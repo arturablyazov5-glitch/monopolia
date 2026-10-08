@@ -10,7 +10,9 @@ async function visit(dir) {
     if (entry.isDirectory()) await visit(path);
     else if (/\.(html|css|js)$/.test(entry.name)) {
       const source = await readFile(path, 'utf8');
-      const result = source.replace(/(["'`]|url\(\s*)\/(?!\/)([^"'`\s)<>]*)/g, (match, prefix, rest) => {
+      const result = source.replace(/srcset="([^"]*)"/g, (match, value) => {
+        return `srcset="${value.replace(/(^|,\s*)\/(?!\/)/g, `$1${base}/`)}"`;
+      }).replace(/(["'`]|url\(\s*)\/(?!\/)([^"'`\s)<>]*)/g, (match, prefix, rest) => {
         if (rest === base.slice(1) || rest.startsWith(base.slice(1) + '/')) return match;
         return `${prefix}${base}/${rest}`;
       });
