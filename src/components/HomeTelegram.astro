@@ -1,0 +1,132 @@
+---
+import Paper from "./Paper.astro";
+import "../styles/home-telegram.css";
+---
+
+<section class="home-telegram" aria-labelledby="telegram-title">
+  <img
+    class="telegram-background"
+    src="/assets/f2c0e.webp"
+    alt=""
+    loading="lazy"
+    width="2880"
+    height="4375"
+    decoding="async"
+  />
+  <div class="telegram-news-wrap">
+    <Paper class="telegram-news">
+      <div>
+        <h2>
+          Семейную ипотеку{" "}
+          <br />
+          завтра отменят!
+        </h2>
+        <p>Лааадно, это ненастоящая новость, но такое не исключено</p>
+      </div>
+      <img
+        class="telegram-news-person"
+        src="/assets/e453b.webp"
+        alt=""
+        loading="lazy"
+        width="1024"
+        height="682"
+        decoding="async"
+      />
+    </Paper>
+    <img
+      class="news-tape news-tape-top"
+      src="/assets/55e7e.webp"
+      alt=""
+      width="861"
+      height="260"
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="news-tape news-tape-bottom"
+      src="/assets/55e7e.webp"
+      alt=""
+      width="861"
+      height="260"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="telegram-content">
+    <div class="telegram-photo">
+      <div class="telegram-photo-crop">
+        <img
+          class="telegram-shadow"
+          src="/assets/73ec6.svg"
+          alt=""
+          width="514.447"
+          height="665.128"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="telegram-person"
+          src="/assets/8db92.webp"
+          srcset="/assets/8db92-m.webp 700w, /assets/8db92.webp 920w"
+          sizes="(max-width: 767px) 345px, 920px"
+          alt="Екатерина Корнеева показывает Telegram на телефоне"
+          loading="lazy"
+          width="920"
+          height="1860"
+          decoding="async"
+        />
+      </div>
+      <Paper class="telegram-signature">
+        <p>Екатерина Корнеева</p>
+        <span>Специалист по недвижимости</span>
+      </Paper>
+    </div>
+    <div class="telegram-copy">
+      <h2 id="telegram-title">
+        Чтобы не пропустить важное, подписывайтесь на наш Telegram
+      </h2>
+      <div class="telegram-benefits">
+        <ul class="diamond-list">
+          <li>Квартиры и дома по цене ниже рынка до 30%</li>
+          <li>Важные новости про недвижку и ипотеку</li>
+        </ul>
+        <div class="telegram-divider"></div>
+        <ul class="diamond-list">
+          <li>Истории-блокбастеры наших клиентов</li>
+          <li>Полезные статьи о сложном простым языком</li>
+        </ul>
+      </div>
+      <button
+        class="button red telegram-subscribe"
+        type="button"
+        aria-describedby="telegram-link-status"
+      >
+        Подписаться на канал
+        <img
+          src="/assets/1b795.svg"
+          alt=""
+          width="18.3777"
+          height="18.4458"
+          loading="lazy"
+          decoding="async"
+        />
+      </button>
+      <p
+        id="telegram-link-status"
+        class="telegram-link-status"
+        role="status"
+        hidden
+      >
+        Ссылка на канал скоро появится.
+      </p>
+    </div>
+  </div>
+</section>
+<script>
+  document
+    .querySelector<HTMLButtonElement>(".telegram-subscribe")
+    ?.addEventListener("click", () => {
+      document.querySelector<HTMLElement>("#telegram-link-status")!.hidden =
+        false;
+    });
+</script>

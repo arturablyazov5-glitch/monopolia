@@ -1,0 +1,134 @@
+.certificates {
+  position: relative;
+  height: 500.681px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-canvas);
+}
+.certificates-background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(180deg);
+  width: max(100%, 1440px);
+  height: 620.273px;
+  max-width: none;
+  z-index: -1;
+}
+.certificates-scene {
+  position: relative;
+  width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+}
+.certificates-content {
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 853px;
+  text-align: center;
+  color: white;
+}
+.certificates h2 {
+  margin: 0;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  white-space: nowrap;
+}
+.certificates-handwriting {
+  margin: 12px 0 0;
+  font: 64px/0.4 var(--font-handwriting);
+}
+.certificates-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 52px;
+}
+.certificates-actions .button {
+  width: 237px;
+}
+.certificates-actions p {
+  margin: 0;
+  width: 262.675px;
+  font: var(--text-small)/1.2 var(--font-body);
+  text-align: left;
+}
+.certificate-sheet {
+  position: absolute;
+  top: 135.188px;
+  left: 1157px;
+  width: 377px;
+  height: 376px;
+  opacity: 0.6;
+}
+.certificate-sheet img {
+  width: 377px;
+  height: 376px;
+  max-width: none;
+}
+.certificate-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    200.112deg,
+    #16161600 10.188%,
+    #18121082 40.382%,
+    #19120eb5 52.061%,
+    #190f0a 69.436%
+  );
+}
+.certificate-sheet.second {
+  left: 1197px;
+  top: 135.188px;
+  transform: rotate(10.16deg);
+}
+.certificate-sheet.second::after {
+  background: linear-gradient(
+    169.804deg,
+    #16161600 1.8903%,
+    #17131182 38.89%,
+    #18110eb5 53.201%,
+    #190d08 74.492%
+  );
+}
+.certificates-ribbon {
+  position: absolute;
+  left: -197px;
+  top: 0;
+  width: 657.281px;
+  height: 814.215px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.certificates-ribbon > div {
+  position: relative;
+  width: 718px;
+  height: 386px;
+  flex: none;
+  transform: rotate(64.53deg) scaleY(-1);
+  opacity: 0.2;
+}
+.certificates-ribbon img {
+  width: 718px;
+  height: 386px;
+  max-width: none;
+}
+.certificates-ribbon > div::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(82.855deg, #221e1c00 34.253%, #221e1c 56.626%);
+}
+.certificates-divider {
+  position: absolute;
+  left: 427.923px;
+  top: 486px;
+  width: 584.154px;
+  height: 14.681px;
+  background: #e5e5e5;
+  mask: url("/assets/7edf9.webp") no-repeat center / 584.154px 14.681px;
+}

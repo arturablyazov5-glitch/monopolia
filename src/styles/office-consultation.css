@@ -1,0 +1,64 @@
+.office-consultation {
+  position: relative;
+  isolation: isolate;
+  height: 800px;
+}
+.office-consultation-background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 798.704px;
+  object-fit: cover;
+  z-index: -1;
+}
+.office-consultation-inner {
+  width: var(--container-width);
+  height: 800px;
+  margin: auto;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.office-consultation-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 14px;
+}
+.office-consultation-copy h2 {
+  width: 100%;
+  text-align: center;
+  color: white;
+}
+.office-consultation-label {
+  position: absolute;
+  top: 1.8px;
+  left: calc(50% - 109px);
+  z-index: 1;
+}
+.office-consultation-label .taped-note-paper > p {
+  color: var(--color-diamond);
+  font-weight: 700;
+}
+.office-consultation-notes {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.office-consultation-note .taped-note-paper {
+  padding: 20px 24px;
+}
+.office-consultation-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.office-consultation-actions > p {
+  color: #e2e2e2;
+  font-size: 14px;
+}

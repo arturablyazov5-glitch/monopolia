@@ -1,0 +1,53 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import HomeHero from "../components/HomeHero.astro";
+import BuyerAudience from "../components/BuyerAudience.astro";
+import FastSale from "../components/FastSale.astro";
+import PrivateCatalog from "../components/PrivateCatalog.astro";
+import Certificates from "../components/Certificates.astro";
+import EqualInterests from "../components/EqualInterests.astro";
+import HonestReviews from "../components/HonestReviews.astro";
+import ProvenTrust from "../components/ProvenTrust.astro";
+import ClientCases from "../components/ClientCases.astro";
+import CompanyAbout from "../components/CompanyAbout.astro";
+import CompanyGuild from "../components/CompanyGuild.astro";
+import OfficeExpansion from "../components/OfficeExpansion.astro";
+import HomePartners from "../components/HomePartners.astro";
+import DirectorInvitation from "../components/DirectorInvitation.astro";
+import BlockbusterCase from "../components/BlockbusterCase.astro";
+import HomeTeam from "../components/HomeTeam.astro";
+import HomeTelegram from "../components/HomeTelegram.astro";
+import HomeServices from "../components/HomeServices.astro";
+import HomeRecruiting from "../components/HomeRecruiting.astro";
+import FaqSection from "../components/FaqSection.astro";
+import { homeFaq } from "../data/faq";
+import LeadSection from "../components/LeadSection.astro";
+// Адаптив главной (планшет/телефон) — после стилей секций.
+import "../styles/home-responsive.css";
+---
+
+<SiteLayout title="Монополия — агентство недвижимости" header>
+  <main class="home-desktop">
+    <HomeHero />
+    <BuyerAudience />
+    <FastSale />
+    <PrivateCatalog />
+    <Certificates />
+    <EqualInterests />
+    <HonestReviews />
+    <ProvenTrust />
+    <ClientCases />
+    <CompanyAbout />
+    <CompanyGuild />
+    <OfficeExpansion />
+    <HomePartners />
+    <DirectorInvitation />
+    <BlockbusterCase />
+    <HomeTeam />
+    <HomeTelegram />
+    <HomeServices />
+    <HomeRecruiting />
+    <FaqSection items={homeFaq} />
+    <LeadSection id="home-question" />
+  </main>
+</SiteLayout>

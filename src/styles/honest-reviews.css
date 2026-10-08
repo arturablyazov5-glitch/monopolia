@@ -1,0 +1,109 @@
+.honest-reviews {
+  position: relative;
+  isolation: isolate;
+  height: 676.594px;
+  padding-top: 120px;
+  /* Фото 1380:5132 в Figma уходит до 5066.6 — под рваный верх бумаги
+     ProvenTrust (4908.71). Низ не обрезаем: фото видно в вырезах края. */
+  overflow-x: clip;
+  clip-path: inset(0 0 -160px 0);
+  background: #151515;
+}
+.honest-reviews-background {
+  position: absolute;
+  top: -91.504px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 926px;
+  z-index: -1;
+}
+.honest-reviews-background > img {
+  width: 100%;
+  height: 926px;
+  max-width: none;
+  object-fit: fill;
+}
+.honest-reviews-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #151515 0%,
+    #151515b3 26.059%,
+    #15151500 52.118%
+  );
+}
+.honest-reviews-scene {
+  position: relative;
+  width: 1440px;
+  height: 436.594px;
+  margin: 0 auto;
+}
+.honest-reviews-copy {
+  position: absolute;
+  left: 140px;
+  top: 104px;
+  width: 463px;
+}
+.honest-reviews h2 {
+  margin: 0;
+  color: white;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.honest-reviews-muted {
+  color: #ffffff66;
+}
+.honest-reviews-last {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.honest-reviews-delete {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fe5b5e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.honest-reviews-note {
+  --paper-texture: url("/assets/0ba2a.webp");
+  margin-top: 55.797px;
+  width: 436px;
+  height: 97px;
+  padding: 20px 24px;
+  transform: rotate(-1deg);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-paper);
+}
+.honest-reviews-note > img:first-child {
+  flex-shrink: 0;
+}
+.honest-reviews-note p {
+  position: relative;
+  margin: 0;
+  font: var(--text-body)/var(--leading-body) var(--font-body);
+}
+.honest-reviews-tape {
+  position: absolute;
+  left: calc(50% - 2.64px);
+  top: -3.5px;
+  transform: translateX(-50%);
+  width: 50.667px;
+  height: 15.3px;
+  max-width: none;
+}
+.honest-reviews-broken {
+  position: absolute;
+  left: 879.879px;
+  top: 0.236px;
+  width: 536.874px;
+  height: 498.254px;
+  max-width: none;
+}

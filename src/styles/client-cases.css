@@ -1,0 +1,208 @@
+.client-cases {
+  position: relative;
+  isolation: isolate;
+  height: 1015px;
+  padding-top: 120px;
+  overflow: hidden;
+  scroll-margin-top: 96px;
+  /* Figma: тёмный фон блока компании 1380:5236 начинается на 120 px выше
+     конца бумаги 1380:5154 — в вырезах рваного низа бумаги виден тёмный. */
+  background: #1c1c1a;
+}
+.cases-background {
+  position: absolute;
+  top: -1129px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1453.82px);
+  height: 2143.403px;
+  max-width: none;
+  z-index: -1;
+}
+.cases-container {
+  width: var(--container-width);
+  margin: 0 auto;
+}
+.cases-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  height: 114px;
+}
+.cases-heading h2 {
+  margin: 0;
+  width: 733px;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.cases-handwriting {
+  margin: 0;
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+}
+.cases-tabs {
+  position: relative;
+}
+.cases-tabs .channels {
+  gap: 0;
+  padding: 8px;
+  background: white var(--paper-texture) center/cover;
+  width: 407px;
+}
+.cases-tabs .chip {
+  padding: 9px 16px;
+  font: 14px/1.2 var(--font-body);
+  white-space: nowrap;
+  border-radius: 0;
+}
+.cases-pointer {
+  position: absolute;
+  right: -6.5px;
+  bottom: -6.74px;
+}
+.cases-content {
+  display: grid;
+  grid-template-columns: 425.6px 670.4px;
+  gap: 64px;
+  margin-top: 40px;
+}
+.cases-content[hidden] {
+  display: none;
+}
+.case-photo {
+  position: relative;
+  height: 561px;
+  transform: rotate(-1deg);
+}
+.case-photo > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.case-person {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  padding: 16px 24px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transform: rotate(2deg);
+  font: 700 20px/1.4 var(--font-body);
+}
+.case-person > span {
+  width: 52px;
+  height: 52px;
+  background: #d9d9d9;
+  border-radius: 4px;
+}
+.case-details {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.case-object p {
+  margin: 0 0 4px;
+  font: 16px/1.2 var(--font-body);
+}
+.case-object h3 {
+  margin: 0;
+  font: 500 20px/1.2 var(--font-heading);
+}
+.case-result {
+  --paper-texture: url("/assets/0ba2a.webp");
+  padding: 20px 24px;
+  height: 78px;
+}
+.case-result p {
+  position: relative;
+  margin: 0;
+  font: 16px/1.2 var(--font-body);
+}
+.case-quote {
+  position: absolute;
+  right: 13.5px;
+  top: 9px;
+}
+.case-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+}
+.case-tape.top {
+  left: -1.67px;
+  top: -8.17px;
+  transform: rotate(-29.75deg);
+}
+.case-tape.bottom {
+  right: -7.57px;
+  bottom: -4.03px;
+  transform: rotate(-22.8deg);
+}
+.case-columns {
+  display: grid;
+  grid-template-columns: 294.7px 294.7px;
+  gap: 81px;
+  position: relative;
+  min-height: 288px;
+}
+.case-columns::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 334.7px;
+  width: 1px;
+  background: var(--color-divider);
+}
+.case-columns h4 {
+  margin: 0 0 15px;
+  font: 700 16px/1.2 var(--font-body);
+}
+.case-columns ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.case-columns li {
+  position: relative;
+  padding-left: 18.485px;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.case-columns li::before {
+  content: "";
+  position: absolute;
+  left: 1.242px;
+  top: 6.242px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-diamond);
+  transform: rotate(-45deg);
+}
+.case-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.case-actions > .button {
+  width: 275px;
+}
+.case-actions > span {
+  width: 1px;
+  height: 52px;
+  background: var(--color-divider);
+}
+.case-actions > div {
+  display: flex;
+  gap: 12px;
+}
+.cases-empty {
+  margin-top: 80px;
+  text-align: center;
+  font: 20px/1.2 var(--font-heading);
+}

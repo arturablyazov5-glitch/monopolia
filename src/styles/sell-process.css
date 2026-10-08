@@ -1,0 +1,34 @@
+/* Только отличия композиции «Продажи» от общих секций «Покупки». */
+.sell-relocation .relocation-map-text {
+  width: 522px;
+}
+.sell-steps .deal-step-list {
+  gap: 20px;
+  color: var(--color-muted);
+  line-height: 19px;
+}
+.sell-steps .deal-step-list .diamond-line {
+  gap: 10px;
+}
+.sell-steps .deal-step-list .diamond {
+  width: 6px;
+  height: 6px;
+  margin: 6.24px 1.24px 0;
+}
+.sell-realtor .realtor-comparison-bg {
+  top: -0.257px;
+}
+
+.sell-realtor .comparison-risk-cell {
+  line-height: 19px;
+}
+
+.sell-steps .deal-step-image > img {
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Шапка 72 px и отдельный разделитель 1 px в Figma. */
+.sell-realtor .comparison-risk thead th {
+  height: 73px;
+}

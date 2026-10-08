@@ -1,0 +1,1242 @@
+/* Адаптив главной (R1) — план: design-reference/responsive-home-plan.md.
+   Только медиазапросы поверх стилей секций; десктоп ≥ 1200 не меняется.
+   Пороги: планшет ≤ 1199, телефон ≤ 767, узкий телефон ≤ 389.
+   Селекторы с .home-desktop — выше специфичность, на /sell/ и /buy/ не действуют. */
+
+/* Мобильные рейтинги ProvenTrust существуют только на узких экранах */
+.home-desktop .trust-ratings-mobile {
+  display: none;
+}
+
+/* 1200–1279: десктопная композиция по центру без горизонтальной прокрутки */
+@media (max-width: 1279px) {
+  .home-desktop {
+    min-width: 0;
+    overflow-x: clip;
+  }
+}
+
+/* ======================= ПЛАНШЕТ ≤ 1199 ======================= */
+@media (max-width: 1199px) {
+  .home-desktop {
+    --rg: 32px; /* поле страницы */
+    --h2: 40px; /* заголовок секции */
+    --sec: 80px; /* отступ секции */
+    --hero-paper: 80px; /* бумажная зона под командой первого экрана */
+  }
+  .home-desktop h2 {
+    font-size: var(--h2);
+  }
+  .home-desktop .arrow {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* --- 1. Первый экран --- */
+  .home-desktop .home-hero {
+    --team-width: min(1270px, 112vw);
+    height: auto;
+    padding-bottom: var(--hero-paper);
+  }
+  .home-desktop .hero-container {
+    width: auto;
+    max-width: none;
+    margin: 0 var(--rg);
+  }
+  /* Команда в потоке; бумажный край начинается на 0,3476 ширины команды
+     (как на десктопе) — низ композиции уходит под бумагу */
+  .home-desktop .hero-team {
+    position: relative;
+    top: auto;
+    margin: 40px 0 calc(var(--team-width) * -0.370974);
+  }
+  .home-desktop .hero-paper-edge {
+    top: auto;
+    bottom: 0;
+    height: var(--hero-paper);
+  }
+
+  /* Рукописные слова: вместо абсолютного оверлея — сам текст в заголовке */
+  .home-desktop .buyer-count,
+  .home-desktop .private-catalog-count {
+    display: none;
+  }
+  .home-desktop .buyer-count-space,
+  .home-desktop .private-catalog-count-space {
+    display: inline-block;
+    color: var(--color-diamond);
+    font: calc(var(--h2) * 1.4545) / 0.4 var(--font-handwriting);
+    white-space: nowrap;
+    transform: rotate(-1deg);
+  }
+
+  /* --- 2. BuyerAudience: текст, затем фото (фото + тень в одном масштабе) --- */
+  .home-desktop .buyer-audience {
+    --k: 0.9;
+    --x: calc(50% - 360px * var(--k));
+    height: auto;
+    padding-top: var(--sec);
+    background: #fdfdfd;
+  }
+  .home-desktop .buyer-paper-background {
+    top: calc(-1 * var(--hero-paper));
+  }
+  .home-desktop .buyer-audience-container {
+    display: grid;
+    grid-template-columns: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 var(--rg);
+  }
+  .home-desktop .buyer-audience-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-row: 1;
+    width: 100%;
+    max-width: 560px;
+    gap: 32px;
+  }
+  .home-desktop .buyer-quote-mark {
+    right: 0;
+  }
+  .home-desktop .buyer-note {
+    width: 100%;
+    height: auto;
+  }
+  .home-desktop .buyer-portrait,
+  .home-desktop .buyer-portrait-shadow,
+  .home-desktop .buyer-name {
+    position: relative;
+    top: auto;
+    left: auto;
+    grid-row: 2;
+    grid-column: 1;
+    align-self: start;
+    justify-self: start;
+  }
+  /* Верхний край фото растворяется в бумаге (на десктопе он совпадает
+     с границей секции и не виден) */
+  .home-desktop .buyer-portrait,
+  .home-desktop .fast-sale-portrait {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%);
+    mask-image: linear-gradient(to bottom, transparent, #000 14%);
+  }
+  .home-desktop .buyer-portrait {
+    width: calc(844px * var(--k));
+    height: calc(633px * var(--k));
+    margin: 32px 0 0 var(--x);
+  }
+  .home-desktop .buyer-portrait-shadow {
+    width: calc(282.415px * var(--k));
+    height: calc(384.066px * var(--k));
+    margin: calc(32px + 50.495px * var(--k)) 0 0
+      calc(var(--x) + 156.591px * var(--k));
+  }
+  .home-desktop .buyer-name {
+    align-self: end;
+    margin: 0 0 24px calc(var(--x) + 104.444px * var(--k));
+  }
+
+  /* --- 3. FastSale --- */
+  .home-desktop .fast-sale {
+    --k: 0.75;
+    height: auto;
+    background: #fdfdfd;
+  }
+  .home-desktop .fast-sale-background {
+    top: auto;
+    bottom: 0;
+  }
+  .home-desktop .fast-sale-scene {
+    width: auto;
+    height: auto;
+    margin: 0 var(--rg);
+    padding-top: var(--sec);
+  }
+  .home-desktop .fast-sale-copy {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    max-width: 560px;
+  }
+  .home-desktop .fast-sale-time {
+    font-size: calc(var(--h2) * 1.4545);
+  }
+  .home-desktop .fast-sale-note {
+    max-width: 100%;
+    margin-top: 32px;
+  }
+  .home-desktop .fast-sale-copy > .button {
+    margin-top: 32px;
+  }
+  .home-desktop .fast-sale-visual {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: calc(828px * var(--k));
+    height: calc(552px * var(--k));
+    margin: 24px 0 0 calc(50% - 414px * var(--k));
+  }
+  .home-desktop .fast-sale-portrait {
+    width: 100%;
+    height: 100%;
+  }
+  .home-desktop .fast-sale-shadow {
+    top: calc(8.518px * var(--k));
+    left: calc(-42.5px * var(--k));
+    width: calc(447.463px * var(--k));
+    height: calc(580.875px * var(--k));
+  }
+  .home-desktop .fast-sale-name {
+    right: 24px;
+    bottom: 64px;
+  }
+  .home-desktop .fast-sale-edge {
+    top: auto;
+    bottom: -35px;
+  }
+
+  /* --- 4. PrivateCatalog --- */
+  .home-desktop .private-catalog {
+    height: auto;
+    gap: 32px;
+    padding: var(--sec) var(--rg);
+  }
+  .home-desktop .private-catalog-heading {
+    width: 100%;
+    max-width: 853px;
+  }
+  .home-desktop .private-catalog-markets {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 8px 10px;
+    margin-top: 6px;
+    font-size: var(--h2);
+  }
+  .home-desktop .private-catalog-card {
+    width: 100%;
+    max-width: 641px;
+    height: auto;
+    margin-top: 0;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+  .home-desktop .private-catalog-assurance p {
+    width: auto;
+  }
+  .home-desktop .private-catalog-underline {
+    display: none;
+  }
+
+  /* --- 5. Certificates --- */
+  .home-desktop .certificates {
+    height: auto;
+    background: #190d08;
+  }
+  .home-desktop .certificates-scene {
+    width: 100%;
+    height: auto;
+    padding: 140px var(--rg) 96px;
+  }
+  .home-desktop .certificates-content {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    transform: none;
+  }
+  .home-desktop .certificates h2 {
+    white-space: normal;
+  }
+  .home-desktop .certificates-handwriting {
+    margin-top: 20px;
+    font-size: calc(var(--h2) * 1.4545);
+  }
+  .home-desktop .certificates-actions {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .home-desktop .certificates-actions p {
+    width: auto;
+    max-width: 320px;
+    text-align: center;
+  }
+  .home-desktop .certificate-sheet.first {
+    left: calc(100% - 283px);
+  }
+  .home-desktop .certificate-sheet.second {
+    left: calc(100% - 243px);
+  }
+  .home-desktop .certificates-divider {
+    top: auto;
+    bottom: 0;
+    left: 50%;
+    width: min(584.154px, 100%);
+    transform: translateX(-50%);
+  }
+
+  /* --- 6. EqualInterests: композиция десктопа, обрезка по центру --- */
+  .home-desktop .equal-interests-content {
+    width: auto;
+    margin: 0 var(--rg);
+  }
+  .home-desktop .equal-interests h2 {
+    width: auto;
+  }
+
+  /* --- 7. HonestReviews: текст → заметка → разбитая карточка --- */
+  .home-desktop .honest-reviews {
+    height: auto;
+    padding-top: var(--sec);
+  }
+  .home-desktop .honest-reviews-background {
+    top: auto;
+    bottom: -158px;
+  }
+  .home-desktop .honest-reviews-background::after {
+    background: linear-gradient(
+      to bottom,
+      #151515 0%,
+      #151515d9 30%,
+      #15151500 70%
+    );
+  }
+  .home-desktop .honest-reviews-scene {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+    width: auto;
+    height: auto;
+    margin: 0 var(--rg);
+    padding-bottom: var(--sec);
+  }
+  .home-desktop .honest-reviews-copy {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+  }
+  .home-desktop .honest-reviews-note {
+    width: auto;
+    max-width: 436px;
+    height: auto;
+    margin-top: 32px;
+  }
+  .home-desktop .honest-reviews-broken {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(420px, 100%);
+    height: auto;
+    align-self: center;
+  }
+
+  /* --- 8. ProvenTrust: заголовок → рейтинги → команда → свайп отзывов --- */
+  .home-desktop .proven-trust {
+    --k: 0.62;
+    min-height: 0;
+    padding-top: 112px;
+  }
+  .home-desktop .proven-trust-scene {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    margin: 0 var(--rg);
+    padding-bottom: var(--sec);
+  }
+  .home-desktop .proven-trust h2 {
+    width: auto;
+    margin: 0;
+  }
+  .home-desktop .trust-count {
+    font-size: calc(var(--h2) * 1.4545);
+  }
+  .home-desktop .trust-ratings-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .home-desktop .trust-rating-mobile {
+    padding: 12px 14px 10px;
+    border-radius: 4px;
+  }
+  .home-desktop .trust-rating-mobile p {
+    position: relative;
+    margin: 6px 0 0;
+    color: var(--color-muted);
+    font: 14px/1.4 var(--font-body);
+  }
+  .home-desktop .trust-team .trust-rating {
+    display: none;
+  }
+  /* Композиция команды масштабируется целиком (только картинки) */
+  .home-desktop .trust-team {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex-shrink: 0;
+    zoom: var(--k);
+    margin: 24px 0 0 calc(50% - 723.5px);
+  }
+  .home-desktop .trust-reviews {
+    position: relative;
+    top: auto;
+    left: auto;
+    z-index: 2;
+    width: auto;
+    margin: calc(-170px * var(--k) + 16px) calc(-1 * var(--rg)) 0;
+  }
+  .home-desktop .trust-reviews .carousel-track {
+    gap: 16px;
+    padding: 0 var(--rg) 12px;
+    scroll-padding: 0 var(--rg);
+  }
+  .home-desktop .trust-reviews .carousel-controls,
+  .home-desktop .home-team .carousel-controls {
+    position: static;
+    inset: auto;
+    justify-content: center;
+    gap: 16px;
+    margin: 16px var(--rg) 0;
+    pointer-events: auto;
+  }
+  .home-desktop .trust-reviews .carousel-pagination,
+  .home-desktop .home-team .carousel-pagination {
+    display: flex;
+  }
+
+  /* --- 9. ClientCases --- */
+  .home-desktop .client-cases {
+    height: auto;
+    padding: var(--sec) 0 calc(var(--sec) + 40px);
+    /* бумага сверху, тёмный блок компании — в вырезах рваного низа */
+    background: linear-gradient(#fdfdfd 50%, #1c1c1a 50%);
+  }
+  .home-desktop .cases-background {
+    top: auto;
+    bottom: 0;
+  }
+  .home-desktop .cases-container {
+    width: auto;
+    margin: 0 var(--rg);
+  }
+  .home-desktop .cases-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    height: auto;
+  }
+  .home-desktop .cases-heading h2 {
+    width: auto;
+  }
+  .home-desktop .cases-handwriting {
+    margin-top: 16px;
+    font-size: calc(var(--h2) * 1.4545);
+  }
+  .home-desktop .cases-tabs .chip {
+    min-height: 44px;
+  }
+  .home-desktop .cases-content {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .home-desktop .case-photo {
+    height: 460px;
+  }
+  .home-desktop .case-result {
+    height: auto;
+    padding-right: 48px;
+  }
+  .home-desktop .case-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+    min-height: 0;
+  }
+  .home-desktop .case-columns::after {
+    left: 50%;
+  }
+
+  /* --- 10. CompanyAbout --- */
+  .home-desktop .company-about {
+    height: auto;
+    padding: var(--sec) 0;
+  }
+  .home-desktop .company-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+    width: auto;
+    margin: 0 var(--rg);
+  }
+  .home-desktop .company-office {
+    justify-self: center;
+    width: min(548px, 100%);
+    height: auto;
+  }
+  .home-desktop .company-office-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 524 / 553;
+  }
+  .home-desktop .company-recommendations,
+  .home-desktop .company-stats {
+    height: auto;
+  }
+  .home-desktop .company-stats {
+    gap: 16px;
+  }
+  .home-desktop .company-download-status {
+    position: static;
+  }
+
+  /* --- 11. CompanyGuild --- */
+  .home-desktop .company-guild {
+    height: auto;
+    padding: 19px var(--rg) var(--sec);
+  }
+  .home-desktop .guild-card {
+    width: auto;
+    max-width: 740px;
+    height: auto;
+  }
+
+  /* --- 12. OfficeExpansion: композиция десктопа по центру экрана --- */
+  .home-desktop .expansion-container {
+    left: 50%;
+    transform: translateX(calc(-50% - 67px));
+  }
+  .home-desktop .expansion-container h2 {
+    transform: translateX(67px);
+  }
+
+  /* --- 13. Партнёры --- */
+  .home-desktop .home-partners {
+    height: auto;
+    padding-bottom: var(--sec);
+  }
+  .home-desktop .home-partners-container {
+    width: auto;
+    margin: 0 var(--rg);
+  }
+
+  /* --- 14. DirectorInvitation --- */
+  .home-desktop .director-invitation {
+    --k: 0.9;
+    height: auto;
+    padding: 0 var(--rg) var(--sec);
+  }
+  .home-desktop .director-card {
+    grid-template-columns: minmax(0, 1fr);
+    width: auto;
+    height: auto;
+    padding: 40px 40px 0;
+  }
+  .home-desktop .director-copy h2 span {
+    width: auto;
+    font-size: calc(var(--h2) * 1.4545);
+  }
+  .home-desktop .director-intro {
+    flex-wrap: wrap;
+  }
+  .home-desktop .director-coffee-note {
+    width: auto;
+    max-width: 466px;
+  }
+  .home-desktop .director-cta {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    margin-top: 40px;
+  }
+  .home-desktop .director-cta > p {
+    flex-shrink: 1;
+    width: auto;
+    max-width: 306px;
+  }
+  .home-desktop .director-photo {
+    height: calc(512px * var(--k));
+    margin: 32px -40px 0;
+    overflow: hidden;
+  }
+  .home-desktop .director-shadow {
+    top: calc(-75.335px * var(--k));
+    left: calc(50% + (-51.166px - 264px) * var(--k));
+    width: calc(615.109px * var(--k));
+    height: calc(675.277px * var(--k));
+  }
+  .home-desktop .director-portrait {
+    top: calc(-161.382px * var(--k));
+    left: calc(50% + (-338.026px - 264px) * var(--k));
+    width: calc(1204.051px * var(--k));
+    height: calc(1816.678px * var(--k));
+  }
+  .home-desktop .director-signature {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  /* --- 15. BlockbusterCase: текст сверху, сцена ниже --- */
+  .home-desktop .blockbuster-case {
+    --k: 0.85;
+    --scene-h: calc(866.965px * var(--k));
+    height: auto;
+    /* цвет белой дымки над сценой: текст сверху читается на светлом */
+    background: #f3f3f3;
+  }
+  .home-desktop .blockbuster-scene {
+    top: auto;
+    bottom: calc(-14px * var(--k));
+    width: calc(1480px * var(--k));
+    height: var(--scene-h);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%);
+    mask-image: linear-gradient(to bottom, transparent, #000 16%);
+  }
+  .home-desktop .blockbuster-content {
+    width: auto;
+    height: auto;
+    padding: 80px var(--rg) calc(var(--scene-h) * 0.62 + 40px);
+  }
+  .home-desktop .blockbuster-content h2,
+  .home-desktop .blockbuster-description {
+    width: auto;
+    max-width: 714px;
+  }
+  .home-desktop .blockbuster-warning {
+    top: auto;
+    bottom: calc(var(--scene-h) * 0.5);
+    left: calc(50% - 300px);
+  }
+  .home-desktop .blockbuster-reply {
+    top: auto;
+    bottom: calc(var(--scene-h) * 0.48);
+    left: auto;
+    right: calc(50% - 300px);
+  }
+
+  /* --- 16. HomeTeam: свайп карточек --- */
+  .home-desktop .home-team {
+    height: auto;
+    padding: calc(120px + var(--sec)) 0 var(--sec);
+  }
+  .home-desktop .home-team-container {
+    width: auto;
+    margin: 0 var(--rg);
+  }
+  .home-desktop .home-team h2 img {
+    top: 14.94px;
+    width: calc(656.663px * 40 / 44);
+    height: auto;
+  }
+  .home-desktop .home-team-description {
+    width: auto;
+    max-width: 564px;
+    margin: 16px auto 32px;
+  }
+  .home-desktop .home-team .carousel {
+    margin: 0 calc(-1 * var(--rg));
+  }
+  .home-desktop .home-team .carousel-track {
+    gap: 16px;
+    padding: 0 var(--rg) 8px;
+    overflow-x: auto;
+    scroll-padding: 0 var(--rg);
+  }
+  .home-desktop .home-team .team-lawyer,
+  .home-desktop .home-team .team-trainer {
+    height: auto;
+  }
+
+  /* --- 17. HomeTelegram --- */
+  .home-desktop .home-telegram {
+    --k: 0.85;
+    height: auto;
+    padding-bottom: var(--sec);
+    background: #fdfdfd;
+  }
+  .home-desktop .telegram-background {
+    top: auto;
+    bottom: 0;
+  }
+  .home-desktop .telegram-news-wrap {
+    width: calc(100% - 2 * var(--rg));
+    max-width: 750px;
+    height: auto;
+    padding: 15px 0;
+  }
+  .home-desktop .telegram-news {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+  }
+  .home-desktop .telegram-content {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 24px;
+    width: auto;
+    margin: 40px var(--rg) 0;
+  }
+  .home-desktop .telegram-photo {
+    height: calc(428px * var(--k) + 40px);
+  }
+  .home-desktop .telegram-photo-crop {
+    top: calc(-71.195px * var(--k));
+    left: calc(50% - 352.5px);
+    transform: scale(var(--k));
+    transform-origin: 50% 0;
+  }
+  .home-desktop .telegram-signature {
+    top: auto;
+    bottom: 0;
+    left: 8px;
+  }
+  .home-desktop .telegram-copy {
+    padding-top: 24px;
+  }
+  .home-desktop .telegram-copy h2 {
+    margin-bottom: 32px;
+  }
+  .home-desktop .telegram-benefits {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .home-desktop .telegram-divider {
+    display: none;
+  }
+
+  /* --- 18. HomeServices: 3 → 2 колонки --- */
+  .home-desktop .home-services {
+    width: auto;
+    margin: 0 var(--rg);
+    padding: var(--sec) 0;
+  }
+  .home-desktop .services-heading h2 {
+    width: auto;
+  }
+  .home-desktop .services-heading p {
+    white-space: normal;
+  }
+  .home-desktop .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 32px;
+    margin-top: 32px;
+  }
+  .home-desktop .service-card-coupon p {
+    width: auto;
+    max-width: none;
+  }
+
+  /* --- 19. HomeRecruiting: фото сверху, текст ниже --- */
+  .home-desktop .home-recruiting {
+    --k: 0.8;
+    height: auto;
+    background: #141414;
+  }
+  .home-desktop .recruiting-union {
+    display: none;
+  }
+  .home-desktop .recruiting-photo {
+    width: calc(1440px * var(--k));
+    height: calc(743px * var(--k));
+    transform: translateX(calc(-50% + 390px * var(--k)));
+  }
+  .home-desktop .recruiting-photo:after {
+    background: linear-gradient(to bottom, #14141400 45%, #141414 96%);
+  }
+  .home-desktop .recruiting-container {
+    width: auto;
+    margin: 0 var(--rg);
+    padding: calc(743px * var(--k) - 80px) 0 var(--sec);
+  }
+  .home-desktop .recruiting-copy {
+    width: 100%;
+    max-width: 600px;
+    gap: 40px;
+  }
+}
+
+/* ======================= ТЕЛЕФОН ≤ 767 ======================= */
+@media (max-width: 767px) {
+  .home-desktop {
+    --rg: 20px;
+    --h2: 30px;
+    --sec: 56px;
+    --hero-paper: 56px;
+  }
+  .home-desktop h2 br {
+    display: none;
+  }
+
+  /* --- 1. Первый экран: заголовок, суть и обе кнопки сразу видны --- */
+  .home-desktop .hero-container {
+    padding-top: 8px;
+  }
+  .home-desktop .hero-content {
+    margin-top: 20px;
+  }
+  .home-desktop .hero-title-block {
+    width: fit-content;
+    max-width: 100%;
+    padding-top: 22px;
+  }
+  .home-desktop .home-hero h1 {
+    font-size: min(32px, calc((100vw - 40px) / 11.2));
+    text-align: center;
+  }
+  .home-desktop .hero-annotation {
+    top: 8px;
+    font-size: 30px;
+  }
+  .home-desktop .hero-title-second {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+  .home-desktop .hero-description br {
+    display: none;
+  }
+  .home-desktop .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .home-desktop .hero-actions > span {
+    display: none;
+  }
+  .home-desktop .hero-actions .button:first-child,
+  .home-desktop .hero-actions .button:last-child {
+    width: 100%;
+  }
+  .home-desktop .hero-team {
+    margin-top: 28px;
+  }
+
+  /* Кнопки CTA секций — на всю ширину */
+  .home-desktop .buyer-audience-content > .button,
+  .home-desktop .fast-sale-copy > .button,
+  .home-desktop .private-catalog-card .button,
+  .home-desktop .certificates-actions .button,
+  .home-desktop .equal-interests-actions .button,
+  .home-desktop .case-actions > .button,
+  .home-desktop .company-download .button,
+  .home-desktop .director-cta .button,
+  .home-desktop .telegram-subscribe,
+  .home-desktop .recruiting-buttons .button {
+    width: 100%;
+  }
+
+  /* --- 2–3. Фото с тенью: телефонный масштаб --- */
+  .home-desktop .buyer-audience {
+    --k: 0.62;
+    --x: calc(50% - 470px * var(--k));
+  }
+  .home-desktop .fast-sale {
+    --k: 0.5;
+  }
+  .home-desktop .fast-sale-name {
+    right: 20px;
+    bottom: 52px;
+  }
+  .home-desktop .fast-sale-note p br {
+    display: none;
+  }
+
+  /* --- 4. PrivateCatalog --- */
+  .home-desktop .private-catalog-assurance p {
+    font-size: 18px;
+  }
+  .home-desktop .private-catalog-assurance p br {
+    display: none;
+  }
+  .home-desktop .private-catalog-card {
+    padding: 28px 20px;
+  }
+
+  /* --- 5. Certificates --- */
+  .home-desktop .certificates-scene {
+    padding: 112px var(--rg) 72px;
+  }
+  .home-desktop .certificates-ribbon {
+    display: none;
+  }
+  .home-desktop .certificate-sheet.first {
+    top: 24px;
+    left: calc(100% - 110px);
+  }
+  .home-desktop .certificate-sheet.second {
+    top: 24px;
+    left: calc(100% - 80px);
+  }
+  .home-desktop .certificates-actions {
+    align-items: stretch;
+  }
+  .home-desktop .certificates-actions p {
+    max-width: none;
+  }
+
+  /* --- 6. EqualInterests: заголовок → фото (все трое в кадре) → кнопки --- */
+  .home-desktop .equal-interests {
+    --w: calc((100vw - 16px) * 1.45);
+    --h: calc(var(--w) * 0.65208);
+    height: auto;
+    padding: var(--sec) 0;
+    background: linear-gradient(#190d08, #151515);
+  }
+  .home-desktop .equal-interests-background {
+    top: auto;
+    bottom: calc(var(--sec) + 136px);
+    width: var(--w);
+    height: var(--h);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%);
+    mask-image: linear-gradient(to bottom, transparent, #000 18%);
+  }
+  .home-desktop .equal-interests-content {
+    padding-top: 0;
+    gap: calc(var(--h) + 8px);
+  }
+  .home-desktop .equal-interests-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+  .home-desktop .equal-interests-actions > span {
+    display: none;
+  }
+
+  /* --- 7. HonestReviews --- */
+  .home-desktop .honest-reviews-background {
+    bottom: calc(-158px * 0.5);
+    width: 720px;
+    height: 463px;
+  }
+  .home-desktop .honest-reviews-background > img {
+    height: 100%;
+  }
+  .home-desktop .honest-reviews-broken {
+    width: min(380px, 100%);
+  }
+
+  /* --- 8. ProvenTrust --- */
+  .home-desktop .proven-trust {
+    --k: 0.36;
+    padding-top: 96px;
+  }
+  .home-desktop .trust-ratings-mobile {
+    gap: 8px;
+  }
+  .home-desktop .trust-rating-mobile {
+    padding: 10px 10px 8px;
+  }
+  .home-desktop .trust-rating-mobile .trust-rating-line {
+    gap: 8px;
+  }
+  .home-desktop .trust-reviews .review-card {
+    flex: 0 0 min(301.333px, 78vw);
+    width: min(301.333px, 78vw);
+  }
+
+  /* --- 9. ClientCases --- */
+  .home-desktop .cases-tabs {
+    width: calc(100% + 2 * var(--rg));
+    margin: 0 calc(-1 * var(--rg));
+    padding: 0 var(--rg) 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .home-desktop .cases-tabs .channels {
+    flex-wrap: nowrap;
+    width: max-content;
+  }
+  .home-desktop .cases-tabs .chip {
+    padding: 9px 12px;
+  }
+  .home-desktop .cases-pointer {
+    display: none;
+  }
+  .home-desktop .case-photo {
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .home-desktop .case-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .home-desktop .case-columns::after {
+    display: none;
+  }
+  .home-desktop .case-actions > span,
+  .home-desktop .case-actions > div {
+    display: none;
+  }
+
+  /* --- 10. CompanyAbout --- */
+  .home-desktop .company-container {
+    gap: 40px;
+  }
+  .home-desktop .company-intro > p {
+    font-size: 18px;
+  }
+  .home-desktop .company-stats {
+    flex-direction: column;
+  }
+  .home-desktop .company-stats > div {
+    display: grid;
+    grid-template-columns: 136px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+  }
+  .home-desktop .company-number {
+    font-size: 32px;
+  }
+  .home-desktop .company-download {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-desktop .company-download .button {
+    width: 100%;
+  }
+  .home-desktop .company-partners {
+    top: 16px;
+    left: 12px;
+    max-width: calc(100% - 24px);
+    flex-wrap: wrap;
+  }
+
+  /* --- 11. CompanyGuild --- */
+  .home-desktop .guild-card {
+    padding: 32px 20px;
+  }
+  .home-desktop .guild-card h2 {
+    margin-bottom: 24px;
+  }
+  .home-desktop .guild-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .home-desktop .guild-details > p {
+    width: auto;
+  }
+  .home-desktop .guild-note p br {
+    display: none;
+  }
+  .home-desktop .guild-note {
+    flex-shrink: 1;
+  }
+  .home-desktop .guild-logo-crop img {
+    top: -290px;
+    right: -300px;
+  }
+
+  /* --- 12. OfficeExpansion: композиция перестроена в ширину телефона --- */
+  .home-desktop .office-expansion {
+    height: auto;
+    padding-bottom: var(--sec);
+  }
+  .home-desktop .expansion-container {
+    left: auto;
+    width: auto;
+    height: 460px;
+    margin: 0 var(--rg);
+    transform: none;
+  }
+  .home-desktop .expansion-container h2 {
+    transform: none;
+  }
+  .home-desktop .office-photo-bubble {
+    zoom: 0.78;
+  }
+  .home-desktop .office-photo-frame span {
+    font-size: 18px;
+  }
+  .home-desktop .future-photo {
+    top: calc(132px / 0.78);
+    left: 0;
+  }
+  .home-desktop .current-photo {
+    top: calc(132px / 0.78);
+    left: auto;
+    right: 0;
+  }
+  .home-desktop .future-office {
+    top: 252px;
+    left: 0;
+  }
+  .home-desktop .current-office {
+    top: 344px;
+    left: auto;
+    right: 0;
+  }
+
+  /* --- 13. Партнёры: логотипы-картинки в масштабе 0,6 --- */
+  .home-desktop .home-partner-logos {
+    zoom: 0.6;
+    gap: 16px;
+  }
+
+  /* --- 14. DirectorInvitation --- */
+  .home-desktop .director-invitation {
+    --k: 0.6;
+  }
+  .home-desktop .director-card {
+    padding: 32px 20px 0;
+  }
+  .home-desktop .director-quote {
+    width: 28px;
+    height: auto;
+  }
+  .home-desktop .director-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-desktop .director-cta > p {
+    max-width: none;
+  }
+  .home-desktop .director-photo {
+    margin: 24px -20px 0;
+  }
+
+  /* --- 15. BlockbusterCase --- */
+  .home-desktop .blockbuster-case {
+    --k: 0.5;
+  }
+  .home-desktop .blockbuster-content {
+    padding: 64px var(--rg) calc(var(--scene-h) * 0.55 + 150px);
+  }
+  .home-desktop .blockbuster-content .speech-bubble p {
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 24px;
+  }
+  .home-desktop .blockbuster-warning {
+    left: 12px;
+    width: 172px;
+    bottom: calc(var(--scene-h) * 0.55 + 16px);
+  }
+  .home-desktop .blockbuster-reply {
+    right: 12px;
+    width: 160px;
+    bottom: calc(var(--scene-h) * 0.48 + 16px);
+  }
+
+  /* --- 16. HomeTeam --- */
+  .home-desktop .home-team h2 span {
+    display: inline;
+    text-decoration: line-through;
+    text-decoration-color: var(--color-diamond);
+    text-decoration-thickness: 3px;
+  }
+  .home-desktop .home-team h2 img {
+    display: none;
+  }
+  .home-desktop .home-team .staff-card {
+    flex: 0 0 300px;
+    width: 300px;
+    min-height: 0;
+  }
+  /* Фото-блок 336 → 268 px: кадрирование лица не меняется, бейдж 14 px */
+  .home-desktop .home-team .staff-photo {
+    zoom: 0.7976;
+  }
+  .home-desktop .home-team .staff-photo .badge {
+    font-size: 17.55px;
+    white-space: normal;
+  }
+  .home-desktop .staff-certificate p:last-of-type {
+    white-space: normal;
+  }
+
+  /* --- 17. HomeTelegram --- */
+  .home-desktop .home-telegram {
+    --k: 0.75;
+  }
+  .home-desktop .telegram-news {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px 0;
+  }
+  .home-desktop .telegram-news h2 {
+    white-space: normal;
+    margin-bottom: 16px;
+  }
+  .home-desktop .telegram-news p {
+    width: auto;
+    font-size: 18px;
+  }
+  .home-desktop .telegram-news-person {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    align-self: flex-end;
+    width: 240px;
+    height: auto;
+    margin: 4px -12px -4px 0;
+  }
+  .home-desktop .news-tape-bottom {
+    top: auto;
+    bottom: 6px;
+  }
+  .home-desktop .telegram-content {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .home-desktop .telegram-copy {
+    order: -1;
+    padding-top: 0;
+  }
+  .home-desktop .telegram-copy h2 {
+    margin-bottom: 24px;
+  }
+
+  /* --- 18. HomeServices: 1 колонка --- */
+  .home-desktop .services-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .home-desktop .services-slot {
+    padding: 4px 0;
+  }
+
+  /* --- 19. HomeRecruiting --- */
+  .home-desktop .home-recruiting {
+    --k: 0.62;
+  }
+  .home-desktop .recruiting-container {
+    padding-top: calc(743px * var(--k) - 64px);
+  }
+  .home-desktop .recruiting-copy {
+    gap: 32px;
+  }
+  .home-desktop .recruiting-note-wrap {
+    width: auto;
+  }
+  .home-desktop .recruiting-benefits {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .home-desktop .recruiting-actions {
+    justify-items: stretch;
+  }
+  .home-desktop .recruiting-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+
+/* ======================= УЗКИЙ ТЕЛЕФОН ≤ 389 ======================= */
+@media (max-width: 389px) {
+  .home-desktop {
+    --rg: 16px;
+    --h2: 28px;
+  }
+}

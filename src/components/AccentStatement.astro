@@ -1,0 +1,23 @@
+---
+// Крупное утверждение между двумя красными мазками (instance 1380:7006,
+// мастер 1122:6989). Текст — через slot; выделенная часть в <strong>
+// становится тёмной, остальное — #1A1A1A 40%.
+interface Props {
+  node?: string;
+  class?: string;
+}
+import "../styles/accent-statement.css";
+
+const { node = "1380:7006", class: className = "" } = Astro.props;
+---
+
+<div class:list={["accent-statement", className]} data-node-id={node}>
+  <span class="accent-statement-stroke" aria-hidden="true"></span>
+  <p>
+    <slot />
+  </p>
+  <span
+    class="accent-statement-stroke accent-statement-stroke-end"
+    aria-hidden="true"
+  ></span>
+</div>

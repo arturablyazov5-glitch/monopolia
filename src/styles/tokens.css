@@ -1,0 +1,91 @@
+/* Figma Чистовой макет. Responsive sizes and interaction states are code additions. */
+:root {
+  --color-accent: #ea1818;
+  --color-diamond: #ff0000;
+  --color-ink: #1a1a1a;
+  --color-muted: #505050;
+  --color-canvas: #ededed;
+  --color-paper: #ffffff;
+  --color-dark: #1c1c1c;
+  --color-caption: #9e9e9e;
+  --color-field-text: #3b3b3b;
+  --color-status: #2bb741;
+  --color-disabled: #bcbcbc;
+  --color-divider: #0000001a;
+  --color-backdrop: #00000099;
+  --font-heading: Forma, Arial, sans-serif;
+  --font-body: Calibri, Arial, sans-serif;
+  --font-handwriting: Denistina, cursive;
+  --text-display: 64px;
+  --text-heading: 44px;
+  --text-card: 20px;
+  --text-body: 16px;
+  --text-small: 14px;
+  --text-button: 16px;
+  --leading-heading: 1;
+  --leading-body: 1.2;
+  --weight-heading: 500;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-13: 52px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --container-width: 1160px;
+  --gutter-desktop: 24px;
+  --gutter-mobile: 16px;
+  --grid-gap: 28px;
+  --radius-control: 4px;
+  --radius-badge: 8px;
+  --radius-speech: 32px;
+  --button-height: 52px;
+  --arrow-size: 40px;
+  --play-size: 72px;
+  --header-height: 56px;
+  --field-height: 52px;
+  --shadow-paper: 0 5px 7px #0000000f;
+  --shadow-play: 0 3px 15px #0000001a;
+  --duration-fast: 150ms;
+  --focus-width: 3px;
+  --paper-texture: url("/assets/30984.webp");
+  --tape-texture: url("/assets/55e7e.webp");
+  --edge-button: polygon(
+    0 3%,
+    15% 1%,
+    28% 2%,
+    41% 0,
+    55% 2%,
+    73% 1%,
+    88% 2%,
+    100% 0,
+    99% 29%,
+    100% 62%,
+    99% 100%,
+    80% 98%,
+    64% 100%,
+    48% 98%,
+    31% 100%,
+    16% 98%,
+    0 100%,
+    1% 66%,
+    0 30%
+  );
+  --red: var(--color-accent);
+  --ink: var(--color-ink);
+  --muted: var(--color-muted);
+  --canvas: var(--color-canvas);
+  --paper: var(--color-paper);
+  --shadow: var(--shadow-paper);
+}
+@media (max-width: 800px) {
+  :root {
+    --text-heading: 34px;
+    --text-display: 44px;
+  }
+}

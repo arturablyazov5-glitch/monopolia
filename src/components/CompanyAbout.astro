@@ -1,0 +1,139 @@
+---
+import Paper from "./Paper.astro";
+import "../styles/company-about.css";
+const stats = [
+  ["20 лет", "на рынке в Белогорске", "и Амурской области"],
+  ["5 000+", "клиентов и ни одного", "судебного спора"],
+  ["300", "сделок в год — одна", "каждый рабочий день"],
+];
+---
+
+<section
+  class="company-about"
+  aria-labelledby="company-title"
+  data-node-id="1380:5237"
+>
+  <div class="company-container">
+    <div class="company-office">
+      <img
+        class="company-office-photo"
+        src="/assets/5559b.webp"
+        srcset="/assets/5559b-m.webp 760w, /assets/5559b.webp 1106w"
+        sizes="(max-width: 767px) calc(100vw - 64px), 1106px"
+        width="548"
+        height="577"
+        alt="Офис агентства Монополия в Белогорске"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="company-partners">
+        <span class="company-superagent">
+          <img
+            src="/assets/6aca5.svg"
+            width="18.667"
+            height="18.667"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          Суперагент
+        </span>
+        <span>и</span>
+        <span class="company-avito">
+          <img
+            src="/assets/34ef4.svg"
+            width="13.333"
+            height="28"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <span>Надежный партнер</span>
+          <img
+            src="/assets/48440.svg"
+            width="12"
+            height="28"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="company-copy">
+      <div class="company-intro">
+        <h2 id="company-title">
+          Монополия — название,{" "}
+          <br />
+          на которое вдохновила{" "}
+          <br />
+          нас игра
+        </h2>
+        <p>
+          Белогорская компания с Московским уровнем сервиса, потому что клиенты
+          в маленьком городе заслуживают не меньше
+        </p>
+      </div>
+      <Paper class="company-recommendations">
+        <img
+          src="/assets/287c2.svg"
+          width="36"
+          height="36"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <p>
+          40% клиентов возвращаются к нам снова, еще 40% приходят по
+          рекомендациям, а <strong>конкуренты направляют к нам</strong> сложные
+          сделки
+        </p>
+        {[0, 1, 2, 3].map((i) => (
+          <img
+            class={`company-tape tape-${i}`}
+            src="/assets/55e7e.webp"
+            width="39.912"
+            height="12.052"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </Paper>
+      <div class="company-stats">
+        {stats.map(([value, first, second]) => (
+          <div>
+            <div class="company-number">
+              {value}
+              <i aria-hidden="true"></i>
+            </div>
+            <p>
+              {first}{" "}
+              <br />
+              {second}
+            </p>
+          </div>
+        ))}
+      </div>
+      <div class="company-download">
+        <button class="button red" type="button" data-company-presentation>
+          Скачать презентацию компании
+        </button>
+        <p>Познакомимся поближе, чтобы вы знали, кому платите комиссию :)</p>
+      </div>
+      <p class="company-download-status" role="status" hidden>
+        Презентация компании пока не добавлена.
+      </p>
+    </div>
+  </div>
+</section>
+<script>
+  document
+    .querySelector("[data-company-presentation]")
+    ?.addEventListener("click", () => {
+      const status = document.querySelector<HTMLElement>(
+        ".company-download-status",
+      );
+      if (status) status.hidden = false;
+    });
+</script>

@@ -1,0 +1,7 @@
+.sell-commission-note {
+  width: var(--container-width);
+  margin: 120px auto;
+}
+.sell-commission-note .accent-statement {
+  padding: 0 214px;
+}

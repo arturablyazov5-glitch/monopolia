@@ -1,0 +1,195 @@
+.proven-trust {
+  position: relative;
+  isolation: isolate;
+  background: #fff var(--paper-texture) center/cover;
+  min-height: 1129px;
+  padding-top: 120px;
+  overflow: hidden;
+}
+.proven-trust-scene {
+  width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  height: 1009px;
+}
+.proven-trust h2 {
+  position: relative;
+  z-index: 2;
+  margin: 0 0 0 210px;
+  width: 514px;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.trust-count {
+  display: inline-block;
+  font: 64px/0.4 var(--font-handwriting);
+  transform: rotate(-1deg);
+}
+.trust-accent {
+  color: var(--color-diamond);
+}
+.trust-team {
+  position: absolute;
+  top: 62px;
+  left: -3.5px;
+  width: 1447px;
+  height: 829px;
+}
+.trust-shadow,
+.trust-portrait {
+  position: absolute;
+  max-width: none;
+}
+.trust-portrait.mirrored {
+  transform: scaleX(-1);
+}
+.trust-team-edge {
+  position: absolute;
+  top: 659px;
+  left: -30px;
+  width: 1507px;
+  height: 234px;
+  max-width: none;
+  transform: rotate(180deg);
+}
+.trust-rating {
+  position: absolute;
+  padding: 16px 16px 12px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-paper);
+}
+.trust-rating:nth-last-child(3) {
+  left: 1031.46px;
+  top: 45.23px;
+  transform: rotate(4.27deg);
+}
+.trust-rating:nth-last-child(2) {
+  left: 1115.76px;
+  top: 167.57px;
+}
+.trust-rating:last-child {
+  left: 1110.9px;
+  top: -61.51px;
+  transform: rotate(-1deg);
+}
+.trust-rating-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+.trust-rating-line > img:first-child {
+  object-fit: contain;
+}
+.trust-rating-line > img:nth-last-of-type(1) {
+  margin-right: -8px;
+}
+.trust-rating-divider {
+  width: 1px;
+  height: 24px;
+  background: #0000001a;
+}
+.trust-rating p {
+  position: relative;
+  margin: 6px 0 0;
+  color: var(--color-muted);
+  font: 14px/1.4 var(--font-body);
+}
+.trust-reviews {
+  position: absolute;
+  top: 591px;
+  left: 240px;
+  width: 960px;
+}
+.trust-reviews .carousel-track {
+  gap: 28px;
+  /* Figma 1380:5188: карточки на y 0 и x 0 слота — без отступов трека. */
+  padding: 0 0 12px;
+}
+.trust-reviews .review-card {
+  flex: 0 0 301.333px;
+  width: 301.333px;
+}
+.trust-reviews .review-photo {
+  height: 340px;
+}
+.trust-reviews .review-photo > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.trust-reviews .review-card:nth-child(1) .review-photo > img {
+  object-position: 50% 24%;
+}
+.trust-reviews .carousel-controls {
+  position: absolute;
+  top: 189px;
+  margin: 0;
+  left: -60px;
+  right: -60px;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.trust-reviews .carousel-controls > button {
+  pointer-events: auto;
+}
+.trust-reviews .carousel-pagination {
+  display: none;
+}
+.trust-reviews .review-card {
+  grid-template-columns: 1fr 100px;
+  grid-template-rows: 340px 24px;
+  gap: 18px 0;
+}
+.trust-reviews .review-photo {
+  grid-column: 1 / -1;
+  overflow: hidden;
+}
+.trust-reviews .review-card > h3 {
+  font: 500 20px/1.2 var(--font-heading);
+}
+.trust-reviews .review-card > img {
+  align-self: center;
+}
+.trust-reviews .review-photo .play {
+  top: 16px;
+  left: 16px;
+  transform: none;
+}
+.trust-reviews .review-card:nth-child(1) .review-photo > img {
+  position: absolute;
+  width: 160.42%;
+  height: 232.06%;
+  left: -30.03%;
+  top: -36.33%;
+  max-width: none;
+}
+.trust-reviews .review-card:nth-child(2) .review-photo > img {
+  position: absolute;
+  width: 110.15%;
+  height: 156.33%;
+  left: -5.06%;
+  top: -8.5%;
+  max-width: none;
+}
+.trust-reviews .review-card:nth-child(3) .review-photo > img {
+  position: absolute;
+  width: 125.26%;
+  height: 123.18%;
+  left: -8.81%;
+  top: -11.62%;
+  max-width: none;
+}
+/* Фон прозрачный: в вырезах рваного верха бумаги видно фото HonestReviews. */
+.proven-trust {
+  background: none;
+}
+.trust-paper-background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1453.82px);
+  height: 2143.403px;
+  max-width: none;
+  z-index: -1;
+}

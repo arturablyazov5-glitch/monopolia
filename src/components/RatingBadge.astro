@@ -1,0 +1,67 @@
+---
+interface Props {
+  loading?: "eager" | "lazy";
+  rating?: string;
+  /** Внутренние страницы (мастер 1380:5758 / 1380:6363): Яндекс первым, 2ГИС вторым. */
+  yandexFirst?: boolean;
+}
+const { rating = "5.0", yandexFirst = false } = Astro.props;
+---
+
+<div
+  class:list={["rating", { "rating-yandex-first": yandexFirst }]}
+  data-node-id="1380:4934"
+  aria-label={`Рейтинг ${rating}`}
+>
+  <span class="rating-map gis" aria-hidden="true">
+    <img
+      src="https://trace-logos.ru/assets/logos/svgs/2gis.svg"
+      alt=""
+      width="18"
+      height="18"
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+  </span>
+  <span class="rating-map yandex" aria-hidden="true">
+    <img
+      class="yandex-pin"
+      src="/assets/0a94f.svg"
+      alt=""
+      width="10.08"
+      height="12.6"
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+    <img
+      class="yandex-dot"
+      src="/assets/4bec0.svg"
+      alt=""
+      width="3.5379"
+      height="3.5379"
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+  </span>
+  <span class="rating-map" aria-hidden="true">
+    <img
+      src="https://trace-logos.ru/assets/logos/svgs/domclick.svg"
+      alt=""
+      width="18"
+      height="18"
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+  </span>
+  <b>
+    <img
+      src="/assets/00e35.svg"
+      alt=""
+      width="12"
+      height="12"
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+    {rating}
+  </b>
+</div>

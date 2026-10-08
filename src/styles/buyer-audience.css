@@ -1,0 +1,131 @@
+.buyer-audience {
+  position: relative;
+  isolation: isolate;
+  height: 633px;
+  overflow: hidden;
+  background: var(--color-canvas);
+}
+.buyer-paper-background {
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 1325px;
+  max-width: none;
+  z-index: -1;
+}
+.buyer-audience-container {
+  position: relative;
+  width: var(--container-width);
+  height: 633px;
+  margin: 0 auto;
+}
+.buyer-portrait {
+  position: absolute;
+  left: -80px;
+  top: 0;
+  width: 844px;
+  height: 633px;
+  max-width: none;
+}
+.buyer-portrait-shadow {
+  position: absolute;
+  left: 76.591px;
+  top: 50.495px;
+  width: 282.415px;
+  height: 384.066px;
+  max-width: none;
+}
+.buyer-audience-content {
+  position: absolute;
+  left: 764px;
+  top: 80.5px;
+  width: 396px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-13);
+}
+.buyer-audience-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+.buyer-audience h2 {
+  font: var(--weight-heading) var(--text-heading)/1 var(--font-heading);
+  margin: 0;
+}
+.buyer-count-space {
+  color: transparent;
+}
+.buyer-count {
+  position: absolute;
+  top: 53.93px;
+  left: 83.201px;
+  white-space: nowrap;
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  transform: rotate(-1deg);
+}
+.buyer-quote-mark {
+  position: absolute;
+  width: 42.612px;
+  height: 33.219px;
+  top: -21.272px;
+  right: -47.334px;
+  max-width: none;
+}
+.buyer-note {
+  --paper-texture: url("/assets/0ba2a.webp");
+  width: 396px;
+  height: 116px;
+  padding: 20px 24px;
+}
+.buyer-note p {
+  position: relative;
+  font: var(--text-body)/var(--leading-body) var(--font-body);
+  margin: 0;
+}
+.buyer-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+  filter: drop-shadow(0 0.9px 0.9px #00000012);
+  z-index: 2;
+}
+.buyer-tape-top {
+  left: -1.67px;
+  top: -8.17px;
+  transform: rotate(-29.75deg);
+}
+.buyer-tape-bottom {
+  right: -7.57px;
+  bottom: -4.03px;
+  transform: rotate(-22.8deg);
+}
+.buyer-name {
+  position: absolute;
+  left: 24.444px;
+  top: 483.464px;
+  padding: 20px 24px;
+  transform: rotate(-2deg);
+}
+.buyer-name-title {
+  position: relative;
+  font: 500 var(--text-card)/1.2 var(--font-heading);
+  margin: 0 0 4px;
+}
+.buyer-name-role {
+  position: relative;
+  font: var(--text-small)/1.2 var(--font-body);
+  color: var(--color-muted);
+  margin: 0;
+  white-space: nowrap;
+}
+.buyer-audience-content > .button {
+  width: 219px;
+}

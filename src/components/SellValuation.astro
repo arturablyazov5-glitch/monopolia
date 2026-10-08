@@ -1,0 +1,111 @@
+---
+// «Продажа», Figma 1380:5771: бумажный фон с рваными краями,
+// блок «Узнайте реальную цену» (1380:5777) и «Хотите продать жилье на этой неделе?» (1380:5814).
+import Button from "./Button.astro";
+import Paper from "./Paper.astro";
+import SellWeekCase from "./SellWeekCase.astro";
+import "../styles/sell-valuation.css";
+
+const nb = " ";
+const columns = [
+  [
+    `Сравним ваш объект с${nb}проданными и${nb}актуальными по${nb}9${nb}параметрам — цена за${nb}м², скорость продажи и${nb}не${nb}только`,
+    `Покажем, на каком месте вы${nb}окажетесь среди конкурентов в${nb}вашем районе`,
+  ],
+  [
+    `Назовем реальную цену — не${nb}ту, что хочется, а${nb}ту, по${nb}которой реально купят`,
+    `Скажем честно, сколько займет продажа, чтобы не${nb}зависнуть на${nb}рынке на${nb}полгода`,
+  ],
+];
+---
+
+<section class="sell-valuation" data-node-id="1380:5771">
+  <img
+    class="sell-valuation-background"
+    src="/assets/34244.webp"
+    alt=""
+    width="1440"
+    height="1381.979"
+    loading="lazy"
+    decoding="async"
+  />
+  <div
+    class="sell-valuation-main"
+    aria-labelledby="sell-valuation-title"
+    data-node-id="1380:5777"
+  >
+    <div class="sell-valuation-copy">
+      <div class="sell-valuation-heading">
+        <h2 id="sell-valuation-title">
+          Узнайте реальную цену
+          <br />
+          вашей недвижимости <span class="sr-only">за 5 минут</span>
+        </h2>
+        <div class="sell-valuation-hand" aria-hidden="true">
+          <span>за 5 минут</span>
+        </div>
+      </div>
+      <div class="sell-valuation-points">
+        {columns.map((items, index) => (
+          <>
+            {index > 0 && <span class="sell-valuation-divider" />}
+            <ul>
+              {items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </>
+        ))}
+      </div>
+      <Button label="Получить анализ объекта" subject="Анализ объекта" />
+    </div>
+    <div class="sell-valuation-visual" data-node-id="1380:5791">
+      <div class="sell-valuation-shadow">
+        <img
+          src="/assets/3c81d.svg"
+          alt=""
+          width="642.729"
+          height="498.849"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="sell-valuation-report">
+        <img
+          src="/assets/4574c.webp"
+          alt="Пример отчёта с анализом объекта"
+          width="1024"
+          height="763"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div class="sell-valuation-file" data-node-id="1380:5794">
+        <Paper class="sell-valuation-file-card" node="1380:5795">
+          <img
+            src="/assets/ef020.svg"
+            alt=""
+            width="36"
+            height="36"
+            loading="lazy"
+            decoding="async"
+          />
+          <p>
+            <span>PDF‑файл</span>
+            <small>0,5 МБ</small>
+          </p>
+          <img
+            class="sell-valuation-tape"
+            src="/assets/55e7e.webp"
+            alt=""
+            width="50.667"
+            height="15.3"
+            loading="lazy"
+            decoding="async"
+          />
+        </Paper>
+      </div>
+    </div>
+  </div>
+  <SellWeekCase />
+</section>

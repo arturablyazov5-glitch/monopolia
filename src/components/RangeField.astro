@@ -1,0 +1,71 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  min?: number;
+  max?: number;
+  step?: number;
+  value?: number;
+  unit?: string;
+  class?: string;
+}
+const {
+  id,
+  label,
+  min = 1,
+  max = 20,
+  step = 0.1,
+  value = 10.9,
+  unit = "млн ₽",
+  class: className = "",
+} = Astro.props;
+const progress = (value - min) / (max - min);
+---
+
+<label
+  class:list={["range-field", className]}
+  data-node-id="1380:6423"
+  data-unit={unit}
+  style={`--range-progress:${progress}`}
+>
+  <output for={id}>
+    {value.toLocaleString("ru-RU")} {unit}
+  </output>
+  <input
+    id={id}
+    name={id}
+    type="range"
+    aria-label={label}
+    min={min}
+    max={max}
+    step={step}
+    value={value}
+  />
+  <span>{label}</span>
+</label>
+<script>
+  document.querySelectorAll<HTMLElement>(".range-field").forEach((field) => {
+    const input = field.querySelector<HTMLInputElement>("input")!;
+    const unit = field.dataset.unit ?? "млн ₽";
+    input.addEventListener("input", () => {
+      field.querySelector("output")!.textContent =
+        Number(input.value).toLocaleString("ru-RU") + " " + unit;
+      field.style.setProperty(
+        "--range-progress",
+        String(
+          (Number(input.value) - Number(input.min)) /
+            (Number(input.max) - Number(input.min)),
+        ),
+      );
+    });
+  });
+</script>
+
+<style>
+  @media (max-width: 1199px) {
+    input {
+      min-height: 44px;
+      touch-action: pan-y;
+    }
+  }
+</style>

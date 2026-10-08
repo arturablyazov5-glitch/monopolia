@@ -1,0 +1,180 @@
+---
+import Button from "./Button.astro";
+import SocialLinks from "./SocialLinks.astro";
+import ChoiceGroup from "./ChoiceGroup.astro";
+interface Props {
+  id?: string;
+  compact?: boolean;
+  variant?: "question" | "contact";
+  title?: string;
+  buttonLabel?: string;
+  endpoint?: string;
+  subject?: string;
+  /** Figma node панели; у внутренних страниц — свои instance */
+  node?: string;
+}
+const {
+  id = "question",
+  compact = false,
+  variant = "question",
+  title = "Остались вопросы?\nЗадайте их здесь",
+  buttonLabel = variant === "question" ? "Задать вопрос" : "Оставить заявку",
+  endpoint,
+  subject = "",
+  node = "1380:5753",
+} = Astro.props;
+---
+
+<div class:list={["lead-panel", { compact: compact }]} data-node-id={node}>
+  <form class="lead-form" data-endpoint={endpoint}>
+    <h2 id={id + "-title"}>
+      {title.split("\n").map((line, i) => (
+        <>
+          {i > 0 && " "}
+          {i > 0 && <br />}
+          {line}
+        </>
+      ))}
+    </h2>
+    <input name="subject" type="hidden" value={subject} />
+    {variant === "question" ? (
+      <>
+        <label class="sr-only" for={id + "-question"}>
+          Ваш вопрос
+        </label>
+        <textarea
+          id={id + "-question"}
+          name="question"
+          placeholder="Напишите свой вопрос"
+          required
+        ></textarea>
+      </>
+    ) : (
+      <>
+        <label class="sr-only" for={id + "-name"}>
+          Ваше имя
+        </label>
+        <input
+          id={id + "-name"}
+          name="name"
+          autocomplete="name"
+          placeholder="Ваше имя"
+          required
+        />
+        <ChoiceGroup
+          name="Предпочитаемый способ связи"
+          options={["По телефону", "Telegram", "WhatsApp"]}
+          channels
+        />
+        <input type="hidden" name="channel" value="По телефону" />
+      </>
+    )}
+    <label class="sr-only" for={id + "-phone"}>
+      Телефон
+    </label>
+    <input
+      id={id + "-phone"}
+      name="phone"
+      type="tel"
+      inputmode="tel"
+      autocomplete="tel"
+      placeholder="+7 (999) 999-99-99"
+      required
+    />
+    <label class="consent">
+      <input type="checkbox" name="consent" required />
+      <span>
+        Я согласен(а) на{" "}
+        <span class="consent-doc">обработку персональных данных</span> и
+        принимаю <span class="consent-doc">политику конфиденциальности</span>
+      </span>
+    </label>
+    <div class="form-bottom">
+      <Button label={buttonLabel} type="submit" />
+      <div class="form-social">
+        <span>
+          Или свяжитесь
+          <br />с нами сами
+        </span>
+        <SocialLinks />
+      </div>
+    </div>
+    {!endpoint && (
+      <p class="caption">Демонстрация формы: заявка не отправляется.</p>
+    )}
+    <p class="form-result" role="status" hidden></p>
+  </form>
+  {!compact && (
+    <div class="form-person">
+      <img
+        class="form-person-stroke"
+        src="/assets/53384.svg"
+        alt=""
+        width="498.909"
+        height="656.2"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        class="person"
+        src="/assets/03306.webp"
+        alt="Елена Горбанева"
+        loading="lazy"
+        width="1280"
+        height="1600"
+        decoding="async"
+      />
+      <div class="paper name-tag">
+        <h3>Елена Горбанева</h3>
+        <p>Специалист по недвижимости</p>
+      </div>
+    </div>
+  )}
+</div>
+<script>
+  document.querySelectorAll<HTMLFormElement>(".lead-form").forEach((form) => {
+    const phone = form.querySelector<HTMLInputElement>("[name=phone]")!;
+    const validate = () => {
+      phone.setCustomValidity(
+        phone.value.replace(/\D/g, "").length >= 10
+          ? ""
+          : "Введите телефон: не менее 10 цифр.",
+      );
+    };
+    phone.addEventListener("input", validate);
+    form.addEventListener("choice-change", ((e: CustomEvent) => {
+      const field = form.querySelector<HTMLInputElement>("[name=channel]");
+      if (field) field.value = e.detail.value;
+    }) as EventListener);
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      validate();
+      if (!form.reportValidity()) return;
+      const status = form.querySelector<HTMLElement>(".form-result")!;
+      status.hidden = false;
+      if (!form.dataset.endpoint) {
+        status.textContent =
+          "Форма прошла проверку. Это демонстрация: заявка не отправлена.";
+        return;
+      }
+      const submit = form.querySelector<HTMLButtonElement>("[type=submit]")!;
+      submit.disabled = true;
+      status.textContent = "Отправляем заявку…";
+      try {
+        const response = await fetch(form.dataset.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        if (!response.ok) throw new Error("Ошибка отправки");
+        status.textContent = "Заявка отправлена. Мы свяжемся с вами.";
+        form.reset();
+      } catch {
+        status.textContent =
+          "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.";
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  });
+</script>

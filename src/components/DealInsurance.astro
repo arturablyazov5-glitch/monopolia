@@ -1,0 +1,95 @@
+---
+import Button from "./Button.astro";
+import TapedNote from "./TapedNote.astro";
+import SpeechBubble from "./SpeechBubble.astro";
+import "../styles/deal-insurance.css";
+interface Props {
+  id?: string;
+  node?: string;
+  subject?: string;
+}
+const {
+  id = "deal-insurance",
+  node = "1380:6562",
+  subject = "Страхование сделки: покупка",
+} = Astro.props;
+---
+
+<section
+  class="deal-insurance"
+  data-node-id={node}
+  aria-labelledby={`${id}-title`}
+>
+  <div class="deal-insurance-copy">
+    <div class="deal-insurance-heading">
+      <h2 id={`${id}-title`}>
+        Страхуем сделку
+        <br />
+        от мошенников
+      </h2>
+      <p class="deal-insurance-hand">на 10 млн</p>
+      <p class="deal-insurance-description">
+        Если суд признает сделку недействительной, страховая возместит убытки
+      </p>
+    </div>
+    <TapedNote class="deal-insurance-note" textured>
+      Но к счастью, наша дотошность{" "}
+      <strong>
+        отпугивает
+        <br />
+        всех мошенников
+      </strong>{" "}
+      и таких случаев не было
+    </TapedNote>
+    <div class="deal-insurance-actions">
+      <Button label="Записаться на консультацию" subject={subject} />
+      <p>
+        На этой неделе есть еще <strong>4 свободных места</strong>
+      </p>
+    </div>
+  </div>
+  <div class="deal-insurance-visual">
+    {/* На десктопе обёртка display: contents (прежние координаты слоёв);
+        на узких экранах — масштабируемая сцена фото + SVG-тень. */}
+    <div class="deal-insurance-stage">
+    <img
+      class="deal-insurance-shadow"
+      src="/assets/fa68f.svg"
+      alt=""
+      loading="lazy"
+      width="867.935"
+      height="726.779"
+      decoding="async"
+    />
+    <img
+      class="deal-insurance-photo"
+      src="/assets/c0bda.webp"
+      width="732.233"
+      height="570.513"
+      alt="Елена с клиентом"
+      loading="lazy"
+      decoding="async"
+    />
+    </div>
+    <img
+      class="deal-insurance-edge"
+      src="/assets/48dd3.svg"
+      alt=""
+      loading="lazy"
+      width="1440"
+      height="51.5"
+      decoding="async"
+    />
+    <div class="deal-insurance-client">
+      <p>Клиент</p>
+      <SpeechBubble side="right" tail="ea997.svg" text="🤨🤨🤨🤨" />
+    </div>
+    <div class="deal-insurance-elena">
+      <p>Елена</p>
+      <SpeechBubble
+        tail="50662.svg"
+        text={"Я спросила не мошенники ли они?\nОни сказали нет"}
+      />
+    </div>
+  </div>
+</section>

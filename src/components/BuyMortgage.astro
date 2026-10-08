@@ -1,0 +1,222 @@
+---
+// Figma 1380:6364: фон 1380:6365 + блок «02» (ипотека, 1380:6370)
+// и блок «03» (объекты ниже рынка, 1380:6444) на странице «Покупка».
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+import NumberedBenefit from "./NumberedBenefit.astro";
+import PartnerLogos from "./PartnerLogos.astro";
+import RangeField from "./RangeField.astro";
+import Carousel from "./Carousel.astro";
+import PropertyCard from "./PropertyCard.astro";
+import "../styles/buy-mortgage.css";
+
+const programs = [
+  "Семейная ипотека",
+  "Военная ипотека",
+  "ИТ‑ипотека",
+  "Сельская ипотека",
+  "Дальневосточная и арктическая ипотека",
+];
+const steps = [
+  ["Подберем выгодные", "условия"],
+  ["Поможем собрать", "документы"],
+  ["Правильно подадим", "заявку в банк"],
+];
+// Карточки 1380:6451–6453 — ровно те, что даны в макете.
+const deals = [
+  {
+    title: "1‑комнатная квартира, 40 м², 5/8 этажей",
+    address: "Благовещенск, ул. Конная, д. 1",
+    oldPrice: "7 000 000 ₽",
+    price: "4 900 000 ₽",
+    pricePerMeter: "122 500 ₽/м²",
+    mortgage: "В ипотеку от 30 000 ₽ в месяц",
+    discount: "-30%",
+  },
+  {
+    title: "3‑комнатная квартира, 89 м², 5/5 этажей",
+    address: "Белогорск, ул. Ленина, д. 10",
+    oldPrice: "12 500 000 ₽",
+    price: "9 375 000 ₽",
+    pricePerMeter: "105 300 ₽/м²",
+    mortgage: "В ипотеку от 45 000 ₽ в месяц",
+    discount: "-25%",
+  },
+  {
+    title: "2‑комнатная квартира, 52 м², 8/21 этажей",
+    address: "Благовещенск, ул. Зейская, д. 222",
+    oldPrice: "8 500 000 ₽",
+    price: "5 950 000 ₽",
+    pricePerMeter: "114 400 ₽/м²",
+    mortgage: "В ипотеку от 30 000 ₽ в месяц",
+    discount: "-30%",
+  },
+];
+---
+
+<section
+  class="buy-mortgage"
+  aria-labelledby="buy-mortgage-title"
+  data-node-id="1380:6364"
+>
+  <picture class="buy-mortgage-bg-picture">
+    <source
+      style="display: none"
+      media="(max-width: 1199px)"
+      srcset="/assets/17477-k-mobile.webp"
+    />
+    <img
+      class="buy-mortgage-bg"
+      src="/assets/17477.webp"
+      alt=""
+      width="1440"
+      height="1911"
+      loading="eager"
+      decoding="async"
+    />
+  </picture>
+
+  <div class="buy-mortgage-approval" data-node-id="1380:6370">
+    <div class="buy-mortgage-lead">
+      <div class="buy-mortgage-intro">
+        <h2 id="buy-mortgage-title" class="buy-mortgage-title">
+          <span class="buy-mortgage-title-row">
+            <span class="buy-mortgage-hand">9 из 10 человек</span>
+            получают
+          </span>
+          одобрение по ипотеке через нас
+        </h2>
+        <ul class="buy-mortgage-programs" aria-label="Ипотечные программы">
+          {programs.map((program) => (
+            <li class="chip selected">
+              <img
+                class="choice-check"
+                src="/assets/40c36.svg"
+                alt=""
+                width="20"
+                height="20"
+                loading="lazy"
+                decoding="async"
+              />
+              {program}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="buy-mortgage-steps">
+        {steps.map(([first, second], index) => (
+          <>
+            {index > 0 && (
+              <span class="buy-mortgage-divider" aria-hidden="true" />
+            )}
+            <NumberedBenefit number={index + 1}>
+              {first} <br />
+              {second}
+            </NumberedBenefit>
+          </>
+        ))}
+        <picture style="display: contents">
+          <source
+            style="display: none"
+            media="(max-width: 767px)"
+            srcset="/assets/mobile-empty.webp"
+          />
+          <img
+            src="/assets/d3fc6.svg"
+            alt=""
+            width="14"
+            height="14"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </div>
+    </div>
+
+    <div class="buy-mortgage-banks">
+      <p>Банки‑партнеры:</p>
+      <PartnerLogos etalonIndex={7} />
+    </div>
+
+    <div class="buy-mortgage-cards">
+      <Paper class="buy-mortgage-calc" node="1380:6420">
+        <div class="buy-mortgage-calc-field">
+          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <RangeField
+            id="buy-housing-price"
+            label="Стоимость жилья"
+            unit="млн"
+            class="buy-mortgage-range"
+          />
+        </div>
+        <div class="buy-mortgage-calc-result">
+          <Button
+            label="Подобрать ипотеку"
+            subject="Подбор ипотеки: стоимость жилья 10,9 млн"
+          />
+          <div>
+            <p class="buy-mortgage-payment">
+              от{" "}
+              <output for="buy-housing-price" data-base-payment="9670">
+                9 670
+              </output>{" "}
+              ₽ / месяц
+            </p>
+            <p class="buy-mortgage-note">* Точную стоимость сообщит менеджер</p>
+          </div>
+        </div>
+      </Paper>
+      <Paper class="buy-mortgage-review" node="1380:6438">
+        <!-- Фото Татьяны в макете не предоставлено — плейсхолдер как в Figma -->
+        <span class="buy-mortgage-photo" aria-hidden="true">
+          Фото
+        </span>
+        <div class="buy-mortgage-review-text">
+          <p>
+            Помогли одобрить ипотеку клиенту, которому банки отказывали 2 года
+          </p>
+          <p class="buy-mortgage-author">Татьяна, специалист по недвижимости</p>
+        </div>
+      </Paper>
+    </div>
+  </div>
+
+  <div class="buy-mortgage-deals" data-node-id="1380:6444">
+    <div class="buy-mortgage-deals-heading">
+      <h2>Объекты с ценой ниже рынка — до 30%</h2>
+      <p>
+        Бывают разные ситуации — кто‑то переезжает, кому‑то срочно нужны деньги.{" "}
+        <br />
+        Поэтому у нас появляются варианты объектов по сниженной цене.
+      </p>
+    </div>
+    <Carousel label="Объекты с ценой ниже рынка" class="buy-mortgage-carousel">
+      {deals.map((deal) => (
+        <PropertyCard {...deal} />
+      ))}
+    </Carousel>
+  </div>
+</section>
+
+<script>
+  // Демонстрационный расчёт: платёж из макета (9 670 ₽ при 10,9 млн)
+  // пропорционально стоимости. Точную сумму сообщает менеджер.
+  document
+    .querySelectorAll<HTMLElement>(".buy-mortgage-calc")
+    .forEach((calc) => {
+      const input = calc.querySelector<HTMLInputElement>("input[type=range]")!;
+      const output = calc.querySelector<HTMLOutputElement>(
+        "[data-base-payment]",
+      )!;
+      const button = calc.querySelector<HTMLButtonElement>("[data-lead]")!;
+      const basePrice = Number(input.defaultValue);
+      const basePayment = Number(output.dataset.basePayment);
+      input.addEventListener("input", () => {
+        const price = Number(input.value);
+        const payment = Math.round((basePayment * price) / basePrice / 10) * 10;
+        output.textContent = payment.toLocaleString("ru-RU");
+        button.dataset.subject = `Подбор ипотеки: стоимость жилья ${price.toLocaleString("ru-RU")} млн`;
+      });
+    });
+</script>

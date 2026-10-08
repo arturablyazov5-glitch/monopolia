@@ -1,0 +1,134 @@
+---
+import { imageSize } from "../lib/image-size";
+// Layer order and percentages are from Figma 1380:4956 (1270 × 912.641).
+const layers = [
+  {
+    stroke: "f15a0.svg",
+    box: "15.95% 78.08% 45.16% 3.2%",
+    bleed: "-18.55% -19.86% -17.57% -38.92%",
+    photo: "d302c",
+    left: 3.4,
+    right: 76.79,
+    top: 141.95,
+    ratio: "251.588684 / 369.676269",
+  },
+  {
+    stroke: "a94b2.svg",
+    box: "14.37% 4.51% 45.77% 80.09%",
+    bleed: "-18.47% -24.13% -16.76% -46.88%",
+    photo: "f72d2",
+    left: 73.03,
+    right: 0,
+    top: 66.09,
+    ratio: "2336 / 3504",
+    flip: true,
+  },
+  {
+    stroke: "e8673.svg",
+    box: "13.09% 68.81% 45.77% 12.47%",
+    bleed: "-18.02% -20.02% -16.3% -36.89%",
+    photo: "d7ab5",
+    left: 12.31,
+    right: 66.34,
+    top: 111.72,
+    ratio: "271.131561 / 435.418273",
+  },
+  {
+    stroke: "1405e.svg",
+    box: "13.63% 15.93% 43.03% 67.28%",
+    bleed: "-17.22% -22.14% -15.84% -42.85%",
+    photo: "11dc7",
+    left: 65.05,
+    right: 15.85,
+    top: 126.37,
+    ratio: "242.599548 / 400.399505",
+  },
+  {
+    stroke: "d3f27.svg",
+    box: "9.86% 56.74% 44.98% 24.19%",
+    bleed: "-16.16% -20.99% -15.18% -38.49%",
+    photo: "bf328",
+    left: 24.63,
+    right: 53.99,
+    top: 88.81,
+    ratio: "271.495117 / 413.487060",
+  },
+  {
+    stroke: "b9a33.svg",
+    box: "10.53% 26.95% 43.09% 55.82%",
+    bleed: "-15.6% -22.1% -16.92% -42.64%",
+    photo: "bd260",
+    left: 52,
+    right: 26.87,
+    top: 88.81,
+    ratio: "268.312652 / 491.538726",
+  },
+  {
+    stroke: "e8deb.svg",
+    box: "6.39% 41.12% 42.97% 40.2%",
+    bleed: "-14.65% -19.78% -13.6% -38.75%",
+    photo: "0df0d",
+    left: 38.79,
+    right: 39.49,
+    top: 60.13,
+    ratio: "275.914581 / 803.424316",
+  },
+];
+// Адаптив: облегчённые портреты *-m.webp (≈ 2 × показа на телефоне), десктоп
+// по sizes по-прежнему выбирает исходные файлы (ширины — фактические файлы).
+const mobileWidths: Record<string, number> = {
+  d302c: 199,
+  f72d2: 270,
+  d7ab5: 214,
+  "11dc7": 191,
+  bf328: 214,
+  bd260: 212,
+  "0df0d": 218,
+};
+const desktopWidths: Record<string, number> = {
+  d302c: 504,
+  f72d2: 686,
+  d7ab5: 542,
+  "11dc7": 486,
+  bf328: 609,
+  bd260: 601,
+  "0df0d": 549,
+};
+---
+
+<div
+  class="hero-team"
+  data-node-id="1380:4956"
+  role="img"
+  aria-label="Команда агентства недвижимости Монополия"
+>
+  {layers.map((layer) => (
+    <>
+      <div class="team-stroke" style={`inset:${layer.box}`}>
+        <div style={`inset:${layer.bleed}`}>
+          <img
+            src={"/assets/" + layer.stroke}
+            alt=""
+            width={imageSize("/assets/" + layer.stroke).width}
+            height={imageSize("/assets/" + layer.stroke).height}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+      <img
+        class:list={["team-portrait", { mirrored: layer.flip }]}
+        src={"/assets/" + layer.photo + ".webp"}
+        alt=""
+        style={`left:${layer.left}%;right:${layer.right}%;width:${100 - layer.left - layer.right}%;top:${(layer.top / 912.641) * 100}%;aspect-ratio:${layer.ratio}`}
+        srcset={`/assets/${layer.photo}-m.webp ${mobileWidths[layer.photo]}w, /assets/${layer.photo}.webp ${desktopWidths[layer.photo]}w`}
+        sizes={`(max-width: 1199px) calc(min(112vw, 1270px) * ${((100 - layer.left - layer.right) / 100).toFixed(4)}), ${(((100 - layer.left - layer.right) / 100) * 1270).toFixed(1)}px`}
+        fetchpriority={layer.photo === "0df0d" ? "high" : "auto"}
+        width={imageSize("/assets/" + layer.photo + ".webp").width}
+        height={imageSize("/assets/" + layer.photo + ".webp").height}
+        loading="eager"
+        decoding="async"
+      />
+    </>
+  ))}
+</div>

@@ -1,0 +1,53 @@
+.equal-interests {
+  position: relative;
+  isolation: isolate;
+  height: 870px;
+  background: linear-gradient(#190d08 0 120px, var(--color-canvas) 120px);
+}
+.equal-interests-background {
+  position: absolute;
+  top: 0.464px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 939.226px;
+  max-width: none;
+  z-index: -1;
+  object-fit: fill;
+}
+.equal-interests-content {
+  position: relative;
+  width: var(--container-width);
+  margin: 0 auto;
+  padding-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 610px;
+}
+.equal-interests h2 {
+  width: 1046px;
+  margin: 0;
+  color: var(--color-paper);
+  text-align: center;
+  font: var(--weight-heading) var(--text-heading)/1 var(--font-heading);
+}
+.equal-interests-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+.equal-interests-actions > span {
+  color: var(--color-paper);
+  font:
+    600 16px/1 "Inter Tight",
+    sans-serif;
+  letter-spacing: -0.32px;
+}
+.equal-interests-actions .button:first-child {
+  width: 196px;
+}
+.equal-interests-actions .button:last-child {
+  width: 210px;
+}

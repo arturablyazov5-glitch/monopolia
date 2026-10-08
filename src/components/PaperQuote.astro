@@ -1,0 +1,8 @@
+---
+import Paper from "./Paper.astro";
+const { tape = true } = Astro.props;
+---
+
+<Paper class="quote" tape={tape} node="1380:4972">
+  <slot />
+</Paper>

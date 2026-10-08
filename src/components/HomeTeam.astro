@@ -1,0 +1,76 @@
+---
+import StaffCard from "./StaffCard.astro";
+import Carousel from "./Carousel.astro";
+import "../styles/home-team.css";
+---
+
+<section
+  id="team"
+  class="home-team"
+  aria-labelledby="team-title"
+  data-node-id="1380:5622"
+>
+  <img
+    class="team-paper-background"
+    src="/assets/f2c0e.webp"
+    width="1440"
+    height="2187.293"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="home-team-container">
+    <h2 id="team-title">
+      В нашей команде 20+{" "}
+      <br />
+      <span>
+        специалистов по недвижимости
+        <img
+          src="/assets/c1cb8.svg"
+          alt=""
+          width="656.109375"
+          height="16.671875"
+          loading="lazy"
+          decoding="async"
+        />
+      </span>{" "}
+      <br />
+      ваших дружочков пирожочков
+    </h2>
+    <p class="home-team-description">
+      Все они готовы в любое время и день недели показать объект или приехать в
+      офис для оформления сделки.{" "}
+      <strong>Даже 1 января или в 12 часов ночи в субботу :)</strong>
+    </p>
+    <Carousel label="Команда Монополии">
+      <StaffCard variant="team-lawyer" shadow="/assets/82a96.svg" />
+      <StaffCard
+        variant="team-expert"
+        name="Елена Мурашкина"
+        role="Старший эксперт по недвижимости"
+        image="/assets/354a0.webp"
+        shadow="/assets/e8fa1.svg"
+        badge="Проверяет объект так, будто покупает себе"
+        facts={[
+          "5 лет опыта работы",
+          "Лично обучила двух стажеров до уровня специалистов",
+          "По образованию медик — сохраняет спокойствие в любых ситуациях",
+        ]}
+      />
+      <StaffCard
+        variant="team-trainer"
+        name="Дарья Шпорт"
+        role="Бизнес-тренер и амбассадор по продаже новостроек"
+        image="/assets/29862.webp"
+        shadow="/assets/c4ef0.svg"
+        badge="Учила школьников — теперь учит риелторов"
+        certificate="Nº POCC RU РГР TOC 27.01AH Nº01045"
+        facts={[
+          "3 года опыта работы",
+          "Обучает стажеров и помогает им вырасти до самостоятельных специалистов",
+          "Лично помогает агентам разруливать сложные сделки",
+        ]}
+      />
+    </Carousel>
+  </div>
+</section>

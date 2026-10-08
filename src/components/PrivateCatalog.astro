@@ -1,0 +1,110 @@
+---
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+import Badge from "./Badge.astro";
+import "../styles/private-catalog.css";
+const checks = [
+  "Залог",
+  "Наследство",
+  "Прописка",
+  "Банкротство",
+  "Аварийность дома",
+  "Арест",
+  "Психическое здоровье собственника",
+  "Пакет документов",
+  "И еще 43+ параметра",
+];
+---
+
+<section
+  class="private-catalog"
+  aria-labelledby="private-catalog-title"
+  data-node-id="1380:5060"
+>
+  <div class="private-catalog-heading">
+    <h2 id="private-catalog-title">
+      А если вы хотите купить недвижку —{" "}<br />у нас есть{" "}
+      <span class="private-catalog-count-space">800+ объектов</span> в закрытой
+      базе,
+    </h2>
+    <span class="private-catalog-count" aria-hidden="true">
+      800+ объектов
+    </span>
+    <div class="private-catalog-markets">
+      которых нет на
+      <span class="private-catalog-market">
+        <span class="private-catalog-market-icon">
+          <img
+            src="/assets/dbe36.svg"
+            alt=""
+            width="36.7731"
+            height="36.3498"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        Авито
+      </span>
+      <span>и</span>
+      <span class="private-catalog-market">
+        <span class="private-catalog-market-icon">
+          <img
+            src="/assets/f2a86.svg"
+            alt=""
+            width="36.7731"
+            height="36.3498"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        Циан
+      </span>
+    </div>
+  </div>
+  <Paper class="private-catalog-card" node="1433:9821">
+    <div class="private-catalog-assurance">
+      <img
+        src="/assets/c88df.svg"
+        alt=""
+        width="36"
+        height="36"
+        loading="lazy"
+        decoding="async"
+      />
+      <p>
+        Каждый проверили по 52 параметрам,{" "}
+        <br />
+        чтобы исключить все риски при оформлении сделки
+      </p>
+      <span class="private-catalog-underline" aria-hidden="true"></span>
+    </div>
+    <div class="private-catalog-checks">
+      {checks.map((text) => (
+        <Badge text={text} />
+      ))}
+    </div>
+    <Button
+      label="Получить доступ к базе"
+      icon="access"
+      subject="Доступ к закрытой базе недвижимости"
+    />
+    <img
+      class="private-catalog-tape top"
+      src="/assets/6d101.webp"
+      alt=""
+      width="40"
+      height="12"
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="private-catalog-tape bottom"
+      src="/assets/6d101.webp"
+      alt=""
+      width="40"
+      height="12"
+      loading="lazy"
+      decoding="async"
+    />
+  </Paper>
+</section>

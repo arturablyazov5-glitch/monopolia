@@ -1,0 +1,76 @@
+---
+import LeadForm from "./LeadForm.astro";
+import "../styles/lead-section.css";
+
+/**
+ * Секция «Остались вопросы?» — Figma 1380:5753 (главная),
+ * те же instance 1380:6342 («Продажа») и 1380:7022 («Покупка»).
+ * Кирпичный фон, белая карточка с формой и портретом Елены Горбаневой.
+ * Без endpoint форма не отправляет данные (демонстрация).
+ */
+interface Props {
+  /** Уникальный префикс id полей формы на странице */
+  id?: string;
+  /** Заголовок; перенос строки — через \n */
+  title?: string;
+  /** Тема заявки (скрытое поле subject) */
+  subject?: string;
+  buttonLabel?: string;
+  /** Figma node instance для data-node-id */
+  node?: string;
+  /** id секции для якорных ссылок */
+  anchor?: string;
+  endpoint?: string;
+}
+const {
+  id = "lead",
+  title = "Остались вопросы?\nЗадайте их здесь",
+  subject = "Вопрос с сайта",
+  buttonLabel = "Задать вопрос",
+  node = "1380:5753",
+  anchor,
+  endpoint,
+} = Astro.props;
+---
+
+<section
+  id={anchor}
+  class="lead-section"
+  aria-labelledby={id + "-title"}
+  data-node-id={node}
+>
+  <div class="lead-section-bricks" aria-hidden="true">
+    <img
+      class="lead-brick lead-brick-left"
+      src="/assets/95626.webp"
+      srcset="/assets/95626-m.webp 800w, /assets/95626.webp 1600w"
+      sizes="(max-width: 767px) 400px, 1600px"
+      alt=""
+      width="855"
+      height="855"
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="lead-brick lead-brick-right"
+      src="/assets/95626.webp"
+      srcset="/assets/95626-m.webp 800w, /assets/95626.webp 1600w"
+      sizes="(max-width: 767px) 400px, 1600px"
+      alt=""
+      width="855"
+      height="855"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="lead-section-card">
+    <LeadForm
+      id={id}
+      title={title}
+      subject={subject}
+      buttonLabel={buttonLabel}
+      node={node}
+      endpoint={endpoint}
+    />
+  </div>
+</section>

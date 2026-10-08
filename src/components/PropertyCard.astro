@@ -1,0 +1,64 @@
+---
+import Paper from "./Paper.astro";
+import Badge from "./Badge.astro";
+import Button from "./Button.astro";
+interface Props {
+  title?: string;
+  image?: string;
+  address?: string;
+  price?: string;
+  oldPrice?: string;
+  pricePerMeter?: string;
+  mortgage?: string;
+  discount?: string;
+}
+const {
+  title = "1-комнатная квартира, 40 м², 5/8 этажей",
+  image = "/assets/da35e.webp",
+  address = "Благовещенск, ул. Конная, д. 1",
+  price = "4 900 000 ₽",
+  oldPrice = "7 000 000 ₽",
+  pricePerMeter = "122 500 ₽/м²",
+  mortgage = "В ипотеку от 30 000 ₽ в месяц",
+  discount = "−30%",
+} = Astro.props;
+---
+
+<Paper class="property-card" node="1380:6451">
+  <div class="property-photo">
+    <img
+      src={image}
+      alt={title}
+      width="336"
+      height="252"
+      loading="lazy"
+      decoding="async"
+    />
+    <Badge text={discount} class="discount" />
+  </div>
+  <div>
+    <h3>{title}</h3>
+    <p class="location">
+      <img
+        src="/assets/2c9bf.svg"
+        width="10"
+        height="14"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      {address}
+    </p>
+  </div>
+  <hr />
+  <div>
+    <s>{oldPrice}</s>
+    <div class="price">
+      <h3>{price}</h3>
+      <p>{pricePerMeter}</p>
+    </div>
+    <p class="mortgage">{mortgage}</p>
+  </div>
+  <hr />
+  <Button label="Записаться на просмотр" subject={title} />
+</Paper>

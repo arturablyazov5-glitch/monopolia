@@ -1,0 +1,48 @@
+.home-partners {
+  height: 387px;
+  position: relative;
+  background: var(--color-dark);
+  color: white;
+}
+.home-partners-container {
+  width: var(--container-width);
+  margin: 0 auto;
+}
+.home-partners h2 {
+  margin: 0 0 24px;
+  text-align: center;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.home-partner-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.home-partner-logo {
+  position: relative;
+  height: 72px;
+  flex-shrink: 0;
+}
+.home-partner-logo img {
+  position: absolute;
+  left: var(--asset-left);
+  top: -7.5px;
+  max-width: none;
+}
+.home-partner-etalon {
+  background: white;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+}
+.home-partner-etalon img {
+  position: static;
+}
+.home-partners-container > p {
+  font: 16px/1.2 var(--font-body);
+  opacity: 0.7;
+  text-align: center;
+  margin: 16px 0 0;
+}

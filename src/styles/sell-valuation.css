@@ -1,0 +1,657 @@
+/* «Продажа» 1380:5771: 1440 × 1382.36, заходит на 65 px под фото 1380:5760. */
+.sell-valuation {
+  position: relative;
+  z-index: 2;
+  margin-top: -65px;
+  padding: 120px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+  min-height: 1382.36px;
+}
+.sell-valuation-background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 1381.979px;
+  max-width: none;
+  z-index: -1;
+}
+
+/* 1380:5777 */
+.sell-valuation-main {
+  width: 1160px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.sell-valuation-copy {
+  width: 560px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 52px;
+}
+.sell-valuation-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sell-valuation-heading h2 {
+  font: 500 44px/1 var(--font-heading);
+  color: var(--color-ink);
+}
+.sell-valuation-hand {
+  width: 240.761px;
+  height: 34.36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sell-valuation-hand span {
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+.sell-valuation-points {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+}
+.sell-valuation-points ul {
+  flex: 1 1 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.sell-valuation-points li {
+  position: relative;
+  padding-left: 18.485px;
+  /* Строки Figma 19 px (76 = 4 × 19, 57 = 3 × 19), колонка 157 px */
+  font: 16px/19px var(--font-body);
+  color: var(--color-muted);
+}
+.sell-valuation-points li::before {
+  content: "";
+  position: absolute;
+  left: 1.243px;
+  top: 6.243px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-diamond);
+  transform: rotate(-45deg);
+}
+.sell-valuation-divider {
+  width: 1px;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 1000px;
+  background: linear-gradient(transparent, #000 5%, transparent);
+  opacity: 0.1;
+}
+
+.sell-valuation-visual {
+  position: relative;
+  width: 560px;
+  flex-shrink: 0;
+  padding: 0 24px;
+}
+.sell-valuation-shadow {
+  position: absolute;
+  left: 17.5px;
+  top: 30.18px;
+  width: 505px;
+  height: 373px;
+}
+.sell-valuation-shadow img {
+  position: absolute;
+  inset: -15.91% -10.67% -17.83% -16.6%;
+  max-width: none;
+}
+.sell-valuation-report {
+  position: relative;
+  height: 407.719px;
+  display: flex;
+  align-items: center;
+}
+.sell-valuation-report img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2055 / 1531;
+  object-fit: cover;
+  transform: rotate(3deg);
+}
+.sell-valuation-file {
+  position: absolute;
+  right: 0.48px;
+  bottom: 0.52px;
+  padding: 24px;
+}
+.sell-valuation-file > .paper {
+  --paper-texture: url("/assets/0ba2a.webp");
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  transform: rotate(-3deg);
+}
+.sell-valuation-file p {
+  display: flex;
+  flex-direction: column;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.sell-valuation-file small {
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--color-muted);
+}
+.sell-valuation-tape {
+  position: absolute;
+  top: -18.5px;
+  left: calc(50% - 2.14px);
+  transform: translateX(-50%);
+  max-width: none;
+  box-shadow: 0 1.143px 1.143px #00000012;
+}
+
+/* 1380:5814 «05» */
+.sell-week {
+  width: 1160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+.sell-week > h2 {
+  width: 836px;
+  font: 500 44px/1 var(--font-heading);
+  color: #000;
+  text-align: center;
+}
+.sell-week-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 686.4px 449.6px;
+  grid-template-rows: minmax(501px, auto);
+  gap: 24px;
+}
+.sell-week-video {
+  position: relative;
+  isolation: isolate;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 0 0 2px #00000059;
+}
+.sell-week-video-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.sell-week-video::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #00000080;
+  z-index: -1;
+}
+.sell-week-duration {
+  align-self: flex-end;
+  padding: 6px 14px;
+  background: var(--color-paper);
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.sell-week-play {
+  position: absolute;
+  left: 401px;
+  top: 139px;
+  width: 44px;
+  height: 44px;
+}
+.sell-week-play .play-red {
+  width: 44px;
+  height: 44px;
+  padding-left: 2.348px;
+  background: var(--color-diamond);
+  box-shadow: none;
+  transition: transform var(--duration-fast);
+}
+.sell-week-play .play-red:hover {
+  transform: scale(1.06);
+}
+.play-triangle {
+  position: relative;
+  display: block;
+  width: 11.739px;
+  height: 13.555px;
+}
+.play-triangle img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-width: none;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.sell-week-play-hint {
+  position: absolute;
+  left: -166.65px;
+  top: -58.56px;
+  font: 14px/1.2 var(--font-body);
+  color: #fff;
+  text-shadow: 0 0 23px #000;
+  white-space: nowrap;
+}
+.sell-week-play-arrow {
+  position: absolute;
+  left: -78.65px;
+  top: -21.56px;
+  width: 63.263px;
+  height: 59.483px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sell-week-play-arrow > span {
+  position: relative;
+  flex: none;
+  width: 63.91px;
+  height: 23.071px;
+  transform: rotate(-138.75deg) scaleY(-1);
+}
+.sell-week-play-arrow img {
+  position: absolute;
+  left: -1.9%;
+  top: 0;
+  max-width: none;
+}
+.sell-week-play [data-video-status] {
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  padding: 6px 10px;
+  background: var(--color-paper);
+  text-align: center;
+}
+.sell-week-story {
+  width: 373.063px;
+  height: 242.404px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sell-week-story-card.paper {
+  flex: none;
+  width: 369px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  transform: rotate(1deg);
+  box-shadow: none;
+}
+.sell-week-story-card.paper::before {
+  content: none;
+}
+.sell-week-story-card > p {
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.sell-week-story-label.paper {
+  --paper-texture: url("/assets/0ba2a.webp");
+  padding: 8px 20px;
+}
+.sell-week-story-label p {
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.sell-week-author {
+  display: flex;
+  flex-direction: column;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.sell-week-author span {
+  color: var(--color-muted);
+}
+.sell-week-quote {
+  position: absolute;
+  right: -6px;
+  top: -4.38px;
+  max-width: none;
+}
+
+.sell-week-form-card.paper {
+  padding: 32px;
+}
+.sell-week-form.lead-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 52px;
+}
+.sell-week-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sell-week-form h3 {
+  margin-bottom: 4px;
+  font: 500 20px/1.2 var(--font-heading);
+  color: var(--color-ink);
+}
+.sell-week-form input[type="tel"] {
+  width: 100%;
+  border: 0;
+  background: var(--color-paper);
+  padding: 12px 20px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-field-text);
+}
+.sell-week-form input[type="tel"]::placeholder {
+  color: var(--color-muted);
+}
+.sell-week-form .channels {
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.sell-week-form .channels .chip {
+  gap: 8px;
+  padding: 8px 12px 8px 10px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+.sell-week-form .channels .chip.selected {
+  background: var(--color-ink);
+  color: #fff;
+}
+.choice-icon {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.choice-icon img {
+  position: absolute;
+  left: -8.19%;
+  top: -6.7%;
+  max-width: none;
+}
+.sell-week-consent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 14px/1.2 var(--font-body);
+  color: #1e1e1e;
+  cursor: pointer;
+}
+.sell-week-consent input {
+  appearance: none;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1px solid var(--color-diamond);
+  border-radius: 4px;
+  background: transparent center/12px no-repeat;
+  cursor: pointer;
+}
+.sell-week-consent input:checked {
+  background-color: var(--color-diamond);
+  background-image: url("/assets/40c36.svg");
+}
+.sell-week-consent u {
+  text-underline-position: from-font;
+}
+.sell-week-form-bottom {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.sell-week-messengers {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.sell-week-form-bottom .caption,
+.sell-week-form-bottom .form-result {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  font-size: 12px;
+}
+.sell-week-form-bottom .form-result:not([hidden]) ~ .caption,
+.sell-week-form-bottom .caption:has(~ .form-result:not([hidden])) {
+  visibility: hidden;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .sell-valuation {
+    min-height: 0;
+    padding: 120px 32px 96px;
+    gap: 80px;
+    overflow-x: clip;
+  }
+  /* Бумага 34244: верхняя копия (img) с рваным верхом, нижняя копия
+     (::after) с рваным низом, середина — цвет бумаги. Ширина 1440 —
+     масштаб рваных краёв как на десктопе. */
+  .sell-valuation::before,
+  .sell-valuation::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: max(100%, 1440px);
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .sell-valuation::before {
+    top: 80px;
+    bottom: 80px;
+    background: #fdfdfd;
+    z-index: -2;
+  }
+  .sell-valuation::after {
+    bottom: 0;
+    height: 1381.979px;
+    max-height: 50%;
+    background: url("/assets/34244.webp") center bottom / 1440px auto
+      no-repeat;
+    z-index: -1;
+  }
+  .sell-valuation-background {
+    max-height: 50%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .sell-valuation-main {
+    width: 100%;
+    max-width: 704px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 48px;
+  }
+  .sell-valuation-copy {
+    width: auto;
+    gap: 40px;
+  }
+  .sell-valuation-heading h2 {
+    font-size: 40px;
+  }
+  .sell-valuation-hand {
+    width: auto;
+    height: auto;
+    justify-content: flex-start;
+    padding: 10px 0 0 4px;
+  }
+  .sell-valuation-hand span {
+    font-size: 58px;
+    line-height: 0.6;
+  }
+  .sell-valuation-visual {
+    align-self: center;
+  }
+
+  .sell-week {
+    width: 100%;
+    max-width: 704px;
+    gap: 32px;
+  }
+  .sell-week > h2 {
+    width: auto;
+    font-size: 40px;
+  }
+  .sell-week-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+  }
+  .sell-week-video {
+    min-height: 480px;
+  }
+  .sell-week-form input[type="tel"] {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .sell-week-form .channels .chip {
+    min-height: 44px;
+  }
+  .sell-week-consent input {
+    width: 20px;
+    height: 20px;
+    background-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sell-valuation {
+    margin-top: -48px;
+    padding: 96px 20px 72px;
+    gap: 64px;
+  }
+  .sell-valuation-main {
+    gap: 40px;
+  }
+  .sell-valuation-copy {
+    align-items: stretch;
+    gap: 32px;
+  }
+  .sell-valuation-heading h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .sell-valuation-hand span {
+    font-size: 44px;
+  }
+  .sell-valuation-points {
+    flex-direction: column;
+  }
+  .sell-valuation-divider {
+    display: none;
+  }
+  .sell-valuation-copy > .button {
+    width: 100%;
+  }
+  /* Буклет + тень + плашка — одним коэффициентом; плашка «PDF-файл»
+     возвращается к нормальному размеру текста. */
+  .sell-valuation-visual {
+    zoom: 0.6;
+  }
+  .sell-valuation-file {
+    zoom: 1.55;
+  }
+
+  .sell-week {
+    gap: 24px;
+  }
+  .sell-week > h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .sell-week-video {
+    min-height: 0;
+    padding: 16px;
+    gap: 200px;
+  }
+  .sell-week-play {
+    left: calc(50% + 48px);
+    top: 112px;
+  }
+  .sell-week-play-hint {
+    font-size: 14px;
+  }
+  .sell-week-story {
+    width: 100%;
+    height: auto;
+  }
+  .sell-week-story-card.paper {
+    width: 100%;
+    padding: 16px 20px 20px;
+  }
+  .sell-week-story-card > p br {
+    display: none;
+  }
+  .sell-week-form-card.paper {
+    padding: 24px 20px 40px;
+  }
+  .sell-week-form.lead-form {
+    gap: 32px;
+  }
+  .sell-week-form h3 {
+    font-size: 18px;
+  }
+  .sell-week-form-bottom {
+    align-items: stretch;
+  }
+  .sell-week-form-bottom .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .sell-week-consent {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 389px) {
+  .sell-valuation {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .sell-valuation-heading h2,
+  .sell-week > h2 {
+    font-size: 28px;
+  }
+  .sell-valuation-visual {
+    zoom: 0.54;
+  }
+  .sell-valuation-file {
+    zoom: 1.7;
+  }
+  .sell-week-play {
+    left: calc(50% + 40px);
+  }
+}

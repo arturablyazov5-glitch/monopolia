@@ -1,0 +1,9 @@
+/* Внутренние экземпляры FAQ: Figma округляет строки Calibri до 19 px.
+   Главная и UI kit сохраняют прежнюю геометрию. */
+.inner-faq .faq-answer-text {
+  line-height: 19px;
+}
+/* У LeadSection свой отступ 120 px снизу; рекомендация на /sell/ идёт сразу после него. */
+.sell-desktop > .lead-section + .referral-bonus {
+  padding-top: 0;
+}

@@ -1,0 +1,7 @@
+---
+const { class: className = "", tape = false, node = "" } = Astro.props;
+---
+
+<article class:list={["paper", className, { taped: tape }]} data-node-id={node}>
+  <slot />
+</article>

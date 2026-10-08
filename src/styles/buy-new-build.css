@@ -1,0 +1,135 @@
+/* Figma 1380:6553 + 1380:6554 — «Покупка»: разделитель и блок «05» */
+.buy-new-build {
+  padding: 120.68px 0 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 119.32px;
+}
+/* Mask group 650:3345: красная заливка по маске 7edf9, 584.15 × 14.68 */
+.buy-new-build-divider {
+  display: block;
+  width: 584.154px;
+  height: 14.681px;
+  background: var(--color-diamond);
+  mask: url("/assets/7edf9.webp") no-repeat center / 584.154px 14.681px;
+}
+/* 05 — белый лист 858 × 338 без текстуры и тени, рваный край общего Paper */
+.buy-new-build-card {
+  width: 858px;
+  height: 338px;
+  padding: 52px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
+  box-shadow: none;
+}
+.buy-new-build-card:before {
+  display: none;
+}
+.buy-new-build-card h2 {
+  width: 714px;
+  max-width: none;
+  color: #000;
+}
+.buy-new-build-card > p {
+  width: 592px;
+  margin-top: -24px;
+  color: #777;
+}
+/* 1380:6559 — бумажная заметка «Комиссия — 0%», −1°, по центру над листом */
+.buy-new-build-note-wrap {
+  position: absolute;
+  left: 50%;
+  top: -23.21px;
+  transform: translateX(-50%) rotate(-1deg);
+  filter: drop-shadow(0 5px 3.5px #0000000f);
+}
+.buy-new-build-note {
+  --paper-texture: url("/assets/0ba2a.webp");
+  box-shadow: none;
+  padding: 8px 20px;
+}
+.buy-new-build-note p {
+  font: var(--text-body) / 1.2 var(--font-body);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.buy-new-build-note strong {
+  font-weight: 700;
+}
+.buy-new-build-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+  object-fit: cover;
+  filter: drop-shadow(0 0.9px 0.9px #00000012);
+}
+.buy-new-build-tape-top {
+  left: -16.31px;
+  top: -14.06px;
+  transform: rotate(-29.75deg);
+}
+.buy-new-build-tape-bottom {
+  right: -21.79px;
+  bottom: -11.76px;
+  transform: rotate(-22.8deg);
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .buy-new-build {
+    padding: 80px var(--buy-gutter);
+    gap: 80px;
+  }
+  .buy-new-build-divider {
+    max-width: 100%;
+    mask-size: 100% 100%;
+  }
+  .buy-new-build-card {
+    width: min(100%, 858px);
+    height: auto;
+    padding: 52px 40px;
+    gap: 32px;
+  }
+  .buy-new-build-card h2 {
+    width: 100%;
+    font-size: 40px;
+  }
+  .buy-new-build-card > p {
+    width: min(100%, 592px);
+    margin-top: -12px;
+  }
+}
+@media (max-width: 767px) {
+  .buy-new-build {
+    padding-top: 56px;
+    padding-bottom: 56px;
+    gap: 56px;
+  }
+  .buy-new-build-card {
+    padding: 48px 24px 32px;
+    gap: 28px;
+  }
+  .buy-new-build-card h2 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .buy-new-build-card > p {
+    margin-top: -12px;
+  }
+  .buy-new-build-card > .button {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+@media (max-width: 539px) {
+  .buy-new-build-card h2 {
+    font-size: 28px;
+  }
+}

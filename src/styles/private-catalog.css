@@ -1,0 +1,144 @@
+.private-catalog {
+  padding: 120px 0 0;
+  height: 766.432px;
+  background: var(--color-canvas);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 52px;
+}
+.private-catalog-heading {
+  position: relative;
+  width: 853px;
+  text-align: center;
+}
+.private-catalog h2 {
+  margin: 0;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.private-catalog-count-space {
+  color: transparent;
+}
+.private-catalog-count {
+  position: absolute;
+  left: 210.525px;
+  top: 53.74px;
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  transform: rotate(-1deg);
+  white-space: nowrap;
+}
+.private-catalog-markets {
+  height: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+}
+.private-catalog-market {
+  margin-top: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 8px;
+  background: white;
+  border-radius: 4px;
+  font: 500 var(--text-card)/1.2 var(--font-heading);
+}
+.private-catalog-market-icon {
+  position: relative;
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+.private-catalog-market-icon img {
+  position: absolute;
+  left: -2.5px;
+  top: -1.894px;
+  max-width: none;
+}
+.private-catalog-card {
+  --paper-texture: url("/assets/0ba2a.webp");
+  margin-top: 5.568px;
+  width: 641px;
+  height: 328.295px;
+  padding: 20px 24px;
+  transform: rotate(-1deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  box-shadow: var(--shadow-paper);
+}
+.private-catalog-assurance {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.private-catalog-assurance p {
+  margin: 0;
+  width: 485.628px;
+  text-align: center;
+  font: 500 var(--text-card)/1.2 var(--font-heading);
+}
+.private-catalog-underline {
+  position: absolute;
+  left: 114.63px;
+  top: 93.57px;
+  width: 422.298px;
+  height: 6.512px;
+  background: var(--color-diamond);
+  mask: url("/assets/4b099.webp") no-repeat 0 0 / 584.154px 14.681px;
+}
+.private-catalog-checks {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.private-catalog-checks .badge {
+  padding: 6px 14px;
+  font: var(--text-small)/1.2 var(--font-body);
+  color: #1a1a1a; /* Figma 1433:9833: текст меток #1A1A1A */
+  border-radius: 0;
+  background: white;
+  transform: rotate(-1deg);
+}
+.private-catalog-checks .badge:nth-child(5),
+.private-catalog-checks .badge:nth-child(6),
+.private-catalog-checks .badge:nth-child(9) {
+  transform: rotate(2deg);
+}
+.private-catalog-checks .badge:nth-child(2) {
+  transform: rotate(1deg);
+}
+.private-catalog-checks .badge:nth-child(4) {
+  transform: rotate(-2deg);
+}
+.private-catalog-checks .badge:nth-child(7) {
+  transform: rotate(-0.5deg);
+}
+.private-catalog-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+  filter: drop-shadow(0 0.9px 0.9px #00000012);
+}
+.private-catalog-tape.top {
+  left: -2.5px;
+  top: -7.3px;
+  transform: rotate(-29.75deg);
+}
+.private-catalog-tape.bottom {
+  right: -3.96px;
+  bottom: -1.31px;
+  transform: rotate(-22.8deg);
+}

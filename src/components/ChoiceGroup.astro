@@ -1,0 +1,75 @@
+---
+import { imageSize } from "../lib/image-size";
+interface Props {
+  loading?: "eager" | "lazy";
+  name: string;
+  options: string[];
+  selected?: number;
+  channels?: boolean;
+  /** Необязательные иконки 16 px для вариантов (файлы в public/assets). */
+  icons?: string[];
+}
+const { name, options, selected = 0, channels = false, icons } = Astro.props;
+---
+
+<div
+  class:list={[channels ? "channels" : "chips"]}
+  role="group"
+  aria-label={name}
+  data-choice-group
+>
+  {options.map((option, index) => (
+    <button
+      type="button"
+      class:list={["chip", { selected: index === selected }]}
+      aria-pressed={index === selected}
+      data-value={option}
+    >
+      {icons?.[index] && (
+        <span class="choice-icon">
+          <img
+            src={"/assets/" + icons[index]}
+            alt=""
+            width={imageSize("/assets/" + icons[index]).width}
+            height={imageSize("/assets/" + icons[index]).height}
+            loading={Astro.props.loading ?? "lazy"}
+            decoding="async"
+          />
+        </span>
+      )}
+      {!channels && (
+        <img
+          class="choice-check"
+          src="/assets/40c36.svg"
+          alt=""
+          width="20"
+          height="20"
+          loading={Astro.props.loading ?? "lazy"}
+          decoding="async"
+        />
+      )}
+      {option}
+    </button>
+  ))}
+</div>
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-choice-group]")
+    .forEach((group) => {
+      group.querySelectorAll<HTMLButtonElement>("button").forEach((button) =>
+        button.addEventListener("click", () => {
+          group.querySelectorAll("button").forEach((item) => {
+            const selected = item === button;
+            item.classList.toggle("selected", selected);
+            item.setAttribute("aria-pressed", String(selected));
+          });
+          group.dispatchEvent(
+            new CustomEvent("choice-change", {
+              bubbles: true,
+              detail: { value: button.dataset.value },
+            }),
+          );
+        }),
+      );
+    });
+</script>

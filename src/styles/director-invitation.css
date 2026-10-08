@@ -1,0 +1,155 @@
+.director-invitation {
+  height: 712px;
+  background: var(--color-dark);
+}
+.director-card {
+  width: var(--container-width);
+  height: 592px;
+  margin: 0 auto;
+  padding: 40px 52px;
+  display: grid;
+  grid-template-columns: 528px 528px;
+  --paper-texture: url("/assets/56094.webp");
+  overflow: hidden;
+}
+.director-card:before {
+  opacity: 0.1;
+}
+.director-copy {
+  position: relative;
+  z-index: 2;
+}
+.director-copy h2 {
+  font: 500 44px/1 var(--font-heading);
+  margin: 0 0 24px;
+  color: var(--color-ink);
+}
+.director-copy h2 span {
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  display: inline-block;
+  transform: rotate(-1deg);
+  width: 148.431px;
+  white-space: nowrap;
+}
+.director-quote {
+  position: absolute;
+  right: -1.45px;
+  top: -1.4px;
+  max-width: none;
+}
+.director-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.director-bio p {
+  margin: 0;
+}
+.director-intro {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.director-intro img {
+  object-fit: contain;
+  flex-shrink: 0;
+  max-width: none;
+}
+.director-coffee-note {
+  width: 466px;
+  margin-top: 40px;
+  padding: 20px 24px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  --paper-texture: url("/assets/0ba2a.webp");
+}
+.director-coffee-note > img:first-child {
+  flex-shrink: 0;
+}
+.director-coffee-note p {
+  font: 16px/1.2 var(--font-body);
+  margin: 0;
+  color: var(--color-ink);
+}
+.director-tape {
+  position: absolute;
+  max-width: none;
+}
+.director-tape.first {
+  right: -22.57px;
+  top: -12px;
+  transform: rotate(29.75deg);
+}
+.director-tape.last {
+  left: -12.06px;
+  bottom: -8px;
+  transform: rotate(22.8deg);
+}
+.director-cta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 52px;
+}
+.director-cta .button {
+  flex-shrink: 0;
+  width: 234px;
+  height: 52px;
+  padding: 18px 20px;
+}
+.director-cta > p {
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  margin: 0;
+  width: 306px;
+  /* Figma 1380:5592: 234 + 24 + 306 > 528 — текст выходит за колонку,
+     но не сжимается (3 строки, как в макете). */
+  flex-shrink: 0;
+}
+.director-photo {
+  position: relative;
+  height: 512px;
+}
+.director-shadow {
+  position: absolute;
+  left: -51.166px;
+  top: -75.335px;
+  max-width: none;
+}
+.director-portrait {
+  position: absolute;
+  left: -338.026px;
+  top: -161.382px;
+  width: 1204.051px;
+  height: 1816.678px;
+  max-width: none;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+.director-signature {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 262.808px;
+  height: 94.022px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.director-signature p {
+  font: 500 20px/1.2 var(--font-heading);
+  margin: 0;
+  white-space: nowrap;
+  color: black;
+}
+.director-signature span {
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}

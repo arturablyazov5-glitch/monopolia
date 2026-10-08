@@ -1,0 +1,530 @@
+/* Figma 1380:6364 — «Покупка»: ипотека (02) и объекты ниже рынка (03) */
+.buy-mortgage {
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  height: 1911.684px;
+  padding: 120px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 120px;
+}
+/* 1380:6366 Union — бумажный фон с рваными краями, 1440 × 1911.16 */
+.buy-mortgage-bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1440px;
+  height: 1911.156px;
+  max-width: none;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 02 — 840.23 × 728.68 */
+.buy-mortgage-approval {
+  width: 840.229px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+.buy-mortgage-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.buy-mortgage-title {
+  width: 728px;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  color: var(--color-ink);
+}
+.buy-mortgage-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+}
+.buy-mortgage-hand {
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  white-space: nowrap;
+}
+/* 1380:6378 — программы, повороты из макета */
+.buy-mortgage-programs {
+  height: 38.684px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.buy-mortgage-programs .chip {
+  padding: 4.5px 10px 4.5px 8px;
+  background: var(--color-ink);
+  font: var(--text-small) / 1.2 var(--font-body);
+  white-space: nowrap;
+  transform: rotate(-1deg);
+}
+.buy-mortgage-programs .chip:nth-child(2) {
+  transform: rotate(1deg);
+}
+.buy-mortgage-programs .chip:nth-child(4) {
+  transform: rotate(-2deg);
+}
+.buy-mortgage-programs .chip:nth-child(5) {
+  transform: rotate(2deg);
+}
+.buy-mortgage-programs .choice-check {
+  display: block;
+}
+/* 1380:6384 — три шага с разделителями */
+.buy-mortgage-steps {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.buy-mortgage-steps .numbered-benefit {
+  white-space: nowrap;
+}
+.buy-mortgage-steps .numbered-benefit p {
+  color: #000;
+  line-height: 1.2;
+}
+.buy-mortgage-divider {
+  align-self: stretch;
+  width: 1px;
+  border-radius: 1000px;
+  background: linear-gradient(transparent, #000 50%, transparent);
+  opacity: 0.1;
+}
+/* 1380:6390 — банки-партнеры */
+.buy-mortgage-banks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.buy-mortgage-banks > p {
+  font: var(--text-small) / 1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.buy-mortgage-banks .partner-logos {
+  width: 100%;
+  margin: 0;
+  gap: 12px;
+}
+.buy-mortgage-banks .partner-etalon {
+  width: 144.71px;
+}
+/* 1380:6419 — калькулятор и отзыв */
+.buy-mortgage-cards {
+  height: 263px;
+  display: flex;
+  gap: 20px;
+}
+.buy-mortgage-calc {
+  flex: 1;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.buy-mortgage-calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.buy-mortgage-calc h3 {
+  color: var(--color-ink);
+}
+.buy-mortgage-range {
+  gap: 0;
+}
+/* Значение плывёт над ползунком, как подпись 10,9 млн в макете */
+.buy-mortgage-range output {
+  justify-self: start;
+  margin-left: calc(8px + (100% - 16px) * var(--range-progress, 0.5));
+  transform: translateX(-50%);
+  margin-bottom: 7px;
+  font: var(--text-body) / 1.2 var(--font-body);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.buy-mortgage-range input {
+  appearance: none;
+  height: 16px;
+  margin: 0;
+  background: linear-gradient(
+      90deg,
+      var(--color-ink) calc(var(--range-progress, 0.5) * 100%),
+      #1a1a1a1a calc(var(--range-progress, 0.5) * 100%)
+    )
+    center / 100% 1px no-repeat;
+}
+.buy-mortgage-range input::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background: url("/assets/96b53.svg") center / 16px 16px no-repeat;
+}
+.buy-mortgage-range input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  background: url("/assets/96b53.svg") center / 16px 16px no-repeat;
+}
+.buy-mortgage-range > span {
+  font: var(--text-small) / 1.2 var(--font-body);
+}
+.buy-mortgage-calc-result {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.buy-mortgage-calc-result > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.buy-mortgage-payment {
+  font: 500 var(--text-card) / 1.2 var(--font-heading);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.buy-mortgage-note {
+  font: var(--text-small) / 1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.buy-mortgage-review {
+  width: 240px;
+  flex-shrink: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+.buy-mortgage-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #dfdede;
+  display: grid;
+  place-items: center;
+  font:
+    14px/1.45 "Inter Tight",
+    sans-serif;
+  color: #808080;
+}
+.buy-mortgage-review-text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.buy-mortgage-review-text p {
+  font: var(--text-body) / 1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.buy-mortgage-review-text .buy-mortgage-author {
+  font-size: var(--text-small);
+  color: var(--color-muted);
+}
+
+/* 03 — 1160 × 823 */
+.buy-mortgage-deals {
+  width: var(--container-width);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.buy-mortgage-deals-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.buy-mortgage-deals-heading h2 {
+  max-width: none;
+  white-space: nowrap;
+  color: var(--color-ink);
+}
+.buy-mortgage-deals-heading p {
+  width: 610px;
+  color: var(--color-muted);
+}
+.buy-mortgage-carousel .carousel-track {
+  padding: 0 0 12px;
+  margin-bottom: -12px;
+}
+.buy-mortgage-carousel .carousel-controls {
+  margin-top: 40px;
+  height: 8px;
+}
+/* Стрелки 1380:6449 / 1380:6454 — по бокам ряда карточек, по центру высоты */
+.buy-mortgage-carousel .arrow {
+  position: absolute;
+  top: 298.5px;
+  border-radius: var(--radius-control);
+}
+.buy-mortgage-carousel .arrow[data-direction="prev"] {
+  left: -60px;
+}
+.buy-mortgage-carousel .arrow[data-direction="next"] {
+  right: -60px;
+}
+/* PropertyCard в Figma 368 × 637: фото строго 4:3, строка старой цены 16.8 px */
+.buy-mortgage-carousel .property-photo > img {
+  position: absolute;
+  inset: 0;
+}
+.buy-mortgage-carousel .property-card s {
+  display: block;
+  line-height: 1.2;
+}
+/* 1380:6371 — заголовок с программами и шаги, gap 32 */
+.buy-mortgage-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .buy-mortgage {
+    height: auto;
+    padding: 80px var(--buy-gutter);
+    gap: 80px;
+    background: #fdfdfd;
+    overflow-x: clip;
+  }
+  .buy-mortgage-bg {
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .buy-mortgage-approval {
+    width: min(100%, 840px);
+    gap: 40px;
+  }
+  .buy-mortgage-title {
+    width: 100%;
+    font-size: 40px;
+  }
+  .buy-mortgage-title-row {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .buy-mortgage-hand {
+    font-size: 58px;
+    line-height: 0.8;
+  }
+  .buy-mortgage-programs {
+    height: auto;
+    flex-wrap: wrap;
+    gap: 12px 8px;
+  }
+  .buy-mortgage-steps {
+    height: auto;
+    gap: 20px;
+  }
+  .buy-mortgage-banks .partner-logos {
+    gap: 12px 20px;
+  }
+  .buy-mortgage-cards {
+    height: auto;
+    align-items: stretch;
+  }
+  .buy-mortgage-calc {
+    min-width: 0;
+    padding: 28px;
+    gap: 28px;
+  }
+  .buy-mortgage-calc h3 {
+    font-size: 24px;
+  }
+  .buy-mortgage-calc-result {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+  .buy-mortgage-calc-result > div {
+    order: -1;
+  }
+  .buy-mortgage-range input {
+    height: 44px;
+  }
+  .buy-mortgage-range output {
+    justify-self: center;
+    margin-left: 0;
+    transform: none;
+  }
+  .buy-mortgage-review {
+    width: 220px;
+    gap: 20px;
+    justify-content: center;
+  }
+  .buy-mortgage-deals {
+    width: 100%;
+    gap: 32px;
+  }
+  .buy-mortgage-deals-heading h2 {
+    font-size: 40px;
+    white-space: normal;
+  }
+  .buy-mortgage-deals-heading p {
+    width: min(100%, 610px);
+  }
+  .buy-mortgage-deals-heading br {
+    display: none;
+  }
+  .buy-mortgage-carousel .carousel-track {
+    gap: 20px;
+  }
+  .buy-mortgage-carousel .carousel-track > * {
+    flex-basis: calc((100% - 52px) / 2);
+    min-width: 0;
+  }
+  .buy-mortgage-carousel .carousel-controls {
+    height: auto;
+    margin-top: 24px;
+    min-height: 44px;
+  }
+  .buy-mortgage-carousel .arrow {
+    position: static;
+    width: 44px;
+    height: 44px;
+  }
+  .buy-mortgage-carousel .carousel-pagination button {
+    position: relative;
+    height: 44px;
+    min-width: 44px;
+    background: transparent;
+  }
+  .buy-mortgage-carousel .carousel-pagination button::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: #d7d7d7;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .buy-mortgage-carousel
+    .carousel-pagination
+    button[aria-current="true"]::after {
+    width: 24px;
+    background: var(--color-ink);
+  }
+}
+@media (max-width: 767px) {
+  .buy-mortgage {
+    padding-top: 56px;
+    padding-bottom: 56px;
+    gap: 56px;
+  }
+  .buy-mortgage-approval {
+    gap: 32px;
+  }
+  .buy-mortgage-title,
+  .buy-mortgage-deals-heading h2 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .buy-mortgage-title-row {
+    display: block;
+  }
+  .buy-mortgage-hand {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 44px;
+    line-height: 0.9;
+  }
+  .buy-mortgage-steps {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .buy-mortgage-steps .numbered-benefit {
+    white-space: normal;
+  }
+  .buy-mortgage-divider,
+  .buy-mortgage-steps > img,
+  .buy-mortgage-steps > picture > img {
+    display: none;
+  }
+  .buy-mortgage-cards {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .buy-mortgage-calc {
+    padding: 24px;
+  }
+  .buy-mortgage-calc h3 {
+    font-size: 22px;
+  }
+  .buy-mortgage-calc .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .buy-mortgage-review {
+    width: 100%;
+    flex-direction: row;
+    text-align: left;
+    padding: 24px;
+    gap: 16px;
+  }
+  .buy-mortgage-photo {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+  .buy-mortgage-carousel .carousel-track > * {
+    flex-basis: min(320px, calc(100% - 28px));
+  }
+  .buy-mortgage-carousel .carousel-track {
+    gap: 16px;
+  }
+  .buy-mortgage-deals-heading {
+    gap: 16px;
+  }
+}
+@media (max-width: 539px) {
+  .buy-mortgage-title,
+  .buy-mortgage-deals-heading h2 {
+    font-size: 28px;
+  }
+  .buy-mortgage-review {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Обёртка picture не создаёт собственного блока. */
+.buy-mortgage-bg-picture {
+  display: contents;
+}
+
+.buy-mortgage-bg-picture > source {
+  display: none;
+}

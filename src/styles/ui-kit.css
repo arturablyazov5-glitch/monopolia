@@ -1,0 +1,329 @@
+.kit-intro {
+  padding: 84px 0 0;
+}
+.eyebrow,
+.section-label {
+  font: 12px/1.3 Calibri;
+  letter-spacing: 2px;
+  color: var(--muted);
+}
+.kit-intro h1 {
+  margin: var(--space-5) 0 var(--space-6);
+}
+.kit-intro h1 .handwriting {
+  display: inline-block;
+  transform: rotate(-8deg);
+  margin-left: var(--space-8);
+  font-size: 72px;
+}
+.kit-intro > p {
+  font-size: var(--text-card);
+  color: var(--muted);
+  line-height: 1.4;
+}
+.kit-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: 36px;
+}
+.kit-nav a {
+  padding: var(--space-3) 18px;
+  background: #fff;
+  font-size: var(--text-small);
+}
+.kit-nav span {
+  margin-left: 18px;
+  color: var(--red);
+}
+.ui-kit > section {
+  padding-top: var(--space-20);
+}
+.ui-kit > section:last-child {
+  padding-bottom: var(--space-20);
+}
+.section-label {
+  margin-bottom: 14px;
+}
+.ui-kit > section > h2 {
+  margin-bottom: var(--space-8);
+}
+.foundation-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-10);
+}
+.type-demo {
+  padding: var(--space-8);
+  display: grid;
+  gap: var(--space-6);
+}
+.type-demo h2 {
+  font-size: var(--text-heading);
+}
+.swatches {
+  display: grid;
+  gap: var(--space-3);
+}
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.swatch > span {
+  width: 64px;
+  height: 48px;
+  box-shadow: var(--shadow);
+}
+.swatch small {
+  display: block;
+  margin-top: var(--space-1);
+}
+.button-demo {
+  padding: var(--space-8);
+  display: grid;
+  gap: var(--space-6);
+}
+.button-demo > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.element-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: var(--space-10);
+}
+.detail-card {
+  padding: var(--space-8);
+  display: grid;
+  gap: var(--space-6);
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-7);
+  align-items: start;
+}
+.card-stack {
+  display: grid;
+  gap: var(--space-7);
+}
+.reviews-row {
+  display: flex;
+  gap: var(--space-16);
+  margin-top: var(--space-10);
+  align-items: center;
+}
+.review-description {
+  display: grid;
+  gap: var(--space-6);
+}
+@media (max-width: 1200px) {
+  .cards-grid {
+    gap: var(--space-5);
+  }
+}
+@media (max-width: 800px) {
+  h2,
+  .type-demo h2 {
+    font-size: 34px;
+  }
+  .kit-intro {
+    padding-top: var(--space-13);
+  }
+  .kit-intro h1 .handwriting {
+    font-size: 54px;
+  }
+  .kit-intro > p {
+    font-size: 18px;
+  }
+  .ui-kit > section {
+    padding-top: 56px;
+  }
+  .foundation-grid,
+  .element-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .swatches {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .card-stack {
+    grid-column: 1/-1;
+    grid-template-columns: 1fr 1fr;
+  }
+  .reviews-row {
+    gap: var(--space-7);
+  }
+  .review-description h2 {
+    font-size: 30px;
+  }
+  .button-demo {
+    padding: var(--space-6);
+  }
+  .type-demo {
+    padding: var(--space-6);
+  }
+}
+@media (max-width: 540px) {
+  .kit-intro h1 .handwriting {
+    display: block;
+    margin: var(--space-5) 0 0;
+  }
+  .cards-grid,
+  .card-stack {
+    grid-template-columns: 1fr;
+  }
+  .card-stack {
+    grid-column: auto;
+  }
+  .reviews-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .swatches {
+    grid-template-columns: 1fr 1fr;
+  }
+  .swatch {
+    gap: var(--space-2);
+  }
+  .swatch > span {
+    width: 40px;
+    height: 40px;
+  }
+  .swatch p {
+    font-size: var(--text-small);
+  }
+  .kit-nav a {
+    padding: 10px var(--space-3);
+  }
+  .detail-card {
+    padding: var(--space-6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+}
+.pattern-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-10);
+  margin-bottom: var(--space-10);
+}
+.range-demo {
+  padding: var(--space-8);
+  display: grid;
+  gap: var(--space-6);
+  max-width: 580px;
+}
+.ui-kit .carousel {
+  margin: var(--space-10) 0 var(--space-16);
+}
+.ui-kit #patterns > .compact {
+  max-width: 580px;
+  padding: var(--space-8);
+  margin-bottom: var(--space-20);
+}
+@media (max-width: 800px) {
+  .pattern-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.token-demo {
+  padding: var(--space-8);
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+.registry-table td {
+  font-size: var(--text-small);
+}
+.registry-table td:last-child {
+  white-space: nowrap;
+  color: var(--color-muted);
+}
+.token-details {
+  margin: var(--space-8) 0 var(--space-20);
+}
+.token-details summary {
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-size: var(--text-card);
+}
+.token-details code {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.token-details td {
+  max-width: 550px;
+}
+
+/* Только демонстрационная страница: desktop-композиции в исходной ширине. */
+.kit-example-label {
+  margin: 40px 0 28px;
+  font: 500 20px/1.2 var(--font-heading);
+}
+.kit-variant-grid {
+  display: grid;
+  grid-template-columns: 360px 420px 300px;
+  gap: 40px;
+  align-items: start;
+}
+.kit-variant-grid .kit-example-label {
+  margin-top: 0;
+}
+.kit-section-demo {
+  position: relative;
+  isolation: isolate;
+  width: 1440px;
+  margin-left: calc((100% - 1440px) / 2);
+  overflow: clip;
+}
+.kit-hero-demo {
+  padding-bottom: 190px;
+}
+.kit-example-details {
+  margin: 32px 0;
+}
+.kit-example-details > summary {
+  padding: 20px 24px;
+  background: #fff;
+  cursor: pointer;
+  font: 500 20px/1.2 var(--font-heading);
+}
+.kit-team-demo {
+  position: relative;
+  height: 520px;
+  overflow: hidden;
+}
+.kit-team-demo .hero-team {
+  position: relative;
+  width: 720px;
+  height: 518px;
+  margin: 0 auto;
+}
+.kit-team-demo .team-stroke,
+.kit-team-demo .team-stroke > div,
+.kit-team-demo .team-portrait {
+  position: absolute;
+}
+.kit-team-demo .team-stroke img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+.kit-team-demo .team-portrait.mirrored {
+  transform: scaleX(-1);
+}
+
+.kit-variant-grid .taped-note {
+  width: 100%;
+  margin: 12px 0 36px;
+}
+.kit-variant-grid .taped-note-paper > p {
+  white-space: normal;
+}

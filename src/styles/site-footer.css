@@ -1,0 +1,335 @@
+/* Figma 1380:5754 — общий footer. Desktop 1440: рваный край 99.21 px,
+   тёмный блок 561 px (24 + 360 + 40 + 1 + 40 + 44 + 52).
+   Селекторы с .site-footer, чтобы перекрыть прежние правила global.css. */
+.site-footer {
+  position: relative;
+  padding: 0;
+  color: #fff;
+  background: linear-gradient(
+    to bottom,
+    transparent 99.21px,
+    var(--color-dark) 99.21px
+  );
+}
+.site-footer .footer-edge {
+  position: relative;
+  height: 99.21px;
+  overflow: hidden;
+}
+/* Вектор Rectangle 170 повернут на 180°; исходный размер 1440×99.21 */
+.site-footer .footer-edge > img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  object-fit: initial;
+  transform: translateX(-50%) rotate(180deg);
+}
+.site-footer .container.footer-inner {
+  display: grid;
+  justify-content: normal;
+  align-items: normal;
+  gap: 40px;
+  padding: 24px 0 52px;
+  background: none;
+}
+.site-footer .footer-inner p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+}
+.site-footer .footer-columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 0;
+}
+.site-footer .footer-company {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 346px;
+  gap: 0;
+}
+.site-footer .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.site-footer .footer-brand img {
+  flex-shrink: 0;
+  max-width: none;
+}
+.site-footer .footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 8px 0 4px;
+}
+.site-footer .footer-brand-text p {
+  font: 14px/1 var(--font-body);
+  color: var(--color-caption);
+  white-space: nowrap;
+}
+.site-footer .footer-legal {
+  display: grid;
+  gap: 10px;
+  font: 14px/1.2 var(--font-body);
+  color: rgb(255 255 255 / 0.5);
+}
+.site-footer .footer-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+.site-footer .footer-navigation nav {
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(162px, max-content);
+  gap: 15px 40px;
+  font: 16px/1.2 var(--font-body);
+  white-space: nowrap;
+}
+.site-footer .footer-navigation a:hover,
+.site-footer .footer-navigation a:focus-visible {
+  color: var(--color-caption);
+}
+.site-footer .footer-policy {
+  display: grid;
+  grid-template-columns: 162px 161px;
+  gap: 8px 40px;
+  font: 14px/1.2 var(--font-body);
+  color: rgb(255 255 255 / 0.5);
+}
+.site-footer .footer-doc {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+/* Единый footer на всех страницах: ссылки на документы подчёркнуты (Figma 1380:7023) */
+.site-footer .footer-doc-link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.site-footer .footer-doc:hover,
+.site-footer .footer-doc:focus-visible {
+  color: #fff;
+}
+.site-footer .footer-doc-status {
+  grid-column: 1 / -1;
+  color: #fff;
+}
+.site-footer .footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 232px;
+}
+.site-footer .footer-contact-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+.site-footer .footer-phone-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.site-footer .footer-phone {
+  font: 500 28px/1.2 var(--font-heading);
+  color: #fff;
+  white-space: nowrap;
+}
+.site-footer .footer-contact .footer-phone-block p {
+  margin: 0;
+  font: 14px/1.2 var(--font-body);
+  color: #747474;
+  white-space: nowrap;
+}
+.site-footer .email-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 9px 14px;
+  background: #272727;
+  font: 700 16px/1.2 var(--font-body);
+  color: #fff;
+  white-space: nowrap;
+}
+.site-footer .email-chip img {
+  flex-shrink: 0;
+}
+.site-footer .footer-social {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.site-footer .footer-social .socials {
+  gap: 12px;
+}
+.site-footer .footer-social p {
+  font: 16px/1.2 var(--font-body);
+  color: #fff;
+  white-space: nowrap;
+}
+.site-footer .footer-subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.site-footer .meta-note {
+  font: 14px/1.2 var(--font-body);
+  color: #fff;
+  opacity: 0.2;
+}
+/* Иконки 40 px: экспорт SVG с выносом тени, смещение как в Figma */
+.site-footer .socials > span,
+.site-footer .socials > a {
+  position: relative;
+}
+.site-footer .socials img {
+  position: absolute;
+  left: -1.99%;
+  top: -6.25%;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+.site-footer .socials img[src$="84d6e.svg"] {
+  left: -6.25%;
+  top: -4.73%;
+}
+.site-footer .footer-divider {
+  height: 1px;
+  border-radius: 1000px;
+  background: #fff;
+  opacity: 0.1;
+}
+.site-footer .footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.site-footer .footer-bottom small {
+  font: 14px/1.2 var(--font-body);
+  color: rgb(255 255 255 / 0.5);
+}
+.site-footer .footer-up {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.site-footer .footer-up img {
+  position: absolute;
+  left: -1.81%;
+  top: -5.68%;
+  max-width: none;
+}
+.site-footer .footer-up:hover {
+  filter: brightness(0.9);
+}
+
+/* ===== Адаптив (R1). Планшет ≤ 1199: компания + контакты в две колонки,
+   разделы и документы ниже. Телефон ≤ 767: всё в стопку. ===== */
+@media (max-width: 1199px) {
+  .site-footer .container.footer-inner {
+    max-width: none;
+    margin: 0 32px;
+  }
+  .site-footer .footer-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px 32px;
+  }
+  .site-footer .footer-company {
+    width: auto;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+  .site-footer .footer-navigation {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .site-footer .footer-contact {
+    width: auto;
+  }
+}
+@media (max-width: 767px) {
+  .site-footer .container.footer-inner {
+    margin: 0 20px;
+    gap: 32px;
+    padding-bottom: 32px;
+  }
+  .site-footer .footer-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  /* Порядок: логотип → контакты → разделы → документы → реквизиты */
+  .site-footer .footer-company {
+    display: contents;
+  }
+  .site-footer .footer-brand {
+    order: 1;
+  }
+  .site-footer .footer-contact {
+    order: 2;
+    gap: 24px;
+  }
+  .site-footer .footer-navigation {
+    order: 3;
+    grid-row: auto;
+    gap: 24px;
+  }
+  .site-footer .footer-legal {
+    order: 4;
+  }
+  .site-footer .footer-brand-text p {
+    white-space: normal;
+  }
+  .site-footer .footer-navigation nav {
+    width: 100%;
+    grid-auto-flow: row;
+    grid-template-rows: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 16px;
+    white-space: normal;
+  }
+  .site-footer .footer-navigation nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .site-footer .footer-policy {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .site-footer .footer-doc {
+    min-height: 44px;
+  }
+  .site-footer .footer-phone-block p,
+  .site-footer .footer-social p {
+    white-space: normal;
+  }
+  .site-footer .email-chip {
+    min-height: 44px;
+  }
+}
+@media (max-width: 389px) {
+  .site-footer .container.footer-inner {
+    margin: 0 16px;
+  }
+}

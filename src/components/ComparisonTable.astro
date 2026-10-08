@@ -1,0 +1,136 @@
+---
+// По умолчанию — простая таблица UI kit (да / нет / текст).
+// variant="risk" — сравнение «Самостоятельно / С риелтором» со шкалой риска
+// (Figma 1380:6987 «Покупка»; тот же мастер 785:7925 на «Продаже»).
+import "../styles/comparison-risk.css";
+
+interface Row {
+  label: string;
+  ours: boolean | string;
+  others: boolean | string;
+  /** Шкала риска 1–5 для variant="risk" */
+  risk?: number;
+  node?: string;
+}
+interface Props {
+  rows: Row[];
+  caption?: string;
+  variant?: "default" | "risk";
+  /** Заголовки колонок для variant="risk": [без нас, с нами] */
+  columns?: [string, string];
+  icons?: [string, string];
+}
+const {
+  rows,
+  caption = "Сравнение вариантов",
+  variant = "default",
+  columns = ["Самостоятельно", "С риелтором"],
+  icons = ["/assets/52c05.svg", "/assets/d616c.svg"],
+} = Astro.props;
+
+// Исходные SVG шкалы (5 точек, бледные — opacity 0.1)
+const riskDots: Record<number, string> = {
+  1: "/assets/88d3d.svg",
+  3: "/assets/fe75e.svg",
+  4: "/assets/8ad04.svg",
+  5: "/assets/e5828.svg",
+};
+---
+
+{variant === "risk" ? (
+  <table role="table" class="comparison-risk" data-node-id="1380:6987">
+    <caption class="sr-only">{caption}</caption>
+    <thead role="rowgroup">
+      <tr>
+        <td />
+        <th scope="col">{columns[0]}</th>
+        <th scope="col" class="comparison-risk-ours">
+          {columns[1]}
+        </th>
+      </tr>
+    </thead>
+    <tbody role="rowgroup">
+      {rows.map((row) => (
+        <tr role="row" data-node-id={row.node}>
+          <th scope="row">
+            <span class="comparison-risk-label">{row.label}</span>
+            {row.risk && (
+              <span class="comparison-risk-level">
+                Риск
+                {riskDots[row.risk] ? (
+                  <img
+                    loading="lazy"
+                    src={riskDots[row.risk]}
+                    width="66"
+                    height="10"
+                    alt={`${row.risk} из 5`}
+                    decoding="async"
+                  />
+                ) : (
+                  <span>{row.risk} из 5</span>
+                )}
+              </span>
+            )}
+          </th>
+          {[row.others, row.ours].map((value, index) => (
+            <td
+              role="cell"
+              class:list={{ "comparison-risk-ours": index === 1 }}
+            >
+              <span class="comparison-mobile-label" aria-hidden="true">
+                {columns[index]}
+              </span>
+              <span class="comparison-risk-cell">
+                <img
+                  loading="lazy"
+                  src={icons[index]}
+                  width="20"
+                  height="20"
+                  alt={index === 1 ? "Плюс" : "Минус"}
+                  decoding="async"
+                />
+                {value}
+              </span>
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+) : (
+  <div class="comparison-wrap">
+    <table class="comparison" data-node-id="1380:6996">
+      <caption>{caption}</caption>
+      <thead role="rowgroup">
+        <tr>
+          <th scope="col">Услуга</th>
+          <th scope="col">С Монополией</th>
+          <th scope="col">Самостоятельно</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        {rows.map((row) => (
+          <tr>
+            <th scope="row">{row.label}</th>
+            {[row.ours, row.others].map((value) => (
+              <td>
+                {typeof value === "boolean" ? (
+                  <img
+                    loading="lazy"
+                    src={"/assets/" + (value ? "d616c.svg" : "52c05.svg")}
+                    alt={value ? "Да" : "Нет"}
+                    width="24"
+                    height="24"
+                    decoding="async"
+                  />
+                ) : (
+                  value
+                )}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}

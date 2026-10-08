@@ -1,0 +1,86 @@
+/* «Продажа» 1380:5914 («23»): 937 × 453.63, по центру страницы.
+   Отступ сверху 120 px (от 1380:5852) — внутри секции; снизу отступа нет:
+   120 px до 1380:5932 даёт padding-top RelocationMap. Фона у секции нет —
+   как в Figma, сквозь неё может проступать слой карты 1380:5932. */
+.sell-answers {
+  position: relative;
+  padding-top: 120px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Paper: белый фон + текстура 56094 10 %, белая внутренняя обводка 30 px
+   (stroke inside — на размеры не влияет), отступы 52 / 72. */
+.sell-answers-card {
+  width: 937px;
+  min-height: 453.63px;
+  box-sizing: border-box;
+  padding: 52px 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
+  --paper-texture: url("/assets/56094.webp");
+  box-shadow: 0 14px 14px #3d0b0b08;
+}
+/* обводка 30 px перекрывает текстуру — текстура только внутри неё */
+.sell-answers-card:before {
+  inset: 30px;
+  opacity: 0.1;
+}
+
+/* 1380:5916 */
+.sell-answers-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.sell-answers-heading h2 {
+  font: 500 44px/1 var(--font-heading);
+  color: var(--color-ink);
+}
+.sell-answers-heading p {
+  width: 502px;
+  font: 16px/19px var(--font-body); /* 2 строки = 38 px, как в Figma */
+  color: #777;
+}
+
+/* 1380:5919: метки-темы, перенос строк как в Figma за счёт габаритов li */
+.sell-answers-topics {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 8px;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.sell-answers-topics > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 273:967: белый + текстура 30984 50 %, внутренняя белая обводка 4 px */
+.sell-answers-topics span {
+  position: relative;
+  isolation: isolate;
+  padding: 6px 14px;
+  background: #fff;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.sell-answers-topics span:before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  z-index: -1;
+  background: url("/assets/30984.webp") center/cover;
+  opacity: 0.5;
+}

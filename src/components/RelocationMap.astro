@@ -1,0 +1,166 @@
+---
+// Figma 1380:6590 («Покупка»): шапка блока 1380:6589 — заголовок,
+// рукописная подпись и маршруты к Белогорску поверх карты 1380:6591.
+// Карта (af69b.svg, 5385×3035) уходит на 2132 px выше блока и лежит
+// под предыдущими секциями (z-index: -1), как в Figma; её верх
+// закрыт градиентом #EDEDED. Слои маршрутов передаются данными —
+// для «Продажи» (1380:5933) достаточно передать свои routes/markers.
+import "../styles/relocation-map.css";
+
+export interface MapLayer {
+  src: string;
+  width: number;
+  height: number;
+  /** Левый верхний угол исходного SVG относительно контейнера 1160 px */
+  left: number;
+  top: number;
+  /** Поворот вокруг центра, градусы */
+  rotate?: number;
+  class?: string;
+  flipY?: boolean;
+}
+
+interface Props {
+  id?: string;
+  class?: string;
+  map?: { src: string; width: number; height: number; fade?: string };
+  title?: string;
+  annotation?: string;
+  description?: string;
+  layers?: MapLayer[];
+  node?: string;
+}
+
+// Координаты — из get_design_context 1380:6590 (с учётом inset экспорта)
+const buyLayers: MapLayer[] = [
+  // Метка Белогорска 1380:6829 (в Figma ниже маршрутов)
+  {
+    src: "/assets/f8bfb.svg",
+    width: 29,
+    height: 40,
+    left: 697,
+    top: 319.76,
+    class: "relocation-pin",
+  },
+  {
+    src: "/assets/d3f82.svg",
+    width: 558.85,
+    height: 159.319,
+    left: 158,
+    top: 373.51,
+  },
+  {
+    src: "/assets/977ff.svg",
+    width: 686,
+    height: 186.419,
+    left: -7,
+    top: 153.95,
+  },
+  {
+    src: "/assets/f332d.svg",
+    width: 376.629,
+    height: 352.273,
+    left: 708.28,
+    top: -42.75,
+  },
+  {
+    src: "/assets/76e7e.svg",
+    width: 401,
+    height: 192.321,
+    left: 740.5,
+    top: 284.7,
+  },
+  // Поезда 1380:6834–6837: исходный SVG 32.6×26.2 (свежий экспорт Figma), центр — центр бокса Figma
+  {
+    src: "/assets/751ee.svg",
+    width: 32.6049,
+    height: 26.2172,
+    left: 538.39,
+    top: 494.59,
+    // relativeTransform 1380:6834: поворот −13.72° с зеркалом по Y
+    rotate: -13.715,
+    flipY: true,
+  },
+  {
+    src: "/assets/751ee.svg",
+    width: 32.6049,
+    height: 26.2172,
+    left: 451.11,
+    top: 247.26,
+    // relativeTransform 1380:6835: поворот 24.65° с зеркалом по Y
+    rotate: 24.653,
+    flipY: true,
+  },
+  {
+    src: "/assets/c7b9e.svg",
+    width: 32.6049,
+    height: 26.2172,
+    left: 976.57,
+    top: 161.94,
+    rotate: 163.84,
+  },
+  {
+    src: "/assets/b7534.svg",
+    width: 32.6049,
+    height: 26.2172,
+    left: 1027.14,
+    top: 286.35,
+    rotate: -139.35,
+  },
+];
+
+const {
+  id = "buy-relocation",
+  class: className = "",
+  map = { src: "/assets/af69b.svg", width: 5386.13, height: 3035.38 },
+  title = "Хотите переехать в Белогорск?",
+  annotation = "В тесноте, да не в обиде",
+  description = "Поможем найти уютное жилье, в котором будете прекрасно себя чувствовать",
+  layers = buyLayers,
+  node = "1380:6590",
+} = Astro.props;
+---
+
+<section
+  class:list={["relocation-map", className]}
+  aria-labelledby={`${id}-title`}
+  data-node-id={node}
+>
+  <div class="relocation-map-bg" aria-hidden="true" data-node-id="1380:6591">
+    <div class="relocation-map-frame">
+      <img
+        src={map.src}
+        width={map.width}
+        height={map.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      <div
+        class="relocation-map-fade"
+        style={map.fade ? `background:${map.fade}` : undefined}
+      ></div>
+    </div>
+  </div>
+  <div class="relocation-map-inner">
+    <div class="relocation-map-heading" data-node-id="1380:6824">
+      <h2 id={`${id}-title`}>{title}</h2>
+      {annotation && <p class="relocation-map-hand">{annotation}</p>}
+      <p class="relocation-map-text">{description}</p>
+    </div>
+    <div class="relocation-map-routes" aria-hidden="true">
+      {layers.map((layer) => (
+        <img
+          class={layer.class}
+          src={layer.src}
+          width={layer.width}
+          height={layer.height}
+          alt=""
+          loading="lazy"
+          style={`--route-left:${(layer.left / 1160) * 100}%;--route-top:${(layer.top / 570) * 100}%;--route-width:${(layer.width / 1160) * 100}%;left:${layer.left}px;top:${layer.top}px;transform:rotate(${layer.rotate ?? 0}deg) ${layer.flipY ? "scaleY(-1)" : ""};`}
+          decoding="async"
+        />
+      ))}
+    </div>
+  </div>
+</section>

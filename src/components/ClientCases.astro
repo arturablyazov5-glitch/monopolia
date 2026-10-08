@@ -1,0 +1,160 @@
+---
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+import ChoiceGroup from "./ChoiceGroup.astro";
+import ArrowButton from "./ArrowButton.astro";
+import "../styles/client-cases.css";
+const situation = [
+  "8 месяцев пыталась продать квартиру сама",
+  "Покупатели звонили, но не доходили до показов или пропадали после просмотра",
+  "Один покупатель был готов выйти на сделку, но в последний момент начал сильно торговаться. Сделка сорвалась",
+];
+const actions = [
+  "Написали продающее объявление с акцентом на преимущества квартиры",
+  "Сняли профессиональный видеообзор квартиры, подъезда и двора",
+  "Запустили продвижение объявления на целевые сегменты покупателей",
+  "Организовали показы в удобное для покупателей время",
+  "Все переговоры взяли на себя и защитили цену объекта",
+];
+---
+
+<section
+  class="client-cases"
+  id="cases"
+  aria-labelledby="cases-title"
+  data-node-id="1380:5193"
+>
+  <img
+    class="cases-background"
+    src="/assets/2b2aa.webp"
+    width="1454"
+    height="2143"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="cases-container">
+    <div class="cases-heading">
+      <div>
+        <h2 id="cases-title">
+          Даже когда кажется, что{" "}
+          <br />
+          выхода нет — находим решение
+        </h2>
+        <p class="cases-handwriting">Читайте кейсы</p>
+      </div>
+      <div class="cases-tabs">
+        <ChoiceGroup
+          name="Категория кейсов"
+          channels
+          options={["Помогли продать", "Помогли купить", "Помогли отжать"]}
+        />
+        <img
+          class="cases-pointer"
+          src="/assets/f6357.svg"
+          alt=""
+          width="17.6346"
+          height="19.3498"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+    <div class="cases-content" data-case-content>
+      <div class="case-photo">
+        <img
+          src="/assets/2769b.webp"
+          width="426"
+          height="561"
+          alt="Двухкомнатная квартира из кейса продажи"
+          loading="lazy"
+          decoding="async"
+        />
+        <Paper class="case-person">
+          <span aria-hidden="true"></span>
+          <strong>Имя</strong>
+        </Paper>
+      </div>
+      <div class="case-details">
+        <div class="case-object">
+          <p>Объект:</p>
+          <h3>2-х комнатная квартира, 55 м², 3/5 этажей</h3>
+        </div>
+        <Paper class="case-result">
+          <p>
+            8 месяцев безрезультатных попыток продать квартиру самостоятельно. С
+            Монополией вышла на сделку за 7 дней и продала квартиру на 270 000 ₽
+            дороже, чем планировала
+          </p>
+          <img
+            class="case-quote"
+            src="/assets/716a6.svg"
+            alt=""
+            width="26.0607"
+            height="20.4199"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="case-tape top"
+            src="/assets/55e7e.webp"
+            alt=""
+            width="861"
+            height="260"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="case-tape bottom"
+            src="/assets/55e7e.webp"
+            alt=""
+            width="861"
+            height="260"
+            loading="lazy"
+            decoding="async"
+          />
+        </Paper>
+        <div class="case-columns">
+          {[
+            { title: "Ситуация клиента:", items: situation },
+            { title: "Что было сделано:", items: actions },
+          ].map((col) => (
+            <div>
+              <h4>{col.title}</h4>
+              <ul>
+                {col.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div class="case-actions">
+          <Button
+            label="Записаться на консультацию"
+            subject="Консультация по продаже недвижимости"
+          />
+          <span></span>
+          <div>
+            <ArrowButton direction="prev" disabled />
+            <ArrowButton disabled />
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="cases-empty" data-case-empty hidden role="status">
+      Кейсы этой категории пока не добавлены.
+    </p>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>(".client-cases").forEach((root) => {
+    root.addEventListener("choice-change", (event) => {
+      const value = (event as CustomEvent<{ value: string }>).detail.value;
+      root.querySelector<HTMLElement>("[data-case-content]")!.hidden =
+        value !== "Помогли продать";
+      root.querySelector<HTMLElement>("[data-case-empty]")!.hidden =
+        value === "Помогли продать";
+    });
+  });
+</script>

@@ -1,0 +1,134 @@
+.home-services {
+  width: var(--container-width);
+  margin: 0 auto;
+  padding: 120px 0;
+}
+.services-heading {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.services-heading h2 {
+  width: 840px;
+  max-width: none;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  color: var(--color-dark);
+}
+.services-heading p {
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  align-items: center;
+  margin-top: 40px;
+}
+.services-slot {
+  /* Строки сетки Figma считаются по габаритам повернутых карточек */
+  padding: var(--service-overhang) 0;
+  transform: rotate(var(--service-tilt));
+}
+
+/* Купон услуги — общий ServiceCard variant="coupon", Figma 1380:5682 */
+.service-card-coupon {
+  display: flex;
+  flex-direction: column;
+  border: 15px solid #fff;
+  border-radius: 4px;
+  box-shadow:
+    0 14px 14px #3d0b0b08,
+    0 5px 7px #0000000f;
+}
+/* В рендере Figma белая обводка не видна: текстура купона идёт до края.
+   Текстура и рваный край Paper выведены на внешнюю границу (через border). */
+.service-card-coupon:before {
+  inset: -15px;
+  border-radius: 4px;
+}
+.service-card-coupon:after {
+  inset: -17px;
+}
+.service-card-coupon > .service-card-body:first-child {
+  display: grid;
+  gap: 10px;
+  /* В Figma обводка 15 px внутренняя: 24 px от внешнего края карточки */
+  padding: 9px 9px 24px;
+}
+.service-card-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font: 500 var(--text-card)/1.2 var(--font-heading);
+  color: #000;
+}
+.service-card-diamond {
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  margin: 8px 0 0;
+  background: #f00;
+  transform: rotate(45deg);
+}
+.service-card-coupon p {
+  width: 298.344px;
+  max-width: none;
+  font: var(--text-small) / 1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.service-perforation {
+  margin: 0 -15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.service-perforation span {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+.service-notch {
+  width: 10px;
+  height: 5px;
+  max-width: none;
+  flex-shrink: 0;
+  /* Слот 5×10: полукруг повернут на -90° внутрь купона */
+  margin: 2.5px -2.5px;
+  transform: rotate(-90deg);
+}
+.service-notch-end {
+  transform: rotate(-90deg) scaleY(-1);
+}
+.service-card-action {
+  display: flex;
+  align-items: center;
+  padding: 24px 9px 9px;
+}
+.service-card-coupon .button {
+  padding: 18px 32px;
+  font-size: 16px;
+}
+.service-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+  object-fit: cover;
+  filter: drop-shadow(0 0.9px 0.9px #00000012);
+  z-index: 2;
+}
+.service-tape-top {
+  left: -34.15px;
+  top: -31.11px;
+  transform: rotate(-29.75deg);
+}
+.service-tape-bottom {
+  right: -35.68px;
+  bottom: -27.07px;
+  transform: rotate(-22.8deg);
+}

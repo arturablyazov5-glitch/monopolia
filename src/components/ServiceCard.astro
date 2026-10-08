@@ -1,0 +1,88 @@
+---
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+interface Props {
+  title?: string;
+  description?: string;
+  cta?: string;
+  variant?: "kit" | "coupon";
+  node?: string;
+}
+const {
+  title = "Помощь в одобрении ипотеки с вероятностью 91%",
+  description = "Подберем выгодную программу. Поможем собрать документы и подать заявки в банк",
+  cta = "Получить консультацию",
+  variant = "kit",
+  node = "1380:5682",
+} = Astro.props;
+const perforationDots = Array.from({ length: 22 });
+---
+
+{variant === "coupon" ? (
+  <Paper class="service-card service-card-coupon" node={node}>
+    <div class="service-card-body">
+      <h3 class="service-card-title">
+        <span class="service-card-diamond" />
+        {title}
+      </h3>
+      <p>{description}</p>
+    </div>
+    <div class="service-perforation" aria-hidden="true">
+      <img
+        class="service-notch"
+        src="/assets/806f9.svg"
+        alt=""
+        width="10"
+        height="5"
+        loading="lazy"
+        decoding="async"
+      />
+      {perforationDots.map(() => (
+        <span />
+      ))}
+      <img
+        class="service-notch service-notch-end"
+        src="/assets/806f9.svg"
+        alt=""
+        width="10"
+        height="5"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="service-card-action">
+      <Button label={cta} tone="black" subject={`Услуга: ${title}`} />
+    </div>
+    <img
+      class="service-tape service-tape-top"
+      src="/assets/6d101.webp"
+      alt=""
+      width="40"
+      height="12"
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="service-tape service-tape-bottom"
+      src="/assets/6d101.webp"
+      alt=""
+      width="40"
+      height="12"
+      loading="lazy"
+      decoding="async"
+    />
+  </Paper>
+) : (
+  <Paper class="service-card" tape node={node}>
+    <div>
+      <h3 class="diamond-line">
+        <span class="diamond" />
+        {title}
+      </h3>
+      <p>{description}</p>
+    </div>
+    <div class="coupon">
+      <Button label={cta} tone="black" />
+    </div>
+  </Paper>
+)}

@@ -1,0 +1,275 @@
+---
+// Figma 1380:6462: 800+ эксклюзивных объектов, карточка проверки,
+// кнопка доступа и окно Safari 1380:6483 с превью закрытой базы.
+import Paper from "./Paper.astro";
+import Badge from "./Badge.astro";
+import Button from "./Button.astro";
+import "../styles/buy-closed-base.css";
+
+const checks = [
+  "Залог",
+  "Наследство",
+  "Прописка",
+  "Банкротство",
+  "Аварийность дома",
+  "Арест",
+  "Психическое здоровье собственника",
+  "Пакет документов",
+  "И еще 43+ параметра",
+];
+// Девять одинаковых карточек kv 1380:6542–6550 — как в макете
+const listings = Array.from({ length: 9 });
+---
+
+<section
+  class="buy-closed-base"
+  aria-labelledby="buy-closed-base-title"
+  data-node-id="1380:6462"
+>
+  <div class="buy-closed-base-container">
+    <div class="buy-closed-base-copy" data-node-id="1380:6463">
+      <h2 id="buy-closed-base-title" class="buy-closed-base-title">
+        <span class="buy-closed-base-title-row">
+          <span class="buy-closed-base-hand">800+</span>
+          эксклюзивных объектов
+        </span>
+        за сентябрь в закрытой базе
+      </h2>
+      <div class="buy-closed-base-card-wrap">
+        <Paper class="buy-closed-base-card" node="1380:6480">
+          <p>
+            Каждый проверили <strong>по 52 параметрам,</strong> <br />
+            чтобы исключить все риски при оформлении сделки
+          </p>
+          <div class="buy-closed-base-checks">
+            {checks.map((text) => (
+              <Badge text={text} />
+            ))}
+          </div>
+          <img
+            class="buy-closed-base-tape buy-closed-base-tape-top"
+            src="/assets/55e7e.webp"
+            alt=""
+            width="40"
+            height="12"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="buy-closed-base-tape buy-closed-base-tape-bottom"
+            src="/assets/55e7e.webp"
+            alt=""
+            width="40"
+            height="12"
+            loading="lazy"
+            decoding="async"
+          />
+        </Paper>
+      </div>
+      <Button
+        label="Получить доступ к базе"
+        subject="Доступ к закрытой базе недвижимости"
+      />
+    </div>
+
+    <!-- 1380:6482 Vector 318 — исходная векторная тень окна -->
+    <picture style="display: contents">
+      <source
+        style="display: none"
+        media="(max-width: 1199px)"
+        srcset="/assets/mobile-empty.webp"
+      />
+      <img
+        class="buy-closed-base-shadow"
+        src="/assets/38acf.svg"
+        alt=""
+        width="735.144"
+        height="600.437"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+
+    <!-- 1380:6483 Safari Light — иллюстрация закрытой базы, не интерактивна -->
+    <div
+      class="buy-safari"
+      role="img"
+      aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
+      data-node-id="1380:6483"
+    >
+      <div class="buy-safari-toolbar">
+        <div class="buy-safari-left">
+          <span class="buy-safari-lights">
+            <i class="close"></i>
+            <i class="minimize"></i>
+            <i class="zoom"></i>
+          </span>
+          <span class="buy-safari-controls">
+            <span class="buy-safari-pill buy-safari-pulldown">
+              <b>◫</b>
+              <b>⌄</b>
+            </span>
+            <span class="buy-safari-pill buy-safari-segment">
+              <b>‹</b>
+              <i></i>
+              <b class="faded">›</b>
+            </span>
+          </span>
+        </div>
+        <span class="buy-safari-pill buy-safari-search">
+          <span class="buy-safari-search-icon">
+            <img
+              src="/assets/d55bf.svg"
+              alt=""
+              width="4.786"
+              height="4.537"
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+          <span class="buy-safari-url">monopoly‑base.ru</span>
+          <b class="faded">↻</b>
+        </span>
+        <div class="buy-safari-right">
+          <span class="buy-safari-pill buy-safari-actions">
+            <b>↓</b>
+            <b>⇧</b>
+            <b>+</b>
+            <b>⧉</b>
+          </span>
+        </div>
+      </div>
+
+      <div class="buy-safari-page">
+        <div class="buy-safari-header">
+          <span class="buy-safari-brand">
+            <img
+              src="/assets/80e4a.svg"
+              alt=""
+              width="14.1924"
+              height="14.1924"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="buy-safari-brand-text">
+              <img
+                src="/assets/18f7e.svg"
+                alt=""
+                width="58.1002"
+                height="5.75175"
+                loading="lazy"
+                decoding="async"
+              />
+              <span>Агентство недвижимости с 2006 года</span>
+            </span>
+          </span>
+          <span class="buy-safari-nav">
+            <span>Хочу продать</span>
+            <span>Хочу купить</span>
+            <span class="buy-safari-nav-base">
+              Закрытая база
+              <img
+                src="/assets/de9a1.svg"
+                alt=""
+                width="2.21756"
+                height="2.21756"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </span>
+          <span class="buy-safari-contacts">
+            <span class="buy-safari-contact-main">
+              <span class="buy-safari-socials">
+                <span class="buy-safari-icon">
+                  <img
+                    class="telegram"
+                    src="/assets/af4c7.svg"
+                    alt=""
+                    width="15.962"
+                    height="15.7358"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+                <span class="buy-safari-icon">
+                  <img
+                    class="max"
+                    src="/assets/9b2bf.svg"
+                    alt=""
+                    width="14.9411"
+                    height="15.4192"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+              </span>
+              <span class="buy-safari-phone">
+                <b>+7 (924) 580-45-55</b>
+                <span class="buy-safari-status">
+                  <i></i>Сейчас работаем
+                </span>
+              </span>
+            </span>
+            <span class="buy-safari-icon">
+              <img
+                class="menu"
+                src="/assets/fcc07.svg"
+                alt=""
+                width="15.6898"
+                height="16.6459"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </span>
+        </div>
+
+        {listings.map(() => (
+          <div class="buy-safari-listing">
+            <div class="buy-safari-photo">
+              <picture>
+                <source
+                  style="display: none"
+                  media="(max-width: 767px)"
+                  srcset="/assets/a8dca-k-360.webp 360w, /assets/a8dca-k-mobile.webp 680w"
+                  sizes="(max-width: 539px) calc((100vw - 68px) / 2), calc((100vw - 76px) / 2)"
+                />
+                <img
+                  src="/assets/a8dca.webp"
+                  alt=""
+                  width="400"
+                  height="277"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <span class="buy-safari-prices">
+                <span class="buy-safari-old-price">
+                  <span>
+                    7 300 000 ₽
+                    <img
+                      src="/assets/e3bb7.svg"
+                      alt=""
+                      width="69.6587"
+                      height="42.9098"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
+                </span>
+                <span class="buy-safari-price">6 900 000 ₽</span>
+              </span>
+            </div>
+            <span class="buy-safari-caption">
+              <b>Квартира такая‑то</b>
+              <span>Текст</span>
+            </span>
+          </div>
+        ))}
+
+        <span class="buy-safari-more">Загрузить еще 800+</span>
+      </div>
+    </div>
+  </div>
+</section>

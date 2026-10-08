@@ -1,0 +1,10 @@
+---
+const { number = 1, text = "Подберем выгодные условия" } = Astro.props;
+---
+
+<div class="numbered-benefit" data-node-id="1380:6385">
+  <span>{number}</span>
+  <p>
+    <slot>{text}</slot>
+  </p>
+</div>

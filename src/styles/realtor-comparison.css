@@ -1,0 +1,114 @@
+/* Figma 1380:6977 «11» — сравнение «Самостоятельно / С риелтором» */
+.realtor-comparison {
+  position: relative;
+  margin-top: -40px; /* «11» начинается на 40 px выше конца 1380:6839 */
+  padding: 120px 0;
+}
+/* Union 1380:6979: 1440 × 1736.575, верх на −0.35 px */
+.realtor-comparison-bg {
+  position: absolute;
+  top: -0.35px;
+  left: 50%;
+  max-width: none;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.realtor-comparison-inner {
+  position: relative;
+  width: var(--container-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 180px;
+}
+.realtor-comparison-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.realtor-comparison-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+/* Бокс повёрнутой заметки 255.572 × 39.445 */
+.realtor-comparison-heading .taped-note {
+  margin: 2.2px 0;
+}
+.realtor-comparison-heading h2 {
+  width: 836px;
+  color: #000;
+  text-align: center;
+}
+.realtor-comparison-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.realtor-comparison-cta p {
+  font-size: var(--text-small);
+  color: #000;
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .realtor-comparison {
+    max-width: 100vw;
+    padding: 80px 32px;
+    background: #fdfdfd;
+    overflow-x: clip;
+  }
+  .realtor-comparison-bg {
+    height: 100%;
+    width: 1440px;
+    object-fit: cover;
+    object-position: top;
+  }
+  .realtor-comparison-inner {
+    width: 100%;
+    gap: 80px;
+  }
+  .realtor-comparison-heading h2 {
+    width: min(100%, 836px);
+    font-size: 40px;
+  }
+  .realtor-comparison-content {
+    gap: 32px;
+  }
+}
+@media (max-width: 767px) {
+  .realtor-comparison {
+    padding: 56px 20px;
+  }
+  .realtor-comparison-inner {
+    gap: 56px;
+  }
+  .realtor-comparison-heading h2 {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .realtor-comparison-cta .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .realtor-comparison-cta p {
+    text-align: center;
+  }
+}
+@media (max-width: 539px) {
+  .realtor-comparison {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .realtor-comparison-heading h2 {
+    font-size: 28px;
+  }
+}
+
+/* Обёртка picture не создаёт собственного блока. */
+.realtor-comparison-bg-picture {
+  display: contents;
+}

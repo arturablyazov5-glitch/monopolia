@@ -1,0 +1,140 @@
+---
+// «Продажа», Figma 1380:5814 «05»: видеоистория продажи за 1 день и форма связи.
+import Button from "./Button.astro";
+import ChoiceGroup from "./ChoiceGroup.astro";
+import Paper from "./Paper.astro";
+import PlayButton from "./PlayButton.astro";
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<div
+  class="sell-week"
+  aria-labelledby="sell-week-title"
+  data-node-id="1380:5814"
+>
+  <h2 id="sell-week-title">Хотите продать жилье на этой неделе?</h2>
+  <div class="sell-week-grid">
+    <article class="sell-week-video" data-node-id="1380:5817">
+      <img
+        class="sell-week-video-frame"
+        src="/assets/2769b.webp"
+        alt="Кадр истории продажи жилья"
+        width="960"
+        height="640"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="sell-week-duration">01:32</span>
+      <div class="sell-week-play">
+        <p class="sell-week-play-hint" aria-hidden="true">
+          Посмотрите историю
+          <br />
+          продажи квартиры за 1 день
+        </p>
+        <span class="sell-week-play-arrow" aria-hidden="true">
+          <span>
+            <img
+              src="/assets/94f0e.svg"
+              alt=""
+              width="65.6246"
+              height="23.5714"
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
+        </span>
+        <PlayButton
+          label="Посмотреть историю продажи квартиры за 1 день"
+          variant="red"
+        />
+      </div>
+      <div class="sell-week-story" data-node-id="1380:5820">
+        <Paper class="sell-week-story-card">
+          <Paper class="sell-week-story-label" node="1380:5821">
+            <p>История как в кино</p>
+          </Paper>
+          <p>
+            К нам обратилась Ирина, которая давно{" "}
+            <br />
+            собиралась продавать квартиру. Она{" "}
+            <br />
+            идеально подходила для Максима,{" "}
+            <br />
+            который обратился к нам утром. В итоге{" "}
+            <br />
+            <strong>оформили сделку одним днем</strong>
+          </p>
+          <p class="sell-week-author">
+            Елена
+            <span>Специалист по недвижимости</span>
+          </p>
+          <img
+            class="sell-week-quote"
+            src="/assets/1e08f.svg"
+            alt=""
+            width="26.0607"
+            height="20.4199"
+            loading="lazy"
+            decoding="async"
+          />
+        </Paper>
+      </div>
+    </article>
+
+    <Paper class="sell-week-form-card" node="1380:5832">
+      <form class="lead-form sell-week-form">
+        <div class="sell-week-form-fields">
+          <h3>
+            Заполните форму, свяжемся с вами в&nbsp;течение 10&nbsp;минут и
+            назначим время встречи
+          </h3>
+          <input name="subject" type="hidden" value="Срочная продажа объекта" />
+          <label class="sr-only" for="sell-week-phone">
+            Телефон
+          </label>
+          <input
+            id="sell-week-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            placeholder="+7 (999) 999-99-99"
+            required
+          />
+          <ChoiceGroup
+            name="Предпочитаемый способ связи"
+            options={["Телефон", "Max", "WhatsApp", "Telegram"]}
+            icons={["9a821.svg", "3af1e.svg", "fe1f8.svg", "4b2cb.svg"]}
+            selected={-1}
+            channels
+          />
+          <input type="hidden" name="channel" value="" />
+          <label class="sell-week-consent">
+            <input type="checkbox" name="consent" required />
+            <span>
+              Я согласен(а) на <u>обработку персональных данных</u> и принимаю{" "}
+              <u>политику конфиденциальности</u>
+            </span>
+          </label>
+        </div>
+        <div class="sell-week-form-bottom">
+          <Button label="Хочу срочно продать объект" type="submit" />
+          <div class="sell-week-messengers">
+            <span>
+              Или напишите нам
+              <br />в мессенджерах
+            </span>
+            <SocialLinks
+              links={[
+                { label: "Telegram", icon: "2dc32.svg" },
+                { label: "Max", icon: "0a072.svg" },
+                { label: "WhatsApp", icon: "2585a.svg" },
+              ]}
+            />
+          </div>
+          <p class="caption">Демонстрация формы: заявка не отправляется.</p>
+          <p class="form-result" role="status" hidden></p>
+        </div>
+      </form>
+    </Paper>
+  </div>
+</div>

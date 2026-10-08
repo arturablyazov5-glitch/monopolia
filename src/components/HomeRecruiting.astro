@@ -1,0 +1,159 @@
+---
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+import "../styles/home-recruiting.css";
+
+const benefitColumns = [
+  [
+    "Высокий доход, премии, бонусы и подарки за результат",
+    "Эксклюзивная база объектов, которых нет на Авито и Циане",
+  ],
+  [
+    "Входящие заявки, вам не придется звонить в холодную",
+    "Командировки на тренинги и мероприятия по всей РФ",
+  ],
+];
+---
+
+<section
+  id="careers"
+  class="home-recruiting"
+  aria-labelledby="recruiting-title"
+  data-node-id="1380:5699"
+>
+  <img
+    class="recruiting-union"
+    src="/assets/d4241.webp"
+    alt=""
+    width="1440"
+    height="743"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="recruiting-photo">
+    <img
+      src="/assets/ecef0.webp"
+      alt="Девушка облокотилась на банкомат"
+      width="1440"
+      height="743"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="recruiting-container">
+    <div class="recruiting-copy">
+      <div class="recruiting-main">
+        <div class="recruiting-intro">
+          <h2 id="recruiting-title">
+            Ищем в команду тех, кто любит шелестящие звуки купюр в банкомате
+          </h2>
+          <div class="recruiting-note-wrap">
+            <Paper class="recruiting-note" node="1380:5721">
+              <img
+                src="/assets/1379b.svg"
+                alt=""
+                width="36"
+                height="36"
+                loading="lazy"
+                decoding="async"
+              />
+              <p>
+                <strong>Опыт не нужен.</strong> Бесплатно обучим, закрепим
+                наставника и доведем до первых сделок
+              </p>
+              <img
+                class="recruiting-tape recruiting-tape-top"
+                src="/assets/55e7e.webp"
+                alt=""
+                width="40"
+                height="12"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                class="recruiting-tape recruiting-tape-bottom"
+                src="/assets/55e7e.webp"
+                alt=""
+                width="40"
+                height="12"
+                loading="lazy"
+                decoding="async"
+              />
+            </Paper>
+          </div>
+        </div>
+        <div class="recruiting-benefits">
+          {benefitColumns.map((column) => (
+            <ul class="recruiting-list">
+              {column.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+      <div class="recruiting-actions">
+        <div class="recruiting-buttons">
+          <Button label="Хочу в команду" subject="Хочу в команду" />
+          <button
+            class="button recruiting-channel"
+            type="button"
+            aria-describedby="recruiting-channel-status"
+          >
+            Подписаться на канал
+            <span class="recruiting-channel-icon">
+              <img
+                src="/assets/1b795.svg"
+                alt=""
+                width="18"
+                height="18"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </button>
+        </div>
+        <p class="recruiting-caption">
+          Мы постоянно растем, поэтому завели канал с вакансиями
+        </p>
+        <p
+          id="recruiting-channel-status"
+          class="recruiting-channel-status"
+          role="status"
+          hidden
+        >
+          Ссылка на канал с вакансиями скоро появится.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="recruiting-edge recruiting-edge-top" aria-hidden="true">
+    <img
+      src="/assets/7df21.svg"
+      alt=""
+      width="1480"
+      height="288"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="recruiting-edge recruiting-edge-bottom" aria-hidden="true">
+    <img
+      src="/assets/81e63.svg"
+      alt=""
+      width="1480"
+      height="288"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</section>
+<script>
+  document
+    .querySelector<HTMLButtonElement>(".recruiting-channel")
+    ?.addEventListener("click", () => {
+      document.querySelector<HTMLElement>(
+        "#recruiting-channel-status",
+      )!.hidden = false;
+    });
+</script>

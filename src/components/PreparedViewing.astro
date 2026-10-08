@@ -1,0 +1,162 @@
+---
+import Button from "./Button.astro";
+import TapedNote from "./TapedNote.astro";
+import "../styles/prepared-viewing.css";
+interface Props {
+  variant?: "buy" | "sell";
+  id?: string;
+  node?: string;
+}
+const {
+  variant = "buy",
+  id = `${variant}-viewing`,
+  node = variant === "buy" ? "1380:6563" : "1380:5884",
+} = Astro.props;
+const selling = variant === "sell";
+const lists = [
+  [
+    "Приведем клинеров и подскажем, что исправить перед съемкой",
+    "Снимем фото так, чтобы визуально было эстетично и красиво",
+  ],
+  [
+    "Сделаем крутой видеообзор объекта как у блогеров",
+    "Напишем текст объявления такой, чтобы хотелось сразу позвонить",
+  ],
+];
+---
+
+<section
+  class:list={["prepared-viewing", { "prepared-viewing-sell": selling }]}
+  data-node-id={node}
+  aria-labelledby={`${id}-title`}
+>
+  <img
+    class="prepared-viewing-background"
+    src={`/assets/${selling ? "2f5bf" : "905c2"}.webp`}
+    width="1440"
+    height={selling ? 756.791 : 655}
+    alt="Квартира до и после подготовки к показу"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="prepared-viewing-inner">
+    <div class="prepared-viewing-copy">
+      <h2 id={`${id}-title`}>
+        {selling ? (
+          <>
+            Почему жилье с нами
+            <br />
+            продается быстрее?
+          </>
+        ) : (
+          <>
+            Бесплатно организуем
+            <br />
+            комфортный показ объекта
+          </>
+        )}
+      </h2>
+      {!selling && (
+        <p class="prepared-viewing-description">
+          Заранее подготовим недвижимость к просмотру: внутри будет чисто
+          и прибрано, не будет жильцов и лишних запахов
+        </p>
+      )}
+      <TapedNote
+        class="prepared-viewing-note"
+        textured
+        icon={{
+          src: `/assets/${selling ? "22985" : "6f018"}.svg`,
+          width: 36,
+          height: 36,
+        }}
+      >
+        {selling ? (
+          <>
+            Мы сделаем так, что 
+            <strong>покупатель влюбится в жилье с первого взгляда</strong> —
+            сделаем фоточки, как в Pinterest, и напишем продающее объявление
+          </>
+        ) : (
+          <>
+            <strong>
+              При этом мы ничего не скрываем и говорим о недостатках сразу.
+            </strong>{" "}
+            Фотографии и описание соответствуют реальности
+          </>
+        )}
+      </TapedNote>
+      {selling && (
+        <div class="prepared-viewing-lists">
+          {lists.map((items) => (
+            <ul class="diamond-list">
+              {items.map((text) => (
+                <li>{text}</li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      )}
+      <div class="prepared-viewing-actions">
+        <Button
+          label={
+            selling
+              ? "Хочу продать быстрее и дороже"
+              : "Записаться на консультацию"
+          }
+          subject={
+            selling
+              ? "Продажа: подготовка объекта"
+              : "Покупка: комфортный показ объекта"
+          }
+        />
+        {!selling && (
+          <p>
+            На этой неделе есть еще <strong>4 свободных места</strong>
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+  <div
+    class="prepared-viewing-probability"
+    aria-label="Подготовка повышает вероятность покупки недвижимости"
+  >
+    <TapedNote class="prepared-viewing-probability-note" textured rotate={-1}>
+      Вероятность
+      <br />
+      покупки недвижимости
+    </TapedNote>
+    <img
+      class="prepared-viewing-arrows"
+      src="/assets/2492b.svg"
+      alt=""
+      loading="lazy"
+      width="279.577"
+      height="32.8059"
+      decoding="async"
+    />
+    <div class="prepared-viewing-ratings">
+      <span>
+        <img
+          src="/assets/cdfed.svg"
+          alt="До подготовки"
+          loading="lazy"
+          width="123.739"
+          height="35.7208"
+          decoding="async"
+        />
+      </span>
+      <span>
+        <img
+          src="/assets/366fe.svg"
+          alt="После подготовки"
+          loading="lazy"
+          width="121.686"
+          height="35.9662"
+          decoding="async"
+        />
+      </span>
+    </div>
+  </div>
+</section>

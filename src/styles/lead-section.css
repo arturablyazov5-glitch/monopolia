@@ -1,0 +1,395 @@
+/* Figma 1380:5753 «Остались вопросы?» (и instance 1380:6342, 1380:7022).
+   Секция начинается сразу после FAQ (у FAQ свой нижний отступ 120 px),
+   до footer — 120 px. Только desktop. */
+.lead-section {
+  position: relative;
+  padding: 0 0 120px;
+  overflow-x: clip;
+}
+/* Группа 621:3059: 1440×858, начинается на 150.89 px выше карточки.
+   z-index −1 без isolation: кирпичи уходят под FAQ сверху и под рваный
+   край footer снизу, как в макете. */
+.lead-section-bricks {
+  position: absolute;
+  top: -150.89px;
+  left: 50%;
+  width: 1440px;
+  height: 858.02px;
+  margin-left: -720px;
+  z-index: -1;
+  pointer-events: none;
+}
+.lead-brick {
+  position: absolute;
+  width: 855.02px;
+  height: 855.02px;
+  max-width: none;
+  object-fit: cover;
+  opacity: 0.6;
+}
+/* rotate(180) + scaleY(−1) = зеркало по горизонтали */
+.lead-brick-left {
+  left: 0;
+  top: 2.6px;
+  transform: scaleX(-1);
+}
+.lead-brick-right {
+  left: 584.98px;
+  top: -0.38px;
+  transform: scaleY(-1);
+}
+.lead-section-card {
+  position: relative;
+  width: var(--container-width);
+  margin: 0 auto;
+}
+/* Внутренняя белая обводка 15 px в Figma рваная: неровный край до 5 px наружу */
+.lead-section-card:before {
+  content: "";
+  position: absolute;
+  inset: -5px 0;
+  background: #fff;
+  clip-path: polygon(
+    0% 4px,
+    1.9% 5px,
+    3.5% 3px,
+    6.2% 1px,
+    7.6% 1px,
+    10% 5px,
+    12% 1.5px,
+    13.4% 4px,
+    15.7% 1.5px,
+    17% 5px,
+    19.2% 5px,
+    20.6% 0px,
+    22% 1px,
+    24.2% 4px,
+    27.3% 4px,
+    28.7% 4px,
+    30.5% 5px,
+    33.1% 5px,
+    36.5% 1px,
+    39% 1px,
+    41.1% 3px,
+    44.6% 5px,
+    45.9% 1px,
+    49% 0px,
+    50.9% 3px,
+    52.4% 5px,
+    53.9% 3px,
+    55.8% 5px,
+    58.9% 4px,
+    60.5% 0px,
+    63.1% 5px,
+    65.7% 4px,
+    67.8% 1.5px,
+    70.2% 1px,
+    71.6% 5px,
+    72.9% 0px,
+    74.6% 2px,
+    77.4% 3px,
+    79.5% 1.5px,
+    81.5% 2px,
+    84% 5px,
+    86.3% 5px,
+    88.1% 5px,
+    91.2% 1px,
+    94% 1.5px,
+    95.7% 5px,
+    98.3% 5px,
+    100% 3px,
+    100% calc(100% - 1.5px),
+    98.3% calc(100% - 5px),
+    95.7% calc(100% - 3px),
+    94% calc(100% - 5px),
+    91.2% calc(100% - 4px),
+    88.1% calc(100% - 5px),
+    86.3% calc(100% - 2px),
+    84% calc(100% - 1.5px),
+    81.5% calc(100% - 1px),
+    79.5% calc(100% - 1.5px),
+    77.4% calc(100% - 1.5px),
+    74.6% calc(100% - 2px),
+    72.9% calc(100% - 2px),
+    71.6% calc(100% - 0px),
+    70.2% calc(100% - 5px),
+    67.8% calc(100% - 1.5px),
+    65.7% calc(100% - 3px),
+    63.1% calc(100% - 3px),
+    60.5% calc(100% - 0px),
+    58.9% calc(100% - 1.5px),
+    55.8% calc(100% - 5px),
+    53.9% calc(100% - 4px),
+    52.4% calc(100% - 4px),
+    50.9% calc(100% - 1.5px),
+    49% calc(100% - 0px),
+    45.9% calc(100% - 5px),
+    44.6% calc(100% - 5px),
+    41.1% calc(100% - 5px),
+    39% calc(100% - 5px),
+    36.5% calc(100% - 5px),
+    33.1% calc(100% - 1px),
+    30.5% calc(100% - 5px),
+    28.7% calc(100% - 5px),
+    27.3% calc(100% - 0px),
+    24.2% calc(100% - 2px),
+    22% calc(100% - 1px),
+    20.6% calc(100% - 2px),
+    19.2% calc(100% - 5px),
+    17% calc(100% - 1.5px),
+    15.7% calc(100% - 1px),
+    13.4% calc(100% - 4px),
+    12% calc(100% - 0px),
+    10% calc(100% - 1px),
+    7.6% calc(100% - 0px),
+    6.2% calc(100% - 1.5px),
+    3.5% calc(100% - 1px),
+    1.9% calc(100% - 4px),
+    0% calc(100% - 0px)
+  );
+}
+.lead-section .lead-panel {
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 40px;
+  align-items: center;
+  padding: 52px;
+  background: #fff;
+}
+.lead-section .lead-form {
+  gap: 20px;
+}
+.lead-section .lead-form h2 {
+  margin-bottom: 20px;
+  font: 500 var(--text-heading) / 1 var(--font-heading);
+  color: var(--color-ink);
+}
+/* Поля: белый + текстура 30984 с прозрачностью 50% (белая внутренняя
+   обводка 16 px сливается с карточкой) */
+.lead-section .lead-form textarea,
+.lead-section .lead-form > input {
+  padding: 16px 28px;
+  border-radius: 4px;
+  background:
+    linear-gradient(rgb(255 255 255 / 0.5), rgb(255 255 255 / 0.5)),
+    #fff var(--paper-texture) center / cover;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-field-text);
+}
+.lead-section .lead-form textarea {
+  height: 108.8px;
+  resize: none;
+}
+.lead-section .lead-form > input {
+  height: 51.2px;
+}
+.lead-section .lead-form textarea::placeholder,
+.lead-section .lead-form > input::placeholder {
+  color: var(--color-field-text);
+  opacity: 1;
+}
+.lead-section .consent {
+  align-items: center;
+  gap: 10px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-field-text);
+}
+.lead-section .consent > span {
+  width: 432px;
+}
+.lead-section .consent-doc {
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+.lead-section .consent input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.lead-section .consent input:checked {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+.lead-section .form-bottom {
+  margin-top: 20px;
+}
+.lead-section .form-social {
+  gap: 12px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+/* Демо-подпись и статус в нижнем поле карточки, высота карточки 557 px */
+.lead-section .lead-form > .caption,
+.lead-section .lead-form > .form-result {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  font: 14px/1.2 var(--font-body);
+}
+.lead-section .lead-form > .caption {
+  color: var(--color-caption);
+}
+.lead-section .lead-form:has(.form-result:not([hidden])) > .caption {
+  display: none;
+}
+/* Колонка портрета 440 px растянута на высоту карточки */
+.lead-section .form-person {
+  align-self: stretch;
+  min-height: 0;
+}
+/* Вектор 969:4546: рамка 364×542 (left 28, top −23.05), экспорт с выносом */
+.lead-section .form-person-stroke {
+  inset: auto;
+  left: -54.37px;
+  top: -81.53px;
+  width: auto;
+  height: auto;
+  max-width: none;
+  object-fit: initial;
+}
+.lead-section .form-person .person {
+  left: -164px;
+  top: -61.06px;
+  width: 768px;
+  height: 885px;
+}
+/* Бейдж: поворот −2°, прижат к правому нижнему углу колонки (рендер Figma ≈ 230×93) */
+.lead-section .name-tag {
+  right: 1.42px;
+  bottom: 3.64px;
+  display: grid;
+  gap: 4px;
+  padding: 20px 24px;
+  box-shadow: none;
+}
+.lead-section .name-tag h3 {
+  font: 500 20px/1.2 var(--font-heading);
+  color: #000;
+  white-space: nowrap;
+}
+.lead-section .name-tag p {
+  margin: 0;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+/* Иконки соцсетей: экспорт SVG больше рамки 32 px, смещение как в Figma */
+.lead-section .socials > span,
+.lead-section .socials > a {
+  position: relative;
+}
+.lead-section .socials img {
+  position: absolute;
+  left: -1.99%;
+  top: -6.25%;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+.lead-section .socials img[src$="2dc32.svg"] {
+  left: -6.25%;
+  top: -4.73%;
+}
+
+/* ===== Адаптив (R1). Планшет ≤ 1199: форма + узкая колонка портрета 300 px.
+   Телефон ≤ 767: форма на всю ширину, портрет специалиста под формой. ===== */
+@media (max-width: 1199px) {
+  .lead-section {
+    padding-bottom: 80px;
+  }
+  .lead-section-card {
+    width: auto;
+    margin: 0 32px;
+  }
+  .lead-section .lead-panel {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 32px;
+    padding: 40px;
+  }
+  .lead-section .consent > span {
+    width: auto;
+  }
+  .lead-section .form-person .person {
+    left: calc(50% - 384px);
+  }
+  .lead-section .form-person-stroke {
+    left: calc(50% - 274.37px);
+  }
+}
+@media (max-width: 767px) {
+  .lead-section {
+    padding-bottom: 56px;
+  }
+  .lead-section-card {
+    margin: 0 20px;
+  }
+  .lead-section .lead-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 28px 20px 0;
+  }
+  .lead-section .lead-form {
+    gap: 16px;
+  }
+  .lead-section .lead-form h2 {
+    margin-bottom: 8px;
+    font-size: 30px;
+  }
+  .lead-section .lead-form > input {
+    height: 52px;
+  }
+  .lead-section .consent {
+    align-items: flex-start;
+  }
+  .lead-section .consent input {
+    width: 20px;
+    height: 20px;
+  }
+  .lead-section .form-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .lead-section .form-bottom .button {
+    width: 100%;
+  }
+  .lead-section .lead-form > .caption,
+  .lead-section .lead-form > .form-result {
+    position: static;
+  }
+  /* Портрет: кадр 320 px по центру, без масштабирования лица */
+  .lead-section .form-person {
+    display: block;
+    height: 320px;
+    margin: 0 -20px;
+    overflow: hidden;
+  }
+  .lead-section .name-tag {
+    right: 12px;
+    bottom: 16px;
+  }
+  .lead-brick {
+    width: 400px;
+    height: 400px;
+  }
+  .lead-brick-right {
+    left: 50%;
+  }
+  .lead-brick-left {
+    left: calc(50% - 400px);
+  }
+}
+@media (max-width: 389px) {
+  .lead-section-card {
+    margin: 0 16px;
+  }
+  .lead-section .lead-form h2 {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,68 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import InnerHero from "../components/InnerHero.astro";
+import BuyMortgage from "../components/BuyMortgage.astro";
+import BuyClosedBase from "../components/BuyClosedBase.astro";
+import BuyNewBuild from "../components/BuyNewBuild.astro";
+import OfficeConsultation from "../components/OfficeConsultation.astro";
+import TrustAndViewing from "../components/TrustAndViewing.astro";
+import FaqSection from "../components/FaqSection.astro";
+import LeadSection from "../components/LeadSection.astro";
+import { buyFaq } from "../data/faq";
+import "../styles/inner-faq.css";
+import RelocationMap from "../components/RelocationMap.astro";
+import DealSteps from "../components/DealSteps.astro";
+import RealtorComparison from "../components/RealtorComparison.astro";
+import { buyDealSteps } from "../data/deal-steps";
+import { buyRealtorComparison } from "../data/realtor-comparison";
+import "../styles/buy-page.css";
+---
+
+<SiteLayout title="Покупка недвижимости — Монополия" header>
+  <main class="buy-desktop">
+    <InnerHero
+      node="1380:6363"
+      title={["800+ проверенных объектов", "недвижимости, которых нет"]}
+      markets
+      description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
+      formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
+      image={{
+        src: "/assets/5ab39.webp",
+        ratio: "1081 / 812",
+        width: 1081,
+        height: 250.368,
+      }}
+      shadow={{
+        src: "cfc23.svg",
+        left: 20.5,
+        top: 29.5,
+        width: 303,
+        height: 185,
+        bleed: "-36.52% -15.61% -36.28% -31.99%",
+      }}
+      buttonLabel="Смотреть подборку"
+      subject="Подборка объектов"
+    />
+    <BuyMortgage />
+    <BuyClosedBase />
+    <BuyNewBuild />
+    <OfficeConsultation />
+    <TrustAndViewing />
+    <!-- 1380:6589: карта 6590, шаги 6839, сравнение 6977 (агент G) -->
+    <RelocationMap />
+    <DealSteps steps={buyDealSteps} />
+    <RealtorComparison rows={buyRealtorComparison} />
+    <FaqSection
+      id="buy-faq"
+      items={buyFaq}
+      node="1380:7007"
+      class="inner-faq"
+    />
+    <LeadSection
+      id="buy-question"
+      node="1380:7022"
+      subject="Вопрос со страницы «Покупка»"
+    />
+    <!-- 1380:7023 — общий footer выводится SiteLayout автоматически. -->
+  </main>
+</SiteLayout>

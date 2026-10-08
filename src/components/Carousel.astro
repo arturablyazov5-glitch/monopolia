@@ -1,0 +1,83 @@
+---
+import ArrowButton from "./ArrowButton.astro";
+const { label = "Карточки", class: className = "" } = Astro.props;
+---
+
+<div class:list={["carousel", className]} data-carousel aria-label={label}>
+  <div class="carousel-track" tabindex="0">
+    <slot />
+  </div>
+  <div class="carousel-controls">
+    <ArrowButton direction="prev" />
+    <div class="carousel-pagination" aria-label="Позиция карусели"></div>
+    <ArrowButton />
+  </div>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
+    const track = root.querySelector<HTMLElement>(".carousel-track")!;
+    const pagination = root.querySelector<HTMLElement>(".carousel-pagination")!;
+    const cards = [...track.children] as HTMLElement[];
+    cards.forEach((card, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Карточка ${index + 1}`);
+      dot.addEventListener("click", () =>
+        track.scrollTo({
+          left: card.offsetLeft - track.offsetLeft,
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "instant"
+            : "smooth",
+        }),
+      );
+      pagination.append(dot);
+    });
+    const update = () => {
+      const current = cards.reduce(
+        (nearest, card, index) =>
+          Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft) <
+          Math.abs(
+            cards[nearest].offsetLeft - track.offsetLeft - track.scrollLeft,
+          )
+            ? index
+            : nearest,
+        0,
+      );
+      pagination
+        .querySelectorAll("button")
+        .forEach((dot, index) =>
+          dot.setAttribute("aria-current", String(index === current)),
+        );
+      (
+        root.querySelector("[data-direction=prev]") as HTMLButtonElement
+      ).disabled = track.scrollLeft < 2;
+      (
+        root.querySelector("[data-direction=next]") as HTMLButtonElement
+      ).disabled =
+        track.scrollLeft + track.clientWidth >=
+        Math.max(
+          ...cards.map(
+            (card) => card.offsetLeft - track.offsetLeft + card.offsetWidth,
+          ),
+        ) -
+          2;
+    };
+    root
+      .querySelectorAll<HTMLButtonElement>("[data-direction]")
+      .forEach((button) =>
+        button.addEventListener("click", () =>
+          track.scrollBy({
+            left:
+              (button.dataset.direction === "next" ? 1 : -1) *
+              (cards[0].clientWidth + 28),
+            behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "instant"
+              : "smooth",
+          }),
+        ),
+      );
+    track.addEventListener("scroll", update, { passive: true });
+    new ResizeObserver(update).observe(track);
+    update();
+  });
+</script>

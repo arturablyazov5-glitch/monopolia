@@ -1,0 +1,59 @@
+---
+// «Продажа», Figma 1380:5914 («23»): карточка «Вам не придется отвечать
+// покупателям по 100 раз…», 11 меток-тем (1380:5919) и кнопка (1380:5931).
+// Секция держит верхний отступ 120 px (зазор от 1380:5852); нижний зазор 120 px
+// даёт следующий блок 1380:5932 (RelocationMap со своим padding-top).
+import Button from "./Button.astro";
+import Paper from "./Paper.astro";
+import "../styles/sell-answers.css";
+
+interface Props {
+  id?: string;
+  subject?: string;
+}
+const {
+  id = "sell-answers",
+  subject = "Продажа: подготовим ответы покупателям",
+} = Astro.props;
+
+const nb = " ";
+// box — габарит повёрнутой метки в Figma (w × h), rotate — угол в градусах.
+const topics: { text: string; box: [number, number]; rotate: number }[] = [
+  { text: "Инфраструктура района", box: [171.48, 31.98], rotate: -1 },
+  { text: "Контингент соседей", box: [147.484, 31.561], rotate: 1 },
+  { text: "Год постройки", box: [113.489, 30.968], rotate: -1 },
+  { text: "Планировка", box: [101.951, 32.507], rotate: -2 },
+  { text: "Площадь", box: [83.962, 31.879], rotate: 2 },
+  { text: "Электрика", box: [90.957, 32.123], rotate: 2 },
+  { text: "Сантехника", box: [97.249, 29.845], rotate: -0.5 },
+  { text: "Коммуналка", box: [103.49, 30.793], rotate: -1 },
+  { text: "Состояние объекта", box: [142.926, 33.938], rotate: 2 },
+  { text: "Материалы конструкций", box: [176.905, 35.125], rotate: 2 },
+  { text: "История ремонтов", box: [139.485, 31.421], rotate: -1 },
+];
+---
+
+<section class="sell-answers" aria-labelledby={`${id}-title`} id={id}>
+  <Paper class="sell-answers-card" node="1380:5914">
+    <div class="sell-answers-heading" data-node-id="1380:5916">
+      <h2 id={`${id}-title`}>
+        Вам не придется отвечать покупателям по{nb}100{nb}раз на{nb}одни и{nb}те
+        же вопросы
+      </h2>
+      <p>
+        Заранее соберем всю техническую и бытовую информацию о{nb}вашем объекте
+        и{nb}сами ответим на вопросы покупателей на{nb}показах
+      </p>
+    </div>
+    <ul class="sell-answers-topics" data-node-id="1380:5919">
+      {topics.map((topic) => (
+        <li style={`width:${topic.box[0]}px;height:${topic.box[1]}px`}>
+          <span style={`transform: rotate(${topic.rotate}deg)`}>
+            {topic.text}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <Button label="Найти покупателя" icon="access" subject={subject} />
+  </Paper>
+</section>

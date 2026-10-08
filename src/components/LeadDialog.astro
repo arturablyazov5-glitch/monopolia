@@ -1,0 +1,43 @@
+---
+import LeadForm from "./LeadForm.astro";
+---
+
+<dialog id="lead-dialog" aria-labelledby="lead-purpose">
+  <button type="button" class="dialog-close" aria-label="Закрыть">
+    ×
+  </button>
+  <p id="lead-purpose"></p>
+  <LeadForm compact id="modal" />
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("#lead-dialog");
+  if (dialog) {
+    document
+      .querySelectorAll<HTMLButtonElement>("[data-lead]")
+      .forEach((button) =>
+        button.addEventListener("click", () => {
+          dialog.querySelector("#lead-purpose")!.textContent =
+            button.dataset.lead!;
+          const input =
+            dialog.querySelector<HTMLInputElement>("[name=subject]");
+          if (input)
+            input.value = button.dataset.subject ?? button.dataset.lead!;
+          dialog.showModal();
+        }),
+      );
+    dialog
+      .querySelector(".dialog-close")
+      ?.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      const rect = dialog.getBoundingClientRect();
+      if (
+        event.target === dialog &&
+        (event.clientX < rect.left ||
+          event.clientX > rect.right ||
+          event.clientY < rect.top ||
+          event.clientY > rect.bottom)
+      )
+        dialog.close();
+    });
+  }
+</script>

@@ -1,0 +1,34 @@
+---
+interface Props {
+  bank: string;
+  time: string;
+  icon: string;
+  masked?: boolean;
+}
+const { bank, time, icon, masked = false } = Astro.props;
+---
+
+<div class="referral-notification">
+  <span
+    class:list={[
+      "referral-notification-icon",
+      { "referral-notification-tbank": masked },
+    ]}
+  >
+    <img
+      src={icon}
+      alt=""
+      loading="lazy"
+      width="40"
+      height="40"
+      decoding="async"
+    />
+  </span>
+  <div class="referral-notification-text">
+    <div>
+      <p>{bank}</p>
+      <small>{time}</small>
+    </div>
+    <p>Пополнение на 5 000 ₽</p>
+  </div>
+</div>

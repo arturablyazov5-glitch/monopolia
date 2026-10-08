@@ -1,0 +1,404 @@
+/* Первый экран внутренних страниц: Figma 1380:5758 / 1380:6363 (1440 × 650). */
+.inner-desktop {
+  min-width: 1280px;
+}
+.inner-hero {
+  position: relative;
+  height: 650px;
+  /* Команда и размытый фон (840 px) выходят ниже первого экрана,
+     как в Figma; следующая секция перекрывает их. */
+  overflow-x: clip;
+  isolation: isolate;
+  z-index: 0;
+}
+.inner-hero-background {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 840px;
+  max-width: none;
+  z-index: -1;
+}
+.inner-hero-container {
+  position: relative;
+  width: 1160px;
+  margin: 0 auto;
+  /* 16 + 56 — общая фиксированная шапка, 40 — отступ контента. */
+  padding-top: 112px;
+  display: flex;
+  gap: 52px;
+  align-items: flex-start;
+}
+.inner-hero-copy {
+  position: relative;
+  z-index: 3;
+  width: 609px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.inner-hero h1 {
+  position: relative;
+  font: 500 44px/1 var(--font-heading);
+  color: var(--color-ink);
+  max-width: none;
+}
+.inner-hero-accent-space {
+  color: transparent;
+}
+.inner-hero-accent {
+  position: absolute;
+  right: 39.6px;
+  top: 60.95px;
+  transform: translateY(-50%);
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  white-space: nowrap;
+}
+.inner-hero-markets {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+.inner-hero-market {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 3px;
+  padding: 6px 10px 6px 8px;
+  background: var(--color-paper);
+  border-radius: var(--radius-control);
+  font: 500 20px/1.2 var(--font-heading);
+  color: #000;
+}
+.inner-hero-market > span:last-child {
+  padding-bottom: 4px;
+}
+.market-icon {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.market-icon img {
+  position: absolute;
+  inset: -5.92% -7.1% -7.68% -7.81%;
+  max-width: none;
+}
+.inner-hero-description {
+  width: 408px;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+
+/* Команда: группа 1421 × 1021.151, x = −406 и y = 298.424 от контейнера. */
+.inner-hero-team {
+  position: absolute;
+  left: -406px;
+  top: 298.424px;
+  width: 1421px;
+  height: 1021.151px;
+  z-index: 2;
+  pointer-events: none;
+}
+.inner-team-stroke,
+.inner-team-stroke > div {
+  position: absolute;
+}
+.inner-team-stroke img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+.inner-team-portrait {
+  position: absolute;
+  height: auto;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* Карточка квиза 400 × 526. */
+.inner-hero-card.paper {
+  position: relative;
+  z-index: 1;
+  width: 400px;
+  height: 526px;
+  flex-shrink: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.inner-hero-card-top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.inner-hero-card-top > p {
+  font: 16px/1.2 var(--font-body);
+  color: #000;
+}
+.inner-hero-booklet {
+  position: relative;
+  padding: 0 24px;
+  margin-bottom: -43px;
+}
+.inner-hero-booklet-shadow {
+  position: absolute;
+}
+.inner-hero-booklet-shadow img {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+}
+.inner-hero-booklet-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.inner-hero-booklet-frame img {
+  width: 100%;
+  height: auto;
+  transform: rotate(3deg);
+  object-fit: cover;
+}
+.inner-hero-fields {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.inner-hero-city {
+  position: relative;
+  display: block;
+}
+.inner-hero-city select {
+  width: 100%;
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--color-paper);
+  padding: 12px 24px;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-field-text);
+  cursor: pointer;
+}
+.inner-hero-city img {
+  position: absolute;
+  right: 23.5px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.inner-hero-types {
+  position: relative;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.inner-hero-types .chip {
+  padding: 4px 10px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  opacity: 0.5;
+  transition: opacity var(--duration-fast);
+}
+.inner-hero-types .chip:hover {
+  opacity: 0.8;
+}
+.inner-hero-types .chip.selected {
+  background: var(--color-ink);
+  color: #fff;
+  opacity: 1;
+}
+.inner-hero-types .choice-check {
+  display: none !important;
+}
+.inner-hero-cursor {
+  position: absolute;
+  right: 14px;
+  bottom: 9px;
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+.inner-hero-cursor img {
+  position: absolute;
+  left: 3.69%;
+  top: 3.69%;
+  max-width: none;
+}
+.inner-hero-submit .button {
+  width: 100%;
+}
+.inner-hero-submit .button.with-icon {
+  padding-right: 24px;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+
+/* 1200–1279: композиция 1160 по центру без горизонтальной прокрутки. */
+@media (max-width: 1279px) {
+  .inner-desktop {
+    min-width: 0;
+    overflow-x: clip;
+  }
+}
+
+/* Планшет 768–1199: поток в колонку — текст → квиз → команда. */
+@media (max-width: 1199px) {
+  .inner-hero {
+    height: auto;
+    /* Команда обрезается по низу первого экрана. */
+    overflow: clip;
+    --hero-k: 0.9;
+    --hero-visible: 560px;
+  }
+  .inner-hero-background {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    object-fit: cover;
+  }
+  .inner-hero-container {
+    width: auto;
+    margin: 0 32px;
+    /* 16 + 56 — шапка, 32 — отступ. */
+    padding-top: 104px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 32px;
+  }
+  .inner-hero-copy {
+    width: 100%;
+  }
+  .inner-hero h1 {
+    max-width: 680px;
+  }
+  /* Рукописная вставка — в строке заголовка, а не абсолютным оверлеем. */
+  .inner-hero-accent-space {
+    display: none;
+  }
+  .inner-hero-accent {
+    position: static;
+    transform: none;
+    display: inline-block;
+    font-size: 64px;
+    line-height: 0.9;
+    white-space: nowrap;
+  }
+  .inner-hero-markets {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+  .inner-hero-description {
+    width: auto;
+    max-width: 480px;
+  }
+  .inner-hero-card.paper {
+    order: 1;
+    width: 400px;
+    max-width: 100%;
+    height: auto;
+    gap: 24px;
+  }
+  .inner-hero-city select {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .inner-hero-types .chip {
+    min-height: 44px;
+    padding: 8px 14px;
+  }
+  /* Курсор — иллюстрация наведения мышью, на сенсорных экранах лишний. */
+  .inner-hero-cursor {
+    display: none;
+  }
+  /* Команда: группа 1421 × 1021 масштабируется целиком (фото и SVG-тени
+     одним коэффициентом), центр — средний портрет (x 694.6), лица в кадре. */
+  .inner-hero-team {
+    order: 2;
+    position: relative;
+    left: auto;
+    top: auto;
+    flex: none;
+    margin-top: calc(-40px * var(--hero-k));
+    margin-left: calc(50% - 694.6px * var(--hero-k));
+    /* transform не меняет габарит: оставляем видимую часть группы. */
+    margin-bottom: calc(var(--hero-visible) * var(--hero-k) - 1021.151px);
+    transform: scale(var(--hero-k));
+    transform-origin: 0 0;
+  }
+}
+
+/* Телефон 360–767 */
+@media (max-width: 767px) {
+  .inner-hero {
+    --hero-k: 0.5;
+    --hero-visible: 540px;
+  }
+  .inner-hero-container {
+    margin: 0 20px;
+    /* 8 + 56 — шапка телефона, 24 — отступ. */
+    padding-top: 88px;
+    gap: 24px;
+  }
+  .inner-hero-copy {
+    gap: 12px;
+  }
+  .inner-hero h1 {
+    font-size: 32px;
+    line-height: 1.05;
+  }
+  .inner-hero-accent {
+    font-size: 46px;
+  }
+  .inner-hero-markets {
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .inner-hero-market {
+    font-size: 18px;
+  }
+  .inner-hero-card.paper {
+    width: 100%;
+    padding: 16px;
+    gap: 20px;
+  }
+  .inner-hero-card-top {
+    gap: 12px;
+  }
+  /* Буклет с тенью — один коэффициент для картинки и координат тени. */
+  .inner-hero-booklet {
+    width: 360px;
+    margin: 0 auto -43px;
+    zoom: 0.8;
+  }
+  .inner-hero-submit .button {
+    min-height: 52px;
+  }
+}
+
+@media (max-width: 389px) {
+  .inner-hero {
+    --hero-k: 0.46;
+  }
+  .inner-hero-container {
+    margin: 0 16px;
+  }
+  .inner-hero h1 {
+    font-size: 30px;
+  }
+  .inner-hero-accent {
+    font-size: 44px;
+  }
+  .inner-hero-booklet {
+    zoom: 0.74;
+  }
+}

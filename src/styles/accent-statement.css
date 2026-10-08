@@ -1,0 +1,59 @@
+/* AccentStatement — Figma 1380:7006 (мастер 1122:6989) */
+.accent-statement {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 126px;
+}
+/* Mask group 650:3273: заливка #F00 по маске 7edf9, 584.154 × 14.681, −0.07° */
+.accent-statement-stroke {
+  display: block;
+  width: 584.154px;
+  height: 14.681px;
+  background: var(--color-diamond);
+  mask: url("/assets/7edf9.webp") no-repeat center / 584.154px 14.681px;
+  transform: rotate(-0.07deg);
+}
+.accent-statement-stroke-end {
+  align-self: flex-end;
+}
+.accent-statement > p {
+  font: var(--weight-heading) var(--text-heading) / 1 var(--font-heading);
+  color: #1a1a1a66;
+  text-align: center;
+}
+.accent-statement strong {
+  font-weight: inherit;
+  color: var(--color-ink);
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .accent-statement {
+    padding: 0 32px;
+    gap: 32px;
+  }
+  .accent-statement-stroke {
+    max-width: 100%;
+    mask-size: 100% 100%;
+  }
+  .accent-statement > p {
+    font-size: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .accent-statement {
+    padding: 0;
+    gap: 28px;
+  }
+  .accent-statement > p {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+}
+@media (max-width: 539px) {
+  .accent-statement > p {
+    font-size: 28px;
+  }
+}

@@ -1,0 +1,45 @@
+---
+interface Props {
+  loading?: "eager" | "lazy";
+  label?: string;
+  tone?: "red" | "black";
+  icon?: boolean | "buy" | "sell" | "access";
+  disabled?: boolean;
+  type?: "button" | "submit";
+  subject?: string;
+}
+const {
+  label = "Оставить заявку",
+  tone = "red",
+  icon = false,
+  disabled = false,
+  type = "button",
+  subject,
+} = Astro.props;
+---
+
+<button
+  class:list={["button", tone, { "with-icon": icon }]}
+  type={type}
+  disabled={disabled}
+  data-lead={type === "button" && !disabled ? label : undefined}
+  data-subject={subject}
+>
+  {label}
+  {icon && (
+    <img
+      src={
+        icon === "buy"
+          ? "/assets/f1336.svg"
+          : icon === "access"
+            ? "/assets/26881.svg"
+            : "/assets/b6e69.svg"
+      }
+      width="16"
+      height="16"
+      alt=""
+      loading={Astro.props.loading ?? "lazy"}
+      decoding="async"
+    />
+  )}
+</button>

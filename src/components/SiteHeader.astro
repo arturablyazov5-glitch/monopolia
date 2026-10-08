@@ -1,0 +1,178 @@
+---
+import SocialLinks from "./SocialLinks.astro";
+interface Props {
+  nav?: { label: string; href: string }[];
+  home?: string;
+  city?: string;
+  desktop?: boolean;
+  socialLinks?: { label: string; icon: string; href?: string }[];
+}
+const {
+  nav = [
+    { label: "Хочу продать", href: "/sell/" },
+    { label: "Хочу купить", href: "/buy/" },
+    { label: "Кейсы", href: "/#cases" },
+  ],
+  home = "/",
+  city = "Белогорск",
+  desktop = true,
+  socialLinks = [
+    { label: "Telegram", icon: "2dc32.svg" },
+    { label: "MAX", icon: "0a072.svg" },
+  ],
+} = Astro.props;
+---
+
+<header
+  class:list={["site-header", { desktop: desktop }]}
+  data-node-id="1380:4922"
+>
+  <a class="brand" href={home} aria-label="Монополия — главная">
+    <img
+      src="/assets/a2665.svg"
+      width="32"
+      height="32"
+      alt=""
+      loading="eager"
+      decoding="async"
+    />
+    <div class="brand-text">
+      <img
+        src="/assets/027b4.svg"
+        width="131"
+        height="13"
+        alt="Монополия"
+        loading="eager"
+        decoding="async"
+      />
+      <span class="tagline">Агентство недвижимости с 2006 года</span>
+    </div>
+  </a>
+  <span class="city">
+    <img
+      src="/assets/20afe.svg"
+      width="10"
+      height="13"
+      alt=""
+      loading="eager"
+      decoding="async"
+    />
+    {city}
+    <img
+      src="/assets/98485.svg"
+      width="5"
+      height="3"
+      alt=""
+      loading="eager"
+      decoding="async"
+    />
+  </span>
+  <nav aria-label="Разделы сайта">
+    {nav.map((item) => (
+      <a href={item.href}>
+        {item.label}
+        {item.label === "Кейсы" && (
+          <img
+            class="nav-marker"
+            src="/assets/febb1.svg"
+            alt=""
+            width="5"
+            height="5"
+            loading="eager"
+            decoding="async"
+          />
+        )}
+      </a>
+    ))}
+  </nav>
+  <div class="header-right">
+    <div class="header-contact">
+      <div class="header-social">
+        <SocialLinks loading="eager" links={socialLinks} />
+      </div>
+      <div class="header-phone">
+        <a href="tel:+79245804555">+7 (924) 580-45-55</a>
+        <small class="office-status">
+          <i></i>
+          <span data-office-status>Пн-Пт 09:00–18:00</span>
+        </small>
+      </div>
+    </div>
+    <!-- Адаптив: звонок одним касанием на телефоне; на десктопе скрыто -->
+    <a class="header-call" href="tel:+79245804555" aria-label="Позвонить: +7 (924) 580-45-55">
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"
+        ></path>
+      </svg>
+    </a>
+    <button
+      type="button"
+      class="menu-button"
+      aria-label="Открыть меню"
+      aria-expanded="false"
+    >
+      <img
+        src="/assets/63228.svg"
+        alt=""
+        width="32"
+        height="32"
+        loading="eager"
+        decoding="async"
+      />
+    </button>
+  </div>
+</header>
+<script>
+  document.querySelectorAll<HTMLElement>(".site-header").forEach((header) => {
+    const officeStatus = header.querySelector<HTMLElement>(
+      "[data-office-status]",
+    );
+    if (officeStatus) {
+      const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Yakutsk",
+        weekday: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+      }).formatToParts(new Date());
+      const part = (key: string) =>
+        parts.find((p) => p.type === key)?.value ?? "";
+      const day = part("weekday");
+      const minutes = Number(part("hour")) * 60 + Number(part("minute"));
+      const open =
+        day === "Sat"
+          ? minutes >= 600 && minutes < 900
+          : day !== "Sun" && minutes >= 540 && minutes < 1080;
+      officeStatus.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
+      header.querySelector(".office-status")?.classList.toggle("closed", !open);
+    }
+    const menu = header.querySelector<HTMLButtonElement>(".menu-button")!;
+    const setOpen = (open: boolean) => {
+      menu.setAttribute("aria-expanded", String(open));
+      menu.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+      header.classList.toggle("menu-open", open);
+    };
+    menu.addEventListener("click", () =>
+      setOpen(menu.getAttribute("aria-expanded") !== "true"),
+    );
+    header
+      .querySelectorAll("nav a")
+      .forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    // Адаптив: тап вне шапки закрывает открытое меню
+    document.addEventListener("click", (e) => {
+      if (
+        header.classList.contains("menu-open") &&
+        !header.contains(e.target as Node)
+      )
+        setOpen(false);
+    });
+    header.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menu.focus();
+      }
+    });
+  });
+</script>

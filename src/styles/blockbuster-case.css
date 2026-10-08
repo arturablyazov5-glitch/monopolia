@@ -1,0 +1,109 @@
+.blockbuster-case {
+  position: relative;
+  isolation: isolate;
+  height: 890px;
+  overflow: hidden;
+  background: var(--color-dark);
+}
+.blockbuster-scene {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleX(-1);
+  top: 37.252px;
+  width: max(100% + 40px, 1480px);
+  height: 866.965px;
+  z-index: -1;
+}
+.blockbuster-scene > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+}
+.blockbuster-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    #ffffffcc 13.438%,
+    #ffffff85 31.639%,
+    #ffffff00 52.396%
+  );
+}
+.blockbuster-edge {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -6px;
+  max-width: none;
+  z-index: 1;
+}
+.blockbuster-content {
+  position: relative;
+  width: 1440px;
+  height: 890px;
+  margin: 0 auto;
+  padding: 80px 140px;
+}
+.blockbuster-label {
+  width: 171px;
+  margin: 0 auto 12px;
+  padding: 8px 20px;
+  transform: rotate(-1deg);
+  --paper-texture: url("/assets/7fcba.webp");
+  color: white;
+}
+.blockbuster-label:before {
+  opacity: 1;
+}
+.blockbuster-label:after {
+  display: none;
+}
+.blockbuster-label p {
+  position: relative;
+  font: 16px/1.2 var(--font-body);
+  white-space: nowrap;
+}
+.blockbuster-label img {
+  position: absolute;
+  left: calc(50% - 28px);
+  top: -18.5px;
+}
+.blockbuster-content h2 {
+  width: 966px;
+  margin: 0 auto 12px;
+  text-align: center;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  color: black;
+}
+.blockbuster-description {
+  width: 714px;
+  margin: 0 auto;
+  text-align: center;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-muted);
+}
+.blockbuster-content .speech-bubble {
+  position: absolute;
+  filter: drop-shadow(0 25px 13.5px #00000029);
+}
+.blockbuster-warning {
+  left: 240px;
+  top: 299.58px;
+  width: 237px;
+}
+.blockbuster-warning p {
+  background: var(--color-accent);
+  color: white;
+}
+.blockbuster-reply {
+  left: 940px;
+  top: 317.58px;
+  width: 218px;
+  color: var(--color-ink);
+}
+.blockbuster-content .speech-bubble > img {
+  display: block;
+}

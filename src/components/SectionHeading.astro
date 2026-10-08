@@ -1,0 +1,9 @@
+---
+const { title, description, annotation, center = false } = Astro.props;
+---
+
+<div class:list={["section-heading", { center: center }]}>
+  <h2>{title}</h2>
+  {annotation && <span class="handwriting">{annotation}</span>}
+  {description && <p>{description}</p>}
+</div>

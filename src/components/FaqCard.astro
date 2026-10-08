@@ -1,0 +1,107 @@
+---
+import Paper from "./Paper.astro";
+import Button from "./Button.astro";
+import type { FaqAnswerBlock } from "../data/faq";
+
+interface Props {
+  question?: string;
+  answer?: string | FaqAnswerBlock[];
+  cta?: string;
+  /** kit — прежний вид UI kit; accordion — карточка секции FAQ (Figma 1380:5740) */
+  variant?: "kit" | "accordion";
+  /** Уникальный id для связки кнопки и ответа (только accordion) */
+  id?: string;
+  /** Ответ раскрыт при загрузке — в макете все ответы открыты */
+  open?: boolean;
+  node?: string;
+}
+const {
+  question = "Как понять, что вы не обманете и не уйдете с деньгами или объектом?",
+  answer = "Это самый честный вопрос и мы его слышим часто, поэтому не просим доверять на слово. До подписания договора вы получаете все условия работы и размер комиссии на бумаге. Расчеты проходят через банк: деньги переходят к продавцу только после регистрации права собственности. Хотите разобраться подробнее — приходите на консультацию.",
+  cta = "Записаться на консультацию",
+  variant = "kit",
+  id = "faq-card",
+  open = true,
+  node = "1380:5740",
+} = Astro.props;
+const blocks = typeof answer === "string" ? [answer] : answer;
+---
+
+{variant === "accordion" ? (
+  <Paper class="faq-card faq-card-accordion" node={node}>
+    <h3 class="faq-question">
+      <button
+        class="faq-toggle"
+        type="button"
+        id={`${id}-question`}
+        aria-expanded={open ? "true" : "false"}
+        aria-controls={`${id}-answer`}
+      >
+        <span class="faq-question-text">{question}</span>
+        <span class="faq-toggle-icon" aria-hidden="true">
+          <img
+            src="/assets/8ac19.svg"
+            alt=""
+            width="38.5917"
+            height="37.8297"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </button>
+    </h3>
+    <div
+      class="faq-answer"
+      id={`${id}-answer`}
+      role="region"
+      aria-labelledby={`${id}-question`}
+      hidden={!open}
+    >
+      <div class="faq-answer-text">
+        {blocks.map((block) =>
+          typeof block === "string" ? (
+            <p>{block}</p>
+          ) : (
+            <ul>
+              {block.list.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          ),
+        )}
+      </div>
+      <Button label={cta} tone="black" subject={`Вопрос: ${question}`} />
+    </div>
+  </Paper>
+) : (
+  <Paper class="faq-card" node={node}>
+    <h3>
+      <img
+        src="/assets/8ac19.svg"
+        width="30"
+        height="30"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      {question}
+    </h3>
+    <p>{blocks.filter((block) => typeof block === "string").join(" ")}</p>
+    <Button label={cta} tone="black" />
+  </Paper>
+)}
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>(".faq-toggle")
+    .forEach((toggle) =>
+      toggle.addEventListener("click", () => {
+        const expanded = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!expanded));
+        const panel = document.getElementById(
+          toggle.getAttribute("aria-controls")!,
+        );
+        if (panel) panel.hidden = expanded;
+      }),
+    );
+</script>

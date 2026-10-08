@@ -1,0 +1,66 @@
+---
+// Бумажная заметка на двух лентах (мастер Figma 569:1388 + ленты 794:340340
+// и 794:340399): «Комиссия за сделку — всего 3%» (1380:6985), «Весь процесс
+// запишем на видео» (1380:6927). Белая обводка Figma — внутренняя, на
+// размеры не влияет; рваный край — общий Paper.
+import Paper from "./Paper.astro";
+import "../styles/taped-note.css";
+
+interface Props {
+  /** Текстура 0ba2a с прозрачностью 50% (как у 1380:6985); без неё — белый лист */
+  textured?: boolean;
+  icon?: { src: string; width: number; height: number };
+  rotate?: number;
+  class?: string;
+  node?: string;
+}
+
+const {
+  textured = false,
+  icon,
+  rotate = 0,
+  class: className = "",
+  node = "",
+} = Astro.props;
+---
+
+<div
+  class:list={["taped-note", className]}
+  style={rotate ? `transform: rotate(${rotate}deg)` : undefined}
+  data-node-id={node || undefined}
+>
+  <Paper class:list={["taped-note-paper", { "taped-note-plain": !textured }]}>
+    {icon && (
+      <img
+        class="taped-note-icon"
+        src={icon.src}
+        width={icon.width}
+        height={icon.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    )}
+    <p>
+      <slot />
+    </p>
+    <img
+      class="taped-note-tape taped-note-tape-top"
+      src="/assets/55e7e.webp"
+      width="39.912"
+      height="12.052"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="taped-note-tape taped-note-tape-bottom"
+      src="/assets/55e7e.webp"
+      width="39.912"
+      height="12.052"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    />
+  </Paper>
+</div>

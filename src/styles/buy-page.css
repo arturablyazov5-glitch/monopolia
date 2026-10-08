@@ -1,0 +1,41 @@
+/* Страница «Покупка» 1380:6357 — только desktop 1440 */
+.buy-desktop {
+  min-width: 1280px;
+}
+/* 1380:6364 начинается на y = 730: 80 px после первого экрана 650 px */
+.buy-desktop > .buy-mortgage {
+  margin-top: 80px;
+}
+
+/* Сверка с Figma (волна 3): правки общих секций только для «Покупки» */
+
+/* 1380:6987 — шапка 72 px + разделитель 1 px, строки 98 px (3 строки по 19 px) */
+.buy-desktop .realtor-comparison .comparison-risk thead th {
+  height: 73px;
+}
+.buy-desktop .realtor-comparison .comparison-risk-cell {
+  line-height: 19px;
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .buy-desktop {
+    min-width: 0;
+    overflow-x: clip;
+    --buy-gutter: 32px;
+  }
+  .buy-desktop > .buy-mortgage {
+    margin-top: 0;
+  }
+}
+@media (max-width: 767px) {
+  .buy-desktop {
+    --buy-gutter: 20px;
+  }
+}
+@media (max-width: 539px) {
+  .buy-desktop {
+    --buy-gutter: 16px;
+  }
+}

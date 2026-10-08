@@ -1,0 +1,37 @@
+---
+import Button from "./Button.astro";
+import "../styles/equal-interests.css";
+---
+
+<section
+  class="equal-interests"
+  aria-labelledby="equal-interests-title"
+  data-node-id="1380:5119"
+>
+  <img
+    class="equal-interests-background"
+    src="/assets/71f71.webp"
+    srcset="/assets/71f71-m.webp 1240w, /assets/71f71.webp 1920w"
+    sizes="(max-width: 767px) calc((100vw - 16px) * 1.45), 1920px"
+    width="1440"
+    height="939"
+    alt="Команда Монополии в офисе"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="equal-interests-content">
+    <h2 id="equal-interests-title">
+      Любим одинаково и продавцов, и покупателей —{" "}<br />
+      поэтому отстаиваем их интересы тоже одинаково
+    </h2>
+    <div class="equal-interests-actions">
+      <Button label="Купить объект" icon="buy" subject="Купить недвижимость" />
+      <span aria-hidden="true">/</span>
+      <Button
+        label="Продать объект"
+        icon="sell"
+        subject="Продать недвижимость"
+      />
+    </div>
+  </div>
+</section>

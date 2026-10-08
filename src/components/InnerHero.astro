@@ -1,0 +1,316 @@
+---
+import { imageSize } from "../lib/image-size";
+// Общий первый экран внутренних страниц: мастер Figma 1380:5758 («Продажа»)
+// и 1380:6363 («Покупка»). Фон, команда, рейтинг, поля квиза одинаковые;
+// тексты, картинка буклета, его тень и кнопка передаются параметрами.
+import Button from "./Button.astro";
+import ChoiceGroup from "./ChoiceGroup.astro";
+import Paper from "./Paper.astro";
+import RatingBadge from "./RatingBadge.astro";
+import "../styles/inner-hero.css";
+
+interface Shadow {
+  /** SVG-тень буклета из Figma (файл в public/assets). */
+  src: string;
+  /** Рамка слоя в координатах слота буклета, px. */
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  /** Вынос SVG за рамку слоя (inset из Figma), CSS inset. */
+  bleed: string;
+}
+
+interface Props {
+  /** data-node-id экземпляра в Figma. */
+  node?: string;
+  /** Строки заголовка h1 (каждая с новой строки). */
+  title: string[];
+  /** Рукописная вставка красным (Denistina) в конце строки accentLine. */
+  accent?: string;
+  accentLine?: number;
+  /** Добавить строку «на [Авито] и [Циан]» (вариант «Покупки»). */
+  markets?: boolean;
+  description: string;
+  formText: string;
+  /** Изображение буклета: путь, пропорции, высота повёрнутого слоя;
+   * alt — описание, mobile — облегчённый файл для экранов ≤ 767 px. */
+  image: {
+    src: string;
+    ratio: string;
+    height: number;
+    width: number;
+    alt?: string;
+    mobile?: string;
+  };
+  shadow: Shadow;
+  buttonLabel: string;
+  buttonIcon?: boolean | "buy" | "sell" | "access";
+  subject: string;
+  options?: string[];
+}
+
+const {
+  node = "1380:5758",
+  title,
+  accent,
+  accentLine = 1,
+  markets = false,
+  description,
+  formText,
+  image,
+  shadow,
+  buttonLabel,
+  buttonIcon = false,
+  subject,
+  options = [
+    "Квартира",
+    "Дом",
+    "Гараж",
+    "Участок",
+    "Коммерческая недвижимость",
+    "Другое",
+  ],
+} = Astro.props;
+
+// Команда: Figma I…;1174:9735 (1421 × 1021.151), порядок слоёв как в макете.
+const team = [
+  {
+    stroke: "06546.svg",
+    box: "9.86% 56.74% 44.98% 24.19%",
+    bleed: "-14.82% -18.41% -14.96% -36.22%",
+    photo: "bf328",
+    pos: "left:24.63%;width:21.38%;top:99.37px",
+    ratio: "271.495117 / 413.48706",
+  },
+  {
+    stroke: "f53d4.svg",
+    box: "10.53% 26.95% 43.09% 55.82%",
+    bleed: "-14.34% -19.65% -15.94% -40.11%",
+    photo: "bd260",
+    pos: "left:52%;width:21.13%;top:99.37px",
+    ratio: "268.312653 / 491.538727",
+  },
+  {
+    stroke: "394a8.svg",
+    box: "6.39% 41.12% 42.97% 40.2%",
+    bleed: "-13.37% -17.74% -13.38% -36.62%",
+    photo: "0df0d",
+    pos: "left:38.79%;width:21.72%;bottom:54.92px",
+    ratio: "275.914581 / 803.424316",
+  },
+];
+---
+
+<section
+  class="inner-hero"
+  aria-labelledby="inner-hero-title"
+  data-node-id={node}
+>
+  <img
+    class="inner-hero-background"
+    src="/assets/inner-hero-background.webp"
+    alt=""
+    width="1440"
+    height="840"
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="inner-hero-container">
+    <div class="inner-hero-copy">
+      <RatingBadge loading="eager" yandexFirst />
+      <h1 id="inner-hero-title" class:list={{ "with-markets": markets }}>
+        {title.map((line, index) => (
+          <>
+            {index > 0 && <br />}
+            {line}
+            {accent && index === accentLine && (
+              <>
+                {" "}
+                <span class="inner-hero-accent-space" aria-hidden="true">
+                  {accent}
+                </span>
+                <span class="inner-hero-accent">{accent}</span>
+              </>
+            )}
+          </>
+        ))}
+        {markets && (
+          <span class="inner-hero-markets">
+            на
+            <span class="inner-hero-market">
+              <span class="market-icon">
+                <img
+                  src="/assets/aee4e.svg"
+                  alt=""
+                  width="36.7731"
+                  height="36.3498"
+                  loading="eager"
+                  decoding="async"
+                />
+              </span>
+              <span>Авито</span>
+            </span>
+            и
+            <span class="inner-hero-market">
+              <span class="market-icon">
+                <img
+                  src="/assets/c5c04.svg"
+                  alt=""
+                  width="36.7731"
+                  height="36.3498"
+                  loading="eager"
+                  decoding="async"
+                />
+              </span>
+              <span>Циан</span>
+            </span>
+          </span>
+        )}
+      </h1>
+      <p class="inner-hero-description">{description}</p>
+    </div>
+
+    <div
+      class="inner-hero-team"
+      role="img"
+      aria-label="Специалисты агентства недвижимости Монополия"
+    >
+      {team.map((layer) => (
+        <>
+          <div class="inner-team-stroke" style={`inset:${layer.box}`}>
+            <div style={`inset:${layer.bleed}`}>
+              <img
+                src={"/assets/" + layer.stroke}
+                alt=""
+                width={imageSize("/assets/" + layer.stroke).width}
+                height={imageSize("/assets/" + layer.stroke).height}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
+          <picture style="display:contents">
+            {/* ≤ 767 px: портреты показаны ≈ 150 px — облегчённые 320 w для 2×. */}
+            <source
+              media="(max-width: 767px)"
+              srcset={`/assets/${layer.photo}-r2-320.webp 320w, /assets/${layer.photo}.webp ${imageSize("/assets/" + layer.photo + ".webp").width}w`}
+              sizes="160px"
+              style="display:none"
+            />
+            <img
+              class="inner-team-portrait"
+              src={"/assets/" + layer.photo + ".webp"}
+              alt=""
+              style={`${layer.pos};aspect-ratio:${layer.ratio}`}
+              fetchpriority={layer.photo === "0df0d" ? "high" : "auto"}
+              width={imageSize("/assets/" + layer.photo + ".webp").width}
+              height={imageSize("/assets/" + layer.photo + ".webp").height}
+              loading="eager"
+              decoding="async"
+            />
+          </picture>
+        </>
+      ))}
+    </div>
+
+    <Paper class="inner-hero-card" node={node + ";1170:9441"}>
+      <div class="inner-hero-card-top">
+        <p>{formText}</p>
+        <div class="inner-hero-quiz">
+          <div class="inner-hero-booklet">
+            <div
+              class="inner-hero-booklet-shadow"
+              style={`left:${shadow.left}px;top:${shadow.top}px;width:${shadow.width}px;height:${shadow.height}px`}
+            >
+              <img
+                src={"/assets/" + shadow.src}
+                alt=""
+                style={`inset:${shadow.bleed}`}
+                width={imageSize("/assets/" + shadow.src).width}
+                height={imageSize("/assets/" + shadow.src).height}
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <div
+              class="inner-hero-booklet-frame"
+              style={`height:${image.height}px`}
+            >
+              <picture style="display:contents">
+                {image.mobile && (
+                  <source
+                    media="(max-width: 767px)"
+                    srcset={image.mobile}
+                    style="display:none"
+                  />
+                )}
+                <img
+                  src={image.src}
+                  alt={image.alt ?? "Пример отчёта Монополии"}
+                  width={image.width}
+                  style={`aspect-ratio:${image.ratio}`}
+                  height={imageSize(image.src, image.width).height}
+                  loading="eager"
+                  decoding="async"
+                />
+              </picture>
+            </div>
+          </div>
+          <div class="inner-hero-fields">
+            <label class="inner-hero-city">
+              <span class="sr-only">Город</span>
+              <select name="city">
+                <option>Белогорск</option>
+              </select>
+              <img
+                src="/assets/98485.svg"
+                alt=""
+                width="6"
+                height="3.5"
+                loading="eager"
+                decoding="async"
+              />
+            </label>
+            <div class="inner-hero-types">
+              <ChoiceGroup
+                loading="eager"
+                name="Тип недвижимости"
+                options={options}
+              />
+              <span class="inner-hero-cursor" aria-hidden="true">
+                <img
+                  src="/assets/23278.svg"
+                  alt=""
+                  width="20.3387"
+                  height="20.643"
+                  loading="eager"
+                  decoding="async"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inner-hero-submit" data-subject-base={subject}>
+        <Button
+          loading="eager"
+          label={buttonLabel}
+          icon={buttonIcon}
+          subject={`${subject}: ${options[0]}`}
+        />
+      </div>
+    </Paper>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>(".inner-hero-card").forEach((card) => {
+    const submit = card.querySelector<HTMLElement>("[data-subject-base]");
+    const button = submit?.querySelector<HTMLButtonElement>("[data-lead]");
+    if (!submit || !button) return;
+    card.addEventListener("choice-change", ((event: CustomEvent) => {
+      button.dataset.subject = `${submit.dataset.subjectBase}: ${event.detail.value}`;
+    }) as EventListener);
+  });
+</script>

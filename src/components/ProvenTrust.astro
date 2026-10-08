@@ -1,0 +1,192 @@
+---
+import { imageSize } from "../lib/image-size";
+import Paper from "./Paper.astro";
+import ReviewCard from "./ReviewCard.astro";
+import Carousel from "./Carousel.astro";
+import "../styles/proven-trust.css";
+const portraits = [
+  {
+    asset: "b0450",
+    x: 938.347,
+    y: 220.756,
+    w: 377.808,
+    h: 566.712,
+    mirror: true,
+  },
+  { asset: "39c26", x: 130.847, y: 238.309, w: 374.292, h: 561.439 },
+  { asset: "6d24a", x: 695.5, y: 68.261, w: 474, h: 711, mirror: true },
+  { asset: "123af", x: 240.5, y: 0, w: 553, h: 829, mirror: true },
+  { asset: "fce18", x: 471.5, y: 13.522, w: 538, h: 808 },
+];
+const shadows = [
+  { asset: "a646d", x: 545.04, y: 22.887 },
+  { asset: "b7bcb", x: 754.01, y: 69.739 },
+  { asset: "06204", x: 924.176, y: 276.333 },
+  { asset: "9d2b8", x: 303.839, y: 54.608 },
+  { asset: "5d521", x: 101.342, y: 275.871 },
+];
+const ratings = [
+  {
+    logo: "domclick-full",
+    label: "Домклик",
+    reviews: "206 отзывов",
+    x: 1031.46,
+    y: 45.23,
+    angle: 4.27,
+    width: 111.104,
+  },
+  {
+    logo: "2gis-full",
+    label: "2ГИС",
+    reviews: "164 отзыва",
+    x: 1115.76,
+    y: 167.57,
+    angle: 0,
+    width: 84.956,
+  },
+  {
+    logo: "yandex-maps-full",
+    label: "Яндекс Карты",
+    reviews: "39 отзывов",
+    x: 1110.9,
+    y: -61.51,
+    angle: -1,
+    width: 91.626,
+  },
+];
+---
+
+<section
+  id="reviews"
+  class="proven-trust"
+  aria-labelledby="proven-trust-title"
+  data-node-id="1380:5160"
+>
+  <img
+    class="trust-paper-background"
+    src="/assets/2b2aa.webp"
+    width="1454"
+    height="2143"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="proven-trust-scene">
+    <h2 id="proven-trust-title">
+      По факту за <span class="trust-count">5 000+</span> <br />
+      сделок — у нас{" "}
+      <span class="trust-accent">
+        ни одного <br />
+        суда и истории обмана
+      </span>
+    </h2>
+    {/* Адаптив: на узких экранах рейтинги выводятся строкой под заголовком,
+        а в композиции команды скрываются; на десктопе этот блок display: none. */}
+    <div class="trust-ratings-mobile">
+      {ratings.map((r) => (
+        <Paper class="trust-rating-mobile">
+          <div class="trust-rating-line">
+            <img
+              src={`https://trace-logos.ru/assets/logos/svgs/${r.logo}.svg`}
+              alt={r.label}
+              width={r.width}
+              height="24"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="trust-rating-divider"></span>
+            <img
+              src="/assets/1795d.svg"
+              alt=""
+              width="13.1982"
+              height="12.7189"
+              loading="lazy"
+              decoding="async"
+            />
+            <strong>5.0</strong>
+          </div>
+          <p>{r.reviews}</p>
+        </Paper>
+      ))}
+    </div>
+    <div class="trust-team" aria-label="Команда Монополии">
+      {shadows.map((s) => (
+        <img
+          class="trust-shadow"
+          src={`/assets/${s.asset}.svg`}
+          alt=""
+          style={`left:${s.x}px;top:${s.y}px`}
+          width={imageSize(`/assets/${s.asset}.svg`).width}
+          height={imageSize(`/assets/${s.asset}.svg`).height}
+          loading="lazy"
+          decoding="async"
+        />
+      ))}
+      {portraits.map((p) => (
+        <img
+          class:list={["trust-portrait", { mirrored: p.mirror }]}
+          src={`/assets/${p.asset}.webp`}
+          alt=""
+          width={p.w}
+          height={p.h}
+          loading="lazy"
+          style={`left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px`}
+          decoding="async"
+        />
+      ))}
+      <img
+        class="trust-team-edge"
+        src="/assets/89254.webp"
+        alt=""
+        width="1507"
+        height="234"
+        loading="lazy"
+        decoding="async"
+      />
+      {ratings.map((r) => (
+        <Paper class="trust-rating">
+          <div
+            style={`--rating-x:${r.x}px;--rating-y:${r.y}px;--rating-angle:${r.angle}deg`}
+            class="trust-rating-anchor"
+          ></div>
+          <div class="trust-rating-line">
+            <img
+              src={`https://trace-logos.ru/assets/logos/svgs/${r.logo}.svg`}
+              alt={r.label}
+              width={r.width}
+              height="24"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="trust-rating-divider"></span>
+            <img
+              src="/assets/1795d.svg"
+              alt=""
+              width="13.1982"
+              height="12.7189"
+              loading="lazy"
+              decoding="async"
+            />
+            <strong>5.0</strong>
+          </div>
+          <p>{r.reviews}</p>
+        </Paper>
+      ))}
+    </div>
+    <div class="trust-reviews">
+      <Carousel label="Видеоотзывы клиентов">
+        <ReviewCard
+          name="Светлана В."
+          image="/assets/188fc.webp"
+          duration="0:47"
+        />
+        <ReviewCard name="Инна С." image="/assets/46cf2.webp" duration="2:06" />
+        <ReviewCard
+          name="Дмитрий В."
+          image="/assets/11a9d.webp"
+          duration="0:33"
+        />
+      </Carousel>
+    </div>
+  </div>
+</section>

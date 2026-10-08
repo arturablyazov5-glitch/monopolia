@@ -1,0 +1,102 @@
+.trust-and-viewing {
+  padding-top: 120px;
+}
+.trust-and-viewing-sell {
+  padding-top: 80px;
+}
+.deal-insurance {
+  position: relative;
+  width: var(--container-width);
+  height: 705px;
+  margin: auto;
+  display: flex;
+}
+.deal-insurance-copy {
+  width: 345px;
+  flex-shrink: 0;
+  padding: 70px 0 180px;
+}
+.deal-insurance-hand {
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  margin-top: 8px;
+}
+.deal-insurance-description {
+  margin-top: 16px;
+  color: #777;
+}
+.deal-insurance-note {
+  margin: 40px auto 80px;
+}
+.deal-insurance-note .taped-note-paper {
+  padding: 20px 24px;
+}
+.deal-insurance-note p {
+  text-align: center;
+}
+.deal-insurance-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.deal-insurance-actions > p {
+  font-size: 14px;
+  color: #000;
+}
+.deal-insurance-visual {
+  flex: 1;
+  position: relative;
+}
+.deal-insurance-photo {
+  position: absolute;
+  left: 41.383px;
+  top: 99.487px;
+  width: 732.233px;
+  height: 570.513px;
+  max-width: none;
+}
+.deal-insurance-shadow {
+  position: absolute;
+  left: calc(86px - 673.24px * 0.186);
+  top: calc(129.661px - 532.5px * 0.1717);
+  max-width: none;
+}
+.deal-insurance-edge {
+  position: absolute;
+  left: -493px;
+  bottom: 13.34px;
+  transform: rotate(180deg);
+  max-width: none;
+}
+.deal-insurance-client,
+.deal-insurance-elena {
+  position: absolute;
+}
+.deal-insurance-client {
+  left: 349px;
+  top: 238.661px;
+}
+.deal-insurance-elena {
+  left: 295px;
+  top: 29.661px;
+}
+.deal-insurance-client > p,
+.deal-insurance-elena > p {
+  margin: 0 32px 4px;
+  color: #000;
+}
+.deal-insurance-client > p {
+  text-align: right;
+}
+.deal-insurance-visual .speech-bubble {
+  padding: 0;
+}
+.deal-insurance-visual .speech-bubble p {
+  white-space: pre;
+  color: #000;
+}
+.deal-insurance-elena .speech-bubble p {
+  background: #269dfd;
+  color: white;
+}

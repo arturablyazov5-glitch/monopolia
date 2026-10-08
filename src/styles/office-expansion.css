@@ -1,0 +1,151 @@
+.office-expansion {
+  height: 620px;
+  position: relative;
+  isolation: isolate;
+  background: var(--color-dark);
+  overflow: hidden;
+  color: white;
+}
+.expansion-map {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -2132.1px;
+  width: max(100%, 1441px);
+  height: 3035px;
+  overflow: hidden;
+  z-index: -1;
+}
+.expansion-map > img {
+  position: absolute;
+  left: calc(50% - 4156.5px);
+  top: 0;
+  max-width: none;
+}
+.expansion-map > div {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #1c1c1c 40.63%, #1c1c1c00 85.815%);
+}
+.expansion-container {
+  width: var(--container-width);
+  height: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+.expansion-container h2 {
+  margin: 0;
+  text-align: center;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  position: relative;
+}
+.office-marker {
+  position: absolute;
+  display: flex;
+  align-items: flex-end;
+  color: black;
+  gap: 16px;
+}
+.future-office {
+  left: 419px;
+  top: 305.9px;
+}
+.current-office {
+  left: 697px;
+  top: 278.9px;
+  gap: 12px;
+}
+.office-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  align-items: flex-end;
+}
+.current-office .office-label-group {
+  align-items: flex-start;
+}
+.office-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  background: white;
+  border-radius: 4px;
+  font: 16px/1.2 var(--font-body);
+}
+.future-office .office-label {
+  padding: 6px 6px 7px 14px;
+}
+.office-label span {
+  font: 14px/1.2 var(--font-body);
+  padding: 7px 8px 4px;
+  background: var(--color-canvas);
+  color: #00000080;
+  transform: rotate(-1deg);
+  border-radius: 4px;
+}
+.future-office .office-arrow {
+  transform: scaleX(-1);
+}
+.office-photo-bubble {
+  position: absolute;
+  width: 208px;
+  height: 136.858px;
+}
+.future-photo {
+  left: 309px;
+  top: 148.381px;
+}
+.current-photo {
+  left: 778px;
+  top: 129.581px;
+  transform: scaleX(-1);
+}
+.office-photo-frame {
+  position: relative;
+  background: #e5e5e5;
+  padding: 4px;
+  border-radius: 32px;
+  overflow: hidden;
+  width: 208px;
+  height: 128px;
+  z-index: 2;
+}
+.office-photo-frame > img {
+  width: 200px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 28px;
+}
+.office-photo-underlay {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+.future-photo .office-photo-frame:after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: 28px;
+  background: #0003;
+}
+.office-photo-frame span {
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  z-index: 3;
+}
+.office-bubble-tail {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.current-photo .office-photo-frame > img:last-child {
+  position: relative;
+}

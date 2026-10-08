@@ -1,0 +1,106 @@
+---
+// Figma 1380:6977 «11» («Покупка»): светлый лист с рваным верхом (Union,
+// a9a13), заходит на 40 px на тёмную секцию шагов. Заметка «Комиссия за
+// сделку — всего 3%», заголовок, сравнение со шкалой риска, CTA и
+// утверждение «Кстати…» (AccentStatement). На «Продаже» — те же части
+// с другими rows / заголовком / текстом в слоте statement.
+import Button from "./Button.astro";
+import TapedNote from "./TapedNote.astro";
+import ComparisonTable from "./ComparisonTable.astro";
+import AccentStatement from "./AccentStatement.astro";
+import "../styles/realtor-comparison.css";
+
+interface Row {
+  label: string;
+  risk?: number;
+  others: string;
+  ours: string;
+  node?: string;
+}
+
+interface Props {
+  id?: string;
+  class?: string;
+  showStatement?: boolean;
+  background?: { src: string; width: number; height: number };
+  note?: string;
+  title?: string;
+  rows: Row[];
+  columns?: [string, string];
+  icons?: [string, string];
+  ctaLabel?: string;
+  subject?: string;
+  node?: string;
+}
+
+const {
+  id = "buy-realtor",
+  class: className = "",
+  showStatement = true,
+  background = { src: "/assets/a9a13.webp", width: 1440, height: 1736.575 },
+  note = "Комиссия за сделку — всего 3%",
+  title = "Ошибки без риелтора могут привести к\u00a0потере жилья или всех денег",
+  rows,
+  columns,
+  icons,
+  ctaLabel = "Записаться на консультацию",
+  subject = "Консультация: покупка с риелтором",
+  node = "1380:6977",
+} = Astro.props;
+---
+
+<section
+  class:list={["realtor-comparison", className]}
+  aria-labelledby={`${id}-title`}
+  data-node-id={node}
+>
+  <picture class="realtor-comparison-bg-picture">
+    {["/assets/a9a13.webp", "/assets/14e49.webp"].includes(background.src) && (
+      <source
+        media="(max-width: 1199px)"
+        srcset={background.src.replace(".webp", "-k-mobile.webp")}
+      />
+    )}
+    <img
+      class="realtor-comparison-bg"
+      src={background.src}
+      width={background.width}
+      height={background.height}
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
+  <div class="realtor-comparison-inner">
+    <div class="realtor-comparison-content" data-node-id="1380:6983">
+      <div class="realtor-comparison-heading" data-node-id="1380:6984">
+        <TapedNote textured rotate={-1} node="1380:6985">
+          {note}
+        </TapedNote>
+        <h2 id={`${id}-title`}>{title}</h2>
+      </div>
+      <ComparisonTable
+        variant="risk"
+        rows={rows}
+        columns={columns}
+        icons={icons}
+        caption={title}
+      />
+      <div class="realtor-comparison-cta" data-node-id="1380:7003">
+        <Button label={ctaLabel} subject={subject} />
+        <p>
+          На этой неделе есть еще <strong>4 свободных места</strong>
+        </p>
+      </div>
+    </div>
+    {showStatement && (
+      <slot name="statement">
+        <AccentStatement>
+          Кстати, <strong>оплату берем только после передачи ключей.</strong> А
+          если вы покупаете в новостройке — комиссию платит застройщик
+        </AccentStatement>
+      </slot>
+    )}
+  </div>
+</section>

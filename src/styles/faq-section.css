@@ -1,0 +1,181 @@
+/* Общая секция FAQ — главная 1380:5736, внутренние 1380:6327 / 1380:7007 */
+.faq-section {
+  width: var(--container-width);
+  margin: 0 auto;
+  padding: 120px 0;
+}
+.faq-section > h2 {
+  font: 500 var(--text-heading) / 1 var(--font-heading);
+  color: var(--color-ink);
+}
+.faq-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-top: 40px;
+}
+.faq-column {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.faq-slot {
+  /* Строки колонки в Figma считаются по габаритам повернутой карточки */
+  padding: var(--faq-overhang) 0;
+  transform: rotate(var(--faq-tilt));
+}
+
+/* Карточка — FaqCard variant="accordion", Figma 1380:5740 */
+.faq-card.faq-card-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* В Figma обводка 16 px внутренняя: 32 px от внешнего края до контента */
+  padding: 16px;
+  border: 16px solid #fff;
+  border-radius: 4px;
+  box-shadow:
+    0 14px 14px #3d0b0b08,
+    0 5px 7px #0000000f;
+}
+/* В рендере Figma белая обводка не видна: бумажная текстура идёт до края.
+   Текстура и рваный край Paper выведены на внешнюю границу (через border). */
+.faq-card-accordion:before {
+  inset: -16px;
+  border-radius: 4px;
+}
+.faq-card-accordion:after {
+  inset: -18px;
+}
+.faq-question {
+  font: 500 var(--text-card) / 1.2 var(--font-heading);
+  color: #000;
+}
+.faq-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.faq-question-text {
+  flex: 1 0 0;
+  min-width: 0;
+}
+.faq-toggle-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  transition: transform var(--duration-fast);
+}
+.faq-toggle-icon img {
+  position: absolute;
+  /* Слот 30×30, SVG с тенью выходит за него: inset −11.36% −13.64% −14.74% −15% */
+  top: -3.41px;
+  left: -4.5px;
+  max-width: none;
+}
+.faq-toggle[aria-expanded="false"] .faq-toggle-icon {
+  transform: rotate(45deg);
+}
+.faq-toggle:hover .faq-toggle-icon {
+  filter: brightness(0.9);
+}
+.faq-answer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+.faq-answer[hidden] {
+  display: none;
+}
+.faq-answer-text {
+  display: grid;
+  /* Пустая строка между абзацами и списком, как в Figma */
+  gap: 1.2em;
+  width: 100%;
+  font: 16px/1.2 var(--font-body);
+  color: #484848;
+}
+.faq-answer-text ul {
+  margin: 0;
+  padding-left: 24px;
+}
+
+/* ===== Адаптив (R1): одна колонка. Планшет ≤ 1199 — до 720 px по центру,
+   телефон ≤ 767 — поля 20 px. Повороты карточек сохраняются. ===== */
+@media (max-width: 1199px) {
+  .faq-section {
+    width: calc(100% - 64px);
+    max-width: 720px;
+    padding: 80px 0;
+  }
+  .faq-section > h2 {
+    font-size: 40px;
+  }
+  .faq-columns {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .faq-column {
+    gap: 24px;
+  }
+  .faq-slot {
+    /* перерасчёт выноса повёрнутой карточки не нужен — запас 4 px */
+    padding: 4px 0;
+  }
+  .faq-toggle {
+    min-height: 44px;
+  }
+}
+@media (max-width: 767px) {
+  .faq-section {
+    width: calc(100% - 40px);
+    padding: 56px 0;
+  }
+  .faq-section > h2 {
+    font-size: 30px;
+  }
+  .faq-card.faq-card-accordion {
+    gap: 16px;
+    padding: 8px;
+    border-width: 12px;
+  }
+  .faq-card-accordion:before {
+    inset: -12px;
+  }
+  .faq-card-accordion:after {
+    inset: -14px;
+  }
+  .faq-question {
+    font-size: 18px;
+  }
+  .faq-toggle {
+    gap: 16px;
+  }
+  .faq-answer {
+    gap: 20px;
+  }
+  .faq-answer .button {
+    width: 100%;
+  }
+}
+@media (max-width: 389px) {
+  .faq-section {
+    width: calc(100% - 32px);
+  }
+  .faq-section > h2 {
+    font-size: 28px;
+  }
+}

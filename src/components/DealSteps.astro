@@ -1,0 +1,347 @@
+---
+// Figma 1380:6839 («Покупка»): тёмная секция «Наша миссия — комиссия»
+// и 10 шагов сделки. Рваный верх 839cd.svg (повёрнут на 180°), фон #1C1C1C
+// с текстурой 47767 (10%) и градиентом. Левая колонка закреплена при
+// прокрутке, полоса прогресса показывает, какая часть шагов пройдена.
+// Шаги — данные (src/data/deal-steps.ts), для «Продажи» передать свои.
+import Paper from "./Paper.astro";
+import TapedNote from "./TapedNote.astro";
+import type { DealStep } from "../data/deal-steps";
+import "../styles/deal-steps.css";
+
+interface Props {
+  id?: string;
+  class?: string;
+  steps: DealStep[];
+  missionTitle?: string;
+  missionAccent?: string;
+  missionText?: string;
+  node?: string;
+}
+
+const responsiveImages = new Set([
+  "/assets/009e6.webp",
+  "/assets/3696d.webp",
+  "/assets/3032e.webp",
+  "/assets/4099d.webp",
+  "/assets/ae81a.webp",
+  "/assets/3ca51.webp",
+  "/assets/6c2b5.webp",
+  "/assets/7d885.webp",
+  "/assets/c0905.webp",
+  "/assets/f4e22.webp",
+]);
+
+const {
+  id = "buy-steps",
+  class: className = "",
+  steps,
+  missionTitle = "Наша миссия",
+  missionAccent = "— комиссия",
+  missionText = "Да, мы заинтересованы в комиссии, но получаем ее не за красивые глазки, а за безопасность вашей сделки, экономию времени и нервов",
+  node = "1380:6839",
+} = Astro.props;
+---
+
+<section
+  class:list={["deal-steps", className]}
+  aria-labelledby={`${id}-title`}
+  data-node-id={node}
+  data-deal-steps
+>
+  <img
+    loading="lazy"
+    class="deal-steps-edge"
+    src="/assets/839cd.svg"
+    width="1447"
+    height="95.713"
+    alt=""
+    aria-hidden="true"
+    decoding="async"
+  />
+  <div class="deal-steps-body">
+    <div class="deal-steps-bg" aria-hidden="true">
+      <img
+        src="/assets/47767.webp"
+        width="569"
+        height="740"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="deal-steps-grid" data-node-id="1380:6842">
+      <div class="deal-mission" data-node-id="1380:6843">
+        <div class="deal-mission-head">
+          <div class="deal-mission-portrait" aria-hidden="true">
+            <img
+              loading="lazy"
+              class="deal-mission-shadow"
+              src="/assets/ee32e.svg"
+              width="137.143"
+              height="143.333"
+              alt=""
+              decoding="async"
+            />
+            <picture style="display: contents">
+              <source
+                style="display: none"
+                media="(max-width: 767px)"
+                srcset="/assets/3740c-m-perf.webp"
+              />
+              <img
+                class="deal-mission-photo"
+                src="/assets/3740c.webp"
+                width="131"
+                height="139"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </div>
+          <h2 id={`${id}-title`}>
+            <span class="deal-mission-muted">{missionTitle}</span>
+            <span class="deal-mission-accent">
+              {missionAccent}
+              <img
+                src="/assets/70823.webp"
+                width="38"
+                height="38"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+          </h2>
+          <picture style="display: contents">
+            <source
+              style="display: none"
+              media="(max-width: 767px)"
+              srcset="/assets/mobile-empty.webp"
+            />
+            <img
+              loading="lazy"
+              class="deal-mission-quote"
+              src="/assets/27025.svg"
+              width="42.6102"
+              height="33.2195"
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+            />
+          </picture>
+        </div>
+        <p class="deal-mission-text">{missionText}</p>
+        <div
+          class="deal-progress"
+          role="progressbar"
+          aria-label="Пройдено шагов сделки"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          data-deal-progress
+        >
+          <span class="deal-progress-track">
+            <span class="deal-progress-fill" data-deal-progress-fill></span>
+          </span>
+          <span class="deal-progress-value" data-deal-progress-value>
+            0%
+          </span>
+        </div>
+      </div>
+
+      <ol class="deal-steps-list" data-deal-steps-list>
+        {steps.map((step, index) => (
+          <li class="deal-step" data-node-id={step.node}>
+            <div class="deal-step-rail" aria-hidden="true">
+              <span class="deal-step-dash deal-step-dash-top">
+                {index > 0 && (
+                  <img
+                    loading="lazy"
+                    src="/assets/df35e.svg"
+                    width="2"
+                    height="26"
+                    alt=""
+                    decoding="async"
+                  />
+                )}
+              </span>
+              <span class="deal-step-number">{index + 1}</span>
+              <span class="deal-step-dash deal-step-dash-bottom">
+                {step.line && (
+                  <img
+                    loading="lazy"
+                    src={step.line.src}
+                    width="2"
+                    height={step.line.height}
+                    alt=""
+                    decoding="async"
+                  />
+                )}
+              </span>
+            </div>
+            <div class="deal-step-holder">
+              <Paper class="deal-step-card">
+                <div class="deal-step-main">
+                  {step.image && (
+                    <div
+                      class="deal-step-image"
+                      style={`aspect-ratio:${step.image.width} / ${step.image.height}`}
+                    >
+                      <picture>
+                        {responsiveImages.has(step.image.src) && (
+                          <source
+                            style="display: none"
+                            media="(max-width: 1199px)"
+                            srcset={`${step.image.src.replace(".webp", "")}-k-560.webp 560w, ${step.image.src.replace(".webp", "")}-k-900.webp 900w, ${step.image.src.replace(".webp", "")}-k-1304.webp 1304w`}
+                            sizes="(max-width: 767px) calc(100vw - 116px), 632px"
+                          />
+                        )}
+                        <img
+                          src={step.image.src}
+                          width={step.image.width}
+                          height={step.image.height}
+                          alt={step.image.alt}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </div>
+                  )}
+                  <h3>
+                    {step.textParts
+                      ? step.textParts.map((part) => (
+                          <span style={part.muted ? "color:#0006" : undefined}>
+                            {part.text}
+                          </span>
+                        ))
+                      : step.text}
+                  </h3>
+                </div>
+                {step.chips && (
+                  <ul class="deal-step-chips">
+                    {step.chips.map((chip) => (
+                      <li
+                        style={
+                          chip.box
+                            ? `width:${chip.box[0]}px;height:${chip.box[1]}px`
+                            : undefined
+                        }
+                      >
+                        <span
+                          style={
+                            chip.rotate
+                              ? `transform: rotate(${chip.rotate}deg)`
+                              : undefined
+                          }
+                        >
+                          {chip.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {step.list && (
+                  <ul class="deal-step-list">
+                    {step.list.map((item) => (
+                      <li class="diamond-line">
+                        <span class="diamond" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {step.note && (
+                  <TapedNote class="deal-step-note" icon={step.note.icon}>
+                    {step.note.text}
+                  </TapedNote>
+                )}
+                {step.funnel && (
+                  <div class="deal-funnel">
+                    <ul
+                      class="deal-funnel-labels"
+                      style={`width:${step.funnel.width}px;height:${step.funnel.height}px`}
+                      aria-label="Что отсеиваем"
+                    >
+                      {step.funnel.labels.map((label) => (
+                        <li
+                          style={`left:${label.x}px;top:${label.y}px;transform:translate(-50%,-50%) rotate(${label.rotate}deg)`}
+                        >
+                          {label.text}
+                        </li>
+                      ))}
+                    </ul>
+                    <picture style="display: contents">
+                      {step.funnel.image.src === "/assets/80e7e.webp" && (
+                        <source
+                          style="display: none"
+                          media="(max-width: 767px)"
+                          srcset="/assets/80e7e-m-perf.webp"
+                        />
+                      )}
+                      <img
+                        class="deal-funnel-image"
+                        style={`width:${step.funnel.width}px;${step.funnel.image.src === "/assets/80e7e.webp" ? "--funnel-image-ratio:596 / 891" : ""}`}
+                        src={step.funnel.image.src}
+                        width={step.funnel.image.width}
+                        height={step.funnel.image.height}
+                        alt={step.funnel.image.alt}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                    <img
+                      class="deal-funnel-icon"
+                      src={step.funnel.icon.src}
+                      width={step.funnel.icon.width}
+                      height={step.funnel.icon.height}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <p class="deal-funnel-result">{step.funnel.result}</p>
+                  </div>
+                )}
+              </Paper>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Прогресс: доля списка шагов, прошедшая через середину окна.
+  for (const section of document.querySelectorAll<HTMLElement>(
+    "[data-deal-steps]",
+  )) {
+    const list = section.querySelector<HTMLElement>("[data-deal-steps-list]");
+    const bar = section.querySelector<HTMLElement>("[data-deal-progress]");
+    const fill = section.querySelector<HTMLElement>(
+      "[data-deal-progress-fill]",
+    );
+    const value = section.querySelector<HTMLElement>(
+      "[data-deal-progress-value]",
+    );
+    if (!list || !bar || !fill || !value) continue;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = list.getBoundingClientRect();
+      const passed = window.innerHeight / 2 - rect.top;
+      const ratio = Math.min(1, Math.max(0, passed / rect.height));
+      const percent = Math.round(ratio * 100);
+      fill.style.width = `${percent}%`;
+      value.textContent = `${percent}%`;
+      bar.setAttribute("aria-valuenow", String(percent));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+  }
+</script>

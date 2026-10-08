@@ -1,0 +1,102 @@
+---
+// Общий мастер 1380:6560 / 1380:6326. Тексты экземпляров отличаются.
+import Button from "./Button.astro";
+import TapedNote from "./TapedNote.astro";
+import "../styles/office-consultation.css";
+interface Props {
+  variant?: "buy" | "sell";
+  id?: string;
+  node?: string;
+}
+const {
+  variant = "buy",
+  id = `${variant}-consultation`,
+  node = variant === "buy" ? "1380:6560" : "1380:6326",
+} = Astro.props;
+const selling = variant === "sell";
+---
+
+<section
+  class:list={["office-consultation", { "office-consultation-sell": selling }]}
+  data-node-id={node}
+  aria-labelledby={`${id}-title`}
+>
+  <img
+    class="office-consultation-background"
+    src="/assets/0ab1b.webp"
+    width="1440"
+    height="798.704"
+    alt="Встреча в офисе Монополии"
+    loading="lazy"
+    decoding="async"
+  />
+  <TapedNote class="office-consultation-label" textured rotate={-1}>
+    Бесплатная консультация
+  </TapedNote>
+  <div class="office-consultation-inner">
+    <div class="office-consultation-copy">
+      <h2 id={`${id}-title`}>
+        {selling ? (
+          <>
+            По телефону хорошо говорить про погоду.
+            <br />
+            Про сделку на миллионы лучше в офисе за кофе
+          </>
+        ) : (
+          "По телефону хорошо говорить про погоду. Про недвижку, ипотеку и риски лучше в офисе с печеньками"
+        )}
+      </h2>
+      <div class="office-consultation-notes">
+        <TapedNote class="office-consultation-note" textured>
+          {selling ? (
+            <>
+              За 40 минут сделаем прогноз по срокам
+              <br />
+              продажи и цене, а не будем переписываться
+              <br />
+              неделю в заблокированных Telegram или WhatsApp*
+            </>
+          ) : (
+            <>
+              За 40 минут разберем бюджет, цели и образ жизни — и сразу отсечем
+              <br />
+              варианты, которые вам не подходят, а не будем переписываться
+              <br />
+              неделю в заблокированных Telegram или WhatsApp*
+            </>
+          )}
+        </TapedNote>
+        <TapedNote class="office-consultation-note" textured>
+          {selling ? (
+            <>
+              Возможно, в нашей базе
+              <br />
+              уже есть человек, который
+              <br />
+              ждет ваше предложение
+            </>
+          ) : (
+            <>
+              А еще расскажем, как законно сэкономить
+              <br />
+              на налогах и расходах до 2 млн при покупке
+              <br />
+              недвижимости
+            </>
+          )}
+        </TapedNote>
+      </div>
+    </div>
+    <div class="office-consultation-actions">
+      <Button
+        label="Записаться на консультацию"
+        subject={`Консультация в офисе: ${selling ? "продажа" : "покупка"}`}
+      />
+      <p>
+        На этой неделе есть
+        <br />
+        еще <strong>4 свободных места</strong>
+      </p>
+    </div>
+  </div>
+</section>

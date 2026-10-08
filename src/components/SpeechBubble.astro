@@ -1,0 +1,20 @@
+---
+const {
+  text = "Клава, ты слыхала? Васька за квартиру просит годовой бюджет Белогорска",
+  side = "left",
+  tail = "3b04c.svg",
+  class: className = "",
+} = Astro.props;
+---
+
+<div class:list={["speech-bubble", side, className]} data-node-id="1380:5769">
+  <p>{text}</p>
+  <img
+    src={"/assets/" + tail}
+    alt=""
+    width="42.183"
+    height="24.858"
+    loading={Astro.props.loading ?? "lazy"}
+    decoding="async"
+  />
+</div>

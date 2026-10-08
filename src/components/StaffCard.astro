@@ -1,0 +1,77 @@
+---
+import { imageSize } from "../lib/image-size";
+import Paper from "./Paper.astro";
+import Badge from "./Badge.astro";
+interface Props {
+  name?: string;
+  role?: string;
+  image?: string;
+  badge?: string;
+  facts?: string[];
+  shadow?: string;
+  variant?: string;
+  certificate?: string;
+}
+const {
+  shadow = "/assets/b03c1.svg",
+  variant = "",
+  certificate,
+  name = "Евгения Матухнова",
+  role = "Юрист по сопровождению сделок",
+  image = "/assets/defcc.webp",
+  badge = "Самый душный юрист в области",
+  facts = [
+    "2 года опыта работы",
+    "Работала в МФЦ и знает все нюансы оформления документов",
+    "Нашла в договоре покупателя ошибку, которая могла стоить клиенту 50 млн ₽",
+  ],
+} = Astro.props;
+---
+
+<Paper class={`staff-card ${variant}`} node="1380:5639">
+  <div class="staff-photo">
+    <img
+      class="staff-backdrop"
+      src={shadow}
+      alt=""
+      width={imageSize(shadow).width}
+      height={imageSize(shadow).height}
+      loading="lazy"
+      decoding="async"
+    />
+    <img
+      class="staff-person"
+      src={image}
+      width="336"
+      height="336"
+      alt={name}
+      loading="lazy"
+      decoding="async"
+    />
+    <Badge text={badge} />
+  </div>
+  <div>
+    <h3>{name}</h3>
+    <p class="muted">{role}</p>
+  </div>
+  {certificate && (
+    <Paper class="staff-certificate">
+      <p>Аттестат:</p>
+      <p>{certificate}</p>
+      <img
+        src="/assets/55e7e.webp"
+        width="39.912"
+        height="12.052"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </Paper>
+  )}
+  <hr />
+  <ul class="diamond-list">
+    {facts.map((fact) => (
+      <li>{fact}</li>
+    ))}
+  </ul>
+</Paper>

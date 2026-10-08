@@ -1,0 +1,476 @@
+---
+import "../styles/global.css";
+import FaqCard from "../components/FaqCard.astro";
+import ReviewCard from "../components/ReviewCard.astro";
+import ServiceCard from "../components/ServiceCard.astro";
+import StaffCard from "../components/StaffCard.astro";
+import Button from "../components/Button.astro";
+import Paper from "../components/Paper.astro";
+import LeadForm from "../components/LeadForm.astro";
+import PropertyCard from "../components/PropertyCard.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+const sections = [
+  ["foundation", "Основа"],
+  ["buttons", "Кнопки"],
+  ["elements", "Детали"],
+  ["cards", "Карточки"],
+  ["faq", "FAQ"],
+  ["forms", "Формы"],
+  ["patterns", "Повторяющиеся блоки"],
+  ["new-details", "Новые варианты"],
+  ["shared-sections", "Общие секции"],
+  ["process", "Карта и сделка"],
+  ["registry", "Реестр"],
+];
+
+import SiteFooter from "../components/SiteFooter.astro";
+import Badge from "../components/Badge.astro";
+import ChoiceGroup from "../components/ChoiceGroup.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import ArrowButton from "../components/ArrowButton.astro";
+import PlayButton from "../components/PlayButton.astro";
+import NumberedBenefit from "../components/NumberedBenefit.astro";
+import SpeechBubble from "../components/SpeechBubble.astro";
+import PaperQuote from "../components/PaperQuote.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ComparisonTable from "../components/ComparisonTable.astro";
+import RatingBadge from "../components/RatingBadge.astro";
+import Carousel from "../components/Carousel.astro";
+import PartnerLogos from "../components/PartnerLogos.astro";
+import RangeField from "../components/RangeField.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import "../styles/ui-kit.css";
+import { components } from "../data/component-registry";
+import FaqSection from "../components/FaqSection.astro";
+import LeadSection from "../components/LeadSection.astro";
+import InnerHero from "../components/InnerHero.astro";
+import TapedNote from "../components/TapedNote.astro";
+import RelocationMap from "../components/RelocationMap.astro";
+import DealSteps from "../components/DealSteps.astro";
+import RealtorComparison from "../components/RealtorComparison.astro";
+import OfficeConsultation from "../components/OfficeConsultation.astro";
+import TrustAndViewing from "../components/TrustAndViewing.astro";
+import ReferralBonus from "../components/ReferralBonus.astro";
+import SellCommissionNote from "../components/SellCommissionNote.astro";
+import HeroTeam from "../components/HeroTeam.astro";
+import { homeFaq, buyFaq, sellFaq } from "../data/faq";
+import { buyDealSteps } from "../data/deal-steps";
+import { sellDealSteps } from "../data/sell-deal-steps";
+import { buyRealtorComparison } from "../data/realtor-comparison";
+import { sellRealtorComparison } from "../data/sell-realtor-comparison";
+import "../styles/home-services.css";
+import tokenSource from "../styles/tokens.css?raw";
+const tokens = [
+  ...tokenSource.split("@media")[0].matchAll(/(--[a-z0-9-]+):\s*([^;]+);/g),
+].map((match) => ({ name: match[1], value: match[2].replace(/\s+/g, " ") }));
+const demoNav = [
+  { label: "Хочу продать", href: "#forms" },
+  { label: "Хочу купить", href: "#cards" },
+  { label: "Кейсы", href: "#faq" },
+];
+---
+
+<SiteLayout title="Монополия — UI kit" noindex>
+  <div class="container">
+    <SiteHeader home="#top" nav={demoNav} />
+    <main class="ui-kit">
+      <div class="kit-intro">
+        <span class="eyebrow">МОНОПОЛИЯ / БИБЛИОТЕКА КОМПОНЕНТОВ</span>
+        <h1>
+          Характер — в деталях.<span class="handwriting">UI kit</span>
+        </h1>
+        <p>
+          Повторяющиеся элементы главной страницы, продажи и покупки.
+          <br />
+          Чистовой макет Figma · локальные шрифты и оригинальные ресурсы.
+        </p>
+        <nav class="kit-nav" aria-label="Навигация по библиотеке">
+          {sections.map(([id, label]) => (
+            <a href={"#" + id}>
+              {label} <span>↗</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+      <section id="foundation">
+        <div class="section-label">01 / ОСНОВА</div>
+        <h2>Типографика и палитра</h2>
+        <div class="foundation-grid">
+          <Paper class="type-demo">
+            <h2>
+              Недвижимость.
+              <br />С человеческим лицом.
+            </h2>
+            <h3>Forma DJR Cyrillic Text · 20 / 24</h3>
+            <p>
+              Calibri · 16 / 19.2. Помогаем найти свой дом и спокойно пройти
+              каждый этап сделки.
+            </p>
+            <small>Дополнительный текст · 14 / 16.8</small>
+            <span class="handwriting">Denistina — живые акценты</span>
+          </Paper>
+          <div class="swatches">
+            {[
+              ["#ea1818", "Акцент"],
+              ["#1a1a1a", "Основной текст"],
+              ["#505050", "Вторичный текст"],
+              ["#ededed", "Фон"],
+              ["#ffffff", "Бумага"],
+            ].map(([color, label]) => (
+              <div class="swatch">
+                <span style={"background:" + color}></span>
+                <p>
+                  {label}
+                  <small>{color}</small>
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section id="buttons">
+        <div class="section-label">02 / ДЕЙСТВИЯ</div>
+        <h2>Кнопки</h2>
+        <Paper class="button-demo">
+          <div>
+            <Button label="Оставить заявку" />
+            <Button label="Хочу купить" icon />
+            <Button label="Получить консультацию" tone="black" />
+            <Button label="Недоступно" disabled />
+          </div>
+          <p class="caption">
+            52 px · Forma Medium 16 px · hover, focus и disabled добавлены для
+            работы в браузере.
+          </p>
+          <div>
+            <ArrowButton direction="prev" disabled />
+            <ArrowButton disabled />
+            <PlayButton />
+          </div>
+        </Paper>
+      </section>
+      <section id="elements">
+        <div class="section-label">03 / ДЕТАЛИ</div>
+        <h2>Метки, выбор и бумага</h2>
+        <div class="element-grid">
+          <Paper class="detail-card">
+            <RatingBadge />
+            <Badge text="−30%" />
+            <Badge text="Проверено" />
+            <ChoiceGroup
+              name="Тип недвижимости"
+              options={["Квартира", "Дом", "Участок"]}
+            />
+            <ChoiceGroup
+              name="Способ связи"
+              options={["По телефону", "Telegram", "WhatsApp"]}
+              channels
+            />
+            <p class="diamond-line">
+              <span class="diamond"></span>Пункты преимуществ и услуг
+            </p>
+            <SocialLinks />
+          </Paper>
+          <PaperQuote>
+            <p>
+              В нашей базе только проверенные потенциальные покупатели{" "}
+              <strong>с наличкой или с предодобренной ипотекой</strong>. Они
+              готовы в ближайшее время купить квартиру, дом или помещение для
+              бизнеса
+            </p>
+          </PaperQuote>
+        </div>
+      </section>
+      <section id="cards">
+        <div class="section-label">04 / КАРТОЧКИ</div>
+        <h2>Объекты, команда и услуги</h2>
+        <div class="cards-grid">
+          <PropertyCard />
+          <StaffCard />
+          <div class="card-stack">
+            <ServiceCard />
+            <Paper class="process-card" node="1380:6385">
+              <NumberedBenefit />
+              <div class="progress">
+                <span></span>
+              </div>
+              <small>Нумерация преимуществ и индикатор этапов</small>
+            </Paper>
+          </div>
+        </div>
+        <div class="reviews-row">
+          <ReviewCard />
+          <div class="review-description">
+            <h2>Отзывы с лицом</h2>
+            <p>
+              Видеообложка, кнопка воспроизведения, длительность, имя и рейтинг.
+            </p>
+            <span class="handwriting">Истории наших клиентов</span>
+            <p class="caption">
+              В UI kit нет видеофайла: кнопка показывает статус демонстрации.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="faq">
+        <div class="section-label">05 / ДОВЕРИЕ</div>
+        <h2>Ответы и сравнение</h2>
+        <FaqCard />
+        <ComparisonTable rows={buyRealtorComparison} />
+      </section>
+      <section id="forms">
+        <div class="section-label">06 / ЗАЯВКА</div>
+        <h2>Форма обратной связи</h2>
+        <LeadForm id="question-demo" />
+      </section>
+      <section id="patterns">
+        <div class="section-label">07 / ПОВТОРЯЮЩИЕСЯ БЛОКИ</div>
+        <SectionHeading
+          title="Диалоги, партнёры и карусель"
+          annotation="Ещё немного деталей"
+        />
+        <div class="pattern-grid">
+          <SpeechBubble />
+          <SpeechBubble
+            side="right"
+            text="Проверим документы и поможем разобраться."
+          />
+        </div>
+        <Paper class="range-demo">
+          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <RangeField id="housing-price" label="Стоимость жилья" />
+          <Button label="Подобрать ипотеку" />
+        </Paper>
+        <PartnerLogos />
+        <Carousel label="Пример карусели объектов">
+          <PropertyCard />
+          <PropertyCard />
+          <PropertyCard />
+          <PropertyCard />
+        </Carousel>
+        <SectionHeading
+          title="Компактная форма"
+          description="Вариант для записи на консультацию и получения подборки"
+        />
+        <LeadForm
+          id="contact-demo"
+          compact
+          variant="contact"
+          title="Получите подборку объектов"
+        />
+      </section>
+      <section id="new-details">
+        <div class="section-label">08 / НОВЫЕ ВАРИАНТЫ</div>
+        <h2>Купон, аккордеон и заметка</h2>
+        <div class="kit-variant-grid">
+          <div>
+            <h3 class="kit-example-label">ServiceCard · coupon</h3>
+            <ServiceCard variant="coupon" />
+          </div>
+          <div>
+            <h3 class="kit-example-label">FaqCard · accordion</h3>
+            <FaqCard {...homeFaq[0]} variant="accordion" id="kit-single-faq" />
+          </div>
+          <div>
+            <h3 class="kit-example-label">TapedNote · иконка</h3>
+            {buyDealSteps
+              .filter((step) => step.note)
+              .slice(0, 1)
+              .map((step) => (
+                <TapedNote icon={step.note!.icon} rotate={-1}>
+                  {step.note!.text}
+                </TapedNote>
+              ))}
+            <h3 class="kit-example-label">RatingBadge · Яндекс первым</h3>
+            <RatingBadge yandexFirst />
+          </div>
+        </div>
+        <h3 class="kit-example-label">HeroTeam · композиция команды</h3>
+        <div class="kit-team-demo">
+          <HeroTeam />
+        </div>
+        <h3 class="kit-example-label">AccentStatement · SellCommissionNote</h3>
+        <SellCommissionNote />
+      </section>
+      <section id="shared-sections">
+        <div class="section-label">09 / ОБЩИЕ СЕКЦИИ</div>
+        <h2>Первый экран, консультация, доверие и формы</h2>
+        <p class="caption">
+          Контент компонентов совпадает со страницами. Заявки демонстрационные.
+        </p>
+        <h3 class="kit-example-label">InnerHero · Покупка</h3>
+        <div class="kit-section-demo kit-hero-demo">
+          <InnerHero
+            node="1380:6363"
+            title={["800+ проверенных объектов", "недвижимости, которых нет"]}
+            markets
+            description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
+            formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
+            image={{
+              src: "/assets/5ab39.webp",
+              ratio: "1081 / 812",
+              width: 1081,
+              height: 250.368,
+            }}
+            shadow={{
+              src: "cfc23.svg",
+              left: 20.5,
+              top: 29.5,
+              width: 303,
+              height: 185,
+              bleed: "-36.52% -15.61% -36.28% -31.99%",
+            }}
+            buttonLabel="Смотреть подборку"
+            subject="Подборка объектов"
+          />
+        </div>
+        {(["buy", "sell"] as const).map((variant) => (
+          <>
+            <h3 class="kit-example-label">
+              OfficeConsultation · {variant === "buy" ? "Покупка" : "Продажа"}
+            </h3>
+            <div class="kit-section-demo">
+              <OfficeConsultation
+                variant={variant}
+                id={`kit-${variant}-consultation`}
+              />
+            </div>
+            <h3 class="kit-example-label">
+              TrustAndViewing · {variant === "buy" ? "Покупка" : "Продажа"}
+            </h3>
+            <p class="caption">Внутри: DealInsurance и PreparedViewing.</p>
+            <div class="kit-section-demo">
+              <TrustAndViewing variant={variant} />
+            </div>
+          </>
+        ))}
+        <h3 class="kit-example-label">FaqSection · Главная</h3>
+        <FaqSection id="kit-home-faq" items={homeFaq} />
+        <details class="kit-example-details">
+          <summary>FaqSection · вопросы «Покупки» и «Продажи»</summary>
+          <FaqSection id="kit-buy-faq" items={buyFaq} node="1380:7007" />
+          <FaqSection id="kit-sell-faq" items={sellFaq} node="1380:6327" />
+        </details>
+        <h3 class="kit-example-label">LeadSection · форма с кирпичным фоном</h3>
+        <div class="kit-section-demo">
+          <LeadSection id="kit-lead" anchor="kit-lead-section" />
+        </div>
+        <h3 class="kit-example-label">ReferralBonus · ReferralNotification</h3>
+        <p class="caption">
+          Уведомления и сроки акции — иллюстрация из макета.
+        </p>
+        <div class="kit-section-demo">
+          <ReferralBonus />
+        </div>
+      </section>
+      <section id="process">
+        <div class="section-label">10 / КАРТА И СДЕЛКА</div>
+        <h2>Переезд, этапы и сравнение рисков</h2>
+        <h3 class="kit-example-label">RelocationMap · Покупка</h3>
+        <div class="kit-section-demo">
+          <RelocationMap id="kit-relocation" />
+        </div>
+        <details class="kit-example-details">
+          <summary>DealSteps · 10 шагов покупки</summary>
+          <div class="kit-section-demo">
+            <DealSteps id="kit-buy-steps" steps={buyDealSteps} />
+          </div>
+        </details>
+        <details class="kit-example-details">
+          <summary>DealSteps · 11 шагов продажи, в том числе списки</summary>
+          <div class="kit-section-demo">
+            <DealSteps
+              id="kit-sell-steps"
+              steps={sellDealSteps}
+              node="1380:6182"
+            />
+          </div>
+        </details>
+        <h3 class="kit-example-label">
+          RealtorComparison · ComparisonTable risk · TapedNote · AccentStatement
+        </h3>
+        <div class="kit-section-demo">
+          <RealtorComparison id="kit-realtor" rows={buyRealtorComparison} />
+        </div>
+        <h3 class="kit-example-label">ComparisonTable · risk · Продажа</h3>
+        <ComparisonTable
+          variant="risk"
+          rows={sellRealtorComparison}
+          icons={["/assets/29925.svg", "/assets/6c2c3.svg"]}
+        />
+      </section>
+      <section id="registry">
+        <SectionHeading
+          title="Состав библиотеки"
+          description="Переиспользуемые компоненты и источник каждого семейства"
+        />
+        <div class="comparison-wrap">
+          <table class="comparison registry-table">
+            <thead>
+              <tr>
+                <th>Компонент</th>
+                <th>Возможности</th>
+                <th>Источник</th>
+              </tr>
+            </thead>
+            <tbody>
+              {components.map(([name, description, source]) => (
+                <tr>
+                  <th scope="row">{name}</th>
+                  <td>{description}</td>
+                  <td>{source}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Paper class="token-demo">
+          <h3>Токены</h3>
+          <p>
+            Цвета · семейства и начертания шрифтов · типографическая шкала ·
+            межстрочные интервалы · отступы · сетка · радиусы · размеры
+            элементов управления · тени · фокус · анимация · текстуры.
+          </p>
+          <p class="caption">
+            src/styles/tokens.css — единый источник. Адаптивные пороги: 1200 /
+            800 / 540 px. Состояния и мобильная компоновка добавлены в коде.
+          </p>
+        </Paper>
+      </section>
+      <details class="token-details">
+        <summary>Все значения токенов ({tokens.length})</summary>
+        <div class="comparison-wrap">
+          <table class="comparison">
+            <thead>
+              <tr>
+                <th>Токен</th>
+                <th>Значение</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tokens.map((token) => (
+                <tr>
+                  <th scope="row">
+                    <code>{token.name}</code>
+                  </th>
+                  <td>
+                    <code>{token.value}</code>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </main>
+  </div>
+  <SiteFooter
+    demo
+    nav={[
+      { label: "Карточки", href: "#cards" },
+      { label: "Отзывы", href: "#cards" },
+      { label: "FAQ", href: "#faq" },
+      { label: "Формы", href: "#forms" },
+    ]}
+  />
+</SiteLayout>

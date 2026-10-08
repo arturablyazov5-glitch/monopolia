@@ -1,0 +1,23 @@
+---
+import DealInsurance from "./DealInsurance.astro";
+import PreparedViewing from "./PreparedViewing.astro";
+interface Props {
+  variant?: "buy" | "sell";
+}
+const { variant = "buy" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "trust-and-viewing",
+    { "trust-and-viewing-sell": variant === "sell" },
+  ]}
+  data-node-id={variant === "sell" ? "1380:5852" : "1380:6561"}
+>
+  <DealInsurance
+    id={`${variant}-insurance`}
+    node={variant === "sell" ? "1380:5853" : "1380:6562"}
+    subject={`Страхование сделки: ${variant === "sell" ? "продажа" : "покупка"}`}
+  />
+  <PreparedViewing variant={variant} />
+</div>

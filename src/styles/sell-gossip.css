@@ -1,0 +1,128 @@
+/* «Продажа» 1380:5760: 1440 × 712.5, начинается через 80 px после первого экрана. */
+.sell-gossip {
+  position: relative;
+  z-index: 1;
+  height: 712.5px;
+  margin-top: 80px;
+}
+.sell-gossip-edge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: max(100%, 1440px);
+  height: 51.5px;
+  max-width: none;
+  transform: translateX(-50%) rotate(180deg);
+}
+.sell-gossip-photo {
+  position: absolute;
+  top: 8.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 703.806px;
+  max-width: none;
+}
+.sell-gossip-content {
+  position: relative;
+  width: 1160px;
+  height: 100%;
+  margin: 0 auto;
+}
+.sell-gossip-content .speech-bubble {
+  position: absolute;
+  padding-bottom: 0;
+}
+.sell-gossip-content .speech-bubble p {
+  white-space: pre;
+}
+.sell-gossip-content .speech-bubble > img {
+  display: block;
+  margin-top: -16px;
+}
+.sell-gossip-rumor {
+  left: 190px;
+  top: 96px;
+}
+.sell-gossip-reply {
+  left: 506px;
+  top: 157px;
+}
+.sell-gossip-content .sell-gossip-reply p {
+  background: #269dfd;
+  color: #fff;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .sell-gossip {
+    height: 600px;
+    /* Рваный верх фото ложится на низ первого экрана. */
+    margin-top: -32px;
+    overflow: clip;
+  }
+  .sell-gossip-photo {
+    left: 0;
+    width: 100%;
+    height: calc(100% - 8.5px);
+    transform: none;
+    object-fit: cover;
+    object-position: 20% 50%;
+  }
+  .sell-gossip-content {
+    width: auto;
+    margin: 0 32px;
+  }
+  .sell-gossip-rumor {
+    left: 0;
+    top: 80px;
+  }
+  .sell-gossip-reply {
+    left: auto;
+    right: 18%;
+    top: 160px;
+  }
+}
+@media (max-width: 767px) {
+  /* Реплики — над сценой, фото ниже (лица соседок не перекрываются). */
+  .sell-gossip {
+    height: 580px;
+    margin-top: 0;
+  }
+  .sell-gossip-edge {
+    top: 168px;
+  }
+  .sell-gossip-photo {
+    top: 176.5px;
+    height: calc(100% - 176.5px);
+    /* Мобильный файл — левая часть кадра (соседки на лавочке). */
+    object-position: 0 50%;
+  }
+  .sell-gossip-content {
+    margin: 0 20px;
+  }
+  .sell-gossip-content .speech-bubble {
+    max-width: 290px;
+  }
+  .sell-gossip-content .speech-bubble p {
+    padding: 12px 16px;
+    font-size: 16px;
+    white-space: normal;
+  }
+  .sell-gossip-content .speech-bubble > img {
+    margin-top: -14px;
+  }
+  .sell-gossip-rumor {
+    top: 24px;
+  }
+  .sell-gossip-content .sell-gossip-reply {
+    right: 0;
+    top: 104px;
+    max-width: 240px;
+  }
+}
+@media (max-width: 389px) {
+  .sell-gossip-content {
+    margin: 0 16px;
+  }
+}

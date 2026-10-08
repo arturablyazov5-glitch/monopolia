@@ -1,0 +1,88 @@
+---
+import RatingBadge from "./RatingBadge.astro";
+import Button from "./Button.astro";
+import HeroTeam from "./HeroTeam.astro";
+import "../styles/home-hero.css";
+---
+
+<section
+  class="home-hero"
+  aria-labelledby="hero-title"
+  data-node-id="1380:4914"
+>
+  <img
+    class="hero-background"
+    src="/assets/home-background.webp"
+    alt=""
+    width="1440"
+    height="840"
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="container hero-container">
+    <div class="hero-header-space" aria-hidden="true"></div>
+    <div class="hero-content" data-node-id="1380:4924">
+      <div class="hero-title-block">
+        <span class="hero-annotation" aria-hidden="true">
+          Агентство
+        </span>
+        <h1 id="hero-title">
+          <span class="hero-title-first">
+            <span class="sr-only">Агентство</span>
+            <span class="crossed-word" aria-hidden="true">
+              Контора
+              <span class="hero-cross-out" aria-hidden="true">
+                <span>
+                  <img
+                    src="/assets/465a7.svg"
+                    alt=""
+                    width="306.567"
+                    height="151.698"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </span>
+              </span>
+            </span>{" "}
+            недвижимости
+          </span>
+          <span class="hero-title-second">
+            с 2006 года <RatingBadge loading="eager" />
+          </span>
+        </h1>
+      </div>
+      <p class="hero-description">
+        Поможем выгодно купить или срочно продать квартиру,{" "}
+        <br />
+        дом или коммерческую недвижимость
+      </p>
+    </div>
+    <div class="hero-actions" data-node-id="1380:4955">
+      <Button
+        loading="eager"
+        label="Купить объект"
+        icon="buy"
+        subject="Хочу купить объект"
+      />
+      <span aria-hidden="true">/</span>
+      <Button
+        loading="eager"
+        label="Продать объект"
+        icon="sell"
+        subject="Хочу продать объект"
+      />
+    </div>
+  </div>
+  <HeroTeam />
+  <div class="hero-paper-edge" aria-hidden="true">
+    <img
+      src="/assets/e159e.webp"
+      alt=""
+      width="1440"
+      height="1325"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+</section>

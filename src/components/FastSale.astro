@@ -1,0 +1,99 @@
+---
+import Button from "./Button.astro";
+import Paper from "./Paper.astro";
+import "../styles/fast-sale.css";
+---
+
+<section
+  class="fast-sale"
+  aria-labelledby="fast-sale-title"
+  data-node-id="1380:4975"
+>
+  <img
+    class="fast-sale-background"
+    src="/assets/e159e.webp"
+    alt=""
+    width="1440"
+    height="1325"
+    loading="eager"
+    decoding="async"
+  />
+  <div class="fast-sale-scene">
+    <div class="fast-sale-copy">
+      <h2 id="fast-sale-title">
+        Недавно мы продали{" "}
+        <br />
+        квартиру за <span class="fast-sale-time">3 часа</span>{" "}
+        <br />
+        <span class="fast-sale-muted">
+          которую другое агентство{" "}
+          <br />
+          не могло продать за год
+        </span>
+      </h2>
+      <Paper class="fast-sale-note" node="1380:4982">
+        <img
+          src="/assets/330ff.svg"
+          width="36"
+          height="36"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+        <p>
+          А среднее время продажи{" "}
+          <br />
+          объектов в Монополии — <strong>2 недели</strong>
+        </p>
+        <img
+          class="fast-sale-tape"
+          src="/assets/55e7e.webp"
+          width="51"
+          height="15"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </Paper>
+      <Button
+        label="Найти покупателя"
+        icon="sell"
+        subject="Быстро продать недвижимость"
+      />
+    </div>
+    <div class="fast-sale-visual">
+      <img
+        class="fast-sale-shadow"
+        src="/assets/86b81.svg"
+        alt=""
+        width="447.463"
+        height="580.875"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        class="fast-sale-portrait"
+        src="/assets/7e2d1.webp"
+        width="828"
+        height="552"
+        alt="Павел Барковский на фоне проданного объекта"
+        loading="lazy"
+        decoding="async"
+      />
+      <Paper class="fast-sale-name" node="1380:5008">
+        <p class="fast-sale-name-title">Павел Барковский</p>
+        <p class="fast-sale-name-role">Старший специалист по недвижимости</p>
+      </Paper>
+    </div>
+  </div>
+  <!-- Figma 1380:5009: рваный край #EDEDED поверх низа фото -->
+  <img
+    class="fast-sale-edge"
+    src="/assets/7c4b3.svg"
+    width="1440"
+    height="80"
+    alt=""
+    loading="lazy"
+    decoding="async"
+  />
+</section>

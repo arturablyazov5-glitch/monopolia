@@ -1,0 +1,71 @@
+---
+interface Props {
+  label?: string;
+  video?: string;
+  /** red — красная кнопка 44 px с треугольником bcd2a (Figma 1380:5827). */
+  variant?: "white" | "red";
+}
+const { label = "Воспроизвести видео", video, variant = "white" } = Astro.props;
+---
+
+<button
+  type="button"
+  class:list={["play", { "play-red": variant === "red" }]}
+  aria-label={label}
+  data-video={video ?? ""}
+>
+  {variant === "red" ? (
+    <span class="play-triangle">
+      <img
+        src="/assets/bcd2a.svg"
+        alt=""
+        width="13.5201"
+        height="11.9038"
+        loading="lazy"
+        decoding="async"
+      />
+    </span>
+  ) : (
+    <img
+      src="/assets/f5a01.svg"
+      alt=""
+      width="46"
+      height="46"
+      loading="lazy"
+      decoding="async"
+    />
+  )}
+</button>
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-video]")
+    .forEach((button) =>
+      button.addEventListener("click", () => {
+        const wrapper = button.closest(".review-card") ?? button.parentElement!;
+        const source = button.dataset.video;
+        if (source) {
+          const video = document.createElement("video");
+          video.src = source;
+          video.controls = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          video.className = "inline-video";
+          button.parentElement!.append(video);
+          button.hidden = true;
+        } else {
+          let status = wrapper.querySelector<HTMLElement>(
+            "[data-video-status]",
+          );
+          if (!status) {
+            status = document.createElement("p");
+            status.dataset.videoStatus = "";
+            status.setAttribute("role", "status");
+            status.className = "caption";
+            wrapper.append(status);
+          }
+          status.textContent =
+            "Демонстрация плеера: видеофайл пока не подключён.";
+        }
+      }),
+    );
+</script>

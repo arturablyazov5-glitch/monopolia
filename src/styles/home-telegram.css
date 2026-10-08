@@ -1,0 +1,167 @@
+.home-telegram {
+  position: relative;
+  isolation: isolate;
+  height: 933.77px;
+  overflow: hidden;
+  background: var(--color-canvas);
+}
+.telegram-background {
+  position: absolute;
+  top: -1254px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 2187.293px;
+  max-width: none;
+  z-index: -1;
+}
+.telegram-news-wrap {
+  position: relative;
+  width: 749.712px;
+  height: 285.895px;
+  margin: 0 auto;
+}
+.telegram-news {
+  position: absolute;
+  left: 9.55px;
+  top: 14.77px;
+  width: 734px;
+  height: 254px;
+  transform: rotate(-1deg);
+  overflow: hidden;
+  /* Обводка 15 px в Figma внутренняя (не сдвигает контент и не видна в
+     рендере — текстура до края), поэтому CSS-рамки нет. */
+  padding: 47px 0 47px 52px;
+  --paper-texture: url("/assets/30984.webp");
+  text-align: left;
+  box-shadow: none;
+}
+.telegram-news h2 {
+  font: 500 44px/1 var(--font-heading);
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 24px;
+}
+.telegram-news p {
+  width: 321.552px;
+  font: 500 20px/1.2 var(--font-heading);
+  color: var(--color-muted);
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+.telegram-news-person {
+  position: absolute;
+  width: 334px;
+  height: 241.086px;
+  right: -13.5px;
+  bottom: -5.15px;
+  max-width: none;
+}
+.news-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  transform: rotate(-150.25deg) scaleY(-1);
+}
+.news-tape-top {
+  right: 0;
+  top: 9px;
+}
+.news-tape-bottom {
+  left: 0;
+  top: 265px;
+}
+.telegram-content {
+  width: 960px;
+  margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: 415px 505px;
+  gap: 40px;
+  position: relative;
+}
+.telegram-photo {
+  position: relative;
+  height: 428px;
+}
+.telegram-photo-crop {
+  position: absolute;
+  width: 705px;
+  height: 794px;
+  overflow: hidden;
+  left: -136px;
+  top: -71.195px;
+}
+.telegram-shadow {
+  position: absolute;
+  left: 75.99px;
+  top: 33.04px;
+  max-width: none;
+}
+.telegram-person {
+  position: absolute;
+  width: 460px;
+  height: 930px;
+  left: 105px;
+  top: -9.534px;
+  max-width: none;
+}
+.telegram-signature {
+  position: absolute;
+  left: 14.966px;
+  top: 326.9px;
+  padding: 20px 24px;
+  transform: rotate(2deg);
+  --paper-texture: url("/assets/30984.webp");
+  text-align: left;
+}
+.telegram-signature p {
+  font: 500 20px/1.2 var(--font-heading);
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+.telegram-signature span {
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.telegram-copy {
+  padding-top: 72px;
+  position: relative;
+}
+.telegram-copy h2 {
+  font: 500 44px/1 var(--font-heading);
+  margin-bottom: 40px;
+}
+.telegram-benefits {
+  display: grid;
+  grid-template-columns: 212px 1px 212px;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.telegram-benefits .diamond-list {
+  gap: 16px;
+  font: 16px/1.2 var(--font-body);
+}
+.telegram-benefits li {
+  padding-left: 18px;
+}
+.telegram-divider {
+  background: linear-gradient(transparent, #000 5%, transparent);
+  opacity: 0.1;
+}
+.telegram-subscribe {
+  background: #ea1818;
+  min-height: 52px;
+  padding: 18px 24px 18px 32px;
+  font: 500 16px/1 var(--font-heading);
+}
+.telegram-subscribe img {
+  max-width: none;
+}
+.telegram-link-status {
+  font: 16px/1.2 var(--font-body);
+  margin-top: 12px;
+  color: var(--color-muted);
+}

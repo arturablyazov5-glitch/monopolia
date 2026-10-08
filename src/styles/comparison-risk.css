@@ -1,0 +1,159 @@
+.comparison-mobile-label {
+  display: none;
+}
+/* ComparisonTable variant="risk" — Figma 1380:6987 (мастер строк 785:7925).
+   Три колонки по 360 px с промежутком 40 px; третья — бумажная колонка. */
+.comparison-risk {
+  width: calc(100% + 80px);
+  margin: 0 -40px;
+  border-collapse: separate;
+  border-spacing: 40px 0;
+  table-layout: fixed;
+  text-align: left;
+  color: #000;
+}
+.comparison-risk th,
+.comparison-risk td {
+  padding: 20px;
+  vertical-align: middle;
+  font-weight: 400;
+}
+/* Разделители 785:7946: 1 px, у первых двух колонок чёрный 5%, у третьей белый */
+.comparison-risk tbody tr:not(:last-child) > * {
+  border-bottom: 1px solid #0000000d;
+}
+.comparison-risk thead > tr > * {
+  border-bottom: 1px solid #0000000d;
+}
+.comparison-risk thead > tr > td:first-child {
+  border-bottom-color: transparent;
+}
+.comparison-risk .comparison-risk-ours {
+  position: relative;
+  isolation: isolate;
+  background: #fff;
+}
+.comparison-risk tr:not(:last-child) > .comparison-risk-ours,
+.comparison-risk thead .comparison-risk-ours {
+  border-bottom-color: #fff;
+}
+.comparison-risk .comparison-risk-ours:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--paper-texture) center / cover;
+  opacity: 0.5;
+  pointer-events: none;
+}
+/* Шапка 1380:6988: высота 72, Forma Medium 20 */
+.comparison-risk thead th {
+  height: 72px;
+  padding: 12px 24px;
+  text-align: center;
+  font: var(--weight-heading) var(--text-card) / var(--leading-body)
+    var(--font-heading);
+  color: #1e1e1e;
+}
+.comparison-risk-label {
+  display: block;
+  font:
+    400 18px/1.35 "Inter Tight",
+    sans-serif;
+  letter-spacing: 0.18px;
+}
+.comparison-risk-level {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: var(--text-small);
+}
+.comparison-risk-cell {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.comparison-risk-cell > img {
+  flex-shrink: 0;
+}
+.comparison-risk tbody th {
+  text-align: left;
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .comparison-risk {
+    width: 100%;
+    margin: 0;
+    border-spacing: 12px 0;
+  }
+  .comparison-risk th,
+  .comparison-risk td {
+    padding: 16px 12px;
+    overflow-wrap: anywhere;
+  }
+  .comparison-risk thead th {
+    padding: 12px;
+    font-size: 20px;
+  }
+  .comparison-risk-cell {
+    gap: 12px;
+  }
+  .comparison-risk-label {
+    font-size: 16px;
+  }
+  .comparison-mobile-label {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .comparison-risk {
+    display: block;
+    border-spacing: 0;
+  }
+  .comparison-risk thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .comparison-risk tbody {
+    display: grid;
+    gap: 24px;
+  }
+  .comparison-risk tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--color-canvas);
+    padding: 8px;
+  }
+  .comparison-risk tbody th,
+  .comparison-risk tbody td {
+    display: block;
+    padding: 16px;
+    border: 0;
+  }
+  .comparison-risk tbody th {
+    padding-bottom: 12px;
+  }
+  .comparison-risk-label {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .comparison-mobile-label {
+    display: block;
+    margin-bottom: 10px;
+    font: 500 18px/1.2 var(--font-heading);
+  }
+  .comparison-risk-cell {
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.3;
+  }
+  .comparison-risk .comparison-risk-ours {
+    margin-top: 8px;
+  }
+}

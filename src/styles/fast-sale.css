@@ -1,0 +1,122 @@
+.fast-sale {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 572px;
+  background: var(--color-canvas);
+}
+.fast-sale-background {
+  position: absolute;
+  top: -753px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max(100%, 1440px);
+  height: 1325px;
+  max-width: none;
+  z-index: -1;
+}
+/* Figma 1380:5009: y 2050 (= 527 px от начала секции), 1440×80;
+   нижняя часть обрезается секцией и продолжается фоном PrivateCatalog. */
+.fast-sale-edge {
+  position: absolute;
+  top: 527px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+  z-index: 3;
+  pointer-events: none;
+}
+.fast-sale-scene {
+  position: relative;
+  width: 1440px;
+  height: 552px;
+  margin: 20px auto 0;
+}
+.fast-sale-copy {
+  position: absolute;
+  top: 80px;
+  left: 140px;
+  z-index: 2;
+  width: 534px;
+}
+.fast-sale h2 {
+  font: var(--weight-heading) var(--text-heading)/1 var(--font-heading);
+  margin: 0;
+}
+.fast-sale-muted {
+  opacity: 0.3;
+}
+.fast-sale-time {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+  transform: rotate(-1deg);
+}
+.fast-sale-note {
+  --paper-texture: url("/assets/0ba2a.webp");
+  margin-top: 40px;
+  padding: 20px 24px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.fast-sale-note p {
+  position: relative;
+  margin: 0;
+  font: var(--text-body)/var(--leading-body) var(--font-body);
+}
+.fast-sale-tape {
+  position: absolute;
+  left: calc(50% - 2.64px);
+  top: -3.5px;
+  transform: translateX(-50%);
+  width: 50.667px;
+  height: 15.3px;
+  filter: drop-shadow(0 1.143px 1.143px #00000012);
+}
+.fast-sale-copy > .button {
+  margin-top: 52px;
+  width: 219px;
+}
+.fast-sale-visual {
+  position: absolute;
+  top: 0;
+  left: 612px;
+  width: 828px;
+  height: 552px;
+}
+.fast-sale-portrait {
+  position: absolute;
+  inset: 0;
+  width: 828px;
+  height: 552px;
+  max-width: none;
+}
+.fast-sale-shadow {
+  position: absolute;
+  top: 8.518px;
+  left: -42.5px;
+  max-width: none;
+}
+.fast-sale-name {
+  position: absolute;
+  right: 141.431px;
+  bottom: 84.91px;
+  padding: 20px 24px;
+  transform: rotate(-2deg);
+}
+.fast-sale-name-title {
+  position: relative;
+  margin: 0 0 4px;
+  font: 500 var(--text-card)/1.2 var(--font-heading);
+}
+.fast-sale-name-role {
+  position: relative;
+  margin: 0;
+  font: var(--text-small)/var(--leading-body) var(--font-body);
+  color: var(--color-muted);
+  white-space: nowrap;
+}

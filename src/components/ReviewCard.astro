@@ -1,0 +1,44 @@
+---
+import Paper from "./Paper.astro";
+import PlayButton from "./PlayButton.astro";
+const {
+  name = "Светлана В.",
+  image = "/assets/188fc.webp",
+  duration = "0:47",
+  video,
+} = Astro.props;
+---
+
+<Paper class="review-card" node="1380:5189">
+  <div class="review-photo">
+    <img
+      src={image}
+      width="269"
+      height="340"
+      alt={name}
+      loading="lazy"
+      decoding="async"
+    />
+    <PlayButton label={`Отзыв: ${name}`} video={video} />
+    <span class="badge duration">
+      <img
+        src="/assets/f5a77.svg"
+        width="12"
+        height="12"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      {duration}
+    </span>
+  </div>
+  <h3>{name}</h3>
+  <img
+    src="/assets/d40d9.svg"
+    width="100"
+    height="14"
+    alt="5 звёзд"
+    loading="lazy"
+    decoding="async"
+  />
+</Paper>

@@ -1,0 +1,43 @@
+---
+import { imageSize } from "../lib/image-size";
+interface Props {
+  loading?: "eager" | "lazy";
+  dark?: boolean;
+  size?: 32 | 40;
+  links?: { label: string; href?: string; icon: string }[];
+}
+const { dark = false, size = 32, links } = Astro.props;
+const defaults: { label: string; icon: string; href?: string }[] = [
+  { label: "Telegram", icon: dark ? "84d6e.svg" : "2dc32.svg" },
+  { label: "MAX", icon: dark ? "5e5f6.svg" : "0a072.svg" },
+  { label: "WhatsApp", icon: dark ? "db97a.svg" : "2585a.svg" },
+];
+---
+
+<div class="socials" style={`--social-size:${size}px`}>
+  {(links ?? defaults).map((item) =>
+    item.href ? (
+      <a href={item.href} aria-label={item.label}>
+        <img
+          src={"/assets/" + item.icon}
+          alt=""
+          loading={Astro.props.loading ?? "lazy"}
+          width={imageSize("/assets/" + item.icon).width}
+          height={imageSize("/assets/" + item.icon).height}
+          decoding="async"
+        />
+      </a>
+    ) : (
+      <span title={item.label}>
+        <img
+          src={"/assets/" + item.icon}
+          alt={item.label}
+          loading={Astro.props.loading ?? "lazy"}
+          width={imageSize("/assets/" + item.icon).width}
+          height={imageSize("/assets/" + item.icon).height}
+          decoding="async"
+        />
+      </span>
+    ),
+  )}
+</div>

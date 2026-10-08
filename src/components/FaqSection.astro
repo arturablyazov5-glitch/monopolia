@@ -1,0 +1,79 @@
+---
+import FaqCard from "./FaqCard.astro";
+import type { FaqItem } from "../data/faq";
+import "../styles/faq-section.css";
+
+interface Props {
+  items: FaqItem[];
+  title?: string;
+  /** Префикс id: должен быть уникальным на странице */
+  id?: string;
+  node?: string;
+  class?: string;
+}
+const {
+  items,
+  title = "Отвечаем на вопросы до того, как вы их зададите",
+  id = "faq",
+  node = "1380:5736",
+  class: className = "",
+} = Astro.props;
+
+const columns: { item: FaqItem; index: number }[][] = [[], []];
+items.forEach((item, index) => {
+  columns[(item.column ?? (index % 2) + 1) - 1].push({ item, index });
+});
+---
+
+<section
+  class:list={["faq-section", className]}
+  aria-labelledby={`${id}-title`}
+  data-node-id={node}
+>
+  <h2 id={`${id}-title`}>{title}</h2>
+  <div class="faq-columns">
+    {columns.map((column) => (
+      <div class="faq-column">
+        {column.map(({ item, index }) => {
+          const tilt = item.tilt ?? 0;
+          return (
+            <div
+              class="faq-slot"
+              style={`--faq-tilt: ${tilt}deg; --faq-overhang: ${((564 * Math.sin((Math.abs(tilt) * Math.PI) / 180)) / 2).toFixed(2)}px`}
+            >
+              <FaqCard
+                variant="accordion"
+                id={`${id}-${index + 1}`}
+                question={item.question}
+                answer={item.answer}
+                cta={item.cta}
+                node={item.node}
+              />
+            </div>
+          );
+        })}
+      </div>
+    ))}
+  </div>
+</section>
+<script>
+  // Адаптив главной: на узких экранах (≤ 1199 px) при загрузке раскрыт только
+  // первый ответ — список вопросов короче и легче просматривается.
+  // Десктоп и внутренние страницы не затрагиваются.
+  if (matchMedia("(max-width: 1199px)").matches) {
+    document
+      .querySelectorAll<HTMLElement>(".home-desktop .faq-section")
+      .forEach((section) =>
+        section
+          .querySelectorAll<HTMLButtonElement>(".faq-toggle")
+          .forEach((toggle, index) => {
+            if (index === 0) return;
+            toggle.setAttribute("aria-expanded", "false");
+            const panel = document.getElementById(
+              toggle.getAttribute("aria-controls")!,
+            );
+            if (panel) panel.hidden = true;
+          }),
+      );
+  }
+</script>

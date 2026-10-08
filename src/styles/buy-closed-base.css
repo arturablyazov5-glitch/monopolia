@@ -1,0 +1,636 @@
+/* Figma 1380:6462 — «Покупка»: закрытая база и окно Safari */
+.buy-closed-base {
+  padding-top: 120px;
+  /* окно Safari в макете выходит за правый край 1440 — обрезаем по ширине */
+  overflow-x: clip;
+}
+.buy-closed-base-container {
+  position: relative;
+  width: var(--container-width);
+  height: 538.837px;
+  margin: 0 auto;
+}
+.buy-closed-base-copy {
+  position: relative;
+  z-index: 2;
+  width: 596px;
+  padding: 52px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+}
+.buy-closed-base-title {
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  font: 500 var(--text-heading)/1 var(--font-heading);
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+.buy-closed-base-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+}
+.buy-closed-base-hand {
+  font: 64px/0.4 var(--font-handwriting);
+  color: var(--color-diamond);
+}
+.buy-closed-base-card-wrap {
+  width: 517px;
+  filter: drop-shadow(0 5px 3.5px #0000000f);
+}
+.buy-closed-base-card {
+  --paper-texture: url("/assets/0ba2a.webp");
+  box-shadow: none;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.buy-closed-base-card p {
+  font: var(--text-body) / 1.2 var(--font-body);
+  color: var(--color-ink);
+}
+.buy-closed-base-card strong {
+  font-weight: 700;
+}
+.buy-closed-base-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.buy-closed-base-checks .badge {
+  line-height: 1.2;
+  white-space: nowrap;
+  transform: rotate(-1deg);
+}
+.buy-closed-base-checks .badge:nth-child(2) {
+  transform: rotate(1deg);
+}
+.buy-closed-base-checks .badge:nth-child(4) {
+  transform: rotate(-2deg);
+}
+.buy-closed-base-checks .badge:nth-child(5),
+.buy-closed-base-checks .badge:nth-child(6),
+.buy-closed-base-checks .badge:nth-child(9) {
+  transform: rotate(2deg);
+}
+.buy-closed-base-checks .badge:nth-child(7) {
+  transform: rotate(-0.5deg);
+}
+/* Ленты 794:340340 / 794:340399, позиции пересчитаны из габаритов повёрнутых рамок */
+.buy-closed-base-tape {
+  position: absolute;
+  width: 39.912px;
+  height: 12.052px;
+  max-width: none;
+  object-fit: cover;
+  filter: drop-shadow(0 0.9px 0.9px #00000012);
+}
+.buy-closed-base-tape-top {
+  left: -16.31px;
+  top: -14.06px;
+  transform: rotate(-29.75deg);
+}
+.buy-closed-base-tape-bottom {
+  right: -21.79px;
+  bottom: -11.76px;
+  transform: rotate(-22.8deg);
+}
+
+/* 1380:6482 — тень окна, исходный SVG без масштабирования */
+.buy-closed-base-shadow {
+  position: absolute;
+  left: 592.1px;
+  top: 25.33px;
+  max-width: none;
+  pointer-events: none;
+}
+
+/* 1380:6483 — окно 700 × 538.84, повёрнуто на 4° (габарит 735.88 × 586.35).
+   x/y Figma (813.59 / 2737.93) — верхний левый угол повёрнутого окна, а не
+   левый край габарита: левый край габарита = 813.59 − 538.84·sin4° = 776.0. */
+.buy-safari {
+  position: absolute;
+  left: 653.94px;
+  top: 0;
+  width: 700px;
+  height: 538.837px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  isolation: isolate;
+  transform: rotate(4deg);
+  font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+  user-select: none;
+}
+.buy-safari b {
+  font-weight: 500;
+}
+.buy-safari-toolbar {
+  height: 22px;
+  padding: 4px;
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.buy-safari-left,
+.buy-safari-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 3.5px;
+}
+.buy-safari-right {
+  justify-content: flex-end;
+}
+.buy-safari-lights {
+  display: flex;
+  gap: 3.5px;
+  padding: 3.5px;
+}
+.buy-safari-lights i {
+  width: 5.444px;
+  height: 5.444px;
+  border-radius: 50%;
+  border: 0.194px solid #0000001a;
+}
+.buy-safari-lights .close {
+  background: #ff736a;
+}
+.buy-safari-lights .minimize {
+  background: #febc2e;
+}
+.buy-safari-lights .zoom {
+  background: #19c332;
+}
+.buy-safari-controls {
+  display: flex;
+  align-items: center;
+  gap: 5.444px;
+}
+/* Заливка «Liquid Glass» (#F7F7F7); размытие подложки на белом фоне не видно */
+.buy-safari-pill {
+  display: flex;
+  align-items: center;
+  border-radius: 115px;
+  background: #f7f7f7;
+  color: #4c4c4c;
+  font-size: 5.056px;
+  line-height: 1;
+}
+.buy-safari-pill .faded {
+  color: #c6c6c6;
+}
+.buy-safari-pulldown {
+  height: 14px;
+  padding: 0 3.111px;
+  gap: 0.778px;
+}
+.buy-safari-segment,
+.buy-safari-actions {
+  padding: 1.556px;
+  gap: 1.556px;
+}
+.buy-safari-segment b,
+.buy-safari-actions b {
+  min-width: 10.889px;
+  height: 10.889px;
+  display: grid;
+  place-items: center;
+}
+.buy-safari-segment i {
+  width: 0.389px;
+  height: 7.778px;
+  margin: 0 0.389px;
+  background: #e6e6e6;
+}
+.buy-safari-search {
+  width: 221.278px;
+  height: 14px;
+  padding: 0 3.889px;
+  gap: 2.333px;
+  flex-shrink: 0;
+}
+.buy-safari-search .faded {
+  color: #808080;
+  width: 6.222px;
+  text-align: center;
+}
+.buy-safari-search-icon {
+  position: relative;
+  width: 6.222px;
+  height: 6.222px;
+  flex-shrink: 0;
+}
+.buy-safari-search-icon img {
+  position: absolute;
+  left: 0.72px;
+  top: 1px;
+  max-width: none;
+}
+.buy-safari-url {
+  flex: 1;
+  text-align: center;
+  line-height: 6.222px;
+}
+
+/* 1380:6540 — страница базы: сетка 3 колонки, ряды из макета */
+.buy-safari-page {
+  flex: 1;
+  min-height: 0;
+  padding: 8px 52px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: 24.613px repeat(3, 135.621px) auto;
+  gap: 13.587px;
+  align-items: start;
+}
+.buy-safari-header {
+  grid-column: 1 / span 3;
+  position: relative;
+  isolation: isolate;
+  height: 24.613px;
+  padding: 0 5.1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 2px;
+  filter: drop-shadow(0 2.218px 1.552px #0000000f);
+  font-family: var(--font-body);
+  font-size: 6.21px;
+  line-height: 1.2;
+  color: #000;
+  white-space: nowrap;
+}
+.buy-safari-header:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 2px;
+  background: var(--paper-texture) center / cover;
+  opacity: 0.5;
+}
+.buy-safari-brand {
+  display: flex;
+  align-items: center;
+  gap: 4.435px;
+}
+.buy-safari-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.331px;
+  padding: 3.105px 0 1.331px;
+  color: #676767;
+  line-height: 1;
+}
+.buy-safari-brand-text img {
+  max-width: none;
+}
+.buy-safari-nav {
+  display: flex;
+  align-items: center;
+  gap: 7.096px;
+}
+.buy-safari-nav > span:first-child {
+  color: #030303;
+}
+.buy-safari-nav-base {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.887px;
+}
+.buy-safari-contacts,
+.buy-safari-contact-main {
+  display: flex;
+  align-items: center;
+  gap: 14.192px;
+}
+.buy-safari-contact-main {
+  gap: 5.766px;
+}
+.buy-safari-socials {
+  display: flex;
+  gap: 2.661px;
+}
+.buy-safari-icon {
+  position: relative;
+  width: 14.192px;
+  height: 14.192px;
+  flex-shrink: 0;
+}
+.buy-safari-icon img {
+  position: absolute;
+  max-width: none;
+}
+.buy-safari-icon .telegram {
+  left: -0.887px;
+  top: -0.671px;
+}
+.buy-safari-icon .max {
+  left: -0.282px;
+  top: -0.887px;
+}
+.buy-safari-icon .menu {
+  left: -0.565px;
+  top: -1.774px;
+}
+.buy-safari-phone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.887px;
+  padding-top: 0.887px;
+}
+.buy-safari-phone b {
+  font: 700 7.98px/1 var(--font-heading);
+  color: #1d2930;
+}
+.buy-safari-status {
+  display: flex;
+  align-items: center;
+  gap: 1.774px;
+  color: #46565d;
+  line-height: 1;
+  letter-spacing: -0.1242px;
+}
+.buy-safari-status i {
+  width: 4.435px;
+  height: 4.435px;
+  border-radius: 50%;
+  background: radial-gradient(#2bb741 0 1.33px, #4caf502e 1.4px);
+}
+
+/* kv 1380:6542–6550 — карточки 189.6 × 148.52 (выходят за трек ряда, как в макете) */
+.buy-safari-listing {
+  height: 148.521px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #fff;
+}
+.buy-safari-photo {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 10px 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  border-radius: 6px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.buy-safari-photo > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.buy-safari-prices {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.buy-safari-old-price {
+  padding: 0 7.532px;
+  margin-bottom: -1.506px;
+}
+.buy-safari-old-price > span {
+  position: relative;
+  display: block;
+  padding: 2.26px 5.272px;
+  background: #fff;
+  isolation: isolate;
+  font: 400 6.026px/1.2 var(--font-heading);
+  color: #1c0d25;
+  white-space: nowrap;
+  transform: rotate(2deg);
+}
+.buy-safari-old-price > span:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--paper-texture) center / cover;
+  opacity: 0.5;
+}
+/* Перечёркивание 1299:5137 — исходный вектор, центр по линии цены */
+.buy-safari-old-price img {
+  position: absolute;
+  left: -15.05px;
+  top: -4.71px;
+  max-width: none;
+  transform: rotate(1.37deg);
+}
+.buy-safari-price {
+  height: 21px;
+  padding: 0 7.7px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  clip-path: var(--edge-button);
+  filter: drop-shadow(0 -1px 1.5px #00000026);
+  font: 500 11px/1 var(--font-heading);
+  color: var(--color-diamond);
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+.buy-safari-caption {
+  display: flex;
+  justify-content: space-between;
+  font: 500 10px/1.2 var(--font-heading);
+  color: #000;
+  white-space: nowrap;
+}
+.buy-safari-caption span {
+  font-weight: 400;
+  opacity: 0.5;
+}
+.buy-safari-more {
+  grid-column: 1 / span 3;
+  justify-self: center;
+  padding: 0 10px 8px;
+  font: 500 7.385px/1 var(--font-heading);
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+/* Высота рядов как у повёрнутых плашек в Figma (≈33.4 px вместо 29) */
+.buy-closed-base-checks .badge {
+  margin: 2.2px 0;
+}
+
+/* Адаптив K: desktop ≥1200 сохраняется. */
+
+@media (max-width: 1199px) {
+  .buy-closed-base {
+    padding: 80px var(--buy-gutter) 0;
+  }
+  .buy-closed-base-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .buy-closed-base-copy {
+    width: min(100%, 700px);
+    padding: 0;
+    gap: 32px;
+    align-items: center;
+  }
+  .buy-closed-base-title {
+    font-size: 40px;
+    white-space: normal;
+    text-align: center;
+  }
+  .buy-closed-base-title-row {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .buy-closed-base-hand {
+    font-size: 58px;
+    line-height: 0.8;
+  }
+  .buy-closed-base-card-wrap {
+    width: min(100%, 600px);
+  }
+  .buy-closed-base-checks .badge {
+    white-space: normal;
+  }
+  .buy-closed-base-shadow {
+    display: none;
+  }
+  .buy-safari {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(100%, 700px);
+    height: 539px;
+    transform: none;
+    box-shadow: 0 12px 32px #0001;
+  }
+}
+@media (max-width: 767px) {
+  .buy-closed-base {
+    padding-top: 56px;
+  }
+  .buy-closed-base-container {
+    gap: 32px;
+  }
+  .buy-closed-base-title {
+    font-size: 30px;
+    line-height: 1.1;
+  }
+  .buy-closed-base-title-row {
+    display: block;
+  }
+  .buy-closed-base-hand {
+    font-size: 44px;
+    line-height: 0.9;
+  }
+  .buy-closed-base-card {
+    padding: 24px;
+  }
+  .buy-closed-base-card br {
+    display: none;
+  }
+  .buy-closed-base-copy > .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .buy-safari {
+    height: 420px;
+  }
+  .buy-safari::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 80px;
+    background: linear-gradient(#fff0, #fff);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .buy-safari-toolbar {
+    height: 32px;
+    align-items: center;
+  }
+  .buy-safari-search {
+    width: 60%;
+    height: 22px;
+    font-size: 12px;
+  }
+  .buy-safari-url {
+    line-height: 1.2;
+  }
+  .buy-safari-controls,
+  .buy-safari-actions {
+    display: none;
+  }
+  .buy-safari-page {
+    padding: 8px 12px;
+    gap: 14px 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 32px;
+    grid-auto-rows: 154px;
+  }
+  .buy-safari-header {
+    grid-column: 1/-1;
+    height: 32px;
+  }
+  .buy-safari-nav,
+  .buy-safari-contacts {
+    display: none;
+  }
+  .buy-safari-brand-text > span {
+    font-size: 9px;
+  }
+  .buy-safari-listing {
+    height: 154px;
+  }
+  .buy-safari-caption {
+    white-space: normal;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+  }
+  .buy-safari-price {
+    font-size: 14px;
+  }
+  .buy-safari-old-price > span {
+    font-size: 10px;
+  }
+  .buy-safari-more {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 539px) {
+  .buy-closed-base-title {
+    font-size: 28px;
+  }
+}
+
+/* picture оставляет исходное заполнение фотографии Safari. */
+.buy-safari-photo picture {
+  display: contents;
+}
+.buy-safari-photo picture > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}

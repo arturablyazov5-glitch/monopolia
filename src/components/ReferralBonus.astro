@@ -1,0 +1,110 @@
+---
+import ReferralNotification from "./ReferralNotification.astro";
+import TapedNote from "./TapedNote.astro";
+import "../styles/referral-bonus.css";
+const notifications = [
+  {
+    bank: "СберБанк",
+    time: "52 минуты назад",
+    icon: "sber",
+    left: 1,
+    top: 0,
+    width: 277.19,
+    height: 135.788,
+    rotate: -15.96,
+  },
+  {
+    bank: "Т‑Банк",
+    time: "12 минут назад",
+    icon: "t-bank",
+    left: 0,
+    top: 190,
+    width: 273.638,
+    height: 81.695,
+    rotate: 3.79,
+  },
+  {
+    bank: "Альфа Банк",
+    time: "7 минут назад",
+    icon: "alfa-bank",
+    left: 1,
+    top: 80,
+    width: 277.18,
+    height: 112.858,
+    rotate: -10.66,
+  },
+  {
+    bank: "Ozon Банк",
+    time: "4 минуты назад",
+    icon: "ozon-bank",
+    left: 223,
+    top: 48,
+    width: 273.922,
+    height: 83.365,
+    rotate: 4.15,
+  },
+  {
+    bank: "МТС Деньги",
+    time: "Сейчас",
+    icon: "mts-money",
+    left: 228,
+    top: 140.6,
+    width: 277.021,
+    height: 110.055,
+    rotate: -10.03,
+  },
+  {
+    bank: "WB Банк",
+    time: "12 минут назад",
+    icon: "wildberries",
+    left: 116.8,
+    top: 97.56,
+    width: 276.956,
+    height: 139.573,
+    rotate: -16.86,
+  },
+];
+---
+
+<section
+  class="referral-bonus"
+  aria-labelledby="sell-referral-title"
+  data-node-id="1380:6343"
+>
+  <div class="referral-bonus-row">
+    <div
+      class="referral-bonus-notifications"
+      role="img"
+      aria-label="Иллюстрация уведомлений о вознаграждении 5 000 рублей, из макета"
+    >
+      {notifications.map((n) => (
+        <div
+          class="referral-notification-slot"
+          style={`left:${n.left}px;top:${n.top}px;width:${n.width}px;height:${n.height}px;--notification-rotation:${n.rotate}deg`}
+        >
+          <ReferralNotification
+            bank={n.bank}
+            time={n.time}
+            icon={`https://trace-logos.ru/assets/logos/svgs/${n.icon}.svg`}
+          />
+        </div>
+      ))}
+    </div>
+    <div class="referral-bonus-copy">
+      <div>
+        <h2 id="sell-referral-title">
+          Получите 5 000 ₽
+          <br />
+          за каждого приведенного
+          <br />
+          друга до конца сентября
+        </h2>
+        <p>При заключении договора</p>
+      </div>
+      <TapedNote textured rotate={-1}>
+        До конца акции: <strong>13 дней</strong>
+      </TapedNote>
+    </div>
+  </div>
+  <!-- В узле 6343 кнопки нет (сверка волны 3): кнопка H «Привести друга» убрана. -->
+</section>

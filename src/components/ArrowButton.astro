@@ -1,0 +1,15 @@
+---
+const { direction = "next", disabled = false } = Astro.props;
+---
+
+<button
+  type="button"
+  class="arrow"
+  aria-label={
+    direction === "next" ? "Следующая карточка" : "Предыдущая карточка"
+  }
+  disabled={disabled}
+  data-direction={direction}
+>
+  {direction === "next" ? "→" : "←"}
+</button>
