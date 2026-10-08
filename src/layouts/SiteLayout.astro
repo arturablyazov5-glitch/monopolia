@@ -21,7 +21,11 @@ const pageSeo: Record<string, { title: string; description: string }> = {
       "800+ проверенных объектов недвижимости, которых нет на Авито и Циан. За 5 дней поможем купить объект по цене ниже рынка и получить одобрение по ипотеке.",
   },
 };
-const pathname = Astro.url.pathname.replace(/\/?$/, "/");
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const pagePath = basePath && Astro.url.pathname.startsWith(`${basePath}/`)
+  ? Astro.url.pathname.slice(basePath.length)
+  : Astro.url.pathname;
+const pathname = pagePath.replace(/\/?$/, "/");
 const seo = pageSeo[pathname];
 // footer по умолчанию выводится на страницах сайта (с header);
 // UI kit вызывает SiteFooter сам со своими ссылками.
