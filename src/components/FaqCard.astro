@@ -40,7 +40,17 @@ const blocks = typeof answer === "string" ? [answer] : answer;
         <span class="faq-question-text">{question}</span>
         <span class="faq-toggle-icon" aria-hidden="true">
           <img
-            src="/assets/8ac19.svg"
+            class="faq-toggle-bg"
+            src="/assets/8ac19-bg.svg"
+            alt=""
+            width="38.5917"
+            height="37.8297"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="faq-toggle-cross"
+            src="/assets/8ac19-cross.svg"
             alt=""
             width="38.5917"
             height="37.8297"
@@ -51,26 +61,28 @@ const blocks = typeof answer === "string" ? [answer] : answer;
       </button>
     </h3>
     <div
-      class="faq-answer"
+      class:list={["faq-answer", { "is-closed": !open }]}
       id={`${id}-answer`}
       role="region"
       aria-labelledby={`${id}-question`}
-      hidden={!open}
+      inert={!open}
     >
-      <div class="faq-answer-text">
-        {blocks.map((block) =>
-          typeof block === "string" ? (
-            <p>{block}</p>
-          ) : (
-            <ul>
-              {block.list.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ),
-        )}
+      <div class="faq-answer-inner">
+        <div class="faq-answer-text">
+          {blocks.map((block) =>
+            typeof block === "string" ? (
+              <p>{block}</p>
+            ) : (
+              <ul>
+                {block.list.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ),
+          )}
+        </div>
+        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} />
       </div>
-      <Button label={cta} tone="black" subject={`Вопрос: ${question}`} />
     </div>
   </Paper>
 ) : (
@@ -101,7 +113,10 @@ const blocks = typeof answer === "string" ? [answer] : answer;
         const panel = document.getElementById(
           toggle.getAttribute("aria-controls")!,
         );
-        if (panel) panel.hidden = expanded;
+        if (panel) {
+          panel.classList.toggle("is-closed", expanded);
+          panel.inert = expanded;
+        }
       }),
     );
 </script>

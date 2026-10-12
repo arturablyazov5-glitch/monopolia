@@ -40,20 +40,6 @@
   margin: 0;
   font: 16px/1.2 var(--font-body);
 }
-.guild-tape {
-  position: absolute;
-  max-width: none;
-}
-.guild-tape-first {
-  top: -14px;
-  left: -16.67px;
-  transform: rotate(-29.75deg);
-}
-.guild-tape-last {
-  bottom: -9px;
-  right: -22.57px;
-  transform: rotate(-22.8deg);
-}
 .guild-logo-crop {
   position: absolute;
   inset: 0;

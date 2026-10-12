@@ -22,24 +22,6 @@
 .taped-note-icon {
   flex-shrink: 0;
 }
-/* Ленты 39.912 × 12.052: центры и повороты из боксов Figma */
-.taped-note-tape {
-  position: absolute;
-  max-width: none;
-  object-fit: cover;
-  box-shadow: 0 0.9px 0.9px #00000012;
-  pointer-events: none;
-}
-.taped-note-tape-top {
-  left: -16.31px;
-  top: -14.07px;
-  transform: rotate(-29.75deg);
-}
-.taped-note-tape-bottom {
-  right: -21.8px;
-  bottom: -11.77px;
-  transform: rotate(-22.8deg);
-}
 
 /* Адаптив K: desktop ≥1200 сохраняется. */
 
@@ -57,11 +39,5 @@
   }
   .taped-note-paper > p {
     font-size: 16px;
-  }
-  .taped-note-tape-top {
-    left: -8px;
-  }
-  .taped-note-tape-bottom {
-    right: -8px;
   }
 }

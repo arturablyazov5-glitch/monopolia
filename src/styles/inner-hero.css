@@ -63,6 +63,9 @@
   gap: 10px;
   white-space: nowrap;
 }
+.inner-hero-net-mobile {
+  display: none;
+}
 .inner-hero-market {
   display: flex;
   align-items: flex-end;
@@ -121,11 +124,12 @@
   object-fit: cover;
 }
 
-/* Карточка квиза 400 × 526. */
+/* Карточка квиза: в макете 400 × 526 со сдвигом 99 px от правого края контейнера;
+   растянута вправо (400 + 99), чтобы правый край совпадал с краем шапки. */
 .inner-hero-card.paper {
   position: relative;
   z-index: 1;
-  width: 400px;
+  width: 499px;
   height: 526px;
   flex-shrink: 0;
   padding: 20px;
@@ -142,6 +146,11 @@
   font: 16px/1.2 var(--font-body);
   color: #000;
 }
+/* Буклет — иллюстрация: не перехватывает курсор (тень и картинка) */
+.inner-hero-booklet,
+.inner-hero-booklet * {
+  pointer-events: none;
+}
 .inner-hero-booklet {
   position: relative;
   padding: 0 24px;
@@ -149,6 +158,14 @@
 }
 .inner-hero-booklet-shadow {
   position: absolute;
+}/* Карточка на десктопе шире макета на 99 px: буклет и его тень остаются прежнего размера по центру */
+@media (min-width: 1200px) {
+  .inner-hero-booklet {
+    padding: 0 73.5px;
+  }
+  .inner-hero-booklet-shadow {
+    margin-left: 49.5px;
+  }
 }
 .inner-hero-booklet-shadow img {
   position: absolute;
@@ -174,27 +191,48 @@
   flex-direction: column;
   gap: 12px;
 }
+.inner-hero-city-picker {
+  position: relative;
+}
 .inner-hero-city {
   position: relative;
   display: block;
-}
-.inner-hero-city select {
   width: 100%;
   appearance: none;
   border: 0;
   border-radius: var(--radius-control);
   background: var(--color-paper);
   padding: 12px 24px;
+  text-align: left;
   font: 16px/1.2 var(--font-body);
   color: var(--color-field-text);
   cursor: pointer;
 }
-.inner-hero-city img {
+.inner-hero-city {
+  transition: background-color var(--duration-fast) ease;
+}
+.inner-hero-city:hover,
+.inner-hero-city[aria-expanded="true"],
+.inner-hero-city:focus-visible {
+  background: color-mix(in srgb, var(--color-paper) 90%, #000);
+}
+.inner-hero-city .city-chevron {
   position: absolute;
   right: 23.5px;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+}
+.inner-hero-city[aria-expanded="true"] .city-chevron {
+  transform: translateY(-50%) rotate(180deg);
+}
+.inner-hero-city-picker .city-menu {
+  left: 0;
+  right: 0;
+}
+.inner-hero-city-picker .city-menu li {
+  font-weight: normal;
+  font-size: 16px;
 }
 .inner-hero-types {
   position: relative;
@@ -271,12 +309,15 @@
     margin: 0 32px;
     /* 16 + 56 — шапка, 32 — отступ. */
     padding-top: 104px;
-    flex-direction: column;
-    align-items: stretch;
+    /* Текст и квиз рядом, если помещаются (1024), иначе — друг под другом;
+       команда всегда отдельной строкой (её габарит шире контейнера). */
+    flex-wrap: wrap;
+    align-items: flex-start;
     gap: 32px;
   }
   .inner-hero-copy {
-    width: 100%;
+    flex: 1 1 320px;
+    width: auto;
   }
   .inner-hero h1 {
     max-width: 680px;
@@ -289,8 +330,9 @@
     position: static;
     transform: none;
     display: inline-block;
+    margin-left: 0.15em;
     font-size: 64px;
-    line-height: 0.9;
+    line-height: 0.5;
     white-space: nowrap;
   }
   .inner-hero-markets {
@@ -308,7 +350,7 @@
     height: auto;
     gap: 24px;
   }
-  .inner-hero-city select {
+  .inner-hero-city {
     min-height: 48px;
     font-size: 16px;
   }
@@ -337,6 +379,39 @@
   }
 }
 
+/* TASK-009b: 768–1023 — заголовок над широким квизом; внутри карточки
+   буклет с тенью слева, поля справа. Команда остаётся следующей строкой. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .inner-hero-copy {
+    flex: 0 0 100%;
+  }
+  .inner-hero-card.paper {
+    width: 100%;
+  }
+  .inner-hero-quiz {
+    display: grid;
+    grid-template-columns: 324px minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+  }
+  .inner-hero-booklet {
+    width: 360px;
+    margin: 0;
+    zoom: 0.9;
+  }
+}
+
+/* TASK-009b: с 1024 — текст и квиз в двух колонках, команда ниже. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .inner-hero-copy {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .inner-hero-card.paper {
+    flex: 0 0 400px;
+  }
+}
+
 /* Телефон 360–767 */
 @media (max-width: 767px) {
   .inner-hero {
@@ -356,12 +431,21 @@
     font-size: 32px;
     line-height: 1.05;
   }
+  /* На телефоне вставка уходит на свою строку. */
   .inner-hero-accent {
+    margin: 4px 0 2px;
     font-size: 46px;
+    line-height: 0.9;
   }
   .inner-hero-markets {
     gap: 8px;
     margin-top: 4px;
+  }
+  .inner-hero-net-desktop {
+    display: none;
+  }
+  .inner-hero-net-mobile {
+    display: inline;
   }
   .inner-hero-market {
     font-size: 18px;

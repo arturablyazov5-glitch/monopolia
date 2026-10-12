@@ -1,0 +1,24 @@
+---
+import { tapesFor, type TapePlacement } from "../lib/tape";
+import "../styles/tape.css";
+interface Props {
+  node?: string;
+  tapes?: TapePlacement[];
+}
+const { node = "", tapes = tapesFor(node) } = Astro.props;
+---
+<span class="tape-layer" aria-hidden="true">
+  {tapes.map((t) => (
+    <img
+      class="paper-tape"
+      data-tape-node={t.node}
+      src={t.src}
+      width={t.width}
+      height={t.height}
+      alt=""
+      loading="lazy"
+      decoding="async"
+      style={`--tape-width:${t.width}px;--tape-height:${t.height}px;--tape-x:${t.horizontal === "right" ? `calc(100% + ${t.x}px)` : t.horizontal === "center" ? `calc(50% + ${t.x}px)` : `${t.x}px`};--tape-y:${t.vertical === "bottom" ? `calc(100% + ${t.y}px)` : `${t.y}px`};--tape-transform:matrix(${t.matrix.join(",")},0,0);--tape-shadow:${t.shadow};--tape-opacity:${t.opacity}`}
+    />
+  ))}
+</span>

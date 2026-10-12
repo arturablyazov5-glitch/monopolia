@@ -6,25 +6,26 @@ import SiteFooter from "../components/SiteFooter.astro";
 import { siteUrl } from "../lib/seo";
 const pageSeo: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Монополия — агентство недвижимости в Белогорске с 2006 года",
+    title: "Монополия — агентство недвижимости в Белогорске с 2006 года",
     description:
-      "Поможем выгодно купить или срочно продать квартиру, дом или коммерческую недвижимость. Монополия — агентство недвижимости в Белогорске с 2006 года.",
+      "Поможем выгодно купить или срочно продать квартиру, дом или коммерческую недвижимость. Монополия — агентство недвижимости в Белогорске с 2006 года.",
   },
   "/sell/": {
-    title: "Продажа недвижимости в Белогорске — Монополия",
+    title: "Продажа недвижимости в Белогорске — Монополия",
     description:
-      "Продадим вашу недвижимость за 2 недели по рыночной цене или выше. В нашей базе 1 500+ покупателей с одобренной ипотекой или наличкой.",
+      "Продадим вашу недвижимость за 2 недели по рыночной цене или выше. В нашей базе 1 500+ покупателей с одобренной ипотекой или наличкой.",
   },
   "/buy/": {
-    title: "Покупка недвижимости в Белогорске — Монополия",
+    title: "Покупка недвижимости в Белогорске — Монополия",
     description:
-      "800+ проверенных объектов недвижимости, которых нет на Авито и Циан. За 5 дней поможем купить объект по цене ниже рынка и получить одобрение по ипотеке.",
+      "800+ проверенных объектов недвижимости, которых нет на Авито и Циан. За 5 дней поможем купить объект по цене ниже рынка и получить одобрение по ипотеке.",
   },
 };
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
-const pagePath = basePath && Astro.url.pathname.startsWith(`${basePath}/`)
-  ? Astro.url.pathname.slice(basePath.length)
-  : Astro.url.pathname;
+const pagePath =
+  basePath && Astro.url.pathname.startsWith(`${basePath}/`)
+    ? Astro.url.pathname.slice(basePath.length)
+    : Astro.url.pathname;
 const pathname = pagePath.replace(/\/?$/, "/");
 const seo = pageSeo[pathname];
 // footer по умолчанию выводится на страницах сайта (с header);
@@ -35,8 +36,9 @@ const {
   header = false,
   footer = header,
 } = Astro.props;
-const pageTitle = seo?.title ?? title;
-const description = seo?.description;
+// Технические метаданные не нуждаются в неразрывных пробелах типографа.
+const pageTitle = (seo?.title ?? title).replaceAll("\u00a0", " ");
+const description = seo?.description.replaceAll("\u00a0", " ");
 const preventIndexing = noindex || pathname === "/ui-kit/";
 const canonical =
   Astro.site && !preventIndexing ? siteUrl(pathname, Astro.site) : undefined;
@@ -86,6 +88,21 @@ const business = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* LCP mobile: фон главной / CSS-текстура квиза внутренних страниц.
+        Обнаруживаем до CSS и очереди остальных изображений. */}
+    {seo && (
+      <link
+        rel="preload"
+        as="image"
+        href={pathname === "/" ? "/assets/home-background.webp" : "/assets/30984.webp"}
+        fetchpriority="high"
+        media="(max-width: 767px)"
+      />
+    )}
+    {/* Denistina видна на первом экране главной и продажи; не ждём CSS. */}
+    {seo && pathname !== "/buy/" && (
+      <link rel="preload" href="/fonts/denistina-site.woff2" as="font" type="font/woff2" crossorigin media="(max-width: 767px)" />
+    )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
@@ -119,22 +136,27 @@ const business = {
     )}
     <link
       rel="preload"
-      href="/fonts/calibri.woff2"
+      href="/fonts/calibri-site.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
+    <link rel="preload" href="/fonts/calibri-bold-site.woff2" as="font" type="font/woff2" crossorigin />
     {preventIndexing && <meta name="robots" content="noindex" />}
     <title>{pageTitle}</title>
     <link
       rel="preload"
-      href="/fonts/forma.woff2"
+      href="/fonts/forma-site.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
   </head>
   <body id="top">
+
+    <a class="skip-link" href="#main">
+      Перейти к содержимому
+    </a>
     {header && (
       <div class="fixed-site-header">
         <SiteHeader />
@@ -143,5 +165,29 @@ const business = {
     <slot />
     {footer && <SiteFooter />}
     <LeadDialog />
+    <script>
+      // a11y: цель skip link — первый <main> страницы (id ставим здесь,
+      // чтобы не править каждую страницу); фокус переносим в main.
+      // Тень фиксированной шапки после 150 px прокрутки
+      const fixedHeader = document.querySelector<HTMLElement>(".fixed-site-header");
+      if (fixedHeader) {
+        const update = () =>
+          fixedHeader.classList.toggle("is-scrolled", window.scrollY > 150);
+        update();
+        addEventListener("scroll", update, { passive: true });
+      }
+      const main = document.querySelector<HTMLElement>("main");
+      const skip = document.querySelector<HTMLAnchorElement>(".skip-link");
+      if (main && skip) {
+        if (!main.id) main.id = "main";
+        skip.href = `#${main.id}`;
+        if (!main.hasAttribute("tabindex")) main.tabIndex = -1;
+        skip.addEventListener("click", (event) => {
+          event.preventDefault();
+          main.focus({ preventScroll: true });
+          main.scrollIntoView();
+        });
+      }
+    </script>
   </body>
 </html>

@@ -1,18 +1,19 @@
 @import "./tokens.css";
+@import "./brush-stroke.css";
 @font-face {
   font-family: Forma;
-  src: url("/fonts/forma.woff2") format("woff2");
+  src: url("/fonts/forma-site.woff2") format("woff2");
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: Calibri;
-  src: url("/fonts/calibri.woff2") format("woff2");
+  src: url("/fonts/calibri-site.woff2") format("woff2");
   font-display: swap;
 }
 @font-face {
   font-family: Denistina;
-  src: url("/fonts/denistina.woff2") format("woff2");
+  src: url("/fonts/denistina-site.woff2") format("woff2");
   font-display: swap;
 }
 * {
@@ -78,9 +79,54 @@ button:disabled {
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
   outline: var(--focus-width) solid var(--red);
   outline-offset: 5px;
+}
+/* a11y: прокручиваемая лента карусели — рамка внутрь, иначе её режет
+   overflow секции; бургер — ближе, иначе режет overflow шапки. */
+main[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+.carousel-track:focus-visible {
+  outline-offset: calc(-1 * var(--focus-width));
+}
+.site-header .menu-button:focus-visible {
+  outline-offset: 2px;
+}
+/* a11y: внутри прокручиваемых лент (карусели, вкладки кейсов) и тесной
+   мобильной шапки внешнюю рамку режет overflow — рамка внутрь и тёмная,
+   чтобы читалась и на красных кнопках. */
+.carousel-track :focus-visible,
+.cases-tabs :focus-visible {
+  outline-color: var(--color-ink);
+  outline-offset: calc(-1 * var(--focus-width));
+}
+@media (max-width: 1199px) {
+  .site-header :focus-visible,
+  .site-header .menu-button:focus-visible {
+    outline-color: var(--color-ink);
+    outline-offset: calc(-1 * var(--focus-width));
+  }
+}
+/* a11y: ссылка «Перейти к содержимому» — видна только при фокусе с клавиатуры */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 12px 16px;
+  background: var(--color-dark);
+  color: #fff;
+  font: 16px/1.2 var(--font-body);
+  border-radius: 8px;
+  transform: translateY(-200%);
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
 }
 img {
   max-width: 100%;
@@ -113,6 +159,14 @@ hr {
 }
 .fixed-site-header .site-header {
   margin-top: 0;
+}
+/* Лёгкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout) */
+.fixed-site-header {
+  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+  transition: filter 0.3s ease;
+}
+.fixed-site-header.is-scrolled {
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
 }
 .site-header {
   display: flex;
@@ -195,37 +249,6 @@ hr {
   z-index: -1;
   pointer-events: none;
 }
-.paper:after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border: 3px solid white;
-  clip-path: polygon(
-    0 1%,
-    10% 0,
-    23% 1%,
-    35% 0,
-    48% 1%,
-    66% 0,
-    84% 1%,
-    100% 0,
-    99% 18%,
-    100% 36%,
-    99% 58%,
-    100% 79%,
-    99% 100%,
-    80% 99%,
-    61% 100%,
-    40% 99%,
-    22% 100%,
-    0 99%,
-    1% 79%,
-    0 54%,
-    1% 30%
-  );
-  pointer-events: none;
-  z-index: -1;
-}
 .button {
   min-height: var(--button-height);
   padding: 18px var(--space-8);
@@ -239,30 +262,45 @@ hr {
   border-radius: var(--radius-control);
   color: white;
   position: relative;
-  transition:
-    background var(--duration-fast),
-    transform var(--duration-fast);
-  clip-path: var(--edge-button);
+  --button-base-color: ButtonFace;
+  --button-hover-color: var(--color-dark);
+  /* Краску рисуют отдельные слои: фон под сглаженными углами hover
+     иначе оставляет цветную кайму. Маска и outline остаются на кнопке. */
+  background: transparent !important;
+  transition: transform 0.4s ease;
 }
 /* Figma (мастер кнопки с иконкой): pl 32, pr 24. */
 .button.with-icon {
   padding-right: 24px;
 }
 .button.red {
-  background: var(--red);
+  --button-base-color: var(--red);
 }
 .button.black {
-  background: var(--color-dark);
+  --button-base-color: var(--color-dark);
+  --button-hover-color: var(--red);
 }
-.button:hover {
-  filter: brightness(0.86);
+.button.white {
+  --button-base-color: #fff;
+}
+/* Recruiting имеет исходные исключения: красная → белая, белая → красная.
+   Локальные hover-правила сохраняют цвет текста; заливку меняет только
+   opacity слоя, а фон остаётся исходным даже при локальном :hover. */
+.recruiting-buttons .button.red:not(:disabled) {
+  --button-hover-color: #fff;
+}
+.recruiting-buttons .button.recruiting-channel:not(:disabled) {
+  --button-base-color: #fff;
+  --button-hover-color: var(--red);
+}
+.button:hover:not(:disabled) {
   transform: translateY(-1px);
 }
-.button:focus-visible {
-  clip-path: none;
+.button:hover:not(:disabled)::after {
+  opacity: 1;
 }
 .button:disabled {
-  background: var(--color-disabled);
+  --button-base-color: var(--color-disabled);
   transform: none;
   filter: none;
 }
@@ -627,20 +665,6 @@ s {
 .lead-form > input {
   height: var(--field-height);
 }
-.consent {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: var(--text-small);
-  color: var(--color-field-text);
-}
-.consent input {
-  accent-color: var(--red);
-  margin: 2px 0;
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-}
 .form-bottom {
   display: flex;
   justify-content: space-between;
@@ -776,13 +800,11 @@ dialog::backdrop {
     margin: 0;
     padding: var(--space-3);
   }
-  .site-header.menu-open nav {
-    display: flex;
-  }
   .header-phone {
     margin-left: auto;
   }
-  .city {
+  .city,
+  .city-picker {
     display: none;
   }
   .quote {
@@ -856,8 +878,13 @@ dialog::backdrop {
   html {
     scroll-behavior: auto;
   }
-  * {
+  *,
+  *::before,
+  *::after {
     transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
   }
 }
 .staff-photo {
@@ -951,6 +978,20 @@ dialog::backdrop {
   width: 100%;
   height: auto;
 }
+/* Общий hover иконок соцсетей (форма, футер, шапка) */
+.socials > a,
+.socials > span {
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) ease,
+    filter var(--duration-fast) ease;
+}
+.socials > a:hover,
+.socials > a:focus-visible,
+.socials > span:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08) drop-shadow(0 3px 3px #00000018);
+}
 .rating {
   gap: var(--space-2);
   height: 34px;
@@ -966,10 +1007,16 @@ dialog::backdrop {
   overflow: hidden;
   border-radius: var(--radius-control);
 }
-.rating-map > img {
+.rating-map > img,
+.rating-map-link > img {
   position: absolute;
   width: 100%;
   height: auto;
+  inset: 0;
+}
+.rating-map-link {
+  display: block;
+  position: absolute;
   inset: 0;
 }
 .rating-map .gis-top {
@@ -991,9 +1038,6 @@ dialog::backdrop {
 }
 .rating-map.yandex {
   background: #f43;
-}
-.rating-yandex-first .rating-map.yandex {
-  order: -1;
 }
 .rating-map .yandex-pin {
   inset: 15% 22%;
@@ -1111,6 +1155,47 @@ dialog::backdrop {
 .carousel-pagination button[aria-current="true"] {
   width: 32px;
   background: var(--color-ink);
+}
+/* Q1b: зона нажатия точек. Desktop — вид без изменений, невидимое
+   расширение по высоте до 44 px (по ширине точки стоят вплотную, gap 4).
+   ≤ 1199 — кнопка 44 × 44, точка рисуется псевдоэлементом. */
+.carousel-pagination button {
+  position: relative;
+}
+.carousel-pagination button::before {
+  content: "";
+  position: absolute;
+  inset: -18px -2px;
+}
+@media (max-width: 1199px) {
+  .carousel-pagination {
+    gap: 0;
+  }
+  .carousel-pagination button,
+  .carousel-pagination button[aria-current="true"] {
+    width: 44px;
+    height: 44px;
+    border-radius: 0;
+    background: transparent;
+  }
+  .carousel-pagination button::before {
+    inset: 0;
+  }
+  .carousel-pagination button::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: #d7d7d7;
+    transform: translateX(-50%);
+  }
+  .carousel-pagination button[aria-current="true"]::after {
+    width: 24px;
+    background: var(--color-ink);
+  }
 }
 .arrow:disabled {
   opacity: 0.3;
@@ -1348,26 +1433,38 @@ dialog::backdrop {
 }
 @font-face {
   font-family: Forma;
-  src: url("/fonts/forma-bold.woff2") format("woff2");
+  src: url("/fonts/forma-bold-site.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: Forma;
-  src: url("/fonts/forma-regular.woff2") format("woff2");
+  src: url("/fonts/forma-regular-site.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: Calibri;
-  src: url("/fonts/calibri-bold.woff2") format("woff2");
+  src: url("/fonts/calibri-bold-site.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
 @font-face {
   font-family: "Inter Tight";
-  src: url("/fonts/inter-tight.woff2") format("woff2");
+  src: url("/fonts/inter-tight-site.woff2") format("woff2");
   font-weight: 100 900;
+  font-display: swap;
+}
+/* В Forma и Calibri нет знака рубля ₽ (U+20BD), он падал в системный serif.
+   Отдельная семья «Ruble» содержит только его (из вариативного Inter Tight) и стоит
+   первой в стеках шрифтов: остальные символы она не покрывает и отдаёт Forma/Calibri.
+   Нельзя делать это второй @font-face внутри Forma: первая грань покрывает весь Unicode
+   и выигрывает, пустой глиф уходит в fallback, а не в соседнюю грань. */
+@font-face {
+  font-family: Ruble;
+  src: url("/fonts/ruble-site.woff2") format("woff2");
+  font-weight: 100 900;
+  unicode-range: U+20BD;
   font-display: swap;
 }
 .arrow {
@@ -1394,7 +1491,8 @@ dialog::backdrop {
 }
 
 @media (max-width: 800px) {
-  .site-header .city {
+  .site-header .city,
+  .site-header .city-picker {
     display: none;
   }
 }
@@ -1412,19 +1510,61 @@ dialog::backdrop {
   gap: 4px;
   align-items: center;
 }
-.office-status i {
-  margin-right: 0;
+/* Пульсация (3 шага) */
+.time {
+  position: relative;
+  top: 2px; /* текст ниже на 2px, кружок компенсирован в ::before/::after */
+  padding-left: 14px;
 }
-.office-status.closed i {
-  background: var(--color-caption);
+.time::before,
+.time::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 2px);
+  left: 4px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+.time::before {
+  width: 8px;
+  height: 8px;
+  background-color: #14ae5c;
+  z-index: 2;
+}
+.time::after {
+  width: 12px;
+  height: 12px;
+  background-color: rgba(20, 174, 92, 0.5);
+  z-index: 1;
+  animation: pulse3 1.5s infinite;
+  will-change: transform, opacity;
+}
+.office-status.closed .time::before {
+  background-color: var(--color-caption);
+}
+.office-status.closed .time::after {
+  display: none;
+}
+@keyframes pulse3 {
+  0% {
+    animation-timing-function: ease-in;
+    transform: translate(-50%, -50%) scale(0.6667);
+    opacity: 0.5;
+  }
+  55% {
+    animation-timing-function: ease-out;
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
 }
 
 .site-header.desktop .brand-text {
   gap: 3px;
   padding-top: 4px;
-}
-.site-header.desktop .header-phone {
-  gap: 2px;
 }
 .site-header.desktop .menu-button {
   position: relative;
@@ -1448,6 +1588,7 @@ dialog::backdrop {
 }
 .site-header.desktop .header-phone {
   display: grid;
+  gap: 0px;
 }
 .site-header.desktop {
   height: 56px;
@@ -1470,7 +1611,7 @@ dialog::backdrop {
   padding: 0;
 }
 .site-header.desktop .city {
-  padding: 5px 12px 4px 8px;
+  padding: 8px 16px 7px 12px;
 }
 .site-header.desktop {
   border-radius: 2px;
@@ -1526,9 +1667,6 @@ dialog::backdrop {
     min-height: 56px;
     flex-wrap: wrap;
     row-gap: 0;
-    max-height: calc(100dvh - 32px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
   }
   .site-header.desktop .header-social {
     display: none;
@@ -1543,9 +1681,11 @@ dialog::backdrop {
     margin-top: 8px;
     padding: 4px 0;
     border-top: 1px solid var(--color-divider);
-  }
-  .site-header.desktop.menu-open nav {
-    display: flex;
+    /* Прокрутка только у панели разделов: overflow на самой шапке
+       обрезал выпадающий список города (он выходит за border-box). */
+    max-height: calc(100dvh - 104px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
   .site-header.desktop nav a {
     min-height: 48px;
@@ -1567,6 +1707,18 @@ dialog::backdrop {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  /* Q1: зона нажатия телефона и логотипа ≥ 44 px на планшете (были 22 и
+     37 px) — невидимое расширение, вёрстка шапки не меняется */
+  .site-header.desktop .header-phone > a,
+  .site-header.desktop .brand {
+    position: relative;
+  }
+  .site-header.desktop .header-phone > a::after,
+  .site-header.desktop .brand::after {
+    content: "";
+    position: absolute;
+    inset: -11px -4px;
+  }
 }
 @media (max-width: 767px) {
   html {
@@ -1583,11 +1735,15 @@ dialog::backdrop {
     max-height: calc(100dvh - 16px);
   }
   .site-header.desktop .tagline,
-  .site-header.desktop .city {
+  .site-header.desktop .city,
+  .site-header.desktop .city-picker {
     display: none;
   }
   .site-header.desktop .brand-text {
     padding-top: 0;
+  }
+  .site-header.desktop .brand {
+    min-height: 44px;
   }
   /* Правая группа раскладывается в общую строку: звонок и бургер справа,
      телефон/режим/соцсети — в раскрытом меню */
@@ -1601,10 +1757,6 @@ dialog::backdrop {
     justify-content: space-between;
     padding: 12px 4px 8px;
     border-top: 1px solid var(--color-divider);
-  }
-  .site-header.desktop.menu-open .header-contact,
-  .site-header.desktop.menu-open .header-social {
-    display: flex;
   }
   .site-header.desktop .header-phone > a {
     display: flex;
@@ -1677,4 +1829,171 @@ dialog::backdrop {
     width: 112px;
     height: auto;
   }
+}
+
+/* Выбор города */
+.city-picker {
+  position: relative;
+}
+button.city {
+  border: 0;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+button.city:hover {
+  background: #e8e8e8;
+}
+.city-chevron {
+  transition: transform 0.2s ease;
+}
+.city[aria-expanded="true"] .city-chevron {
+  transform: rotate(180deg);
+}
+.city-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 50;
+  min-width: 100%;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+.city-menu[hidden] {
+  display: none;
+}
+.city-menu li {
+  padding: 8px 12px;
+  font-size: var(--text-small);
+  font-weight: bold;
+  white-space: nowrap;
+  cursor: pointer;
+  border-radius: 2px;
+  outline: none;
+}
+.city-menu li:hover,
+.city-menu li:focus-visible {
+  background: #f1f1f1;
+}
+.city-menu li[aria-selected="true"] {
+  color: var(--red);
+}
+
+/* ===== Меню сайта (бургер): выпадающая бумажная панель на всех ширинах =====
+   Панель — потомок шапки (position: absolute), поэтому overflow шапки не нужен;
+   рваный край — готовый .brush-stroke. На ≤ 1199 inline-навигация скрыта,
+   полный список разделов — только в панели. */
+/* Тень — фильтром на обёртке: filter на самом элементе применяется ДО его маски и рисовал бы
+   тень от ровной рамки, а у обёртки он обводит уже замаскированный (рваный) силуэт панели */
+.menu-panel-shadow {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 320px;
+  max-width: calc(100vw - 24px);
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.16));
+}
+.menu-panel {
+  position: relative;
+  width: 100%;
+  max-height: calc(100dvh - 100px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 10px 24px 16px;
+  background: #fff;
+  font-family: Ruble, Forma, var(--font-body, sans-serif);
+}
+.menu-panel[hidden] {
+  display: none;
+}
+.menu-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-panel li + li {
+  border-top: 1px solid var(--color-divider);
+}
+.menu-panel li a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  font-family: Ruble, Forma, sans-serif;
+  font-size: 18px;
+  transition: color var(--duration-fast) ease;
+}
+.menu-panel li a:hover,
+.menu-panel li a:focus-visible {
+  color: var(--color-accent);
+}
+.menu-panel-actions {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-divider);
+}
+.menu-panel-actions .button {
+  width: 100%;
+  justify-content: center;
+}
+.menu-panel-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  font-family: Ruble, Forma, sans-serif;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.menu-panel-phone:hover,
+.menu-panel-phone:focus-visible {
+  color: var(--color-accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .menu-panel:not([hidden]) {
+    animation: menu-panel-in 0.18s ease-out;
+  }
+}
+@keyframes menu-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.menu-button .menu-close {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.menu-button[aria-expanded="true"] .menu-close {
+  display: block;
+}
+@media (max-width: 767px) {
+  .menu-panel-shadow {
+    left: 0;
+    right: 0;
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* Подписи inline-навигации шапки не переносятся на вторую строку */
+.site-header nav a {
+  white-space: nowrap;
+}
+
+/* Обратные ссылки на Trace Logos остаются в разметке, но по ним нельзя кликнуть */
+a[href^="https://trace-logos.ru/"] {
+  pointer-events: none;
+  cursor: default;
 }

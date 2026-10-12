@@ -16,14 +16,61 @@
   position: relative;
   height: 577px;
   transform: rotate(-1deg);
-  border-radius: 4px;
-  overflow: hidden;
+  /* TASK-035: внешний край — нативный контур кистевой обводки Figma
+     1380:5238 (белая 32px CENTER). Рисуется слоем ::before позади фото и
+     плашки; слой выходит за 548×577 на глубину зазубрин (в Figma верх
+     -16, лево -6, право +9, низ +7 px), поэтому overflow и маска на самой
+     карточке не нужны. Срезы 32px, перекрытие 2px внутри заливки. */
+  border-radius: 0;
+}
+.company-office::before {
+  content: "";
+  position: absolute;
+  inset: -16.3px -9.6px -6.7px -6.1px;
+  z-index: -1;
+  background: #fff;
+  pointer-events: none;
+  mask-image:
+    url("/assets/office-edge-mask-tl.svg"), url("/assets/office-edge-mask-t.svg"),
+    url("/assets/office-edge-mask-tr.svg"), url("/assets/office-edge-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/office-edge-mask-r.svg"),
+    url("/assets/office-edge-mask-bl.svg"), url("/assets/office-edge-mask-b.svg"),
+    url("/assets/office-edge-mask-br.svg");
+  mask-size:
+    32px 32px, calc(100% - 60px) 32px, 32px 32px,
+    32px calc(100% - 60px), calc(100% - 60px) calc(100% - 60px),
+    32px calc(100% - 60px), 32px 32px, calc(100% - 60px) 32px, 32px 32px;
+  mask-position:
+    left top, center top, right top, left center, center center, right center,
+    left bottom, center bottom, right bottom;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
 }
 .company-office-photo {
   width: 548px;
   height: 577px;
   object-fit: cover;
   max-width: none;
+  /* TASK-026: внутренний контур нативной кистевой обводки Figma
+     1380:5238 (32px CENTER, белая). Маска только фото: внешний белый
+     край .company-office и бейдж не меняются. Срезы 24px сохраняют
+     глубину зазубрин при смене пропорций; 2px перекрытия внутри
+     непрозрачной области исключают щели между девятью частями. */
+  mask-image:
+    url("/assets/office-photo-mask-tl.svg"), url("/assets/office-photo-mask-t.svg"),
+    url("/assets/office-photo-mask-tr.svg"), url("/assets/office-photo-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/office-photo-mask-r.svg"),
+    url("/assets/office-photo-mask-bl.svg"), url("/assets/office-photo-mask-b.svg"),
+    url("/assets/office-photo-mask-br.svg");
+  mask-size:
+    24px 24px, calc(100% - 44px) 24px, 24px 24px,
+    24px calc(100% - 44px), calc(100% - 44px) calc(100% - 44px),
+    24px calc(100% - 44px), 24px 24px, calc(100% - 44px) 24px, 24px 24px;
+  mask-position:
+    left top, center top, right top, left center, center center, right center,
+    left bottom, center bottom, right bottom;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
 }
 .company-partners {
   position: absolute;
@@ -100,31 +147,6 @@
 .company-recommendations > img:first-child {
   flex-shrink: 0;
 }
-.company-recommendations .company-tape {
-  position: absolute;
-  z-index: 2;
-  max-width: none;
-}
-.company-tape.tape-0 {
-  left: -16.67px;
-  top: -14px;
-  transform: rotate(-29.75deg);
-}
-.company-tape.tape-1 {
-  right: -22.57px;
-  bottom: -9px;
-  transform: rotate(-22.8deg);
-}
-.company-tape.tape-2 {
-  right: -22.57px;
-  top: -12px;
-  transform: rotate(29.75deg);
-}
-.company-tape.tape-3 {
-  left: -12.06px;
-  bottom: -8px;
-  transform: rotate(22.8deg);
-}
 .company-stats {
   display: flex;
   justify-content: space-between;
@@ -177,10 +199,37 @@
   background: #ff0000;
 }
 .company-office {
-  background: white;
-  padding: 12px;
+  /* Фото занимает внутренний контур обводки Figma: x 1,44–544, y 2,91–573
+     от рамки 548×577; белое — слой ::before. */
+  padding: 2.91px 4px 4px 1.44px;
 }
 .company-office-photo {
-  width: 524px;
-  height: 553px;
+  display: block;
+  width: 542.56px;
+  height: 570.09px;
+}
+
+/* TASK-035b (решение заказчика): на ≤1199 кромка карточки офиса прежняя —
+   рамка 12px и девятичастная маска Рванина-2 (срез 8px) на самой карточке,
+   внутренняя маска фото Рванина-3 без изменений. Нативный контур Figma
+   (::before, office-edge-mask-*.svg) работает только на ≥1200. */
+@media (max-width: 1199px) {
+  .company-office {
+    background: white;
+    padding: 12px;
+    mask-image: var(--brush-images);
+    mask-size: var(--brush-sizes);
+    mask-position: var(--brush-positions);
+    mask-repeat: no-repeat;
+    mask-origin: border-box;
+    mask-clip: border-box;
+    mask-mode: alpha;
+    overflow: hidden;
+  }
+  .company-office::before {
+    content: none;
+  }
+  .company-office-photo {
+    display: inline;
+  }
 }

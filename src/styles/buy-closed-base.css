@@ -82,25 +82,6 @@
 .buy-closed-base-checks .badge:nth-child(7) {
   transform: rotate(-0.5deg);
 }
-/* Ленты 794:340340 / 794:340399, позиции пересчитаны из габаритов повёрнутых рамок */
-.buy-closed-base-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  object-fit: cover;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-}
-.buy-closed-base-tape-top {
-  left: -16.31px;
-  top: -14.06px;
-  transform: rotate(-29.75deg);
-}
-.buy-closed-base-tape-bottom {
-  right: -21.79px;
-  bottom: -11.76px;
-  transform: rotate(-22.8deg);
-}
 
 /* 1380:6482 — тень окна, исходный SVG без масштабирования */
 .buy-closed-base-shadow {
@@ -540,6 +521,9 @@
   .buy-closed-base-hand {
     font-size: 44px;
     line-height: 0.9;
+    position: relative;
+    top: 8px;
+    margin-right: 8px;
   }
   .buy-closed-base-card {
     padding: 24px;

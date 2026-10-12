@@ -108,6 +108,7 @@ const desktopWidths: Record<string, number> = {
         <div style={`inset:${layer.bleed}`}>
           <img
             src={"/assets/" + layer.stroke}
+            fetchpriority="low"
             alt=""
             width={imageSize("/assets/" + layer.stroke).width}
             height={imageSize("/assets/" + layer.stroke).height}
@@ -123,7 +124,7 @@ const desktopWidths: Record<string, number> = {
         style={`left:${layer.left}%;right:${layer.right}%;width:${100 - layer.left - layer.right}%;top:${(layer.top / 912.641) * 100}%;aspect-ratio:${layer.ratio}`}
         srcset={`/assets/${layer.photo}-m.webp ${mobileWidths[layer.photo]}w, /assets/${layer.photo}.webp ${desktopWidths[layer.photo]}w`}
         sizes={`(max-width: 1199px) calc(min(112vw, 1270px) * ${((100 - layer.left - layer.right) / 100).toFixed(4)}), ${(((100 - layer.left - layer.right) / 100) * 1270).toFixed(1)}px`}
-        fetchpriority={layer.photo === "0df0d" ? "high" : "auto"}
+        fetchpriority="low"
         width={imageSize("/assets/" + layer.photo + ".webp").width}
         height={imageSize("/assets/" + layer.photo + ".webp").height}
         loading="eager"

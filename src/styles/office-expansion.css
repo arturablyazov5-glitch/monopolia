@@ -149,3 +149,40 @@
 .current-photo .office-photo-frame > img:last-child {
   position: relative;
 }
+
+/* Макет 1380:5275: карта — общий фон «О компании», «Гильдии» и «Офисов»
+   (рамка 3035 px начинается на 2132 px выше секции, градиент #1c1c1c → прозрачный).
+   Верхние блоки становятся прозрачными и лежат выше карты. Только фиксированная
+   десктопная раскладка (≥1280): ниже блоки перестраиваются по высоте содержимого. */
+@media (min-width: 1280px) {
+  .office-expansion {
+    z-index: 0;
+    overflow: visible;
+    overflow-x: clip;
+  }
+  .office-expansion .expansion-map {
+    /* 1212 = высота «О компании» (757) + «Гильдии» (455): выше карта не заходит */
+    clip-path: inset(920px 0 0 0);
+    background: var(--color-dark);
+  }
+  .home-desktop .company-about,
+  .home-desktop .company-guild {
+    background: transparent;
+    z-index: 1;
+  }
+  .home-desktop .company-guild {
+    position: relative;
+  }
+}
+/* TASK-019. Figma: карта (3035 px, низ на +903 от верха секции) продолжается
+   под блоком «Наши партнёры» (+283 px от его верха). Фон партнёров в этой зоне
+   прозрачен, ниже — тёмный. Только ≥1280 (как правила карты выше). */
+@media (min-width: 1280px) {
+  .home-desktop .home-partners {
+    background: linear-gradient(
+      to bottom,
+      transparent 282px,
+      var(--color-dark) 282px
+    );
+  }
+}

@@ -89,24 +89,6 @@
   font: var(--text-body)/var(--leading-body) var(--font-body);
   margin: 0;
 }
-.buyer-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-  z-index: 2;
-}
-.buyer-tape-top {
-  left: -1.67px;
-  top: -8.17px;
-  transform: rotate(-29.75deg);
-}
-.buyer-tape-bottom {
-  right: -7.57px;
-  bottom: -4.03px;
-  transform: rotate(-22.8deg);
-}
 .buyer-name {
   position: absolute;
   left: 24.444px;

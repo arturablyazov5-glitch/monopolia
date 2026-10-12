@@ -3,9 +3,12 @@ interface Props {
   bank: string;
   time: string;
   icon: string;
+  /** Страница логотипа на Trace Logos — обратная ссылка с иконки */
+  href?: string;
+  alt?: string;
   masked?: boolean;
 }
-const { bank, time, icon, masked = false } = Astro.props;
+const { bank, time, icon, href, alt = "", masked = false } = Astro.props;
 ---
 
 <div class="referral-notification">
@@ -15,14 +18,27 @@ const { bank, time, icon, masked = false } = Astro.props;
       { "referral-notification-tbank": masked },
     ]}
   >
-    <img
-      src={icon}
-      alt=""
-      loading="lazy"
-      width="40"
-      height="40"
-      decoding="async"
-    />
+    {href ? (
+      <a href={href}>
+        <img
+          src={icon}
+          alt={alt}
+          loading="lazy"
+          width="40"
+          height="40"
+          decoding="async"
+        />
+      </a>
+    ) : (
+      <img
+        src={icon}
+        alt={alt}
+        loading="lazy"
+        width="40"
+        height="40"
+        decoding="async"
+      />
+    )}
   </span>
   <div class="referral-notification-text">
     <div>

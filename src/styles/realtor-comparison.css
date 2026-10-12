@@ -1,6 +1,8 @@
 /* Figma 1380:6977 «11» — сравнение «Самостоятельно / С риелтором» */
 .realtor-comparison {
   position: relative;
+  /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
+  overflow-x: clip;
   margin-top: -40px; /* «11» начинается на 40 px выше конца 1380:6839 */
   padding: 120px 0;
 }
@@ -9,7 +11,11 @@
   position: absolute;
   top: -0.35px;
   left: 50%;
+  /* Шире макета бумага растягивается на всю ширину окна, высота прежняя (в WebP рваные края) */
+  width: max(100%, 1440px); /* 100%, не 100vw: vw включает полосу прокрутки */
+  height: var(--bg-height, auto);
   max-width: none;
+  object-fit: fill;
   transform: translateX(-50%);
   pointer-events: none;
 }

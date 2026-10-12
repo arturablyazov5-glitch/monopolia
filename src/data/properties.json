@@ -1,0 +1,50 @@
+{
+  "revision": 0,
+  "objects": [
+    {
+      "id": "figma-deal-1",
+      "title": "1‑комнатная квартира, 40 м², 5/8 этажей",
+      "address": "Благовещенск, ул. Конная, д. 1",
+      "price": "4 900 000 ₽",
+      "oldPrice": "7 000 000 ₽",
+      "pricePerMeter": "122 500 ₽/м²",
+      "mortgage": "В ипотеку от 30 000 ₽ в месяц",
+      "discount": "-30%",
+      "image": {
+        "small": "/assets/da35e.webp",
+        "large": "/assets/da35e.webp"
+      },
+      "visible": true
+    },
+    {
+      "id": "figma-deal-2",
+      "title": "3‑комнатная квартира, 89 м², 5/5 этажей",
+      "address": "Белогорск, ул. Ленина, д. 10",
+      "price": "9 375 000 ₽",
+      "oldPrice": "12 500 000 ₽",
+      "pricePerMeter": "105 300 ₽/м²",
+      "mortgage": "В ипотеку от 45 000 ₽ в месяц",
+      "discount": "-25%",
+      "image": {
+        "small": "/assets/da35e.webp",
+        "large": "/assets/da35e.webp"
+      },
+      "visible": true
+    },
+    {
+      "id": "figma-deal-3",
+      "title": "2‑комнатная квартира, 52 м², 8/21 этажей",
+      "address": "Благовещенск, ул. Зейская, д. 222",
+      "price": "5 950 000 ₽",
+      "oldPrice": "8 500 000 ₽",
+      "pricePerMeter": "114 400 ₽/м²",
+      "mortgage": "В ипотеку от 30 000 ₽ в месяц",
+      "discount": "-30%",
+      "image": {
+        "small": "/assets/da35e.webp",
+        "large": "/assets/da35e.webp"
+      },
+      "visible": true
+    }
+  ]
+}

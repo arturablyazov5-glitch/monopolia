@@ -13,6 +13,8 @@ interface Props {
   rotate?: number;
   class?: string;
   node?: string;
+  tapeNode?: string;
+  tape?: boolean;
 }
 
 const {
@@ -21,6 +23,8 @@ const {
   rotate = 0,
   class: className = "",
   node = "",
+  tapeNode = "I1380:6985;569:1388",
+  tape = true,
 } = Astro.props;
 ---
 
@@ -29,7 +33,7 @@ const {
   style={rotate ? `transform: rotate(${rotate}deg)` : undefined}
   data-node-id={node || undefined}
 >
-  <Paper class:list={["taped-note-paper", { "taped-note-plain": !textured }]}>
+  <Paper class:list={["taped-note-paper", { "taped-note-plain": !textured }]} tapeNode={tape ? tapeNode : ""}>
     {icon && (
       <img
         class="taped-note-icon"
@@ -44,23 +48,5 @@ const {
     <p>
       <slot />
     </p>
-    <img
-      class="taped-note-tape taped-note-tape-top"
-      src="/assets/55e7e.webp"
-      width="39.912"
-      height="12.052"
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
-    <img
-      class="taped-note-tape taped-note-tape-bottom"
-      src="/assets/55e7e.webp"
-      width="39.912"
-      height="12.052"
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
   </Paper>
 </div>

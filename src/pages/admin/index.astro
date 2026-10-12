@@ -1,0 +1,276 @@
+---
+import SiteHeader from "../../components/SiteHeader.astro";
+import AdminIcon from "../../components/AdminIcon.astro";
+import Paper from "../../components/Paper.astro";
+import Button from "../../components/Button.astro";
+import AdminChoiceGroup from "../../components/AdminChoiceGroup.astro";
+import "../../styles/global.css";
+import "../../styles/admin.css";
+const endpoint = import.meta.env.PUBLIC_CATALOG_ENDPOINT || "";
+const api = endpoint ? new URL(endpoint).origin : "";
+const media = import.meta.env.PUBLIC_MEDIA_BASE || "";
+const csp = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' blob: data:${media ? ` ${new URL(media).origin}` : ""}`,
+  `connect-src 'self'${api ? ` ${api}` : ""}`,
+  "object-src 'none'",
+  "base-uri 'none'",
+  "form-action 'self'",
+].join("; ");
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content={csp}
+    />
+    <title>Админка — Монополия</title>
+  </head>
+  <body class="admin-page" data-api-base={api} data-media-base={media}>
+    <a class="skip-link" href="#admin-main">
+      К содержимому
+    </a>
+    <div class="fixed-site-header">
+      <SiteHeader variant="admin" />
+    </div>
+    <main id="admin-main" class="admin-main">
+      <div class="admin-intro">
+        <div>
+          <span class="admin-eyebrow">ВЫБОР НЕДВИЖИМОСТИ</span>
+          <h1>Объекты под контролем.</h1>
+        </div>
+        <span class="handwriting">Всё на своих местах</span>
+      </div>
+      <Paper class="admin-login">
+        <div class="admin-login-copy">
+          <span class="admin-eyebrow">ДЛЯ КОМАНДЫ МОНОПОЛИИ</span>
+          <h2>Вход в админку</h2>
+          <p>
+            Добавляйте объекты, меняйте фотографии
+            <br />и выбирайте, что показать на сайте.
+          </p>
+        </div>
+        <div>
+          <form id="login">
+            <label>
+              Логин
+              <input
+                name="username"
+                autocomplete="username"
+                required
+                maxlength="80"
+                placeholder="Ваш логин"
+              />
+            </label>
+            <label>
+              Пароль
+              <input
+                type="password"
+                name="password"
+                autocomplete="current-password"
+                required
+                maxlength="256"
+                placeholder="Ваш пароль"
+              />
+            </label>
+            <button class="button red" type="submit">
+              <AdminIcon name="login" />
+              Войти
+            </button>
+          </form>
+          <div class="admin-recovery">
+            <button id="recovery" class="admin-text-button" type="button">
+              Получить пароль
+            </button>
+            <a
+              id="recovery-link"
+              class="recovery-link"
+              target="_blank"
+              rel="noopener"
+              hidden
+            >
+              Открыть Telegram ↗
+            </a>
+          </div>
+          <p id="login-notice" class="admin-banner" role="status" hidden></p>
+        </div>
+      </Paper>
+      <div id="workspace" hidden>
+        <div class="admin-toolbar">
+          <div>
+            <h2>
+              Ваши объекты <span id="object-count"></span>
+            </h2>
+            <p>Порядок в списке — порядок на сайте.</p>
+          </div>
+          <div class="toolbar">
+            <button
+              id="reload"
+              class="button white admin-secondary"
+              type="button"
+              title="Обновить список"
+              aria-label="Обновить список"
+            >
+              <AdminIcon name="reload" />
+              <span>Обновить список</span>
+              <span class="admin-tooltip" aria-hidden="true">
+                Обновить список
+              </span>
+            </button>
+            <button id="add" class="button red" type="button">
+              <AdminIcon name="plus" />
+              Добавить объект
+            </button>
+          </div>
+        </div>
+        <label id="search-label" class="admin-search" hidden>
+          <span class="admin-search-caption">Поиск по названию</span>
+          <AdminIcon name="search" />
+          <input id="search" type="search" placeholder="Найти объект" />
+        </label>
+        <div
+          id="objects"
+          aria-label="Карточки недвижимости"
+          aria-busy="false"
+        ></div>
+      </div>
+    </main>
+    <dialog
+      id="editor"
+      class="admin-dialog"
+      aria-labelledby="edit-title"
+      hidden
+    >
+      <div class="paper admin-panel">
+        <header class="admin-dialog-heading">
+          <div>
+            <span class="admin-eyebrow">КАРТОЧКА НЕДВИЖИМОСТИ</span>
+            <h2 id="edit-title" tabindex="-1">
+              Новый объект
+            </h2>
+          </div>
+          <button
+            id="editor-close"
+            class="admin-icon-button"
+            type="button"
+            aria-label="Закрыть редактор"
+            title="Закрыть редактор"
+            data-tooltip="Закрыть редактор"
+          >
+            <AdminIcon name="close" />
+          </button>
+        </header>
+        <form id="form" novalidate>
+          <div class="admin-editor-body">
+            <div id="fields" class="fields"></div>
+            <div id="image-editor">
+              <label class="admin-upload">
+                <AdminIcon name="camera" />
+                <span>
+                  Фотография <small>JPEG, PNG или WebP · до 15 МБ</small>
+                </span>
+                <input
+                  id="image-file"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                />
+              </label>
+              <p class="admin-photo-note">
+                Кадр 4:3 — по центру фотографии. Оригинал не публикуется.
+              </p>
+              <canvas
+                id="crop-preview"
+                width="680"
+                height="510"
+                hidden
+                aria-label="Кадр фотографии"
+                role="img"
+              ></canvas>
+              <img
+                id="current-image"
+                width="360"
+                height="270"
+                alt="Текущее фото"
+                hidden
+              />
+              <span
+                class="field-error"
+                data-field="image"
+                id="error-image"
+              ></span>
+            </div>
+            <div class="admin-visibility">
+              <p>Видимость на сайте</p>
+              <AdminChoiceGroup
+                name="Видимость карточки"
+                options={["Показывать", "Скрыть"]}
+              />
+            </div>
+          </div>
+          <footer class="admin-dialog-footer">
+            <button id="cancel" class="admin-text-button" type="button">
+              Отмена
+            </button>
+            <Button label="Сохранить" type="submit" />
+          </footer>
+        </form>
+      </div>
+    </dialog>
+    <dialog
+      id="confirmation"
+      class="admin-dialog admin-confirmation"
+      role="alertdialog"
+      aria-labelledby="confirm-title"
+      aria-describedby="confirm-description"
+    >
+      <div class="paper admin-panel">
+        <header class="admin-dialog-heading">
+          <h2 id="confirm-title">Удалить объект?</h2>
+          <button
+            id="confirm-close"
+            class="admin-icon-button"
+            type="button"
+            aria-label="Закрыть подтверждение"
+            title="Закрыть подтверждение"
+            data-tooltip="Закрыть"
+          >
+            <AdminIcon name="close" />
+          </button>
+        </header>
+        <p id="confirm-description">Это действие нельзя отменить.</p>
+        <div class="admin-dialog-footer">
+          <button
+            id="confirm-cancel"
+            class="admin-text-button"
+            type="button"
+            autofocus
+          >
+            Отмена
+          </button>
+          <button id="confirm-ok" class="button red" type="button">
+            Удалить
+          </button>
+        </div>
+      </div>
+    </dialog>
+    <div
+      id="message"
+      popover="manual"
+      class="admin-toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      hidden
+    ></div>
+    <script>
+      import "../../scripts/admin/editor";
+    </script>
+  </body>
+</html>

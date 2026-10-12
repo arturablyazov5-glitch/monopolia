@@ -12,6 +12,7 @@ import "../styles/fast-sale.css";
   <img
     class="fast-sale-background"
     src="/assets/e159e.webp"
+    fetchpriority="low"
     alt=""
     width="1440"
     height="1325"
@@ -21,17 +22,14 @@ import "../styles/fast-sale.css";
   <div class="fast-sale-scene">
     <div class="fast-sale-copy">
       <h2 id="fast-sale-title">
-        Недавно мы продали{" "}
-        <br />
-        квартиру за <span class="fast-sale-time">3 часа</span>{" "}
-        <br />
+        Недавно мы продали <br />
+        квартиру за <span class="fast-sale-time">3 часа</span> <br />
         <span class="fast-sale-muted">
-          которую другое агентство{" "}
-          <br />
-          не могло продать за год
+          которую другое агентство <br />
+          не могло продать за год
         </span>
       </h2>
-      <Paper class="fast-sale-note" node="1380:4982">
+      <Paper class="fast-sale-note" tapeNode="1380:4982" node="1380:4982">
         <img
           src="/assets/330ff.svg"
           width="36"
@@ -41,19 +39,9 @@ import "../styles/fast-sale.css";
           decoding="async"
         />
         <p>
-          А среднее время продажи{" "}
-          <br />
-          объектов в Монополии — <strong>2 недели</strong>
+          А среднее время продажи <br />
+          объектов в Монополии — <strong>2 недели</strong>
         </p>
-        <img
-          class="fast-sale-tape"
-          src="/assets/55e7e.webp"
-          width="51"
-          height="15"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
       </Paper>
       <Button
         label="Найти покупателя"
@@ -76,13 +64,13 @@ import "../styles/fast-sale.css";
         src="/assets/7e2d1.webp"
         width="828"
         height="552"
-        alt="Павел Барковский на фоне проданного объекта"
+        alt="Павел Барковский на фоне проданного объекта"
         loading="lazy"
         decoding="async"
       />
       <Paper class="fast-sale-name" node="1380:5008">
         <p class="fast-sale-name-title">Павел Барковский</p>
-        <p class="fast-sale-name-role">Старший специалист по недвижимости</p>
+        <p class="fast-sale-name-role">Старший специалист по недвижимости</p>
       </Paper>
     </div>
   </div>

@@ -10,21 +10,64 @@ import LeadForm from "./LeadForm.astro";
   <LeadForm compact id="modal" />
 </dialog>
 <script>
+  import {
+    initializeLeadSources,
+    leadSource,
+    leadSection,
+  } from "../lib/lead-source";
+  initializeLeadSources();
   const dialog = document.querySelector<HTMLDialogElement>("#lead-dialog");
   if (dialog) {
     document
       .querySelectorAll<HTMLButtonElement>("[data-lead]")
       .forEach((button) =>
         button.addEventListener("click", () => {
+          const form = dialog.querySelector<HTMLFormElement>("form")!;
+          if (form.getAttribute("aria-busy") === "true") return;
+          form.reset();
+          form.dataset.leadSource = leadSource(button);
+          form.dataset.leadSection = leadSection(button);
+          const card = button.closest(".inner-hero-card");
+          const calc = button.closest(".buy-mortgage-calc, .range-demo");
+          const context: Record<string, string> = {};
+          if (card) {
+            context.city =
+              card.querySelector<HTMLInputElement>("[name=city]")?.value ?? "";
+            context.propertyType =
+              card
+                .querySelector<HTMLElement>(
+                  "[data-choice-group] [aria-pressed=true]",
+                )
+                ?.textContent?.trim() ?? "";
+          }
+          if (calc)
+            context.priceMillion =
+              calc.querySelector<HTMLInputElement>("input[type=range]")
+                ?.value ?? "";
+          form.dataset.context = JSON.stringify(context);
           dialog.querySelector("#lead-purpose")!.textContent =
             button.dataset.lead!;
           const input =
             dialog.querySelector<HTMLInputElement>("[name=subject]");
           if (input)
             input.value = button.dataset.subject ?? button.dataset.lead!;
+          // Панель меню закрывается при открытии формы: её скрытая кнопка
+          // не может принять фокус после Escape. Возвращаем его на бургер.
+          opener = button.closest(".menu-panel")
+            ? (button
+                .closest(".site-header")
+                ?.querySelector<HTMLElement>(".menu-button") ?? button)
+            : button;
           dialog.showModal();
         }),
       );
+    // a11y: Escape закрывает нативный modal; после любого закрытия
+    // фокус возвращается на кнопку, которая открыла форму.
+    let opener: HTMLElement | null = null;
+    dialog.addEventListener("close", () => {
+      opener?.focus();
+      opener = null;
+    });
     dialog
       .querySelector(".dialog-close")
       ?.addEventListener("click", () => dialog.close());

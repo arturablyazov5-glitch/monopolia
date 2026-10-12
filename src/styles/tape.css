@@ -1,0 +1,26 @@
+/* Ленты не участвуют в раскладке. Отсчёт — border-box листа, а не текст/иконка.
+   Маска бумаги применяется к её фону; отдельный слой остаётся немаскированным. */
+.tape-layer {
+  position: absolute;
+  inset: calc(-1 * var(--tape-border, 0px));
+  overflow: visible;
+  z-index: 3;
+  pointer-events: none;
+}
+.paper-tape {
+  position: absolute;
+  display: block;
+  width: var(--tape-width);
+  height: var(--tape-height);
+  max-width: none;
+  left: var(--tape-x);
+  top: var(--tape-y);
+  transform: var(--tape-transform);
+  transform-origin: 0 0;
+  box-shadow: var(--tape-shadow);
+  opacity: var(--tape-opacity);
+  object-fit: cover;
+  pointer-events: none;
+}
+.paper.service-card-coupon > .tape-layer,
+.paper.recruiting-note > .tape-layer { --tape-border: 15px; }

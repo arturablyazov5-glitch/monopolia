@@ -72,9 +72,12 @@
 }
 .home-team .staff-photo .badge {
   position: absolute;
+  left: auto;
   right: 12px;
   bottom: 12px;
+  width: max-content;
   max-width: calc(100% - 24px);
+  text-align: left;
   padding: 6px 14px;
   font: 14px/1.2 var(--font-body);
   white-space: nowrap;
@@ -144,6 +147,8 @@
   color: var(--color-muted);
 }
 .home-team .staff-certificate {
+  /* Белая плашка: без бумажной текстуры, которую наследует карточка */
+  --paper-texture: none;
   padding: 12px 16px;
   width: 100%;
 }
@@ -155,19 +160,24 @@
   font: 16px/1.2 var(--font-body);
   white-space: nowrap;
 }
-.staff-certificate img {
-  position: absolute;
-  right: -18.5px;
-  top: -10px;
-  transform: rotate(29.75deg);
-}
 .home-team .carousel-controls {
   position: absolute;
-  inset: 344px -40px auto;
+  /* Figma 1380:5631: стрелки 40 px + зазор 20 px от ряда карточек. */
+  inset: 344px -60px auto;
   display: flex;
   justify-content: space-between;
   pointer-events: none;
   margin: 0;
+}
+/* 1160 px ряд + 2 × (40 px стрелка + 20 px зазор + 8 px поле окна).
+   Ниже этой ширины боковые стрелки не помещаются: используем свободное
+   место под рядом, не меняя высоту секции и раскладку ≤1199. */
+@media (min-width: 1200px) and (max-width: 1295px) {
+  .home-team .carousel-controls {
+    inset: calc(100% + 16px) 0 auto;
+    justify-content: center;
+    gap: 16px;
+  }
 }
 .home-team .carousel-controls .arrow {
   pointer-events: auto;

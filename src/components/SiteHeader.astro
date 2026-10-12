@@ -1,13 +1,19 @@
 ---
 import SocialLinks from "./SocialLinks.astro";
+import { cities as defaultCities } from "../data/cities";
+import Button from "./Button.astro";
+import { siteSections } from "../data/site-nav";
 interface Props {
+  variant?: "site" | "admin";
   nav?: { label: string; href: string }[];
   home?: string;
   city?: string;
+  cities?: string[];
   desktop?: boolean;
   socialLinks?: { label: string; icon: string; href?: string }[];
 }
 const {
+  variant = "site",
   nav = [
     { label: "Хочу продать", href: "/sell/" },
     { label: "Хочу купить", href: "/buy/" },
@@ -16,6 +22,7 @@ const {
   home = "/",
   city = "Белогорск",
   desktop = true,
+  cities = defaultCities,
   socialLinks = [
     { label: "Telegram", icon: "2dc32.svg" },
     { label: "MAX", icon: "0a072.svg" },
@@ -24,10 +31,10 @@ const {
 ---
 
 <header
-  class:list={["site-header", { desktop: desktop }]}
+  class:list={["site-header", { desktop: desktop, "admin-site-header": variant === "admin" }]}
   data-node-id="1380:4922"
 >
-  <a class="brand" href={home} aria-label="Монополия — главная">
+  <a class="brand" href={home} aria-label="Монополия — главная">
     <img
       src="/assets/a2665.svg"
       width="32"
@@ -45,28 +52,45 @@ const {
         loading="eager"
         decoding="async"
       />
-      <span class="tagline">Агентство недвижимости с 2006 года</span>
+      <span class="tagline">Агентство недвижимости с 2006 года</span>
     </div>
   </a>
-  <span class="city">
-    <img
-      src="/assets/20afe.svg"
-      width="10"
-      height="13"
-      alt=""
-      loading="eager"
-      decoding="async"
-    />
-    {city}
-    <img
-      src="/assets/98485.svg"
-      width="5"
-      height="3"
-      alt=""
-      loading="eager"
-      decoding="async"
-    />
-  </span>
+  {variant === "admin" ? <><span class="admin-header-label">Админка</span><button id="logout" class="admin-text-button admin-logout" type="button" hidden>Выйти</button></> : <>
+  <div class="city-picker" data-city-picker>
+    <button
+      type="button"
+      class="city"
+      data-city-toggle
+      aria-haspopup="listbox"
+      aria-expanded="false"
+    >
+      <img
+        src="/assets/20afe.svg"
+        width="10"
+        height="13"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+      <span data-city-label>{city}</span>
+      <img
+        class="city-chevron"
+        src="/assets/98485.svg"
+        width="5"
+        height="3"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    </button>
+    <ul class="city-menu" role="listbox" aria-label="Город" hidden>
+      {cities.map((c) => (
+        <li role="option" aria-selected={c === city} tabindex="-1" data-city-option={c}>
+          {c}
+        </li>
+      ))}
+    </ul>
+  </div>
   <nav aria-label="Разделы сайта">
     {nav.map((item) => (
       <a href={item.href}>
@@ -78,7 +102,7 @@ const {
             alt=""
             width="5"
             height="5"
-            loading="eager"
+            loading="lazy"
             decoding="async"
           />
         )}
@@ -88,18 +112,21 @@ const {
   <div class="header-right">
     <div class="header-contact">
       <div class="header-social">
-        <SocialLinks loading="eager" links={socialLinks} />
+        <SocialLinks loading="lazy" links={socialLinks} />
       </div>
       <div class="header-phone">
-        <a href="tel:+79245804555">+7 (924) 580-45-55</a>
+        <a href="tel:+79245804555">+7 (924) 580-45-55</a>
         <small class="office-status">
-          <i></i>
-          <span data-office-status>Пн-Пт 09:00–18:00</span>
+          <span class="time" data-office-status>Пн‑Пт 09:00–18:00</span>
         </small>
       </div>
     </div>
     <!-- Адаптив: звонок одним касанием на телефоне; на десктопе скрыто -->
-    <a class="header-call" href="tel:+79245804555" aria-label="Позвонить: +7 (924) 580-45-55">
+    <a
+      class="header-call"
+      href="tel:+79245804555"
+      aria-label="Позвонить: +7 (924) 580-45-55"
+    >
       <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
         <path
           fill="currentColor"
@@ -112,19 +139,49 @@ const {
       class="menu-button"
       aria-label="Открыть меню"
       aria-expanded="false"
+      aria-controls="site-menu-panel"
     >
       <img
         src="/assets/63228.svg"
+        fetchpriority="low"
         alt=""
         width="32"
         height="32"
         loading="eager"
         decoding="async"
       />
+      <svg class="menu-close" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="4" y="5" width="25" height="24" fill="#D52D2D"></rect>
+        <path d="M10 10l12 12M22 10L10 22" stroke="#fff" stroke-width="1.5" stroke-linecap="round"></path>
+      </svg>
     </button>
   </div>
+  <!-- Меню сайта: выпадающая панель под бургером на всех ширинах.
+       Не <nav>: правила шапки `.site-header nav` относятся к inline-навигации. -->
+  <div class="menu-panel-shadow">
+  <div
+    class="menu-panel brush-stroke"
+    id="site-menu-panel"
+    role="navigation"
+    aria-label="Все разделы сайта"
+    hidden
+  >
+    <ul>
+      {siteSections.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+    <div class="menu-panel-actions">
+      <Button label="Оставить заявку" loading="lazy" />
+      <a class="menu-panel-phone" href="tel:+79245804555">+7 (924) 580-45-55</a>
+    </div>
+  </div>
+  </div>
+  </>}
 </header>
-<script>
+{variant !== "admin" && <script>
+  import { initCityPickers } from "../lib/city-picker";
+  initCityPickers();
   document.querySelectorAll<HTMLElement>(".site-header").forEach((header) => {
     const officeStatus = header.querySelector<HTMLElement>(
       "[data-office-status]",
@@ -148,19 +205,37 @@ const {
       officeStatus.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
       header.querySelector(".office-status")?.classList.toggle("closed", !open);
     }
+    if (header.classList.contains("admin-site-header")) return;
     const menu = header.querySelector<HTMLButtonElement>(".menu-button")!;
+    const panel = header.querySelector<HTMLElement>(".menu-panel")!;
     const setOpen = (open: boolean) => {
       menu.setAttribute("aria-expanded", String(open));
       menu.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
       header.classList.toggle("menu-open", open);
+      panel.hidden = !open;
     };
-    menu.addEventListener("click", () =>
-      setOpen(menu.getAttribute("aria-expanded") !== "true"),
-    );
-    header
-      .querySelectorAll("nav a")
+    menu.addEventListener("click", (e) => {
+      const open = menu.getAttribute("aria-expanded") !== "true";
+      setOpen(open);
+      // a11y: при открытии с клавиатуры (detail 0) фокус — на первый пункт
+      if (open && e.detail === 0)
+        panel.querySelector<HTMLElement>("a")?.focus();
+    });
+    // a11y: фокус ушёл из шапки (Tab дальше последнего пункта) — меню закрывается
+    header.addEventListener("focusout", (e) => {
+      const next = (e as FocusEvent).relatedTarget as Node | null;
+      if (
+        header.classList.contains("menu-open") &&
+        next &&
+        !header.contains(next)
+      )
+        setOpen(false);
+    });
+    // переход по разделу или открытие формы закрывают меню
+    panel
+      .querySelectorAll("a, [data-lead]")
       .forEach((a) => a.addEventListener("click", () => setOpen(false)));
-    // Адаптив: тап вне шапки закрывает открытое меню
+    // клик/тап вне шапки закрывает открытое меню
     document.addEventListener("click", (e) => {
       if (
         header.classList.contains("menu-open") &&
@@ -168,11 +243,15 @@ const {
       )
         setOpen(false);
     });
-    header.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
+    // a11y: бургер управляет панелью (aria-controls); Escape закрывает меню,
+    // где бы ни был фокус, и возвращает фокус на бургер.
+    panel.id = `site-menu-panel-${[...document.querySelectorAll(".site-header")].indexOf(header)}`;
+    menu.setAttribute("aria-controls", panel.id);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && header.classList.contains("menu-open")) {
         setOpen(false);
         menu.focus();
       }
     });
   });
-</script>
+</script>}

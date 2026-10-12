@@ -1,0 +1,8 @@
+**
+!server/
+!server/*.mjs
+!src/
+!src/lib/
+!src/lib/catalog-schema.mjs
+!src/data/
+!src/data/properties.json

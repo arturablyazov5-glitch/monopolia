@@ -113,22 +113,3 @@
   padding: 18px 32px;
   font-size: 16px;
 }
-.service-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  object-fit: cover;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-  z-index: 2;
-}
-.service-tape-top {
-  left: -34.15px;
-  top: -31.11px;
-  transform: rotate(-29.75deg);
-}
-.service-tape-bottom {
-  right: -35.68px;
-  bottom: -27.07px;
-  transform: rotate(-22.8deg);
-}

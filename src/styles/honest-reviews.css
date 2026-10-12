@@ -6,7 +6,7 @@
   /* Фото 1380:5132 в Figma уходит до 5066.6 — под рваный верх бумаги
      ProvenTrust (4908.71). Низ не обрезаем: фото видно в вырезах края. */
   overflow-x: clip;
-  clip-path: inset(0 0 -160px 0);
+  clip-path: inset(-100px 0 -160px 0);
   background: #151515;
 }
 .honest-reviews-background {
@@ -90,15 +90,6 @@
   margin: 0;
   font: var(--text-body)/var(--leading-body) var(--font-body);
 }
-.honest-reviews-tape {
-  position: absolute;
-  left: calc(50% - 2.64px);
-  top: -3.5px;
-  transform: translateX(-50%);
-  width: 50.667px;
-  height: 15.3px;
-  max-width: none;
-}
 .honest-reviews-broken {
   position: absolute;
   left: 879.879px;
@@ -106,4 +97,59 @@
   width: 536.874px;
   height: 498.254px;
   max-width: none;
+}
+
+/* TASK-040: одна композиция 1440, пропорционально окну ноутбука.
+   cqw учитывает ширину секции (включая обычную полосу прокрутки).
+   tan(atan2()) даёт безразмерный коэффициент без нового деления длин
+   в calc(); высота в потоке компенсируется через aspect-ratio. */
+@media (1200px <= width < 1440px) {
+  .honest-reviews {
+    container-type: inline-size;
+    --scene-scale: tan(atan2(100cqw, 1440px));
+    height: auto;
+    aspect-ratio: 1440 / 676.594;
+    padding-top: 0;
+  }
+  .honest-reviews-scene {
+    position: absolute;
+    left: 0;
+    top: calc(100cqw * 120 / 1440);
+    margin: 0;
+    transform: scale(var(--scene-scale));
+    transform-origin: 0 0;
+  }
+  .honest-reviews-background {
+    top: calc(100cqw * -91.504 / 1440);
+    width: 1440px;
+    transform: translateX(-50%) scale(var(--scene-scale));
+    transform-origin: 50% 0;
+  }
+}
+
+@media (width > 1440px) {
+  .honest-reviews::before {
+    /* Фон продолжается и над секцией, и под вырезами рваной бумаги
+       ProvenTrust: границы высоты секции не образуют обрывов по бокам. */
+    content: "";
+    position: absolute;
+    top: -91.504px;
+    left: 0;
+    width: 100%;
+    height: 926px;
+    z-index: -2;
+    pointer-events: none;
+    background: #151515;
+  }
+  .honest-reviews-background {
+    /* Маска применяется к фото вместе с исходным затемнением текста. */
+    width: 1440px;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 140px,
+      #000 calc(100% - 140px),
+      transparent
+    );
+  }
 }

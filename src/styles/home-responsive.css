@@ -27,6 +27,10 @@
   .home-desktop h2 {
     font-size: var(--h2);
   }
+  /* Жёсткие переносы десктопа — перенос по ширине (пробелы перед <br> в разметке) */
+  .home-desktop h2 br {
+    display: none;
+  }
   .home-desktop .arrow {
     width: 44px;
     height: 44px;
@@ -52,8 +56,8 @@
   }
   .home-desktop .hero-paper-edge {
     top: auto;
-    bottom: 0;
-    height: var(--hero-paper);
+    bottom: -1px;
+    height: calc(var(--hero-paper) + 1px);
   }
 
   /* Рукописные слова: вместо абсолютного оверлея — сам текст в заголовке */
@@ -78,8 +82,12 @@
     padding-top: var(--sec);
     background: #fdfdfd;
   }
+  /* Перекрытие 1 px убирает шов субпиксельного стыка бумаги с первым экраном */
+  .home-desktop .buyer-audience {
+    margin-top: -1px;
+  }
   .home-desktop .buyer-paper-background {
-    top: calc(-1 * var(--hero-paper));
+    top: calc(1px - var(--hero-paper));
   }
   .home-desktop .buyer-audience-container {
     display: grid;
@@ -279,6 +287,12 @@
   }
 
   /* --- 6. EqualInterests: композиция десктопа, обрезка по центру --- */
+  /* Q1: h2 на планшете в 2–3 строки — фиксированная высота 870 обрезала
+     кнопки (768: срезаны наполовину); высота по содержимому. */
+  .home-desktop .equal-interests {
+    height: auto;
+    padding-bottom: 48px;
+  }
   .home-desktop .equal-interests-content {
     width: auto;
     margin: 0 var(--rg);
@@ -415,8 +429,9 @@
 
   /* --- 9. ClientCases --- */
   .home-desktop .client-cases {
+    --cases-pad: var(--sec);
     height: auto;
-    padding: var(--sec) 0 calc(var(--sec) + 40px);
+    padding: var(--cases-pad) 0 calc(var(--sec) + 40px);
     /* бумага сверху, тёмный блок компании — в вырезах рваного низа */
     background: linear-gradient(#fdfdfd 50%, #1c1c1a 50%);
   }
@@ -515,6 +530,9 @@
   }
   .home-desktop .expansion-container h2 {
     transform: translateX(67px);
+    /* Q1: заголовок в одну строку шириной 1280 обрезался краями экрана */
+    width: calc(100vw - 2 * var(--rg));
+    margin: 0 auto;
   }
 
   /* --- 13. Партнёры --- */
@@ -588,7 +606,7 @@
     --scene-h: calc(866.965px * var(--k));
     height: auto;
     /* цвет белой дымки над сценой: текст сверху читается на светлом */
-    background: #f3f3f3;
+    background: linear-gradient(var(--color-dark) 0 40px, #f3f3f3 40px);
   }
   .home-desktop .blockbuster-scene {
     top: auto;
@@ -601,7 +619,8 @@
   .home-desktop .blockbuster-content {
     width: auto;
     height: auto;
-    padding: 80px var(--rg) calc(var(--scene-h) * 0.62 + 40px);
+    /* Q1: +40 px — пузырь «У вас забор…» наезжал на описание на 768 */
+    padding: 80px var(--rg) calc(var(--scene-h) * 0.62 + 140px);
   }
   .home-desktop .blockbuster-content h2,
   .home-desktop .blockbuster-description {
@@ -610,14 +629,14 @@
   }
   .home-desktop .blockbuster-warning {
     top: auto;
-    bottom: calc(var(--scene-h) * 0.5);
-    left: calc(50% - 300px);
+    bottom: calc(var(--scene-h) * 0.63);
+    left: calc(50% - 340px);
   }
   .home-desktop .blockbuster-reply {
     top: auto;
-    bottom: calc(var(--scene-h) * 0.48);
+    bottom: calc(var(--scene-h) * 0.61);
     left: auto;
-    right: calc(50% - 300px);
+    right: calc(50% - 340px);
   }
 
   /* --- 16. HomeTeam: свайп карточек --- */
@@ -675,6 +694,11 @@
     top: auto;
     left: auto;
     width: 100%;
+  }
+  .home-desktop .telegram-news h2,
+  .home-desktop .telegram-news p {
+    max-width: 58%;
+    white-space: normal;
   }
   .home-desktop .telegram-content {
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
@@ -762,6 +786,335 @@
   }
 }
 
+/* ============ ПЛАНШЕТ 768–1023: правки пустот (TASK-009) ============ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* --- 19. HomeRecruiting: фото во всю ширину экрана (раньше сдвигалось,
+     слева оставалась чёрная полоса) --- */
+  .home-desktop .recruiting-photo {
+    left: 0;
+    width: 100%;
+    transform: none;
+  }
+  .home-desktop .recruiting-photo img {
+    object-fit: cover;
+    object-position: 32% 50%;
+  }
+  /* --- 2–3. BuyerAudience / FastSale: текст на всю ширину колонки,
+     без узкой полосы слева и пустоты справа --- */
+  .home-desktop .buyer-audience-content,
+  .home-desktop .fast-sale-copy {
+    max-width: none;
+  }
+  .home-desktop .buyer-note,
+  .home-desktop .fast-sale-note {
+    max-width: 640px;
+  }
+  /* --- 7. HonestReviews: текст слева, девушка по центру-справа, разбитая
+     карточка у нижнего правого угла (вместо карточки поверх лица) --- */
+  .home-desktop .honest-reviews-background {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    transform: none;
+  }
+  .home-desktop .honest-reviews-background > img {
+    height: 100%;
+    object-fit: cover;
+    object-position: 0 50%;
+  }
+  .home-desktop .honest-reviews-background::after {
+    background: linear-gradient(
+      to right,
+      #151515 0%,
+      #151515b3 30%,
+      #15151500 58%
+    );
+  }
+  .home-desktop .honest-reviews-scene {
+    position: relative;
+    min-height: 330px;
+    padding-bottom: 0;
+  }
+  .home-desktop .honest-reviews-copy {
+    max-width: 46%;
+  }
+  .home-desktop .honest-reviews-copy h2 {
+    font-size: clamp(32px, 4.2vw, 40px);
+  }
+  .home-desktop .honest-reviews-note {
+    max-width: 100%;
+  }
+  .home-desktop .honest-reviews-broken {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: min(400px, 46%);
+    align-self: auto;
+  }
+  /* --- 10. CompanyAbout: фото офиса во всю ширину колонки, 3:2
+     (раньше узкая вертикаль по центру с пустыми боками) --- */
+  .home-desktop .company-office {
+    width: 100%;
+  }
+  .home-desktop .company-office-photo {
+    aspect-ratio: 3 / 2;
+    object-position: 50% 62%;
+  }
+  /* Портреты без растворения верха: шляпа и кадр целиком (как на 1024+) */
+  .home-desktop .buyer-portrait,
+  .home-desktop .fast-sale-portrait {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  /* FastSale: фото до правого края экрана (раньше правый край здания
+     обрывался вертикальной линией посреди страницы); фото, тень и плашка
+     имени — в одном масштабе через cqw */
+  .home-desktop .fast-sale-visual {
+    container-type: inline-size;
+    width: calc(100% + var(--rg));
+    height: auto;
+    aspect-ratio: 828 / 552;
+    margin: 24px calc(-1 * var(--rg)) 0 0;
+  }
+  .home-desktop .fast-sale-shadow {
+    top: calc(8.518cqw * 100 / 828);
+    left: calc(-42.5cqw * 100 / 828);
+    width: calc(447.463cqw * 100 / 828);
+    height: calc(580.875cqw * 100 / 828);
+  }
+  .home-desktop .fast-sale-name {
+    right: calc(141.431cqw * 100 / 828);
+    bottom: calc(84.91cqw * 100 / 828);
+  }
+}
+
+/* ============ ПЛАНШЕТ 1024–1199: две колонки (TASK-009) ============
+   Уменьшенная десктопная композиция «текст | фото» вместо мобильной стопки:
+   на 1024–1199 стопка оставляла пустую правую половину экрана.
+   Портреты с тенями масштабируются через контейнерные единицы (cqw) —
+   фото, тень и плашка имени в одном масштабе, как на 1440. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  /* --- 2. BuyerAudience: портрет слева, текст справа (как 1440) --- */
+  .home-desktop .buyer-audience {
+    container-type: inline-size;
+    --u: calc((100cqw - 2 * var(--rg)) / 1160);
+    padding-top: 0;
+  }
+  .home-desktop .buyer-audience-container {
+    display: block;
+    position: relative;
+    height: calc(633 * var(--u));
+  }
+  .home-desktop .buyer-portrait,
+  .home-desktop .buyer-portrait-shadow,
+  .home-desktop .buyer-name {
+    position: absolute;
+    margin: 0;
+  }
+  .home-desktop .buyer-portrait {
+    top: 0;
+    left: calc(-80 * var(--u));
+    width: calc(844 * var(--u));
+    height: calc(633 * var(--u));
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .home-desktop .buyer-portrait-shadow {
+    top: calc(50.495 * var(--u));
+    left: calc(76.591 * var(--u));
+    width: calc(282.415 * var(--u));
+    height: calc(384.066 * var(--u));
+  }
+  .home-desktop .buyer-name {
+    top: calc(483.464 * var(--u));
+    left: calc(24.444 * var(--u));
+  }
+  .home-desktop .buyer-audience-content {
+    position: absolute;
+    top: 50%;
+    left: calc(740 * var(--u));
+    width: calc(420 * var(--u));
+    max-width: none;
+    transform: translateY(-50%);
+  }
+
+  /* --- 3. FastSale: текст слева, портрет справа --- */
+  .home-desktop .fast-sale-scene {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    align-items: center;
+    column-gap: 24px;
+    margin: 0 0 0 var(--rg);
+    padding-top: 0;
+  }
+  .home-desktop .fast-sale-copy {
+    padding: 56px 0;
+    max-width: none;
+  }
+  .home-desktop .fast-sale-visual {
+    container-type: inline-size;
+    align-self: end;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 828 / 552;
+    margin: 0;
+  }
+  .home-desktop .fast-sale-portrait {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .home-desktop .fast-sale-shadow {
+    top: calc(8.518cqw * 100 / 828);
+    left: calc(-42.5cqw * 100 / 828);
+    width: calc(447.463cqw * 100 / 828);
+    height: calc(580.875cqw * 100 / 828);
+  }
+  .home-desktop .fast-sale-name {
+    right: calc(141.431cqw * 100 / 828);
+    bottom: calc(84.91cqw * 100 / 828);
+  }
+
+  /* --- 7. HonestReviews: композиция 1440 в масштабе --u (текст | девушка |
+     разбитая карточка), шрифты остаются планшетными --- */
+  .home-desktop .honest-reviews {
+    container-type: inline-size;
+    --u: calc((100cqw - 2 * var(--rg)) / 1160);
+    height: calc(676.594 * var(--u));
+    min-height: 560px;
+    padding-top: calc(120 * var(--u));
+  }
+  .home-desktop .honest-reviews-background {
+    top: calc(-91.504 * var(--u));
+    bottom: auto;
+    width: calc(1440 * var(--u));
+    height: calc(926 * var(--u));
+  }
+  .home-desktop .honest-reviews-background > img {
+    height: 100%;
+  }
+  .home-desktop .honest-reviews-background::after {
+    background: linear-gradient(
+      to right,
+      #151515 0%,
+      #151515b3 26.059%,
+      #15151500 52.118%
+    );
+  }
+  .home-desktop .honest-reviews-scene {
+    display: block;
+    position: relative;
+    width: auto;
+    height: calc(436.594 * var(--u));
+    margin: 0 var(--rg);
+    padding: 0;
+  }
+  .home-desktop .honest-reviews-copy {
+    position: absolute;
+    top: calc(104 * var(--u));
+    left: 0;
+    width: calc(470 * var(--u));
+  }
+  .home-desktop .honest-reviews-note {
+    width: calc(436 * var(--u) + 24px);
+    max-width: none;
+    margin-top: calc(55.797 * var(--u));
+  }
+  .home-desktop .honest-reviews-broken {
+    position: absolute;
+    top: 0;
+    left: calc(700 * var(--u));
+    width: calc(480 * var(--u));
+    height: auto;
+    max-width: none;
+  }
+
+  /* --- 9. ClientCases: фото слева, описание справа (как 1440) --- */
+  .home-desktop .cases-content {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .home-desktop .case-photo {
+    height: auto;
+    aspect-ratio: 425.6 / 561;
+  }
+  .home-desktop .case-columns {
+    gap: 24px;
+  }
+
+  /* --- 10. CompanyAbout: фото офиса слева, текст справа --- */
+  .home-desktop .company-container {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+  }
+  .home-desktop .company-office {
+    justify-self: stretch;
+    width: 100%;
+  }
+
+  /* --- 14. DirectorInvitation: текст слева, портрет справа --- */
+  .home-desktop .director-card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 32px;
+    padding-bottom: 0;
+  }
+  .home-desktop .director-copy {
+    padding-bottom: 40px;
+  }
+  .home-desktop .director-photo {
+    align-self: end;
+    height: calc(560px * var(--k));
+    margin: 0 -40px 0 0;
+  }
+  /* --- 19. HomeRecruiting: фото слева, текст справа (как 1440), без стопки --- */
+  .home-desktop .home-recruiting {
+    --k: 1;
+    background: #1c1c1c;
+  }
+  .home-desktop .recruiting-photo {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+  .home-desktop .recruiting-photo img {
+    object-fit: cover;
+    object-position: 0 50%;
+  }
+  .home-desktop .recruiting-photo:after {
+    background: linear-gradient(
+      269.96deg,
+      #1c1c1c 0%,
+      #1c1c1c 30%,
+      rgb(28 28 28 / 0) 60%
+    );
+  }
+  .home-desktop .recruiting-container {
+    justify-content: flex-end;
+    padding: 80px 0;
+  }
+  .home-desktop .recruiting-copy {
+    width: min(500px, 50%);
+    max-width: none;
+    gap: 36px;
+  }
+  .home-desktop .recruiting-note-wrap {
+    width: auto;
+  }
+  .home-desktop .recruiting-benefits {
+    gap: 20px 24px;
+  }
+  /* --- 18. HomeServices: 3 колонки как на 1440 — в 2 колонки девятая
+     карточка «Страхование» оставалась одна с пустой правой половиной --- */
+  .home-desktop .services-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
+
 /* ======================= ТЕЛЕФОН ≤ 767 ======================= */
 @media (max-width: 767px) {
   .home-desktop {
@@ -769,9 +1122,6 @@
     --h2: 30px;
     --sec: 56px;
     --hero-paper: 56px;
-  }
-  .home-desktop h2 br {
-    display: none;
   }
 
   /* --- 1. Первый экран: заголовок, суть и обе кнопки сразу видны --- */
@@ -836,6 +1186,9 @@
   .home-desktop .buyer-audience {
     --k: 0.62;
     --x: calc(50% - 470px * var(--k));
+  }
+  .home-desktop .buyer-name {
+    margin-left: 0;
   }
   .home-desktop .fast-sale {
     --k: 0.5;
@@ -957,6 +1310,20 @@
   }
   .home-desktop .cases-tabs .chip {
     padding: 9px 12px;
+  }
+  /* Q1: на 360–430 третья вкладка «Помогли отжать» обрезалась краем экрана
+     (скролл без видимого края) — три вкладки равными долями во всю ширину,
+     длинная подпись переносится в две строки */
+  .home-desktop .cases-tabs .channels {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+  }
+  .home-desktop .cases-tabs .chip {
+    justify-content: center;
+    padding: 6px 8px;
+    white-space: normal;
+    text-align: center;
   }
   .home-desktop .cases-pointer {
     display: none;
@@ -1163,8 +1530,11 @@
     flex-direction: column;
     padding: 32px 24px 0;
   }
+  .home-desktop .telegram-news h2,
+  .home-desktop .telegram-news p {
+    max-width: none;
+  }
   .home-desktop .telegram-news h2 {
-    white-space: normal;
     margin-bottom: 16px;
   }
   .home-desktop .telegram-news p {

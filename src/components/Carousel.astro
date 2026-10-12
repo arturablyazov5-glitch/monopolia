@@ -3,13 +3,28 @@ import ArrowButton from "./ArrowButton.astro";
 const { label = "Карточки", class: className = "" } = Astro.props;
 ---
 
-<div class:list={["carousel", className]} data-carousel aria-label={label}>
-  <div class="carousel-track" tabindex="0">
+<div
+  class:list={["carousel", className]}
+  data-carousel
+  role="region"
+  aria-roledescription="карусель"
+  aria-label={label}
+>
+  <div
+    class="carousel-track"
+    tabindex="0"
+    role="group"
+    aria-label="Карточки: прокрутка стрелками клавиатуры"
+  >
     <slot />
   </div>
   <div class="carousel-controls">
     <ArrowButton direction="prev" />
-    <div class="carousel-pagination" aria-label="Позиция карусели"></div>
+    <div
+      class="carousel-pagination"
+      role="group"
+      aria-label="Позиция карусели"
+    ></div>
     <ArrowButton />
   </div>
 </div>
@@ -17,14 +32,28 @@ const { label = "Карточки", class: className = "" } = Astro.props;
   document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
     const track = root.querySelector<HTMLElement>(".carousel-track")!;
     const pagination = root.querySelector<HTMLElement>(".carousel-pagination")!;
-    const cards = [...track.children] as HTMLElement[];
+    let cards = [...track.children] as HTMLElement[];
+    // Точки и активная позиция учитывают поля scroll-snap и конец ленты.
+    const targetLeft = (card: HTMLElement) =>
+      Math.min(
+        track.scrollWidth - track.clientWidth,
+        Math.max(
+          0,
+          card.offsetLeft -
+            track.offsetLeft -
+            (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0),
+        ),
+      );
+    const rebuild = () => {
+    cards = [...track.children] as HTMLElement[];
+    pagination.replaceChildren();
     cards.forEach((card, index) => {
       const dot = document.createElement("button");
       dot.type = "button";
       dot.setAttribute("aria-label", `Карточка ${index + 1}`);
       dot.addEventListener("click", () =>
         track.scrollTo({
-          left: card.offsetLeft - track.offsetLeft,
+          left: targetLeft(card),
           behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
             ? "instant"
             : "smooth",
@@ -32,13 +61,12 @@ const { label = "Карточки", class: className = "" } = Astro.props;
       );
       pagination.append(dot);
     });
+    };
     const update = () => {
       const current = cards.reduce(
         (nearest, card, index) =>
-          Math.abs(card.offsetLeft - track.offsetLeft - track.scrollLeft) <
-          Math.abs(
-            cards[nearest].offsetLeft - track.offsetLeft - track.scrollLeft,
-          )
+          Math.abs(targetLeft(card) - track.scrollLeft) <
+          Math.abs(targetLeft(cards[nearest]) - track.scrollLeft)
             ? index
             : nearest,
         0,
@@ -69,7 +97,7 @@ const { label = "Карточки", class: className = "" } = Astro.props;
           track.scrollBy({
             left:
               (button.dataset.direction === "next" ? 1 : -1) *
-              (cards[0].clientWidth + 28),
+              ((cards[0]?.clientWidth || 0) + 28),
             behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
               ? "instant"
               : "smooth",
@@ -78,6 +106,8 @@ const { label = "Карточки", class: className = "" } = Astro.props;
       );
     track.addEventListener("scroll", update, { passive: true });
     new ResizeObserver(update).observe(track);
+    rebuild();
+    root.addEventListener("catalog-updated", () => { track.scrollLeft = 0; rebuild(); update(); });
     update();
   });
 </script>

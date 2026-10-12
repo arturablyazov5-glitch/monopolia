@@ -1,5 +1,6 @@
 ---
 import Paper from "./Paper.astro";
+import TapeLayer from "./TapeLayer.astro";
 import "../styles/home-telegram.css";
 ---
 
@@ -17,11 +18,10 @@ import "../styles/home-telegram.css";
     <Paper class="telegram-news">
       <div>
         <h2>
-          Семейную ипотеку{" "}
-          <br />
+          Семейную ипотеку <br />
           завтра отменят!
         </h2>
-        <p>Лааадно, это ненастоящая новость, но такое не исключено</p>
+        <p>Лааадно, это ненастоящая новость, но такое не исключено</p>
       </div>
       <img
         class="telegram-news-person"
@@ -33,24 +33,7 @@ import "../styles/home-telegram.css";
         decoding="async"
       />
     </Paper>
-    <img
-      class="news-tape news-tape-top"
-      src="/assets/55e7e.webp"
-      alt=""
-      width="861"
-      height="260"
-      loading="lazy"
-      decoding="async"
-    />
-    <img
-      class="news-tape news-tape-bottom"
-      src="/assets/55e7e.webp"
-      alt=""
-      width="861"
-      height="260"
-      loading="lazy"
-      decoding="async"
-    />
+    <TapeLayer node="1380:5647" />
   </div>
   <div class="telegram-content">
     <div class="telegram-photo">
@@ -69,7 +52,7 @@ import "../styles/home-telegram.css";
           src="/assets/8db92.webp"
           srcset="/assets/8db92-m.webp 700w, /assets/8db92.webp 920w"
           sizes="(max-width: 767px) 345px, 920px"
-          alt="Екатерина Корнеева показывает Telegram на телефоне"
+          alt="Екатерина Корнеева показывает Telegram на телефоне"
           loading="lazy"
           width="920"
           height="1860"
@@ -78,22 +61,22 @@ import "../styles/home-telegram.css";
       </div>
       <Paper class="telegram-signature">
         <p>Екатерина Корнеева</p>
-        <span>Специалист по недвижимости</span>
+        <span>Специалист по недвижимости</span>
       </Paper>
     </div>
     <div class="telegram-copy">
       <h2 id="telegram-title">
-        Чтобы не пропустить важное, подписывайтесь на наш Telegram
+        Чтобы не пропустить важное, подписывайтесь на наш Telegram
       </h2>
       <div class="telegram-benefits">
         <ul class="diamond-list">
-          <li>Квартиры и дома по цене ниже рынка до 30%</li>
-          <li>Важные новости про недвижку и ипотеку</li>
+          <li>Квартиры и дома по цене ниже рынка до 30%</li>
+          <li>Важные новости про недвижку и ипотеку</li>
         </ul>
         <div class="telegram-divider"></div>
         <ul class="diamond-list">
-          <li>Истории-блокбастеры наших клиентов</li>
-          <li>Полезные статьи о сложном простым языком</li>
+          <li>Истории‑блокбастеры наших клиентов</li>
+          <li>Полезные статьи о сложном простым языком</li>
         </ul>
       </div>
       <button
@@ -101,7 +84,7 @@ import "../styles/home-telegram.css";
         type="button"
         aria-describedby="telegram-link-status"
       >
-        Подписаться на канал
+        Подписаться на канал
         <img
           src="/assets/1b795.svg"
           alt=""
@@ -117,7 +100,7 @@ import "../styles/home-telegram.css";
         role="status"
         hidden
       >
-        Ссылка на канал скоро появится.
+        Ссылка на канал скоро появится.
       </p>
     </div>
   </div>

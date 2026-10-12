@@ -29,7 +29,7 @@ const logos = [
 ---
 
 {home ? (
-  <div class="home-partner-logos" aria-label="Логотипы партнёров">
+  <div class="home-partner-logos" role="group" aria-label="Логотипы партнёров">
     {homeLogos.map(([file, width, left, name]) => (
       <span
         class:list={[
@@ -53,6 +53,7 @@ const logos = [
   <div
     class="partner-logos"
     data-node-id="1380:6392"
+    role="group"
     aria-label="Логотипы партнёров"
   >
     {[

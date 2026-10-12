@@ -30,15 +30,23 @@ const lists = [
   data-node-id={node}
   aria-labelledby={`${id}-title`}
 >
-  <img
-    class="prepared-viewing-background"
-    src={`/assets/${selling ? "2f5bf" : "905c2"}.webp`}
-    width="1440"
-    height={selling ? 756.791 : 655}
-    alt="Квартира до и после подготовки к показу"
-    loading="lazy"
-    decoding="async"
-  />
+  <picture style="display:contents">
+    {/* ≤ 767 px: центральная полоса кадра (x 600–2400 из 2880) в высоте исходника. */}
+    <source
+      media="(max-width: 767px)"
+      srcset={`/assets/${selling ? "2f5bf" : "905c2"}-r2-m.webp`}
+      style="display:none"
+    />
+    <img
+      class="prepared-viewing-background"
+      src={`/assets/${selling ? "2f5bf" : "905c2"}.webp`}
+      width="1440"
+      height={selling ? 756.791 : 655}
+      alt="Квартира до и после подготовки к показу"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
   <div class="prepared-viewing-inner">
     <div class="prepared-viewing-copy">
       <h2 id={`${id}-title`}>
@@ -58,12 +66,12 @@ const lists = [
       </h2>
       {!selling && (
         <p class="prepared-viewing-description">
-          Заранее подготовим недвижимость к просмотру: внутри будет чисто
-          и прибрано, не будет жильцов и лишних запахов
+          Заранее подготовим недвижимость к просмотру: внутри будет чисто и прибрано, не будет жильцов и лишних запахов
         </p>
       )}
       <TapedNote
         class="prepared-viewing-note"
+        tapeNode={selling ? "I1380:5904;569:1388" : "I1380:6585;569:1388"}
         textured
         icon={{
           src: `/assets/${selling ? "22985" : "6f018"}.svg`,
@@ -73,14 +81,13 @@ const lists = [
       >
         {selling ? (
           <>
-            Мы сделаем так, что 
-            <strong>покупатель влюбится в жилье с первого взгляда</strong> —
-            сделаем фоточки, как в Pinterest, и напишем продающее объявление
+            Мы сделаем так, что 
+            <strong>покупатель влюбится в жилье с первого взгляда</strong> — сделаем фоточки, как в Pinterest, и напишем продающее объявление
           </>
         ) : (
           <>
             <strong>
-              При этом мы ничего не скрываем и говорим о недостатках сразу.
+              При этом мы ничего не скрываем и говорим о недостатках сразу.
             </strong>{" "}
             Фотографии и описание соответствуют реальности
           </>
@@ -120,9 +127,10 @@ const lists = [
   </div>
   <div
     class="prepared-viewing-probability"
+    role="group"
     aria-label="Подготовка повышает вероятность покупки недвижимости"
   >
-    <TapedNote class="prepared-viewing-probability-note" textured rotate={-1}>
+    <TapedNote tape={false} class="prepared-viewing-probability-note" textured rotate={-1}>
       Вероятность
       <br />
       покупки недвижимости
@@ -140,7 +148,7 @@ const lists = [
       <span>
         <img
           src="/assets/cdfed.svg"
-          alt="До подготовки"
+          alt="До подготовки"
           loading="lazy"
           width="123.739"
           height="35.7208"

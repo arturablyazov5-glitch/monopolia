@@ -1,8 +1,12 @@
 .equal-interests {
   position: relative;
+  /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
+  overflow-x: clip;
   isolation: isolate;
+  /* Выше «Честных отзывов»: полупрозрачный низ фото накрывает верх их фона (как в макете) */
+  z-index: 2;
   height: 870px;
-  background: linear-gradient(#190d08 0 120px, var(--color-canvas) 120px);
+  background: linear-gradient(#190d08 0 120px, transparent 120px);
 }
 .equal-interests-background {
   position: absolute;
@@ -50,4 +54,33 @@
 }
 .equal-interests-actions .button:last-child {
   width: 210px;
+}
+
+@media (width > 1440px) {
+  .equal-interests::before {
+    /* Продление занимает всю высоту фото, включая нахлёст на HonestReviews. */
+    content: "";
+    position: absolute;
+    top: 0.464px;
+    left: 0;
+    width: 100%;
+    height: 939.226px;
+    z-index: -2;
+    pointer-events: none;
+    background: linear-gradient(#190d08, #151515);
+    /* Открываем следующий фон только после его начала (y=778.496px),
+       чтобы в нахлёсте не просвечивал светлый холст страницы. */
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+  }
+  .equal-interests-background {
+    /* Кадр и люди сохраняют размеры сцены 1440; никаких растянутых пикселей. */
+    width: 1440px;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 100px,
+      #000 calc(100% - 100px),
+      transparent
+    );
+  }
 }

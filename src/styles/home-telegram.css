@@ -59,20 +59,6 @@
   bottom: -5.15px;
   max-width: none;
 }
-.news-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  transform: rotate(-150.25deg) scaleY(-1);
-}
-.news-tape-top {
-  right: 0;
-  top: 9px;
-}
-.news-tape-bottom {
-  left: 0;
-  top: 265px;
-}
 .telegram-content {
   width: 960px;
   margin: 40px auto 0;

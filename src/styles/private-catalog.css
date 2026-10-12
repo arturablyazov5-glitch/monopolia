@@ -125,20 +125,3 @@
 .private-catalog-checks .badge:nth-child(7) {
   transform: rotate(-0.5deg);
 }
-.private-catalog-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-}
-.private-catalog-tape.top {
-  left: -2.5px;
-  top: -7.3px;
-  transform: rotate(-29.75deg);
-}
-.private-catalog-tape.bottom {
-  right: -3.96px;
-  bottom: -1.31px;
-  transform: rotate(-22.8deg);
-}

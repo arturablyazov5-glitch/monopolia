@@ -8,6 +8,9 @@
   display: block;
   position: relative;
   left: 50%;
+  /* Шире макета рваный край растягивается на всю ширину окна (SVG с preserveAspectRatio="none") */
+  width: max(100%, 1447px);
+  height: 95.713px;
   max-width: none;
   transform: translateX(-50%) rotate(180deg);
 }
@@ -348,8 +351,10 @@
   .deal-funnel-image {
     max-width: 100%;
   }
+  /* Блок шириной 0: обрезаем только по высоте (длинная картинка), по ширине пунктир остаётся видимым */
   .deal-step-dash {
-    overflow: clip;
+    overflow-x: visible;
+    overflow-y: clip;
   }
 }
 @media (max-width: 767px) {
@@ -357,7 +362,10 @@
     padding: 16px 20px 72px;
   }
   .deal-steps-grid {
-    gap: 32px;
+    gap: 0;
+  }
+  .deal-mission {
+    display: contents;
   }
   .deal-mission-head {
     flex-wrap: wrap;
@@ -367,12 +375,12 @@
     font-size: 30px;
   }
   .deal-mission-portrait {
-    width: 105px;
-    height: 112px;
+    width: 92px;
+    height: 98px;
   }
   .deal-mission-portrait > img,
   .deal-mission-portrait > picture > img {
-    transform: scale(0.8);
+    transform: scale(0.7);
     transform-origin: top left;
   }
   .deal-funnel-image {
@@ -396,7 +404,13 @@
     height: 28px;
   }
   .deal-progress {
+    position: sticky;
+    top: calc(8px + var(--header-height) + 16px);
+    z-index: 3;
     margin-top: 24px;
+  }
+  .deal-steps-list {
+    margin-top: 32px;
   }
   .deal-step {
     gap: 12px;
@@ -409,7 +423,7 @@
     gap: 24px;
   }
   .deal-step-card h3 {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.2;
   }
   .deal-step-note .taped-note-paper {

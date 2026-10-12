@@ -80,25 +80,6 @@
 .recruiting-note strong {
   font-weight: 700;
 }
-.recruiting-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  object-fit: cover;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-  z-index: 2;
-}
-.recruiting-tape-top {
-  left: -31.31px;
-  top: -29.06px;
-  transform: rotate(-29.75deg);
-}
-.recruiting-tape-bottom {
-  right: -36.79px;
-  bottom: -26.77px;
-  transform: rotate(-22.8deg);
-}
 .recruiting-benefits {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -146,6 +127,14 @@
 }
 .recruiting-buttons .button.red {
   background: #ea1818;
+}
+.recruiting-buttons .button.red:hover:not(:disabled) {
+  background: #fff;
+  color: var(--color-dark);
+}
+.recruiting-buttons .button.recruiting-channel:hover:not(:disabled) {
+  background: #ea1818;
+  color: #fff;
 }
 .recruiting-channel {
   background: #fff;
@@ -197,4 +186,27 @@
 }
 .recruiting-edge-bottom {
   bottom: -223.94px;
+}
+
+@media (width > 1440px) {
+  .home-recruiting {
+    background: var(--color-dark);
+  }
+  .recruiting-union,
+  .recruiting-photo {
+    /* Кирпич плавно уходит в цвет блока; оба слоя скрыты у левой границы.
+       Размер и положение исходного кадра остаются как на 1440 px. */
+    mask-image: linear-gradient(to right, transparent, #000 180px);
+  }
+  .recruiting-edge {
+    left: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+  .recruiting-edge img {
+    /* Как trust-team-edge: масштабируется только бумага, высота прежняя.
+       Прозрачные поля исходника (20 px с каждой стороны) остаются за окном. */
+    left: calc(-100% * 20 / 1440);
+    width: calc(100% * 1480 / 1440);
+  }
 }

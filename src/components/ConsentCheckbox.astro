@@ -1,0 +1,17 @@
+---
+import "../styles/consent.css";
+import { legal } from "../data/legal";
+// Единый чекбокс согласия на обработку персональных данных.
+// Единственный источник разметки и стилей (src/styles/consent.css) для
+// формы заявки, модалки и блока «Продать за неделю».
+---
+
+<label class="consent">
+  <input type="checkbox" name="consent" required />
+  <span class="consent-text">
+    Я согласен(а) на{" "}
+    <a class="consent-doc" href={legal.consent.href} target="_blank" rel="noopener">обработку персональных данных</a>{" "}
+    и принимаю{" "}
+    <a class="consent-doc" href={legal.privacy.href} target="_blank" rel="noopener">политику конфиденциальности</a>
+  </span>
+</label>

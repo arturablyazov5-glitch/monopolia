@@ -9,49 +9,24 @@ import RangeField from "./RangeField.astro";
 import Carousel from "./Carousel.astro";
 import PropertyCard from "./PropertyCard.astro";
 import "../styles/buy-mortgage.css";
+import "../styles/property-media.css";
+import { selectDeals, catalog } from "../lib/catalog";
 
 const programs = [
   "Семейная ипотека",
   "Военная ипотека",
   "ИТ‑ипотека",
   "Сельская ипотека",
-  "Дальневосточная и арктическая ипотека",
+  "Дальневосточная и арктическая ипотека",
 ];
 const steps = [
   ["Подберем выгодные", "условия"],
   ["Поможем собрать", "документы"],
-  ["Правильно подадим", "заявку в банк"],
+  ["Правильно подадим", "заявку в банк"],
 ];
-// Карточки 1380:6451–6453 — ровно те, что даны в макете.
-const deals = [
-  {
-    title: "1‑комнатная квартира, 40 м², 5/8 этажей",
-    address: "Благовещенск, ул. Конная, д. 1",
-    oldPrice: "7 000 000 ₽",
-    price: "4 900 000 ₽",
-    pricePerMeter: "122 500 ₽/м²",
-    mortgage: "В ипотеку от 30 000 ₽ в месяц",
-    discount: "-30%",
-  },
-  {
-    title: "3‑комнатная квартира, 89 м², 5/5 этажей",
-    address: "Белогорск, ул. Ленина, д. 10",
-    oldPrice: "12 500 000 ₽",
-    price: "9 375 000 ₽",
-    pricePerMeter: "105 300 ₽/м²",
-    mortgage: "В ипотеку от 45 000 ₽ в месяц",
-    discount: "-25%",
-  },
-  {
-    title: "2‑комнатная квартира, 52 м², 8/21 этажей",
-    address: "Благовещенск, ул. Зейская, д. 222",
-    oldPrice: "8 500 000 ₽",
-    price: "5 950 000 ₽",
-    pricePerMeter: "114 400 ₽/м²",
-    mortgage: "В ипотеку от 30 000 ₽ в месяц",
-    discount: "-30%",
-  },
-];
+const deals = selectDeals();
+const endpoint = import.meta.env.PUBLIC_CATALOG_ENDPOINT || (import.meta.env.DEV ? "/api/catalog" : "");
+const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
 ---
 
 <section
@@ -71,7 +46,7 @@ const deals = [
       alt=""
       width="1440"
       height="1911"
-      loading="eager"
+      loading="lazy"
       decoding="async"
     />
   </picture>
@@ -81,10 +56,10 @@ const deals = [
       <div class="buy-mortgage-intro">
         <h2 id="buy-mortgage-title" class="buy-mortgage-title">
           <span class="buy-mortgage-title-row">
-            <span class="buy-mortgage-hand">9 из 10 человек</span>
+            <span class="buy-mortgage-hand">9 из 10 человек</span>
             получают
           </span>
-          одобрение по ипотеке через нас
+          одобрение по ипотеке через нас
         </h2>
         <ul class="buy-mortgage-programs" aria-label="Ипотечные программы">
           {programs.map((program) => (
@@ -116,21 +91,6 @@ const deals = [
             </NumberedBenefit>
           </>
         ))}
-        <picture style="display: contents">
-          <source
-            style="display: none"
-            media="(max-width: 767px)"
-            srcset="/assets/mobile-empty.webp"
-          />
-          <img
-            src="/assets/d3fc6.svg"
-            alt=""
-            width="14"
-            height="14"
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
       </div>
     </div>
 
@@ -142,7 +102,7 @@ const deals = [
     <div class="buy-mortgage-cards">
       <Paper class="buy-mortgage-calc" node="1380:6420">
         <div class="buy-mortgage-calc-field">
-          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
           <RangeField
             id="buy-housing-price"
             label="Стоимость жилья"
@@ -174,9 +134,9 @@ const deals = [
         </span>
         <div class="buy-mortgage-review-text">
           <p>
-            Помогли одобрить ипотеку клиенту, которому банки отказывали 2 года
+            Помогли одобрить ипотеку клиенту, которому банки отказывали 2 года
           </p>
-          <p class="buy-mortgage-author">Татьяна, специалист по недвижимости</p>
+          <p class="buy-mortgage-author">Татьяна, специалист по недвижимости</p>
         </div>
       </Paper>
     </div>
@@ -184,22 +144,38 @@ const deals = [
 
   <div class="buy-mortgage-deals" data-node-id="1380:6444">
     <div class="buy-mortgage-deals-heading">
-      <h2>Объекты с ценой ниже рынка — до 30%</h2>
+      <h2>Объекты с ценой ниже рынка — до 30%</h2>
       <p>
-        Бывают разные ситуации — кто‑то переезжает, кому‑то срочно нужны деньги.{" "}
+        Бывают разные ситуации — кто‑то переезжает, кому‑то срочно нужны деньги.{" "}
         <br />
-        Поэтому у нас появляются варианты объектов по сниженной цене.
+        Поэтому у нас появляются варианты объектов по сниженной цене.
       </p>
     </div>
-    <Carousel label="Объекты с ценой ниже рынка" class="buy-mortgage-carousel">
-      {deals.map((deal) => (
-        <PropertyCard {...deal} />
-      ))}
-    </Carousel>
+    <div data-catalog data-revision={catalog.revision} data-endpoint={endpoint} data-media-base={mediaBase} style="display: contents">
+    <div data-catalog-live hidden={deals.length === 0} style="display: contents">
+      <Carousel
+        label="Объекты с ценой ниже рынка"
+        class="buy-mortgage-carousel"
+      >
+        {deals.map((deal) => (
+          <PropertyCard {...deal} />
+        ))}
+      </Carousel>
+    </div>
+    <div data-catalog-empty hidden={deals.length > 0}>
+      <div
+        class="buy-deals-empty"
+        role="img"
+        aria-label="Каталог предложений пуст"
+      />
+    </div>
+    <template data-card-template><PropertyCard title="" address="" price="" oldPrice="" pricePerMeter="" mortgage="" discount="" cardImage={{small:"",large:""}} /></template>
+    </div>
   </div>
 </section>
 
 <script>
+  import "../scripts/catalog-refresh";
   // Демонстрационный расчёт: платёж из макета (9 670 ₽ при 10,9 млн)
   // пропорционально стоимости. Точную сумму сообщает менеджер.
   document

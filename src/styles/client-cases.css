@@ -1,10 +1,13 @@
 .client-cases {
   position: relative;
   isolation: isolate;
+  --cases-pad: 120px;
   height: 1015px;
-  padding-top: 120px;
+  padding-top: var(--cases-pad);
   overflow: hidden;
-  scroll-margin-top: 96px;
+  /* Якорь #cases: заголовок встаёт под шапкой (общий scroll-padding у html), а не ниже на высоту
+     верхнего отступа секции; прежний scroll-margin 96 px складывался с scroll-padding и давал +200 px */
+  scroll-margin-top: calc(-1 * var(--cases-pad));
   /* Figma: тёмный фон блока компании 1380:5236 начинается на 120 px выше
      конца бумаги 1380:5154 — в вырезах рваного низа бумаги виден тёмный. */
   background: #1c1c1a;
@@ -55,6 +58,24 @@
   white-space: nowrap;
   border-radius: 0;
 }
+/* Неактивные вкладки без белой заливки: видна подложка контейнера */
+.cases-tabs .chip:not(.selected) {
+  background: transparent;
+}
+.cases-tabs .channels .chip {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+@media (hover: hover) {
+  .cases-tabs .channels .chip:not(.selected):hover {
+    color: var(--color-accent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cases-tabs .channels .chip {
+    transition: none;
+  }
+}
 .cases-pointer {
   position: absolute;
   right: -6.5px;
@@ -78,6 +99,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* TASK-022: native brush silhouette of Figma 1380:5202 (32px centred
+     image stroke, no white ring or shadow). Only the photo is masked;
+     the overlaid .case-person keeps its existing position and silhouette.
+     24px slices keep the edge depth on tablet/square mobile photos;
+     2px opaque overlaps prevent seams, as in brush-stroke.css. */
+  mask-image:
+    url("/assets/case-photo-mask-tl.svg"), url("/assets/case-photo-mask-t.svg"),
+    url("/assets/case-photo-mask-tr.svg"), url("/assets/case-photo-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/case-photo-mask-r.svg"),
+    url("/assets/case-photo-mask-bl.svg"), url("/assets/case-photo-mask-b.svg"),
+    url("/assets/case-photo-mask-br.svg");
+  mask-size:
+    24px 24px, calc(100% - 44px) 24px, 24px 24px,
+    24px calc(100% - 44px), calc(100% - 44px) calc(100% - 44px),
+    24px calc(100% - 44px), 24px 24px, calc(100% - 44px) 24px, 24px 24px;
+  mask-position:
+    left top, center top, right top, left center, center center, right center,
+    left bottom, center bottom, right bottom;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
 }
 .case-person {
   position: absolute;
@@ -123,22 +164,6 @@
   position: absolute;
   right: 13.5px;
   top: 9px;
-}
-.case-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-}
-.case-tape.top {
-  left: -1.67px;
-  top: -8.17px;
-  transform: rotate(-29.75deg);
-}
-.case-tape.bottom {
-  right: -7.57px;
-  bottom: -4.03px;
-  transform: rotate(-22.8deg);
 }
 .case-columns {
   display: grid;

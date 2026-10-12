@@ -13,7 +13,7 @@ interface Props {
 }
 const {
   items,
-  title = "Отвечаем на вопросы до того, как вы их зададите",
+  title = "Отвечаем на вопросы до того, как вы их зададите",
   id = "faq",
   node = "1380:5736",
   class: className = "",
@@ -43,6 +43,7 @@ items.forEach((item, index) => {
             >
               <FaqCard
                 variant="accordion"
+                open={index === 0}
                 id={`${id}-${index + 1}`}
                 question={item.question}
                 answer={item.answer}
@@ -56,24 +57,3 @@ items.forEach((item, index) => {
     ))}
   </div>
 </section>
-<script>
-  // Адаптив главной: на узких экранах (≤ 1199 px) при загрузке раскрыт только
-  // первый ответ — список вопросов короче и легче просматривается.
-  // Десктоп и внутренние страницы не затрагиваются.
-  if (matchMedia("(max-width: 1199px)").matches) {
-    document
-      .querySelectorAll<HTMLElement>(".home-desktop .faq-section")
-      .forEach((section) =>
-        section
-          .querySelectorAll<HTMLButtonElement>(".faq-toggle")
-          .forEach((toggle, index) => {
-            if (index === 0) return;
-            toggle.setAttribute("aria-expanded", "false");
-            const panel = document.getElementById(
-              toggle.getAttribute("aria-controls")!,
-            );
-            if (panel) panel.hidden = true;
-          }),
-      );
-  }
-</script>

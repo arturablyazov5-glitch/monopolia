@@ -1,6 +1,8 @@
 /* Figma 1380:6364 — «Покупка»: ипотека (02) и объекты ниже рынка (03) */
 .buy-mortgage {
   position: relative;
+  /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
+  overflow-x: clip;
   z-index: 1;
   isolation: isolate;
   height: 1911.684px;
@@ -15,9 +17,11 @@
   position: absolute;
   top: 0;
   left: 50%;
-  width: 1440px;
+  /* Шире макета (1440) фон растягивается на всю ширину окна, иначе по бокам остаются пустые поля */
+  width: max(100%, 1440px); /* 100%, не 100vw: vw включает полосу прокрутки */
   height: 1911.156px;
   max-width: none;
+  object-fit: fill;
   transform: translateX(-50%);
   z-index: -1;
   pointer-events: none;
@@ -70,7 +74,8 @@
   filter: drop-shadow(0 4px 2.5px #00000005);
 }
 .buy-mortgage-programs .chip {
-  padding: 4.5px 10px 4.5px 8px;
+  /* Слева галочка и так отступает от края, справа рваная маска съедает ~8 px — запас справа больше */
+  padding: 9px 28px 9px 10px;
   background: var(--color-ink);
   font: var(--text-small) / 1.2 var(--font-body);
   white-space: nowrap;
@@ -87,6 +92,8 @@
 }
 .buy-mortgage-programs .choice-check {
   display: block;
+  width: 16px;
+  height: 16px;
 }
 /* 1380:6384 — три шага с разделителями */
 .buy-mortgage-steps {
@@ -187,6 +194,39 @@
   border: 0;
   background: url("/assets/96b53.svg") center / 16px 16px no-repeat;
 }
+/* Hover на точке: чуть вырастает и темнеет, при перетаскивании — ещё сильнее */
+.buy-mortgage-range input {
+  cursor: pointer;
+}
+.buy-mortgage-range input::-webkit-slider-thumb {
+  transition:
+    transform var(--duration-fast) ease,
+    filter var(--duration-fast) ease;
+}
+.buy-mortgage-range input::-moz-range-thumb {
+  transition:
+    transform var(--duration-fast) ease,
+    filter var(--duration-fast) ease;
+}
+.buy-mortgage-range input:hover::-webkit-slider-thumb,
+.buy-mortgage-range input:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.3);
+  filter: brightness(0.85);
+}
+.buy-mortgage-range input:hover::-moz-range-thumb,
+.buy-mortgage-range input:focus-visible::-moz-range-thumb {
+  transform: scale(1.3);
+  filter: brightness(0.85);
+}
+.buy-mortgage-range input:active {
+  cursor: grabbing;
+}
+.buy-mortgage-range input:active::-webkit-slider-thumb {
+  transform: scale(1.45);
+}
+.buy-mortgage-range input:active::-moz-range-thumb {
+  transform: scale(1.45);
+}
 .buy-mortgage-range > span {
   font: var(--text-small) / 1.2 var(--font-body);
 }
@@ -273,9 +313,13 @@
   padding: 0 0 12px;
   margin-bottom: -12px;
 }
+/* Точки пагинации в этой карусели убраны; на десктопе остаются только стрелки по бокам */
+.buy-mortgage-carousel .carousel-pagination {
+  display: none;
+}
 .buy-mortgage-carousel .carousel-controls {
-  margin-top: 40px;
-  height: 8px;
+  margin-top: 0;
+  height: 0;
 }
 /* Стрелки 1380:6449 / 1380:6454 — по бокам ряда карточек, по центру высоты */
 .buy-mortgage-carousel .arrow {
@@ -468,9 +512,7 @@
   .buy-mortgage-steps .numbered-benefit {
     white-space: normal;
   }
-  .buy-mortgage-divider,
-  .buy-mortgage-steps > img,
-  .buy-mortgage-steps > picture > img {
+  .buy-mortgage-divider {
     display: none;
   }
   .buy-mortgage-cards {

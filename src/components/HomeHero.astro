@@ -48,14 +48,13 @@ import "../styles/home-hero.css";
             недвижимости
           </span>
           <span class="hero-title-second">
-            с 2006 года <RatingBadge loading="eager" />
+            с 2006 года <RatingBadge loading="eager" />
           </span>
         </h1>
       </div>
       <p class="hero-description">
-        Поможем выгодно купить или срочно продать квартиру,{" "}
-        <br />
-        дом или коммерческую недвижимость
+        Поможем выгодно купить или срочно продать квартиру, <br />
+        дом или коммерческую недвижимость
       </p>
     </div>
     <div class="hero-actions" data-node-id="1380:4955">
@@ -63,14 +62,14 @@ import "../styles/home-hero.css";
         loading="eager"
         label="Купить объект"
         icon="buy"
-        subject="Хочу купить объект"
+        href="/buy/"
       />
       <span aria-hidden="true">/</span>
       <Button
         loading="eager"
         label="Продать объект"
         icon="sell"
-        subject="Хочу продать объект"
+        href="/sell/"
       />
     </div>
   </div>
@@ -78,6 +77,7 @@ import "../styles/home-hero.css";
   <div class="hero-paper-edge" aria-hidden="true">
     <img
       src="/assets/e159e.webp"
+      fetchpriority="low"
       alt=""
       width="1440"
       height="1325"

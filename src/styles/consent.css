@@ -1,0 +1,60 @@
+/* Чекбокс согласия — единый вид везде (как на главной): чёрная рамка 1 px,
+   при выборе красная заливка с белым кольцом внутри. */
+.consent {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-field-text);
+  cursor: pointer;
+}
+/* Зона нажатия ≥ 44 px по высоте без изменения вида */
+.consent::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: max(100%, 44px);
+  transform: translateY(-50%);
+}
+.consent input {
+  appearance: none;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+.consent input:checked {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: inset 0 0 0 2px #fff;
+}
+.consent-text {
+  max-width: 432px;
+}
+.consent-doc {
+  text-decoration: underline;
+  text-underline-position: from-font;
+  cursor: pointer;
+  transition: color var(--duration-fast) ease;
+}
+.consent-doc:hover {
+  color: var(--color-accent);
+}
+@media (max-width: 767px) {
+  .consent {
+    align-items: flex-start;
+  }
+  .consent input {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,5 +1,6 @@
 ---
 import { imageSize } from "../lib/image-size";
+import { cities } from "../data/cities";
 // Общий первый экран внутренних страниц: мастер Figma 1380:5758 («Продажа»)
 // и 1380:6363 («Покупка»). Фон, команда, рейтинг, поля квиза одинаковые;
 // тексты, картинка буклета, его тень и кнопка передаются параметрами.
@@ -113,18 +114,25 @@ const team = [
     alt=""
     width="1440"
     height="840"
-    fetchpriority="high"
+    fetchpriority="low"
     loading="eager"
     decoding="async"
   />
   <div class="inner-hero-container">
     <div class="inner-hero-copy">
-      <RatingBadge loading="eager" yandexFirst />
+      <RatingBadge loading="eager" />
       <h1 id="inner-hero-title" class:list={{ "with-markets": markets }}>
         {title.map((line, index) => (
           <>
             {index > 0 && <br />}
-            {line}
+            {markets && index === title.length - 1 && line.endsWith(" нет") ? (
+              <>
+                {line.slice(0, -4)}
+                <span class="inner-hero-net-desktop"> нет</span>
+              </>
+            ) : (
+              line
+            )}
             {accent && index === accentLine && (
               <>
                 {" "}
@@ -138,7 +146,9 @@ const team = [
         ))}
         {markets && (
           <span class="inner-hero-markets">
-            на
+            <span>
+              <span class="inner-hero-net-mobile">нет </span>на
+            </span>
             <span class="inner-hero-market">
               <span class="market-icon">
                 <img
@@ -186,7 +196,7 @@ const team = [
                 alt=""
                 width={imageSize("/assets/" + layer.stroke).width}
                 height={imageSize("/assets/" + layer.stroke).height}
-                loading="eager"
+                loading="lazy"
                 decoding="async"
               />
             </div>
@@ -204,10 +214,10 @@ const team = [
               src={"/assets/" + layer.photo + ".webp"}
               alt=""
               style={`${layer.pos};aspect-ratio:${layer.ratio}`}
-              fetchpriority={layer.photo === "0df0d" ? "high" : "auto"}
+              fetchpriority="auto"
               width={imageSize("/assets/" + layer.photo + ".webp").width}
               height={imageSize("/assets/" + layer.photo + ".webp").height}
-              loading="eager"
+              loading="lazy"
               decoding="async"
             />
           </picture>
@@ -248,6 +258,7 @@ const team = [
                 )}
                 <img
                   src={image.src}
+                  fetchpriority="low"
                   alt={image.alt ?? "Пример отчёта Монополии"}
                   width={image.width}
                   style={`aspect-ratio:${image.ratio}`}
@@ -259,20 +270,40 @@ const team = [
             </div>
           </div>
           <div class="inner-hero-fields">
-            <label class="inner-hero-city">
-              <span class="sr-only">Город</span>
-              <select name="city">
-                <option>Белогорск</option>
-              </select>
-              <img
-                src="/assets/98485.svg"
-                alt=""
-                width="6"
-                height="3.5"
-                loading="eager"
-                decoding="async"
-              />
-            </label>
+            <div class="city-picker inner-hero-city-picker" data-city-picker>
+              <button
+                type="button"
+                class="inner-hero-city"
+                data-city-toggle
+                aria-haspopup="listbox"
+                aria-expanded="false"
+                aria-label="Город"
+              >
+                <span data-city-label>{cities[0]}</span>
+                <img
+                  class="city-chevron"
+                  src="/assets/98485.svg"
+                  alt=""
+                  width="6"
+                  height="3.5"
+                  loading="eager"
+                  decoding="async"
+                />
+              </button>
+              <input type="hidden" name="city" value={cities[0]} />
+              <ul class="city-menu" role="listbox" aria-label="Город" hidden>
+                {cities.map((c, i) => (
+                  <li
+                    role="option"
+                    aria-selected={i === 0}
+                    tabindex="-1"
+                    data-city-option={c}
+                  >
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div class="inner-hero-types">
               <ChoiceGroup
                 loading="eager"
@@ -297,6 +328,7 @@ const team = [
         <Button
           loading="eager"
           label={buttonLabel}
+          source={`Квиз в шапке · Кнопка «${buttonLabel}»`}
           icon={buttonIcon}
           subject={`${subject}: ${options[0]}`}
         />

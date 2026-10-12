@@ -1,0 +1,53 @@
+/* TASK-043: scoped media and measured text slots; UI-kit defaults retain their layout. */
+.property-photo picture > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+.buy-mortgage-carousel .property-photo picture > img {
+  position: absolute;
+  inset: 0;
+}
+.buy-mortgage-carousel .property-card {
+  flex-shrink: 0;
+}
+.buy-mortgage-carousel .property-card > div > h3 {
+  height: 48px;
+}
+.buy-mortgage-carousel .property-card .location {
+  height: 19.1875px;
+}
+.buy-mortgage-carousel .property-card s {
+  height: 16.796875px;
+}
+.buy-mortgage-carousel .property-card .price {
+  height: 24px;
+}
+.buy-mortgage-carousel .property-card .mortgage {
+  height: 43.1875px;
+}
+.buy-deals-empty {
+  height: 637.171875px;
+  width: 100%;
+}
+@media (768px <= width <= 1199px) {
+  .buy-deals-empty {
+    height: calc((100vw - 180px) * 0.375 + 453.171875px);
+  }
+}
+@media (923px <= width <= 1199px) {
+  .buy-mortgage-carousel .property-card > div > h3 {
+    height: 24px;
+  }
+  .buy-deals-empty {
+    height: calc((100vw - 180px) * 0.375 + 429.171875px);
+  }
+}
+@media (max-width: 767px) {
+  .buy-deals-empty {
+    height: calc(min(288px, 100vw - 92px) * 0.75 + 453.171875px);
+  }
+}
+
+[data-catalog] [hidden] { display: none !important; }

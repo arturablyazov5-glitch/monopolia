@@ -32,7 +32,7 @@ const {
         Если суд признает сделку недействительной, страховая возместит убытки
       </p>
     </div>
-    <TapedNote class="deal-insurance-note" textured>
+    <TapedNote class="deal-insurance-note" tapeNode={`I${node};1168:7198;569:1388`} textured>
       Но к счастью, наша дотошность{" "}
       <strong>
         отпугивает
@@ -52,24 +52,24 @@ const {
     {/* На десктопе обёртка display: contents (прежние координаты слоёв);
         на узких экранах — масштабируемая сцена фото + SVG-тень. */}
     <div class="deal-insurance-stage">
-    <img
-      class="deal-insurance-shadow"
-      src="/assets/fa68f.svg"
-      alt=""
-      loading="lazy"
-      width="867.935"
-      height="726.779"
-      decoding="async"
-    />
-    <img
-      class="deal-insurance-photo"
-      src="/assets/c0bda.webp"
-      width="732.233"
-      height="570.513"
-      alt="Елена с клиентом"
-      loading="lazy"
-      decoding="async"
-    />
+      <img
+        class="deal-insurance-shadow"
+        src="/assets/fa68f.svg"
+        alt=""
+        loading="lazy"
+        width="867.935"
+        height="726.779"
+        decoding="async"
+      />
+      <img
+        class="deal-insurance-photo"
+        src="/assets/c0bda.webp"
+        width="732.233"
+        height="570.513"
+        alt="Елена с клиентом"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     <img
       class="deal-insurance-edge"
@@ -88,7 +88,7 @@ const {
       <p>Елена</p>
       <SpeechBubble
         tail="50662.svg"
-        text={"Я спросила не мошенники ли они?\nОни сказали нет"}
+        text={"Я спросила не мошенники ли они?\nОни сказали нет"}
       />
     </div>
   </div>

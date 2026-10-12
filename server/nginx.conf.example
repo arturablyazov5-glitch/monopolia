@@ -1,0 +1,37 @@
+# Inside http {}. One HTTPS domain serves both Astro static files and Node API.
+limit_req_zone $binary_remote_addr zone=leads:10m rate=6r/m;
+server {
+    listen 443 ssl;
+    server_name example.ru;
+    root /var/www/monopoly;
+    index index.html;
+    ssl_certificate /etc/letsencrypt/live/example.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.ru/privkey.pem;
+    access_log off;
+    error_log /dev/null;
+    client_max_body_size 2m;
+    location /api/ {
+        proxy_pass http://127.0.0.1:8787;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For "";
+        proxy_read_timeout 40s;
+    }
+    location /media/ {
+        proxy_pass http://127.0.0.1:8787;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For "";
+    }
+    location = /lead {
+        client_max_body_size 10k;
+        limit_req zone=leads burst=15 nodelay;
+        limit_req_status 429;
+        proxy_pass http://127.0.0.1:8787;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For "";
+        proxy_read_timeout 30s;
+    }
+    location / { try_files $uri $uri/ /index.html; }
+}
+server { listen 80; server_name example.ru; access_log off; return 301 https://example.ru$request_uri; }

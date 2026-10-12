@@ -1,0 +1,30 @@
+---
+/** Site chips, with events owned by the external admin editor under strict CSP. */
+interface Props {
+  name: string;
+  options: string[];
+}
+const { name, options } = Astro.props;
+---
+
+<div class="chips" role="group" aria-label={name} data-choice-group>
+  {options.map((option, index) => (
+    <button
+      type="button"
+      class:list={["chip", { selected: index === 0 }]}
+      aria-pressed={index === 0}
+      data-value={option}
+    >
+      <img
+        class="choice-check"
+        src="/assets/40c36.svg"
+        alt=""
+        width="20"
+        height="20"
+        loading="lazy"
+        decoding="async"
+      />
+      {option}
+    </button>
+  ))}
+</div>

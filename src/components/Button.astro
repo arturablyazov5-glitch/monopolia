@@ -7,6 +7,8 @@ interface Props {
   disabled?: boolean;
   type?: "button" | "submit";
   subject?: string;
+  source?: string;
+  href?: string;
 }
 const {
   label = "Оставить заявку",
@@ -15,15 +17,32 @@ const {
   disabled = false,
   type = "button",
   subject,
+  source,
+  href,
 } = Astro.props;
+const Tag = href ? "a" : "button";
 ---
 
-<button
+<Tag
   class:list={["button", tone, { "with-icon": icon }]}
-  type={type}
-  disabled={disabled}
-  data-lead={type === "button" && !disabled ? label : undefined}
-  data-subject={subject}
+  href={href}
+  type={href ? undefined : type}
+  disabled={href ? undefined : disabled}
+  data-lead={
+    !href && type === "button" && !disabled
+      ? label.replaceAll("\u00a0", " ")
+      : undefined
+  }
+  data-lead-source={
+    !href && type === "button" && !disabled
+      ? (
+          source ||
+          `${subject ? (/^Подбор ипотеки:/.test(subject) ? "Подбор ипотеки" : subject) + " · " : ""}Кнопка «${label}»`
+        ).replaceAll("\u00a0", " ")
+      : undefined
+  }
+  data-subject={href ? undefined : subject?.replaceAll("\u00a0", " ")}
+  aria-haspopup={!href && type === "button" && !disabled ? "dialog" : undefined}
 >
   {label}
   {icon && (
@@ -42,4 +61,4 @@ const {
       decoding="async"
     />
   )}
-</button>
+</Tag>

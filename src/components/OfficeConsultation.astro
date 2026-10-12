@@ -21,16 +21,24 @@ const selling = variant === "sell";
   data-node-id={node}
   aria-labelledby={`${id}-title`}
 >
-  <img
-    class="office-consultation-background"
-    src="/assets/0ab1b.webp"
-    width="1440"
-    height="798.704"
-    alt="Встреча в офисе Монополии"
-    loading="lazy"
-    decoding="async"
-  />
-  <TapedNote class="office-consultation-label" textured rotate={-1}>
+  <picture style="display:contents">
+    {/* ≤ 767 px: центральная полоса кадра 1534 × 1598 (подготовлена M). */}
+    <source
+      media="(max-width: 767px)"
+      srcset="/assets/0ab1b-m-perf.webp"
+      style="display:none"
+    />
+    <img
+      class="office-consultation-background"
+      src="/assets/0ab1b.webp"
+      width="1440"
+      height="798.704"
+      alt="Встреча в офисе Монополии"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
+  <TapedNote tapeNode={`I${node};786:6642;569:1388`} class="office-consultation-label" textured rotate={-1}>
     Бесплатная консультация
   </TapedNote>
   <div class="office-consultation-inner">
@@ -38,8 +46,7 @@ const selling = variant === "sell";
       <h2 id={`${id}-title`}>
         {selling ? (
           <>
-            По телефону хорошо говорить про погоду.
-            <br />
+            По телефону хорошо говорить про погоду. <br />
             Про сделку на миллионы лучше в офисе за кофе
           </>
         ) : (
@@ -47,40 +54,34 @@ const selling = variant === "sell";
         )}
       </h2>
       <div class="office-consultation-notes">
-        <TapedNote class="office-consultation-note" textured>
+        <TapedNote tapeNode={`I${node};1281:4701;569:1388`} class="office-consultation-note" textured>
           {selling ? (
             <>
-              За 40 минут сделаем прогноз по срокам
-              <br />
-              продажи и цене, а не будем переписываться
-              <br />
+              За 40 минут сделаем прогноз по срокам <br />
+              продажи и цене, а не будем переписываться <br />
               неделю в заблокированных Telegram или WhatsApp*
             </>
           ) : (
             <>
-              За 40 минут разберем бюджет, цели и образ жизни — и сразу отсечем
+              За 40 минут разберем бюджет, цели и образ жизни — и сразу отсечем{" "}
               <br />
-              варианты, которые вам не подходят, а не будем переписываться
+              варианты, которые вам не подходят, а не будем переписываться{" "}
               <br />
               неделю в заблокированных Telegram или WhatsApp*
             </>
           )}
         </TapedNote>
-        <TapedNote class="office-consultation-note" textured>
+        <TapedNote tapeNode={`I${node};1281:4795;569:1388`} class="office-consultation-note" textured>
           {selling ? (
             <>
-              Возможно, в нашей базе
-              <br />
-              уже есть человек, который
-              <br />
+              Возможно, в нашей базе <br />
+              уже есть человек, который <br />
               ждет ваше предложение
             </>
           ) : (
             <>
-              А еще расскажем, как законно сэкономить
-              <br />
-              на налогах и расходах до 2 млн при покупке
-              <br />
+              А еще расскажем, как законно сэкономить <br />
+              на налогах и расходах до 2 млн при покупке <br />
               недвижимости
             </>
           )}
@@ -93,8 +94,7 @@ const selling = variant === "sell";
         subject={`Консультация в офисе: ${selling ? "продажа" : "покупка"}`}
       />
       <p>
-        На этой неделе есть
-        <br />
+        На этой неделе есть <br />
         еще <strong>4 свободных места</strong>
       </p>
     </div>

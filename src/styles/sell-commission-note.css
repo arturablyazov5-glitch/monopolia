@@ -5,3 +5,27 @@
 .sell-commission-note .accent-statement {
   padding: 0 214px;
 }
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .sell-commission-note {
+    width: auto;
+    margin: 80px 32px;
+  }
+  .sell-commission-note .accent-statement {
+    padding: 0 64px;
+  }
+}
+@media (max-width: 767px) {
+  .sell-commission-note {
+    margin: 56px 20px;
+  }
+  .sell-commission-note .accent-statement {
+    padding: 0;
+  }
+}
+@media (max-width: 389px) {
+  .sell-commission-note {
+    margin: 56px 16px;
+  }
+}

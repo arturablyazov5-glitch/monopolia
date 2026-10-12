@@ -1,6 +1,7 @@
 ---
 import ReferralNotification from "./ReferralNotification.astro";
 import TapedNote from "./TapedNote.astro";
+import { traceLogo } from "../data/trace-logos";
 import "../styles/referral-bonus.css";
 const notifications = [
   {
@@ -75,7 +76,7 @@ const notifications = [
     <div
       class="referral-bonus-notifications"
       role="img"
-      aria-label="Иллюстрация уведомлений о вознаграждении 5 000 рублей, из макета"
+      aria-label="Иллюстрация уведомлений о вознаграждении 5 000 рублей, из макета"
     >
       {notifications.map((n) => (
         <div
@@ -85,7 +86,9 @@ const notifications = [
           <ReferralNotification
             bank={n.bank}
             time={n.time}
-            icon={`https://trace-logos.ru/assets/logos/svgs/${n.icon}.svg`}
+            icon={traceLogo(n.icon).src}
+            href={traceLogo(n.icon).href}
+            alt={traceLogo(n.icon).alt}
           />
         </div>
       ))}
@@ -101,7 +104,7 @@ const notifications = [
         </h2>
         <p>При заключении договора</p>
       </div>
-      <TapedNote textured rotate={-1}>
+      <TapedNote tapeNode="I1380:6355;569:1388" textured rotate={-1}>
         До конца акции: <strong>13 дней</strong>
       </TapedNote>
     </div>

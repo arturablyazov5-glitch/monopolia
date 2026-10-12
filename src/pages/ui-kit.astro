@@ -70,21 +70,21 @@ const demoNav = [
 ];
 ---
 
-<SiteLayout title="Монополия — UI kit" noindex>
+<SiteLayout title="Монополия — UI kit" noindex>
   <div class="container">
     <SiteHeader home="#top" nav={demoNav} />
     <main class="ui-kit">
       <div class="kit-intro">
         <span class="eyebrow">МОНОПОЛИЯ / БИБЛИОТЕКА КОМПОНЕНТОВ</span>
         <h1>
-          Характер — в деталях.<span class="handwriting">UI kit</span>
+          Характер — в деталях.<span class="handwriting">UI kit</span>
         </h1>
         <p>
-          Повторяющиеся элементы главной страницы, продажи и покупки.
+          Повторяющиеся элементы главной страницы, продажи и покупки.
           <br />
-          Чистовой макет Figma · локальные шрифты и оригинальные ресурсы.
+          Чистовой макет Figma · локальные шрифты и оригинальные ресурсы.
         </p>
-        <nav class="kit-nav" aria-label="Навигация по библиотеке">
+        <nav class="kit-nav" aria-label="Навигация по библиотеке">
           {sections.map(([id, label]) => (
             <a href={"#" + id}>
               {label} <span>↗</span>
@@ -94,20 +94,19 @@ const demoNav = [
       </div>
       <section id="foundation">
         <div class="section-label">01 / ОСНОВА</div>
-        <h2>Типографика и палитра</h2>
+        <h2>Типографика и палитра</h2>
         <div class="foundation-grid">
           <Paper class="type-demo">
             <h2>
               Недвижимость.
-              <br />С человеческим лицом.
+              <br />С человеческим лицом.
             </h2>
             <h3>Forma DJR Cyrillic Text · 20 / 24</h3>
             <p>
-              Calibri · 16 / 19.2. Помогаем найти свой дом и спокойно пройти
-              каждый этап сделки.
+              Calibri · 16 / 19.2. Помогаем найти свой дом и спокойно пройти каждый этап сделки.
             </p>
             <small>Дополнительный текст · 14 / 16.8</small>
-            <span class="handwriting">Denistina — живые акценты</span>
+            <span class="handwriting">Denistina — живые акценты</span>
           </Paper>
           <div class="swatches">
             {[
@@ -139,8 +138,7 @@ const demoNav = [
             <Button label="Недоступно" disabled />
           </div>
           <p class="caption">
-            52 px · Forma Medium 16 px · hover, focus и disabled добавлены для
-            работы в браузере.
+            52 px · Forma Medium 16 px · hover, focus и disabled добавлены для работы в браузере.
           </p>
           <div>
             <ArrowButton direction="prev" disabled />
@@ -151,7 +149,7 @@ const demoNav = [
       </section>
       <section id="elements">
         <div class="section-label">03 / ДЕТАЛИ</div>
-        <h2>Метки, выбор и бумага</h2>
+        <h2>Метки, выбор и бумага</h2>
         <div class="element-grid">
           <Paper class="detail-card">
             <RatingBadge />
@@ -163,27 +161,25 @@ const demoNav = [
             />
             <ChoiceGroup
               name="Способ связи"
-              options={["По телефону", "Telegram", "WhatsApp"]}
+              options={["По телефону", "Telegram", "WhatsApp"]}
               channels
             />
             <p class="diamond-line">
-              <span class="diamond"></span>Пункты преимуществ и услуг
+              <span class="diamond"></span>Пункты преимуществ и услуг
             </p>
             <SocialLinks />
           </Paper>
           <PaperQuote>
             <p>
-              В нашей базе только проверенные потенциальные покупатели{" "}
-              <strong>с наличкой или с предодобренной ипотекой</strong>. Они
-              готовы в ближайшее время купить квартиру, дом или помещение для
-              бизнеса
+              В нашей базе только проверенные потенциальные покупатели{" "}
+              <strong>с наличкой или с предодобренной ипотекой</strong>. Они готовы в ближайшее время купить квартиру, дом или помещение для бизнеса
             </p>
           </PaperQuote>
         </div>
       </section>
       <section id="cards">
         <div class="section-label">04 / КАРТОЧКИ</div>
-        <h2>Объекты, команда и услуги</h2>
+        <h2>Объекты, команда и услуги</h2>
         <div class="cards-grid">
           <PropertyCard />
           <StaffCard />
@@ -194,27 +190,27 @@ const demoNav = [
               <div class="progress">
                 <span></span>
               </div>
-              <small>Нумерация преимуществ и индикатор этапов</small>
+              <small>Нумерация преимуществ и индикатор этапов</small>
             </Paper>
           </div>
         </div>
         <div class="reviews-row">
           <ReviewCard />
           <div class="review-description">
-            <h2>Отзывы с лицом</h2>
+            <h2>Отзывы с лицом</h2>
             <p>
-              Видеообложка, кнопка воспроизведения, длительность, имя и рейтинг.
+              Видеообложка, кнопка воспроизведения, длительность, имя и рейтинг.
             </p>
             <span class="handwriting">Истории наших клиентов</span>
             <p class="caption">
-              В UI kit нет видеофайла: кнопка показывает статус демонстрации.
+              В UI kit нет видеофайла: кнопка показывает статус демонстрации.
             </p>
           </div>
         </div>
       </section>
       <section id="faq">
         <div class="section-label">05 / ДОВЕРИЕ</div>
-        <h2>Ответы и сравнение</h2>
+        <h2>Ответы и сравнение</h2>
         <FaqCard />
         <ComparisonTable rows={buyRealtorComparison} />
       </section>
@@ -226,18 +222,18 @@ const demoNav = [
       <section id="patterns">
         <div class="section-label">07 / ПОВТОРЯЮЩИЕСЯ БЛОКИ</div>
         <SectionHeading
-          title="Диалоги, партнёры и карусель"
-          annotation="Ещё немного деталей"
+          title="Диалоги, партнёры и карусель"
+          annotation="Ещё немного деталей"
         />
         <div class="pattern-grid">
           <SpeechBubble />
           <SpeechBubble
             side="right"
-            text="Проверим документы и поможем разобраться."
+            text="Проверим документы и поможем разобраться."
           />
         </div>
         <Paper class="range-demo">
-          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
           <RangeField id="housing-price" label="Стоимость жилья" />
           <Button label="Подобрать ипотеку" />
         </Paper>
@@ -250,7 +246,7 @@ const demoNav = [
         </Carousel>
         <SectionHeading
           title="Компактная форма"
-          description="Вариант для записи на консультацию и получения подборки"
+          description="Вариант для записи на консультацию и получения подборки"
         />
         <LeadForm
           id="contact-demo"
@@ -261,7 +257,7 @@ const demoNav = [
       </section>
       <section id="new-details">
         <div class="section-label">08 / НОВЫЕ ВАРИАНТЫ</div>
-        <h2>Купон, аккордеон и заметка</h2>
+        <h2>Купон, аккордеон и заметка</h2>
         <div class="kit-variant-grid">
           <div>
             <h3 class="kit-example-label">ServiceCard · coupon</h3>
@@ -282,7 +278,7 @@ const demoNav = [
                 </TapedNote>
               ))}
             <h3 class="kit-example-label">RatingBadge · Яндекс первым</h3>
-            <RatingBadge yandexFirst />
+            <RatingBadge />
           </div>
         </div>
         <h3 class="kit-example-label">HeroTeam · композиция команды</h3>
@@ -294,9 +290,9 @@ const demoNav = [
       </section>
       <section id="shared-sections">
         <div class="section-label">09 / ОБЩИЕ СЕКЦИИ</div>
-        <h2>Первый экран, консультация, доверие и формы</h2>
+        <h2>Первый экран, консультация, доверие и формы</h2>
         <p class="caption">
-          Контент компонентов совпадает со страницами. Заявки демонстрационные.
+          Контент компонентов совпадает со страницами. Заявки отправляются через общий обработчик.
         </p>
         <h3 class="kit-example-label">InnerHero · Покупка</h3>
         <div class="kit-section-demo kit-hero-demo">
@@ -304,8 +300,8 @@ const demoNav = [
             node="1380:6363"
             title={["800+ проверенных объектов", "недвижимости, которых нет"]}
             markets
-            description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
-            formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
+            description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
+            formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
             image={{
               src: "/assets/5ab39.webp",
               ratio: "1081 / 812",
@@ -338,7 +334,7 @@ const demoNav = [
             <h3 class="kit-example-label">
               TrustAndViewing · {variant === "buy" ? "Покупка" : "Продажа"}
             </h3>
-            <p class="caption">Внутри: DealInsurance и PreparedViewing.</p>
+            <p class="caption">Внутри: DealInsurance и PreparedViewing.</p>
             <div class="kit-section-demo">
               <TrustAndViewing variant={variant} />
             </div>
@@ -347,37 +343,37 @@ const demoNav = [
         <h3 class="kit-example-label">FaqSection · Главная</h3>
         <FaqSection id="kit-home-faq" items={homeFaq} />
         <details class="kit-example-details">
-          <summary>FaqSection · вопросы «Покупки» и «Продажи»</summary>
+          <summary>FaqSection · вопросы «Покупки» и «Продажи»</summary>
           <FaqSection id="kit-buy-faq" items={buyFaq} node="1380:7007" />
           <FaqSection id="kit-sell-faq" items={sellFaq} node="1380:6327" />
         </details>
-        <h3 class="kit-example-label">LeadSection · форма с кирпичным фоном</h3>
+        <h3 class="kit-example-label">LeadSection · форма с кирпичным фоном</h3>
         <div class="kit-section-demo">
           <LeadSection id="kit-lead" anchor="kit-lead-section" />
         </div>
         <h3 class="kit-example-label">ReferralBonus · ReferralNotification</h3>
         <p class="caption">
-          Уведомления и сроки акции — иллюстрация из макета.
+          Уведомления и сроки акции — иллюстрация из макета.
         </p>
         <div class="kit-section-demo">
           <ReferralBonus />
         </div>
       </section>
       <section id="process">
-        <div class="section-label">10 / КАРТА И СДЕЛКА</div>
-        <h2>Переезд, этапы и сравнение рисков</h2>
+        <div class="section-label">10 / КАРТА И СДЕЛКА</div>
+        <h2>Переезд, этапы и сравнение рисков</h2>
         <h3 class="kit-example-label">RelocationMap · Покупка</h3>
         <div class="kit-section-demo">
           <RelocationMap id="kit-relocation" />
         </div>
         <details class="kit-example-details">
-          <summary>DealSteps · 10 шагов покупки</summary>
+          <summary>DealSteps · 10 шагов покупки</summary>
           <div class="kit-section-demo">
             <DealSteps id="kit-buy-steps" steps={buyDealSteps} />
           </div>
         </details>
         <details class="kit-example-details">
-          <summary>DealSteps · 11 шагов продажи, в том числе списки</summary>
+          <summary>DealSteps · 11 шагов продажи, в том числе списки</summary>
           <div class="kit-section-demo">
             <DealSteps
               id="kit-sell-steps"
@@ -402,7 +398,7 @@ const demoNav = [
       <section id="registry">
         <SectionHeading
           title="Состав библиотеки"
-          description="Переиспользуемые компоненты и источник каждого семейства"
+          description="Переиспользуемые компоненты и источник каждого семейства"
         />
         <div class="comparison-wrap">
           <table class="comparison registry-table">
@@ -427,18 +423,15 @@ const demoNav = [
         <Paper class="token-demo">
           <h3>Токены</h3>
           <p>
-            Цвета · семейства и начертания шрифтов · типографическая шкала ·
-            межстрочные интервалы · отступы · сетка · радиусы · размеры
-            элементов управления · тени · фокус · анимация · текстуры.
+            Цвета · семейства и начертания шрифтов · типографическая шкала · межстрочные интервалы · отступы · сетка · радиусы · размеры элементов управления · тени · фокус · анимация · текстуры.
           </p>
           <p class="caption">
-            src/styles/tokens.css — единый источник. Адаптивные пороги: 1200 /
-            800 / 540 px. Состояния и мобильная компоновка добавлены в коде.
+            src/styles/tokens.css — единый источник. Адаптивные пороги: 1200 / 800 / 540 px. Состояния и мобильная компоновка добавлены в коде.
           </p>
         </Paper>
       </section>
       <details class="token-details">
-        <summary>Все значения токенов ({tokens.length})</summary>
+        <summary>Все значения токенов ({tokens.length})</summary>
         <div class="comparison-wrap">
           <table class="comparison">
             <thead>

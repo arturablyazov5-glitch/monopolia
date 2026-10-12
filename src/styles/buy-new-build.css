@@ -61,24 +61,6 @@
 .buy-new-build-note strong {
   font-weight: 700;
 }
-.buy-new-build-tape {
-  position: absolute;
-  width: 39.912px;
-  height: 12.052px;
-  max-width: none;
-  object-fit: cover;
-  filter: drop-shadow(0 0.9px 0.9px #00000012);
-}
-.buy-new-build-tape-top {
-  left: -16.31px;
-  top: -14.06px;
-  transform: rotate(-29.75deg);
-}
-.buy-new-build-tape-bottom {
-  right: -21.79px;
-  bottom: -11.76px;
-  transform: rotate(-22.8deg);
-}
 
 /* Адаптив K: desktop ≥1200 сохраняется. */
 

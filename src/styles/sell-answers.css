@@ -9,8 +9,8 @@
   justify-content: center;
 }
 
-/* Paper: белый фон + текстура 56094 10 %, белая внутренняя обводка 30 px
-   (stroke inside — на размеры не влияет), отступы 52 / 72. */
+/* Paper: белый фон + текстура 56094 10 %, отступы контента 52 / 72.
+   Видимая кромка измерена отдельно от strokeWeight 30 в brush-stroke.css. */
 .sell-answers-card {
   width: 937px;
   min-height: 453.63px;
@@ -25,9 +25,9 @@
   --paper-texture: url("/assets/56094.webp");
   box-shadow: 0 14px 14px #3d0b0b08;
 }
-/* обводка 30 px перекрывает текстуру — текстура только внутри неё */
+/* Текстура доходит до верхней/нижней кромки; кольцо — padding фонового слоя. */
 .sell-answers-card:before {
-  inset: 30px;
+  inset: 0;
   opacity: 0.1;
 }
 
@@ -66,7 +66,7 @@
   align-items: center;
   justify-content: center;
 }
-/* 273:967: белый + текстура 30984 50 %, внутренняя белая обводка 4 px */
+/* 273:967: белый + текстура 30984 50 %; видимое кольцо 0 / 1 / 0 / 1 px. */
 .sell-answers-topics span {
   position: relative;
   isolation: isolate;
@@ -79,8 +79,58 @@
 .sell-answers-topics span:before {
   content: "";
   position: absolute;
-  inset: 4px;
+  inset: 0;
   z-index: -1;
   background: url("/assets/30984.webp") center/cover;
   opacity: 0.5;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .sell-answers {
+    padding: 80px 32px 0;
+  }
+  .sell-answers-card {
+    width: 100%;
+    max-width: 937px;
+    min-height: 0;
+    padding: 48px 40px;
+  }
+  .sell-answers-heading h2 {
+    font-size: 40px;
+  }
+  .sell-answers-heading p {
+    width: auto;
+    max-width: 502px;
+  }
+}
+@media (max-width: 767px) {
+  .sell-answers {
+    padding: 56px 20px 0;
+  }
+  .sell-answers-card {
+    padding: 36px 20px;
+    gap: 32px;
+  }
+  .sell-answers-heading h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .sell-answers-card > .button {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+@media (max-width: 389px) {
+  .sell-answers {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .sell-answers-card {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .sell-answers-heading h2 {
+    font-size: 28px;
+  }
 }

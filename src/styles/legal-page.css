@@ -1,0 +1,39 @@
+.legal-page {
+  /* Ширина как у шапки: на десктопе контейнер, на планшете поля 32 px, на телефоне 12 px */
+  width: min(var(--container-width), 100% - 64px);
+  min-height: 60vh;
+  margin: 0 auto;
+  padding: 140px 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.legal-page h1 {
+  font: 500 var(--text-heading) / 1.1 var(--font-heading);
+}
+.legal-page h2 {
+  font: 500 24px / 1.2 var(--font-heading);
+  margin-bottom: 8px;
+}
+.legal-page p {
+  font: 16px / 1.4 var(--font-body);
+  color: var(--color-muted);
+}
+.legal-page p a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--duration-fast) ease;
+}
+.legal-page p a:hover {
+  color: var(--color-accent);
+}
+.legal-page-back {
+  align-self: flex-start;
+  margin-top: 16px;
+}
+@media (max-width: 767px) {
+  .legal-page {
+    width: calc(100% - 24px);
+    padding-top: 112px;
+  }
+}

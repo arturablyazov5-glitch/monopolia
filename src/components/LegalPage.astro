@@ -1,0 +1,30 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Button from "./Button.astro";
+import "../styles/legal-page.css";
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<SiteLayout title={`${title} — Монополия`} header noindex>
+  <main class="legal-page">
+    <h1>{title}</h1>
+    <section>
+      <h2>Оператор</h2>
+      <p>
+        ИП Сиделина Елена Юрьевна, ИНН 280403620684, ОГРНИП 316280100058921.
+      </p>
+      <p>Адрес: 676805, Амурская область, г. Белогорск, ул. Ленина, д. 48.</p>
+      <p>
+        Телефон: <a href="tel:+79245804555">+7 (924) 580-45-55</a>, эл. почта:{" "}
+        <a href="mailto:anmonopoliya@mail.ru">anmonopoliya@mail.ru</a>.
+      </p>
+    </section>
+    <slot />
+    <div class="legal-page-back">
+      <Button label="На главную" href="/" />
+    </div>
+  </main>
+</SiteLayout>

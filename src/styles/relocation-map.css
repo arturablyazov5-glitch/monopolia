@@ -18,7 +18,10 @@
   position: absolute;
   top: 0;
   left: calc(50% + 0.5px);
-  width: 1441px;
+  /* Шире макета рамка расширяется на всю ширину окна, карта (SVG 5385 px) сдвигается вместе с ней —
+     иначе по бокам оставались пустые поля. Запас карты справа ≈ 508 px (до окна ≈ 2450 px). */
+  --map-extra: calc((max(100vw, 1441px) - 1441px) / 2);
+  width: max(100vw, 1441px);
   height: 3035px;
   transform: translateX(-50%);
   overflow: hidden;
@@ -26,7 +29,7 @@
 /* Group 2131329049: inset 0 −35.26% 0 −238.45% → left −3436 px */
 .relocation-map-frame > img {
   position: absolute;
-  left: -3436px;
+  left: calc(-3436px + var(--map-extra));
   top: 0;
   max-width: none;
 }
@@ -81,6 +84,9 @@
   position: absolute;
   max-width: none;
 }
+.relocation-map-route-map {
+  display: none;
+}
 
 /* Адаптив K: desktop ≥1200 сохраняется. */
 
@@ -110,8 +116,7 @@
     margin-top: 24px;
   }
   .relocation-map-bg {
-    top: 0;
-    height: 100%;
+    display: none;
   }
   .relocation-map-frame {
     width: 100%;
@@ -134,6 +139,31 @@
     width: 100%;
     aspect-ratio: 1160 / 570;
     margin-top: 24px;
+    isolation: isolate;
+  }
+  .relocation-map-route-map {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .relocation-map-route-map > img {
+    position: absolute;
+    max-width: none;
+    width: 464.3216%;
+    height: auto;
+    left: -308.2759%;
+    top: -374.0526%;
+    mask-image: linear-gradient(to bottom, transparent 55%, #000 80%);
+  }
+  .relocation-map-route-map::after {
+    content: "";
+    position: absolute;
+    left: -100%;
+    right: -100%;
+    bottom: 100%;
+    height: 600px;
+    background: linear-gradient(var(--color-canvas) 35%, #ededed00);
   }
   .relocation-map-routes > img {
     left: var(--route-left) !important;
@@ -155,6 +185,8 @@
   }
   .relocation-map-routes {
     margin-top: 32px;
+    width: max(100%, 560px);
+    margin-left: calc(50% - 280px);
   }
 }
 @media (max-width: 539px) {

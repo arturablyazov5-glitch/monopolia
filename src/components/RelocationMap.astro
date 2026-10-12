@@ -113,9 +113,9 @@ const {
   id = "buy-relocation",
   class: className = "",
   map = { src: "/assets/af69b.svg", width: 5386.13, height: 3035.38 },
-  title = "Хотите переехать в Белогорск?",
-  annotation = "В тесноте, да не в обиде",
-  description = "Поможем найти уютное жилье, в котором будете прекрасно себя чувствовать",
+  title = "Хотите переехать в Белогорск?",
+  annotation = "В тесноте, да не в обиде",
+  description = "Поможем найти уютное жилье, в котором будете прекрасно себя чувствовать",
   layers = buyLayers,
   node = "1380:6590",
 } = Astro.props;
@@ -149,6 +149,9 @@ const {
       <p class="relocation-map-text">{description}</p>
     </div>
     <div class="relocation-map-routes" aria-hidden="true">
+      <div class="relocation-map-route-map">
+        <img src={map.src} width={map.width} height={map.height} alt="" loading="lazy" decoding="async" />
+      </div>
       {layers.map((layer) => (
         <img
           class={layer.class}

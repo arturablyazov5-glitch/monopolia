@@ -93,6 +93,9 @@
   .comparison-risk td {
     padding: 16px 12px;
     overflow-wrap: anywhere;
+    /* Q1: «переплатой миллионов» связано неразрывным пробелом и на 768
+       рвалось без дефиса («миллион|ов») — переносим по слогам с дефисом */
+    hyphens: auto;
   }
   .comparison-risk thead th {
     padding: 12px;

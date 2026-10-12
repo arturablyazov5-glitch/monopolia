@@ -38,7 +38,7 @@ const {
   steps,
   missionTitle = "Наша миссия",
   missionAccent = "— комиссия",
-  missionText = "Да, мы заинтересованы в комиссии, но получаем ее не за красивые глазки, а за безопасность вашей сделки, экономию времени и нервов",
+  missionText = "Да, мы заинтересованы в комиссии, но получаем ее не за красивые глазки, а за безопасность вашей сделки, экономию времени и нервов",
   node = "1380:6839",
 } = Astro.props;
 ---
@@ -212,7 +212,9 @@ const {
                   <h3>
                     {step.textParts
                       ? step.textParts.map((part) => (
-                          <span style={part.muted ? "color:#0006" : undefined}>
+                          <span
+                            style={part.muted ? "color:#0006" : undefined}
+                          >
                             {part.text}
                           </span>
                         ))
@@ -253,7 +255,7 @@ const {
                   </ul>
                 )}
                 {step.note && (
-                  <TapedNote class="deal-step-note" icon={step.note.icon}>
+                  <TapedNote tapeNode={id.startsWith("sell") || id.includes("sell") ? "I1380:6257;785:7567;1380:6256;569:1388" : "I1380:6928;785:7567;1380:6927;569:1388"} class="deal-step-note" icon={step.note.icon}>
                     {step.note.text}
                   </TapedNote>
                 )}
@@ -262,7 +264,7 @@ const {
                     <ul
                       class="deal-funnel-labels"
                       style={`width:${step.funnel.width}px;height:${step.funnel.height}px`}
-                      aria-label="Что отсеиваем"
+                      aria-label="Что отсеиваем"
                     >
                       {step.funnel.labels.map((label) => (
                         <li

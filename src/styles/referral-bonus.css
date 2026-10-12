@@ -14,6 +14,7 @@
   width: 505.021px;
   height: 271.694px;
   flex-shrink: 0;
+  pointer-events: none;
 }
 .referral-notification-slot {
   position: absolute;
@@ -39,8 +40,17 @@
   width: 40px;
   height: 40px;
   flex-shrink: 0;
+  /* Figma: иконки банков со скруглением 8 px (как у Т‑Банка) */
+  border-radius: 8px;
+  overflow: hidden;
+}
+.referral-notification-icon a {
+  display: block;
+  width: 40px;
+  height: 40px;
 }
 .referral-notification-icon img {
+  display: block;
   width: 40px;
   height: 40px;
   object-fit: contain;
@@ -95,4 +105,77 @@
 }
 .referral-bonus-copy > .taped-note {
   margin: 1.8px 0;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+/* Текст и срок акции — первыми; композиция уведомлений (иллюстрация,
+   role=img) масштабируется целиком. */
+@media (max-width: 1199px) {
+  .referral-bonus {
+    width: auto;
+    margin: 0 32px;
+    padding: 80px 0;
+    --referral-k: 1;
+  }
+  .referral-bonus-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 40px;
+    min-height: 0;
+  }
+  .referral-bonus-copy {
+    order: -1;
+  }
+  .referral-bonus-copy h2 {
+    font-size: 40px;
+  }
+  .referral-bonus-notifications {
+    margin-left: calc(50% - 252.5px * var(--referral-k));
+    margin-bottom: calc(271.694px * var(--referral-k) - 271.694px);
+    transform: scale(var(--referral-k));
+    transform-origin: 0 0;
+  }
+}
+/* TASK-009: 1024–1199 — текст и таймер слева, веер уведомлений справа */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .referral-bonus-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .referral-bonus-copy {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .referral-bonus-notifications {
+    flex-shrink: 0;
+    margin: 0;
+    /* Масштаб всего веера освобождает место под три строки заголовка,
+       включая повороты карточек и их тени. */
+    zoom: 0.86;
+    transform: none;
+  }
+}
+@media (max-width: 767px) {
+  .referral-bonus {
+    margin: 0 20px;
+    padding: 56px 0 64px;
+    --referral-k: min(1, calc((100vw - 32px) / 505.021px));
+  }
+  .referral-bonus-copy {
+    gap: 24px;
+  }
+  .referral-bonus-copy h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+}
+@media (max-width: 389px) {
+  .referral-bonus {
+    margin: 0 16px;
+  }
+  .referral-bonus-copy h2 {
+    font-size: 28px;
+  }
 }

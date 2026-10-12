@@ -1,7 +1,18 @@
 ---
-const { class: className = "", tape = false, node = "" } = Astro.props;
+import TapeLayer from "./TapeLayer.astro";
+import { type TapePlacement } from "../lib/tape";
+interface Props {
+  class?: string;
+  tape?: boolean;
+  node?: string;
+  tapeNode?: string;
+  tapes?: TapePlacement[];
+}
+const { class: className = "", tape = false, node = "", tapeNode = "", tapes } = Astro.props;
+const placementNode = tapeNode || (tape ? "I1380:4972;569:1388" : "");
 ---
 
-<article class:list={["paper", className, { taped: tape }]} data-node-id={node}>
+<article class:list={["paper", className, { "paper-has-tape": tape || placementNode || tapes?.length }]} data-node-id={node}>
   <slot />
+  {(placementNode || tapes?.length) && <TapeLayer node={placementNode} tapes={tapes} />}
 </article>

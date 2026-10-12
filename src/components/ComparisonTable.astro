@@ -24,7 +24,7 @@ const {
   rows,
   caption = "Сравнение вариантов",
   variant = "default",
-  columns = ["Самостоятельно", "С риелтором"],
+  columns = ["Самостоятельно", "С риелтором"],
   icons = ["/assets/52c05.svg", "/assets/d616c.svg"],
 } = Astro.props;
 
@@ -67,7 +67,7 @@ const riskDots: Record<number, string> = {
                     decoding="async"
                   />
                 ) : (
-                  <span>{row.risk} из 5</span>
+                  <span>{row.risk} из 5</span>
                 )}
               </span>
             )}
@@ -104,7 +104,7 @@ const riskDots: Record<number, string> = {
       <thead role="rowgroup">
         <tr>
           <th scope="col">Услуга</th>
-          <th scope="col">С Монополией</th>
+          <th scope="col">С Монополией</th>
           <th scope="col">Самостоятельно</th>
         </tr>
       </thead>

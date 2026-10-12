@@ -49,7 +49,7 @@
 .fast-sale-time {
   display: inline-block;
   position: relative;
-  top: -2px;
+  top: 7px;
   font: 64px/0.4 var(--font-handwriting);
   color: var(--color-diamond);
   transform: rotate(-1deg);
@@ -67,15 +67,6 @@
   position: relative;
   margin: 0;
   font: var(--text-body)/var(--leading-body) var(--font-body);
-}
-.fast-sale-tape {
-  position: absolute;
-  left: calc(50% - 2.64px);
-  top: -3.5px;
-  transform: translateX(-50%);
-  width: 50.667px;
-  height: 15.3px;
-  filter: drop-shadow(0 1.143px 1.143px #00000012);
 }
 .fast-sale-copy > .button {
   margin-top: 52px;
@@ -119,4 +110,59 @@
   font: var(--text-small)/var(--leading-body) var(--font-body);
   color: var(--color-muted);
   white-space: nowrap;
+}
+
+/* TASK-039: вся сцена 1440 пропорционально помещается в ширину секции.
+   tan(atan2()) даёт безразмерное отношение длин без новой typed division;
+   cqw учитывает реальную ширину контейнера, включая полосу прокрутки.
+   Компенсация нижним margin сохраняет высоту потока после transform. */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .fast-sale {
+    container-type: inline-size;
+    --scene-scale: tan(atan2(100cqw, 1440px));
+    height: auto;
+  }
+  .fast-sale-scene {
+    margin: calc(100cqw * 20 / 1440) 0
+      calc(100cqw * 552 / 1440 - 552px);
+    transform: scale(var(--scene-scale));
+    transform-origin: top left;
+  }
+  .fast-sale-background {
+    top: calc(100cqw * -753 / 1440);
+    width: 100cqw;
+    height: calc(100cqw * 1325 / 1440);
+  }
+  .fast-sale-edge {
+    top: calc(100cqw * 527 / 1440);
+    width: 100cqw;
+    height: calc(100cqw * 80 / 1440);
+  }
+}
+
+@media (width > 1440px) {
+  .fast-sale {
+    background: var(--color-paper);
+  }
+  .fast-sale-background {
+    /* Исходная текстура остаётся 1440×1325; края уходят в белую бумагу. */
+    width: 1440px;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 120px,
+      #000 calc(100% - 120px),
+      transparent
+    );
+  }
+  .fast-sale-portrait {
+    /* Справа заканчивается фото здания, а не вырезанный портрет.
+       Плавный переход убирает прямой обрыв за пределами сцены. */
+    mask-image: linear-gradient(to right, #000 calc(100% - 120px), transparent);
+  }
+  .fast-sale-edge {
+    /* Масштабируется только бумага: высота рваной кромки прежняя. */
+    width: 100%;
+    height: 80px;
+  }
 }

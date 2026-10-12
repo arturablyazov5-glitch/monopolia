@@ -66,11 +66,6 @@
   font: 16px/1.2 var(--font-body);
   white-space: nowrap;
 }
-.blockbuster-label img {
-  position: absolute;
-  left: calc(50% - 28px);
-  top: -18.5px;
-}
 .blockbuster-content h2 {
   width: 966px;
   margin: 0 auto 12px;
@@ -106,4 +101,59 @@
 }
 .blockbuster-content .speech-bubble > img {
   display: block;
+}
+
+/* TASK-040: тот же масштаб сцены, что в HonestReviews.
+   Фото, пузыри, скотч и кромка сохраняют координаты макета 1440;
+   aspect-ratio компенсирует высоту, cqw учитывает ширину секции,
+   tan(atan2()) не требует нового деления длин в calc(). */
+@media (1200px <= width < 1440px) {
+  .blockbuster-case {
+    container-type: inline-size;
+    --scene-scale: tan(atan2(100cqw, 1440px));
+    height: auto;
+    aspect-ratio: 1440 / 890;
+  }
+  .blockbuster-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    transform: scale(var(--scene-scale));
+    transform-origin: 0 0;
+  }
+  .blockbuster-scene {
+    top: calc(100cqw * 37.252 / 1440);
+    width: 1480px;
+    transform: translateX(-50%) scale(var(--scene-scale)) scaleX(-1);
+    transform-origin: 50% 0;
+  }
+  .blockbuster-edge {
+    top: calc(100cqw * -6 / 1440);
+    width: 1493.19px;
+    height: 129.56px;
+    transform: translateX(-50%) scale(var(--scene-scale));
+    transform-origin: 50% 0;
+  }
+}
+
+@media (width > 1440px) {
+  .blockbuster-scene {
+    /* Фото и люди сохраняют кадрирование 1440. Вся сцена вместе с
+       белым верхним градиентом плавно переходит в --color-dark. */
+    width: 1480px;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 180px,
+      #000 calc(100% - 180px),
+      transparent
+    );
+  }
+  .blockbuster-edge {
+    /* В SVG бумага занимает x=20…1473.19. Пропорциональный выпуск
+       прозрачных полей за окно не оставляет вертикальных обрывов. */
+    width: calc(100% * 1493.19 / 1440);
+    height: 129.56px;
+  }
 }

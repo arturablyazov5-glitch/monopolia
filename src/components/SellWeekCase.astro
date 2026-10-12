@@ -1,6 +1,7 @@
 ---
 // «Продажа», Figma 1380:5814 «05»: видеоистория продажи за 1 день и форма связи.
 import Button from "./Button.astro";
+import ConsentCheckbox from "./ConsentCheckbox.astro";
 import ChoiceGroup from "./ChoiceGroup.astro";
 import Paper from "./Paper.astro";
 import PlayButton from "./PlayButton.astro";
@@ -12,7 +13,7 @@ import SocialLinks from "./SocialLinks.astro";
   aria-labelledby="sell-week-title"
   data-node-id="1380:5814"
 >
-  <h2 id="sell-week-title">Хотите продать жилье на этой неделе?</h2>
+  <h2 id="sell-week-title">Хотите продать жилье на этой неделе?</h2>
   <div class="sell-week-grid">
     <article class="sell-week-video" data-node-id="1380:5817">
       <img
@@ -29,7 +30,7 @@ import SocialLinks from "./SocialLinks.astro";
         <p class="sell-week-play-hint" aria-hidden="true">
           Посмотрите историю
           <br />
-          продажи квартиры за 1 день
+          продажи квартиры за 1 день
         </p>
         <span class="sell-week-play-arrow" aria-hidden="true">
           <span>
@@ -44,29 +45,25 @@ import SocialLinks from "./SocialLinks.astro";
           </span>
         </span>
         <PlayButton
-          label="Посмотреть историю продажи квартиры за 1 день"
+          label="Посмотреть историю продажи квартиры за 1 день"
           variant="red"
         />
       </div>
       <div class="sell-week-story" data-node-id="1380:5820">
         <Paper class="sell-week-story-card">
           <Paper class="sell-week-story-label" node="1380:5821">
-            <p>История как в кино</p>
+            <p>История как в кино</p>
           </Paper>
           <p>
-            К нам обратилась Ирина, которая давно{" "}
-            <br />
-            собиралась продавать квартиру. Она{" "}
-            <br />
-            идеально подходила для Максима,{" "}
-            <br />
-            который обратился к нам утром. В итоге{" "}
-            <br />
+            К нам обратилась Ирина, которая давно <br />
+            собиралась продавать квартиру. Она <br />
+            идеально подходила для Максима, <br />
+            который обратился к нам утром. В итоге <br />
             <strong>оформили сделку одним днем</strong>
           </p>
           <p class="sell-week-author">
             Елена
-            <span>Специалист по недвижимости</span>
+            <span>Специалист по недвижимости</span>
           </p>
           <img
             class="sell-week-quote"
@@ -82,11 +79,22 @@ import SocialLinks from "./SocialLinks.astro";
     </article>
 
     <Paper class="sell-week-form-card" node="1380:5832">
-      <form class="lead-form sell-week-form">
+      <form
+        class="lead-form sell-week-form"
+        data-form="sell-week"
+        data-lead-source="Хотите продать жилье на этой неделе? · Кнопка «Хочу срочно продать объект»"
+        data-endpoint={
+          import.meta.env.PUBLIC_LEAD_ENDPOINT ||
+          (import.meta.env.DEV ? "/lead" : "")
+        }
+      >
+        <span hidden aria-hidden="true">
+          <input name="honeypot" tabindex="-1" autocomplete="off" />
+        </span>
         <div class="sell-week-form-fields">
           <h3>
-            Заполните форму, свяжемся с вами в&nbsp;течение 10&nbsp;минут и
-            назначим время встречи
+            Заполните форму, свяжемся с вами в течение 10 минут и назначим время
+            встречи
           </h3>
           <input name="subject" type="hidden" value="Срочная продажа объекта" />
           <label class="sr-only" for="sell-week-phone">
@@ -96,8 +104,9 @@ import SocialLinks from "./SocialLinks.astro";
             id="sell-week-phone"
             name="phone"
             type="tel"
+            inputmode="tel"
             autocomplete="tel"
-            placeholder="+7 (999) 999-99-99"
+            placeholder="+7 (999) 999-99-99"
             required
           />
           <ChoiceGroup
@@ -108,20 +117,15 @@ import SocialLinks from "./SocialLinks.astro";
             channels
           />
           <input type="hidden" name="channel" value="" />
-          <label class="sell-week-consent">
-            <input type="checkbox" name="consent" required />
-            <span>
-              Я согласен(а) на <u>обработку персональных данных</u> и принимаю{" "}
-              <u>политику конфиденциальности</u>
-            </span>
-          </label>
+          <ConsentCheckbox />
         </div>
         <div class="sell-week-form-bottom">
           <Button label="Хочу срочно продать объект" type="submit" />
           <div class="sell-week-messengers">
             <span>
-              Или напишите нам
-              <br />в мессенджерах
+              Или напишите нам
+              <br />
+              в мессенджерах
             </span>
             <SocialLinks
               links={[
@@ -131,8 +135,7 @@ import SocialLinks from "./SocialLinks.astro";
               ]}
             />
           </div>
-          <p class="caption">Демонстрация формы: заявка не отправляется.</p>
-          <p class="form-result" role="status" hidden></p>
+          <p class="form-result" role="status" aria-live="polite" hidden></p>
         </div>
       </form>
     </Paper>

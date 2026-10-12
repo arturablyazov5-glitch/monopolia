@@ -2,9 +2,9 @@
 import Paper from "./Paper.astro";
 import "../styles/company-about.css";
 const stats = [
-  ["20 лет", "на рынке в Белогорске", "и Амурской области"],
-  ["5 000+", "клиентов и ни одного", "судебного спора"],
-  ["300", "сделок в год — одна", "каждый рабочий день"],
+  ["20 лет", "на рынке в Белогорске", "и Амурской области"],
+  ["5 000+", "клиентов и ни одного", "судебного спора"],
+  ["300", "сделок в год — одна", "каждый рабочий день"],
 ];
 ---
 
@@ -22,7 +22,7 @@ const stats = [
         sizes="(max-width: 767px) calc(100vw - 64px), 1106px"
         width="548"
         height="577"
-        alt="Офис агентства Монополия в Белогорске"
+        alt="Офис агентства Монополия в Белогорске"
         loading="lazy"
         decoding="async"
       />
@@ -63,18 +63,15 @@ const stats = [
     <div class="company-copy">
       <div class="company-intro">
         <h2 id="company-title">
-          Монополия — название,{" "}
-          <br />
-          на которое вдохновила{" "}
-          <br />
+          Монополия — название, <br />
+          на которое вдохновила <br />
           нас игра
         </h2>
         <p>
-          Белогорская компания с Московским уровнем сервиса, потому что клиенты
-          в маленьком городе заслуживают не меньше
+          Белогорская компания с Московским уровнем сервиса, потому что клиенты в маленьком городе заслуживают не меньше
         </p>
       </div>
-      <Paper class="company-recommendations">
+      <Paper class="company-recommendations" tapeNode="I1380:5258;569:1388">
         <img
           src="/assets/287c2.svg"
           width="36"
@@ -84,21 +81,9 @@ const stats = [
           decoding="async"
         />
         <p>
-          40% клиентов возвращаются к нам снова, еще 40% приходят по
-          рекомендациям, а <strong>конкуренты направляют к нам</strong> сложные
-          сделки
+          40% клиентов возвращаются к нам снова, еще 40% приходят по рекомендациям, а <strong>конкуренты направляют к нам</strong> сложные сделки
         </p>
-        {[0, 1, 2, 3].map((i) => (
-          <img
-            class={`company-tape tape-${i}`}
-            src="/assets/55e7e.webp"
-            width="39.912"
-            height="12.052"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        ))}
+        
       </Paper>
       <div class="company-stats">
         {stats.map(([value, first, second]) => (
@@ -108,8 +93,7 @@ const stats = [
               <i aria-hidden="true"></i>
             </div>
             <p>
-              {first}{" "}
-              <br />
+              {first} <br />
               {second}
             </p>
           </div>
@@ -119,10 +103,10 @@ const stats = [
         <button class="button red" type="button" data-company-presentation>
           Скачать презентацию компании
         </button>
-        <p>Познакомимся поближе, чтобы вы знали, кому платите комиссию :)</p>
+        <p>Познакомимся поближе, чтобы вы знали, кому платите комиссию :)</p>
       </div>
       <p class="company-download-status" role="status" hidden>
-        Презентация компании пока не добавлена.
+        Презентация компании пока не добавлена.
       </p>
     </div>
   </div>

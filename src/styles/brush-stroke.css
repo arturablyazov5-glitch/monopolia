@@ -1,0 +1,305 @@
+/* TASK-010b. Девять частей внешнего контура brush-mask.svg.
+   Срез внешнего силуэта 8px НЕ равен толщине обводки Figma.
+   Белое кольцо и border элемента измеряются отдельно (см. аудит).
+   Только статические SVG/CSS. Исходный контур и полноширинные экспорты сохранены. */
+:root {
+  --brush-images:
+    url("/assets/brush-mask-tl.svg"), url("/assets/brush-mask-t.svg"),
+    url("/assets/brush-mask-tr.svg"), url("/assets/brush-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    url("/assets/brush-mask-bl.svg"), url("/assets/brush-mask-b.svg"),
+    url("/assets/brush-mask-br.svg");
+  /* Стыки соседних SVG дают дробное покрытие alpha. Перекрытие 2px
+     находится внутри непрозрачной части силуэта, внешний контур не меняет. */
+  --brush-sizes:
+    8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px), 8px 8px,
+    calc(100% - 14px) 8px, 8px 8px;
+  --brush-positions:
+    left top, center top, right top, left center, center center, right center,
+    left bottom, center bottom, right bottom;
+}
+/* Интерактивные элементы. Внешняя область остаётся открытой для исходного
+   outline и box-shadow; размеры, цвета и правила фокуса не меняются. */
+.brush-stroke,
+.button,
+.arrow,
+.city,
+.header-call,
+.lead-form > input,
+.lead-form textarea,
+.inner-hero-city,
+.inner-hero-types .chip,
+.sell-week-form .chip,
+.sell-week-form input[type="tel"],
+.cases-tabs .channels,
+.cases-tabs .chip.selected,
+.private-catalog-market,
+.inner-hero-market,
+.private-catalog-checks .badge,
+.buy-mortgage-programs > *,
+.sell-answers-topics span,
+.deal-progress,
+.email-chip,
+.office-label,
+.office-label span,
+.staff-photo .badge,
+.property-card .badge,
+.property-card .mortgage,
+.property-photo {
+  --brush-ring: 0px;
+  --brush-outside: linear-gradient(#fff, #fff);
+  mask-image:
+    var(--brush-images), var(--brush-outside), var(--brush-outside),
+    var(--brush-outside), var(--brush-outside);
+  mask-size:
+    var(--brush-sizes),
+    100% 48px,
+    100% 48px,
+    48px calc(100% + 96px),
+    48px calc(100% + 96px);
+  mask-position:
+    var(--brush-positions),
+    left 0 top -48px,
+    left 0 bottom -48px,
+    left -48px top -48px,
+    right -48px top -48px;
+  mask-repeat: no-repeat;
+  mask-origin: border-box;
+  mask-clip: no-clip;
+  mask-mode: alpha;
+  background-clip: border-box;
+  clip-path: none;
+}
+/* У бумаги маскируется только краска, а не сам контейнер: скотч,
+   вложенный фокус и исходные тени больше не проходят через маску. */
+.paper,
+.site-header {
+  --brush-border: 0px;
+  --brush-ring: 0px;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  mask: none;
+  clip-path: none;
+}
+.site-header {
+  position: relative;
+  isolation: isolate;
+}
+.paper::after,
+.site-header::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: calc(-1 * var(--brush-border)) !important;
+  background: #fff;
+  z-index: -2;
+  pointer-events: none;
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-origin: border-box;
+  mask-clip: border-box;
+  clip-path: none;
+}
+.paper::before,
+.sell-answers-topics span::before {
+  /* Внутренняя девятичастная маска отсчитывается от content-box этого
+     декоративного слоя. Padding кольца не участвует в раскладке листа. */
+  box-sizing: border-box;
+  padding: var(--brush-ring);
+  background-origin: content-box;
+  background-clip: content-box;
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-origin: content-box;
+  mask-clip: content-box;
+}
+/* Значения — медианы нативных экспортов 2× по сторонам: верх, право,
+   низ, лево. strokeWeight и резерв border в layout здесь не используются.
+   Семейства без отдельного кольца сохраняют 0px. */
+.paper.buyer-name,
+.paper.fast-sale-name,
+.paper.director-signature,
+.paper.telegram-signature {
+  --brush-ring: 0px 3px;
+}
+.paper.buyer-note,
+.paper.quote,
+.paper.fast-sale-note {
+  --brush-ring: 0px 2px 0px 0px;
+}
+.paper.taped-note-paper {
+  --brush-ring: 0px 1.5px 0px 0px;
+}
+.paper.trust-rating {
+  --brush-ring: 0px 1.25px 0px 0px;
+}
+.paper.private-catalog-card,
+.paper.telegram-news {
+  --brush-ring: 0px 2.25px 0px 0px;
+}
+.paper.director-card {
+  --brush-ring: 0px 1.75px 0px 0px;
+}
+.paper.director-card::before {
+  /* Светлая складка самой текстуры тоже входит в видимую ширину.
+     Калибровка 2×: её положение +1px даёт медианы 0.5/1.5/0.75/0px. */
+  background-position: calc(50% + 1px) center;
+}
+.paper.inner-hero-card {
+  --brush-ring: 4.25px 0px 1px 0px;
+}
+.paper.review-card {
+  --brush-ring: 4.25px 0px 1.25px 0px;
+}
+.paper.property-card {
+  --brush-ring: 4.25px 0px 1px 0px;
+}
+.paper.buy-mortgage-calc {
+  --brush-ring: 0px 3px 0px 0px;
+}
+.paper.buy-mortgage-review {
+  --brush-ring: 5.25px 0px 1.5px 0px;
+}
+.paper.sell-answers-card {
+  --brush-ring: 0px 4px 0px 0.5px;
+}
+.paper.faq-card-accordion {
+  --brush-border: 16px;
+  --brush-ring: 0px 2.25px 0px 0px;
+}
+.paper.service-card-coupon {
+  --brush-border: 15px;
+  --brush-ring: 3.25px 0px 0.5px 0px;
+}
+.paper.recruiting-note {
+  --brush-border: 15px;
+  --brush-ring: 0px 2px 0px 0px;
+}
+.paper.recruiting-note::before {
+  inset: calc(-1 * var(--brush-border));
+}
+.sell-answers-topics span {
+  --brush-ring: 0px 1px;
+}
+.lead-form > input,
+.lead-form textarea {
+  --brush-ring-inline-end: 2px;
+  --brush-ring: 0px var(--brush-ring-inline-end) 0px 0px;
+}
+@media (max-width: 767px) {
+  .paper.faq-card-accordion {
+    --brush-border: 12px;
+  }
+}
+/* Тёмный лист имеет собственную непрозрачную текстуру. */
+.paper.blockbuster-label::after {
+  background: var(--color-dark);
+}
+/* TASK-030. Статичный фон и маска не меняются на кадрах hover.
+   Отдельная заливка композится через opacity; отрицательный z-index
+   внутри isolation оставляет текст/иконки поверх неё. Chrome создаёт
+   отдельный композитный слой на время opacity-transition. */
+.button {
+  isolation: isolate;
+}
+.button::before,
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.button::before {
+  background: var(--button-base-color);
+  opacity: 1;
+}
+.button::after {
+  background: var(--button-hover-color);
+  opacity: 0;
+}
+.button:hover:not(:disabled)::before {
+  opacity: 0;
+}
+/* TASK-019. Figma: видимый силуэт кнопки (заливка + рваная обводка) выходит
+   на 4 px за рамку раскладки (60 px против 52). Раскладка не меняется:
+   заливку покоя рисует ::before с inset -4px,
+   hover-слой ::after и девять тайлов маски расширены на ту же величину.
+   Полосы «внешней области» отодвинуты на 4 px, чтобы они не пропускали
+   гладкую заливку ::before, но пропускали outline фокуса (offset 5px).
+   Только десктоп ≥1200: на меньших ширинах макета Figma нет. */
+@media (min-width: 1200px) {
+  .button {
+    --brush-sizes:
+      8px 8px, calc(100% - 6px) 8px, 8px 8px, 8px calc(100% - 6px),
+      calc(100% - 6px) calc(100% - 6px), 8px calc(100% - 6px), 8px 8px,
+      calc(100% - 6px) 8px, 8px 8px;
+    --brush-positions:
+      left -4px top -4px, left 50% top -4px, right -4px top -4px,
+      left -4px top 50%, left 50% top 50%, right -4px top 50%,
+      left -4px bottom -4px, left 50% bottom -4px, right -4px bottom -4px;
+    mask-size:
+      var(--brush-sizes),
+      calc(100% + 8px) 48px,
+      calc(100% + 8px) 48px,
+      48px calc(100% + 104px),
+      48px calc(100% + 104px);
+    mask-position:
+      var(--brush-positions),
+      left -4px top -52px,
+      left -4px bottom -52px,
+      left -52px top -52px,
+      right -52px top -52px;
+  }
+  .button::before,
+  .button::after {
+    inset: -4px;
+  }
+}
+
+/* Плашки программ ипотеки — не интерактивные: «внешние полосы» маски (для outline фокуса и тени)
+   не нужны. На повёрнутой плашке они давали тонкую светлую линию по прямой рамке box'а
+   вокруг рваного силуэта. Оставляем только девять тайлов контура. */
+.buy-mortgage-programs > * {
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+}
+
+/* ТЕНИ ПО РВАНОМУ КРАЮ. box-shadow рисуется от прямоугольной рамки, а рваный силуэт даёт маска
+   псевдоэлементов, поэтому тень шла от ровного края. Для .paper тень переносится в filter:
+   drop-shadow на самом листе. Его фоновые слои (::before/::after) уже замаскированы, и filter
+   обводит именно рваный силуэт. Для элемента, у которого маска на нём самом, filter не подходит
+   (он применяется до маски) — там тень делает обёртка (см. .menu-panel-shadow). */
+.paper {
+  box-shadow: none !important;
+  filter: drop-shadow(0 5px 7px #0000000f);
+}
+.paper.faq-card-accordion,
+.paper.service-card-coupon {
+  filter: drop-shadow(0 14px 14px #3d0b0b08) drop-shadow(0 5px 7px #0000000f);
+}
+.paper.sell-answers-card {
+  filter: drop-shadow(0 14px 14px #3d0b0b08);
+}
+.paper.taped-note-paper {
+  filter: none;
+}
+/* Листы, у которых тени по макету нет (или она задана обёрткой/внешним слоем) */
+.paper.buy-closed-base-card,
+.paper.buy-new-build-card,
+.paper.buy-new-build-note,
+.paper.deal-step-card,
+.paper.recruiting-note,
+.paper.telegram-news,
+.paper.sell-week-story-card {
+  filter: none;
+}

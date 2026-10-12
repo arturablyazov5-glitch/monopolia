@@ -2,28 +2,27 @@
 interface Props {
   loading?: "eager" | "lazy";
   rating?: string;
-  /** Внутренние страницы (мастер 1380:5758 / 1380:6363): Яндекс первым, 2ГИС вторым. */
-  yandexFirst?: boolean;
 }
-const { rating = "5.0", yandexFirst = false } = Astro.props;
+import { traceLogo } from "../data/trace-logos";
+const { rating = "5.0" } = Astro.props;
+const gis = traceLogo("2gis");
+const domclick = traceLogo("domclick");
 ---
 
-<div
-  class:list={["rating", { "rating-yandex-first": yandexFirst }]}
-  data-node-id="1380:4934"
-  aria-label={`Рейтинг ${rating}`}
->
-  <span class="rating-map gis" aria-hidden="true">
-    <img
-      src="https://trace-logos.ru/assets/logos/svgs/2gis.svg"
-      alt=""
-      width="18"
-      height="18"
-      loading={Astro.props.loading ?? "lazy"}
-      decoding="async"
-    />
+<div class="rating" data-node-id="1380:4934">
+  <span class="rating-map gis">
+    <a class="rating-map-link" href={gis.href}>
+      <img
+        src={gis.src}
+        alt={gis.alt}
+        width="18"
+        height="18"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
   </span>
-  <span class="rating-map yandex" aria-hidden="true">
+  <span class="rating-map yandex" role="img" aria-label="Яндекс Карты">
     <img
       class="yandex-pin"
       src="/assets/0a94f.svg"
@@ -43,17 +42,19 @@ const { rating = "5.0", yandexFirst = false } = Astro.props;
       decoding="async"
     />
   </span>
-  <span class="rating-map" aria-hidden="true">
-    <img
-      src="https://trace-logos.ru/assets/logos/svgs/domclick.svg"
-      alt=""
-      width="18"
-      height="18"
-      loading={Astro.props.loading ?? "lazy"}
-      decoding="async"
-    />
+  <span class="rating-map">
+    <a class="rating-map-link" href={domclick.href}>
+      <img
+        src={domclick.src}
+        alt={domclick.alt}
+        width="18"
+        height="18"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
   </span>
-  <b>
+  <b aria-label={`Рейтинг ${rating}`}>
     <img
       src="/assets/00e35.svg"
       alt=""

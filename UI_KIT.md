@@ -17,7 +17,7 @@
 - `ServiceCard`: title, description, cta, variant="kit"|"coupon", node. Купон показан с теми же текстами, что на главной; данные по умолчанию соответствуют первой услуге.
 - `ReviewCard`: name, image, duration, video. Без video показывается явный статус демонстрации.
 - `FaqCard`: question, answer, cta; variant="accordion" (id, open, node) для секции FAQ.
-- `FaqSection`: items (FaqItem[] из src/data/faq.ts), title, id, node, class. id — уникальный префикс заголовка и всех вопросов; в библиотеке показаны homeFaq, buyFaq и sellFaq.
+- `FaqSection`: items (FaqItem[] из src/data/faq.ts), title, id, node, class. id — уникальный префикс заголовка и всех вопросов; в библиотеке показаны homeFaq, buyFaq и sellFaq. По решению пользователя (TASK-017) на всех ширинах, включая `/ui-kit/`, изначально открыт только первый ответ (SSR); остальные закрыты и имеют `inert`. Ручное переключение сохраняется. Отдельный `FaqCard` сохраняет `open=true` по умолчанию.
 - `ComparisonTable`: rows с label, ours, others (boolean или текст), variant="default"|"risk", columns, icons, caption. Для risk строки содержат risk (1–5) и node; данные покупки и продажи импортируются из src/data/*realtor-comparison.ts.
 - `ChoiceGroup`: name, options (массив строк), selected (индекс; −1 — нет выбора), channels, icons (имена файлов), loading; событие choice-change.
 - `SocialLinks`: dark, size (32|40), loading, links ({ label, icon, href? }[]); реальные ссылки передаются через links. Без links — демонстрационные иконки.
@@ -65,3 +65,7 @@
 ## Граница готовности
 
 Библиотека предназначена для сборки трёх продающих страниц. Sanity, серверная обработка и хранение заявок, настоящие видео и адреса соцсетей, юридические страницы и публикация — отдельный этап. Проверка готовности UI kit не подтверждает работу этих сервисов.
+
+FAQ (TASK-017): на всех ширинах изначально раскрыт только первый ответ. Единственный эталон высот и секций на 1440 px — `design-reference/baseline-1440.json`; высоты `/` — 17717 px, `/sell/` — 16058 px, `/buy/` — 16023 px.
+
+Перед сдачей и после больших правок запускай `node scripts/check-baseline.mjs`.

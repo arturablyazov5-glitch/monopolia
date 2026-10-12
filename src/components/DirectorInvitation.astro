@@ -1,7 +1,9 @@
 ---
 import Button from "./Button.astro";
 import Paper from "./Paper.astro";
+import { traceLogo } from "../data/trace-logos";
 import "../styles/director-invitation.css";
+const domclick = traceLogo("domclick-full");
 ---
 
 <section
@@ -22,31 +24,31 @@ import "../styles/director-invitation.css";
       />
       <h2 id="director-title">
         Лично провела <span>3 000+</span> <br />
-        сделок, которые научили <br />
+        сделок, которые научили <br />
         видеть скрытые риски
       </h2>
       <div class="director-bio">
         <div class="director-intro">
           <p>
-            Здравствуйте, я Елена Сиделина. Сегодня мое агентство входит{" "}
-            <strong>в ТОП-3 рейтинга Домклик в Белогорске</strong>
+            Здравствуйте, я Елена Сиделина. Сегодня мое агентство входит{" "}
+            <strong>в ТОП‑3 рейтинга Домклик в Белогорске</strong>
           </p>
-          <img
-            src="https://trace-logos.ru/assets/logos/svgs/domclick-full.svg"
-            width="110.249"
-            height="23.815"
-            alt="Домклик"
-            loading="lazy"
-            decoding="async"
-          />
+          <a href={domclick.href}>
+            <img
+              src={domclick.src}
+              width="110.249"
+              height="23.815"
+              alt={domclick.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
         </div>
         <p>
-          За 8 лет я лично провела более 3 000 сделок как юрист-практик и
-          поняла, что в недвижимости нет типовых сделок. У каждого объекта свои
-          риски и нюансы, которые не видны первый взгляд
+          За 8 лет я лично провела более 3 000 сделок как юрист‑практик и поняла, что в недвижимости нет типовых сделок. У каждого объекта свои риски и нюансы, которые не видны первый взгляд
         </p>
       </div>
-      <Paper class="director-coffee-note">
+      <Paper class="director-coffee-note" tapeNode="I1380:5590;569:1388">
         <img
           src="/assets/2ce79.svg"
           width="36"
@@ -56,27 +58,8 @@ import "../styles/director-invitation.css";
           decoding="async"
         />
         <p>
-          Приглашаю вас в офис. Познакомимся за чашечкой кофе, разберем ситуацию
-          и дадим <strong>рекомендации под ваш случай</strong>
+          Приглашаю вас в офис. Познакомимся за чашечкой кофе, разберем ситуацию и дадим <strong>рекомендации под ваш случай</strong>
         </p>
-        <img
-          class="director-tape first"
-          src="/assets/55e7e.webp"
-          width="39.912"
-          height="12.052"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="director-tape last"
-          src="/assets/55e7e.webp"
-          width="39.912"
-          height="12.052"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
       </Paper>
       <div class="director-cta">
         <Button
@@ -84,8 +67,7 @@ import "../styles/director-invitation.css";
           subject="Консультация в офисе за кофе"
         />
         <p>
-          Это бесплатно и без обязательств, но сэкономит вам месяцы и сотни
-          тысяч или даже миллионы рублей на предотвращении ошибок
+          Это бесплатно и без обязательств, но сэкономит вам месяцы и сотни тысяч или даже миллионы рублей на предотвращении ошибок
         </p>
       </div>
     </div>

@@ -1,7 +1,9 @@
 .office-consultation {
   position: relative;
   isolation: isolate;
-  height: 800px;
+  /* Фон с рваными краями (альфа в самом WebP, 1440 : 798.7) масштабируется вместе с шириной окна:
+     иначе при cover шире 1440 фото росло и обрезало рваные края сверху и снизу */
+  height: max(800px, 55.469vw);
 }
 .office-consultation-background {
   position: absolute;
@@ -9,13 +11,13 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 798.704px;
+  height: calc(100% - 1.3px);
   object-fit: cover;
   z-index: -1;
 }
 .office-consultation-inner {
   width: var(--container-width);
-  height: 800px;
+  height: 100%;
   margin: auto;
   padding: 80px 0;
   display: flex;
@@ -41,7 +43,7 @@
   z-index: 1;
 }
 .office-consultation-label .taped-note-paper > p {
-  color: var(--color-diamond);
+  color: #000;
   font-weight: 700;
 }
 .office-consultation-notes {
@@ -61,4 +63,96 @@
 .office-consultation-actions > p {
   color: #e2e2e2;
   font-size: 14px;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+/* Порядок: метка → заголовок → свободная зона с лицами → записки → CTA. */
+@media (max-width: 1199px) {
+  .office-consultation {
+    height: auto;
+    overflow-x: clip;
+  }
+  .office-consultation-background {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    object-position: 50% 50%;
+  }
+  .office-consultation-inner {
+    width: auto;
+    height: auto;
+    min-height: 920px;
+    margin: 0 32px;
+    padding: 88px 0 80px;
+    justify-content: flex-start;
+    gap: 24px;
+  }
+  .office-consultation-copy {
+    display: contents;
+  }
+  .office-consultation-copy h2 {
+    font-size: 40px;
+    max-width: 720px;
+    margin: 0 auto;
+    text-shadow: 0 0 24px #0000008c;
+  }
+  .office-consultation-copy h2 br {
+    display: none;
+  }
+  .office-consultation-notes {
+    margin-top: auto;
+    align-items: stretch;
+  }
+  .office-consultation-note {
+    flex: 1 1 0;
+    max-width: 380px;
+  }
+  .office-consultation-note .taped-note-paper {
+    height: 100%;
+  }
+  .office-consultation-note .taped-note-paper br {
+    display: none;
+  }
+  .office-consultation-actions {
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 767px) {
+  .office-consultation-inner {
+    min-height: 1140px;
+    margin: 0 20px;
+    padding: 80px 0 64px;
+  }
+  .office-consultation-copy h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .office-consultation-notes {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .office-consultation-note {
+    flex: none;
+    max-width: 100%;
+  }
+  .office-consultation-actions {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .office-consultation-actions .button {
+    width: 100%;
+    min-height: 52px;
+  }
+}
+@media (max-width: 389px) {
+  .office-consultation-inner {
+    margin: 0 16px;
+  }
+  .office-consultation-copy h2 {
+    font-size: 28px;
+  }
 }

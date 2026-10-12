@@ -2,7 +2,10 @@
 import Paper from "./Paper.astro";
 import Badge from "./Badge.astro";
 import Button from "./Button.astro";
+import type { Image } from "../lib/catalog-schema.mjs";
+import "../styles/property-media.css";
 interface Props {
+  cardImage?: Image;
   title?: string;
   image?: string;
   address?: string;
@@ -13,31 +16,37 @@ interface Props {
   discount?: string;
 }
 const {
+  cardImage,
   title = "1-комнатная квартира, 40 м², 5/8 этажей",
   image = "/assets/da35e.webp",
-  address = "Благовещенск, ул. Конная, д. 1",
+  address = "Благовещенск, ул. Конная, д. 1",
   price = "4 900 000 ₽",
   oldPrice = "7 000 000 ₽",
-  pricePerMeter = "122 500 ₽/м²",
-  mortgage = "В ипотеку от 30 000 ₽ в месяц",
+  pricePerMeter = "122 500 ₽/м²",
+  mortgage = "В ипотеку от 30 000 ₽ в месяц",
   discount = "−30%",
 } = Astro.props;
 ---
 
 <Paper class="property-card" node="1380:6451">
   <div class="property-photo">
-    <img
-      src={image}
-      alt={title}
-      width="336"
-      height="252"
-      loading="lazy"
-      decoding="async"
-    />
-    <Badge text={discount} class="discount" />
+    {cardImage && cardImage.large !== "/assets/da35e.webp" ? (
+      <picture style="display: contents">
+        <source style="display: none" srcset={`${cardImage.small} 360w, ${cardImage.large} 680w`}
+          sizes="(max-width: 767px) min(288px, calc(100vw - 92px)), (max-width: 1199px) calc((100vw - 180px) / 2), 336px" />
+        <img src={cardImage.large} alt={title} width="680" height="510" loading="lazy" decoding="async" />
+      </picture>
+    ) : (
+      <img src={image} alt={title} width="336" height="252" loading="lazy" decoding="async" />
+    )}
+    {discount ? (
+      <Badge text={discount} class="discount" />
+    ) : (
+      <span class="discount" aria-hidden="true" />
+    )}
   </div>
   <div>
-    <h3>{title}</h3>
+    <h3 data-card="title">{title}</h3>
     <p class="location">
       <img
         src="/assets/2c9bf.svg"
@@ -47,17 +56,19 @@ const {
         loading="lazy"
         decoding="async"
       />
-      {address}
+      <span data-card="address">{address}</span>
     </p>
   </div>
   <hr />
   <div>
-    <s>{oldPrice}</s>
+    <s aria-hidden={!oldPrice || undefined}>{oldPrice}</s>
     <div class="price">
-      <h3>{price}</h3>
-      <p>{pricePerMeter}</p>
+      <h3 data-card="price">{price}</h3>
+      <p aria-hidden={!pricePerMeter || undefined}>{pricePerMeter}</p>
     </div>
-    <p class="mortgage">{mortgage}</p>
+    <p class="mortgage" aria-hidden={!mortgage || undefined}>
+      {mortgage}
+    </p>
   </div>
   <hr />
   <Button label="Записаться на просмотр" subject={title} />

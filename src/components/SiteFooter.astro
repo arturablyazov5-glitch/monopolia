@@ -1,6 +1,8 @@
 ---
 import SocialLinks from "./SocialLinks.astro";
 import "../styles/site-footer.css";
+import { legal } from "../data/legal";
+import { siteSections } from "../data/site-nav";
 
 /**
  * Общий footer всех страниц — Figma 1380:5754 (главная),
@@ -10,21 +12,14 @@ import "../styles/site-footer.css";
  */
 interface Props {
   nav?: { label: string; href: string }[];
+  home?: string;
   /** Совместимость с UI kit; документы в любом случае заглушки */
   demo?: boolean;
   node?: string;
 }
 const {
-  nav = [
-    { label: "Купить недвижимость", href: "/buy/" },
-    { label: "Продать недвижимость", href: "/sell/" },
-    { label: "Кейсы", href: "/#cases" },
-    { label: "Отзывы", href: "/#reviews" },
-    { label: "Команда", href: "/#team" },
-    { label: "Услуги", href: "/#services" },
-    { label: "Для соискателей", href: "/#careers" },
-    { label: "Вопрос‑ответ", href: "/#faq-title" },
-  ],
+  nav = siteSections,
+  home = "/",
   node = "1380:5754",
 } = Astro.props;
 ---
@@ -43,7 +38,7 @@ const {
   <div class="container footer-inner">
     <div class="footer-columns">
       <div class="footer-company">
-        <div class="footer-brand">
+        <a class="footer-brand" href={home} aria-label="Монополия — главная">
           <img
             src="/assets/bb79f.svg"
             alt=""
@@ -61,51 +56,52 @@ const {
               loading="lazy"
               decoding="async"
             />
-            <p>Агентство недвижимости с 2006 года</p>
+            <p>Агентство недвижимости с 2006 года</p>
           </div>
-        </div>
+        </a>
         <div class="footer-legal">
           <p>ИП Сиделина Елена Юрьевна</p>
           <p>ИНН: 280403620684</p>
           <p>ОГРНИП: 316280100058921</p>
           <p>
-            Адрес: 676805, Амурская область, г. Белогорск, ул.&nbsp;Ленина,
-            д.&nbsp;48
+            Адрес: 676805, Амурская область, г. Белогорск, ул. Ленина, д. 48
           </p>
         </div>
       </div>
       <div class="footer-navigation">
-        <nav aria-label="Разделы сайта">
+        <nav aria-label="Разделы сайта (подвал)">
           {nav.map((item) => (
             <a href={item.href}>{item.label}</a>
           ))}
         </nav>
         <div class="footer-policy">
-          <button type="button" class="footer-doc">
+          <a class="footer-doc" href={legal.privacy.href}>
             <span class="footer-doc-link">Политика конфиденциальности</span>
-          </button>
-          <button type="button" class="footer-doc">
+          </a>
+          <a class="footer-doc" href={legal.consent.href}>
             Согласие на{" "}
             <span class="footer-doc-link">обработку персональных данных</span>
-          </button>
-          <p class="footer-doc-status" role="status" hidden>
-            Документ будет опубликован позже.
-          </p>
+          </a>
         </div>
       </div>
       <div class="footer-contact">
         <div class="footer-contact-main">
           <div class="footer-phone-block">
             <a class="footer-phone" href="tel:+79245804555">
-              +7 (924) 580-45-55
+              +7 (924) 580-45-55
             </a>
             <p>
-              Пн‑Пт с 09:00 до 18:00
+              Пн‑Пт с 09:00 до 18:00
               <br />
-              Сб с 10:00 до 15:00
+              Сб с 10:00 до 15:00
             </p>
           </div>
-          <a class="email-chip" href="mailto:anmonopoliya@mail.ru">
+          <button
+            class="email-chip"
+            type="button"
+            data-copy="anmonopoliya@mail.ru"
+            aria-label="Скопировать почту anmonopoliya@mail.ru"
+          >
             <img
               src="/assets/decb5.svg"
               alt=""
@@ -114,14 +110,14 @@ const {
               loading="lazy"
               decoding="async"
             />
-            anmonopoliya@mail.ru
-          </a>
+            <span class="email-chip-text">anmonopoliya@mail.ru</span>
+          </button>
         </div>
         <div class="footer-social">
           <SocialLinks dark size={40} />
           <p>
             Свяжитесь
-            <br />с нами
+            <br />с нами
           </p>
         </div>
         <div class="footer-subscribe">
@@ -137,7 +133,7 @@ const {
             <p>
               Подписывайтесь
               <br />
-              на наши соцсети
+              на наши соцсети
             </p>
           </div>
           <small class="meta-note">
@@ -148,7 +144,7 @@ const {
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <small>© Все права защищены, 2026</small>
+      <small>© Все права защищены, 2026</small>
       <a class="footer-up" href="#top" aria-label="Наверх">
         <img
           src="/assets/d90d7.svg"
@@ -163,12 +159,35 @@ const {
   </div>
 </footer>
 <script>
-  document.querySelectorAll<HTMLElement>(".footer-policy").forEach((box) => {
-    const status = box.querySelector<HTMLElement>(".footer-doc-status")!;
-    box.querySelectorAll(".footer-doc").forEach((button) =>
-      button.addEventListener("click", () => {
-        status.hidden = false;
-      }),
-    );
+  document.querySelectorAll<HTMLButtonElement>(".email-chip").forEach((chip) => {
+    const text = chip.querySelector<HTMLElement>(".email-chip-text")!;
+    const original = text.textContent!;
+    let timer: number | undefined;
+    chip.addEventListener("click", async () => {
+      const value = chip.dataset.copy!;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        // Без Clipboard API (http, старые браузеры): выделяем во временном поле
+        const field = document.createElement("textarea");
+        field.value = value;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.append(field);
+        field.select();
+        document.execCommand("copy");
+        field.remove();
+      }
+      // Ширина фиксируется, чтобы плашка не прыгала при смене текста
+      chip.style.minWidth = `${chip.offsetWidth}px`;
+      text.textContent = "Почта скопирована";
+      chip.classList.add("copied");
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        text.textContent = original;
+        chip.classList.remove("copied");
+        chip.style.minWidth = "";
+      }, 2000);
+    });
   });
 </script>

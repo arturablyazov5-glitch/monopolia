@@ -5,6 +5,8 @@ import Paper from "./Paper.astro";
 import Badge from "./Badge.astro";
 import Button from "./Button.astro";
 import "../styles/buy-closed-base.css";
+import { selectPreview } from "../lib/catalog";
+import "../styles/property-media.css";
 
 const checks = [
   "Залог",
@@ -15,10 +17,10 @@ const checks = [
   "Арест",
   "Психическое здоровье собственника",
   "Пакет документов",
-  "И еще 43+ параметра",
+  "И еще 43+ параметра",
 ];
 // Девять одинаковых карточек kv 1380:6542–6550 — как в макете
-const listings = Array.from({ length: 9 });
+const listings = selectPreview();
 ---
 
 <section
@@ -33,37 +35,23 @@ const listings = Array.from({ length: 9 });
           <span class="buy-closed-base-hand">800+</span>
           эксклюзивных объектов
         </span>
-        за сентябрь в закрытой базе
+        за сентябрь в закрытой базе
       </h2>
       <div class="buy-closed-base-card-wrap">
-        <Paper class="buy-closed-base-card" node="1380:6480">
+        <Paper
+          class="buy-closed-base-card"
+          tapeNode="I1380:6480;569:1388"
+          node="1380:6480"
+        >
           <p>
-            Каждый проверили <strong>по 52 параметрам,</strong> <br />
-            чтобы исключить все риски при оформлении сделки
+            Каждый проверили <strong>по 52 параметрам,</strong> <br />
+            чтобы исключить все риски при оформлении сделки
           </p>
           <div class="buy-closed-base-checks">
             {checks.map((text) => (
               <Badge text={text} />
             ))}
           </div>
-          <img
-            class="buy-closed-base-tape buy-closed-base-tape-top"
-            src="/assets/55e7e.webp"
-            alt=""
-            width="40"
-            height="12"
-            loading="lazy"
-            decoding="async"
-          />
-          <img
-            class="buy-closed-base-tape buy-closed-base-tape-bottom"
-            src="/assets/55e7e.webp"
-            alt=""
-            width="40"
-            height="12"
-            loading="lazy"
-            decoding="async"
-          />
         </Paper>
       </div>
       <Button
@@ -94,7 +82,7 @@ const listings = Array.from({ length: 9 });
     <div
       class="buy-safari"
       role="img"
-      aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
+      aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
       data-node-id="1380:6483"
     >
       <div class="buy-safari-toolbar">
@@ -160,7 +148,7 @@ const listings = Array.from({ length: 9 });
                 loading="lazy"
                 decoding="async"
               />
-              <span>Агентство недвижимости с 2006 года</span>
+              <span>Агентство недвижимости с 2006 года</span>
             </span>
           </span>
           <span class="buy-safari-nav">
@@ -205,7 +193,7 @@ const listings = Array.from({ length: 9 });
                 </span>
               </span>
               <span class="buy-safari-phone">
-                <b>+7 (924) 580-45-55</b>
+                <b>+7 (924) 580-45-55</b>
                 <span class="buy-safari-status">
                   <i></i>Сейчас работаем
                 </span>
@@ -225,50 +213,76 @@ const listings = Array.from({ length: 9 });
           </span>
         </div>
 
-        {listings.map(() => (
-          <div class="buy-safari-listing">
-            <div class="buy-safari-photo">
-              <picture>
-                <source
-                  style="display: none"
-                  media="(max-width: 767px)"
-                  srcset="/assets/a8dca-k-360.webp 360w, /assets/a8dca-k-mobile.webp 680w"
-                  sizes="(max-width: 539px) calc((100vw - 68px) / 2), calc((100vw - 76px) / 2)"
-                />
-                <img
-                  src="/assets/a8dca.webp"
-                  alt=""
-                  width="400"
-                  height="277"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-              <span class="buy-safari-prices">
-                <span class="buy-safari-old-price">
-                  <span>
-                    7 300 000 ₽
-                    <img
-                      src="/assets/e3bb7.svg"
-                      alt=""
-                      width="69.6587"
-                      height="42.9098"
-                      loading="lazy"
-                      decoding="async"
-                    />
+        {listings.map((listing) =>
+          listing ? (
+            <div class="buy-safari-listing">
+              <div class="buy-safari-photo">
+                <picture>
+                  <source
+                    style="display: none"
+                    media={
+                      listing.photo?.id === "legacy-a8dca"
+                        ? "(max-width: 767px)"
+                        : undefined
+                    }
+                    srcset={
+                      listing.photo?.id === "legacy-a8dca"
+                        ? "/assets/a8dca-k-360.webp 360w, /assets/a8dca-k-mobile.webp 680w"
+                        : listing.photo?.variants
+                            .map((v) => v.src + " " + v.width + "w")
+                            .join(", ")
+                    }
+                    sizes="(max-width: 539px) calc((100vw - 68px) / 2), (max-width: 767px) calc((100vw - 76px) / 2), 190px"
+                  />
+                  <img
+                    src={listing.image}
+                    alt=""
+                    width={
+                      listing.photo?.id === "legacy-a8dca"
+                        ? 400
+                        : listing.photo?.width
+                    }
+                    height={
+                      listing.photo?.id === "legacy-a8dca"
+                        ? 277
+                        : listing.photo?.height
+                    }
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+                <span class="buy-safari-prices">
+                  <span
+                    class="buy-safari-old-price"
+                    aria-hidden={!listing.oldPrice || undefined}
+                  >
+                    <span>
+                      {listing.oldPrice}
+                      <img
+                        src="/assets/e3bb7.svg"
+                        hidden={!listing.oldPrice || undefined}
+                        alt=""
+                        width="69.6587"
+                        height="42.9098"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
                   </span>
+                  <span class="buy-safari-price">{listing.price}</span>
                 </span>
-                <span class="buy-safari-price">6 900 000 ₽</span>
+              </div>
+              <span class="buy-safari-caption">
+                <b>{listing.title}</b>
+                <span>{listing.caption}</span>
               </span>
             </div>
-            <span class="buy-safari-caption">
-              <b>Квартира такая‑то</b>
-              <span>Текст</span>
-            </span>
-          </div>
-        ))}
+          ) : (
+            <div class="buy-safari-listing" aria-hidden="true" />
+          ),
+        )}
 
-        <span class="buy-safari-more">Загрузить еще 800+</span>
+        <span class="buy-safari-more">Загрузить еще 800+</span>
       </div>
     </div>
   </div>

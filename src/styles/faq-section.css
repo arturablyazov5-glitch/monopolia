@@ -31,7 +31,9 @@
 .faq-card.faq-card-accordion {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  /* Отступ до ответа задаёт сам ответ (margin-top), чтобы закрытая карточка не оставляла «дырку» */
+  gap: 0;
+  --faq-gap: 20px;
   /* В Figma обводка 16 px внутренняя: 32 px от внешнего края до контента */
   padding: 16px;
   border: 16px solid #fff;
@@ -83,20 +85,57 @@
   left: -4.5px;
   max-width: none;
 }
-.faq-toggle[aria-expanded="false"] .faq-toggle-icon {
+/* Крутится только крестик, красный квадрат остаётся на месте */
+.faq-toggle-cross {
+  transition: transform var(--duration-fast);
+}
+.faq-toggle[aria-expanded="false"] .faq-toggle-cross {
   transform: rotate(45deg);
 }
-.faq-toggle:hover .faq-toggle-icon {
-  filter: brightness(0.9);
+/* Hover на всей строке вопроса (текст и квадратик): квадратик становится тёмным (#1c1c1c), крестик остаётся белым */
+.faq-toggle-bg {
+  transition: filter var(--duration-fast) ease;
 }
+.faq-toggle:hover .faq-toggle-bg,
+.faq-toggle:focus-visible .faq-toggle-bg {
+  filter: brightness(0) invert(0.11);
+}
+/* Плавное раскрытие: высота анимируется через grid 1fr ↔ 0fr */
 .faq-answer {
+  display: grid;
+  grid-template-rows: 1fr;
+  margin-top: var(--faq-gap);
+  transition:
+    grid-template-rows 0.4s ease,
+    margin-top 0.4s ease,
+    opacity 0.3s ease,
+    visibility 0s;
+}
+.faq-answer.is-closed {
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  opacity: 0;
+  visibility: hidden;
+  /* visibility прячем только после того, как ответ свернулся */
+  transition:
+    grid-template-rows 0.4s ease,
+    margin-top 0.4s ease,
+    opacity 0.25s ease,
+    visibility 0s 0.4s;
+}
+.faq-answer-inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
+  min-height: 0;
+  overflow: hidden;
 }
-.faq-answer[hidden] {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .faq-answer,
+  .faq-answer.is-closed {
+    transition: none;
+  }
 }
 .faq-answer-text {
   display: grid;
@@ -148,7 +187,7 @@
     font-size: 30px;
   }
   .faq-card.faq-card-accordion {
-    gap: 16px;
+    --faq-gap: 16px;
     padding: 8px;
     border-width: 12px;
   }
@@ -164,7 +203,7 @@
   .faq-toggle {
     gap: 16px;
   }
-  .faq-answer {
+  .faq-answer-inner {
     gap: 20px;
   }
   .faq-answer .button {

@@ -21,6 +21,13 @@
   top: 0;
   height: 756.791px;
 }
+/* Рваные края — альфа самого фото (1440 × 655/757). Шире макета cover увеличивал фото по высоте
+   и срезал края, оставляя прямой срез: растягиваем по ширине, высота фиксирована. */
+@media (min-width: 1441px) {
+  .prepared-viewing-background {
+    object-fit: fill;
+  }
+}
 .prepared-viewing-inner {
   width: var(--container-width);
   margin: auto;
@@ -119,10 +126,6 @@
   margin: 3.525px auto 0;
   text-align: center;
 }
-/* В мастере 1317:5368 (5885 / 6564) у записки «Вероятность» лент нет. */
-.prepared-viewing-probability-note .taped-note-tape {
-  display: none;
-}
 .prepared-viewing-arrows {
   position: absolute;
   left: 15.06px;
@@ -158,4 +161,130 @@
 }
 .prepared-viewing-ratings span + span img {
   top: -9.966px;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .prepared-viewing,
+  .prepared-viewing-sell {
+    height: auto;
+    padding: 64px 32px 104px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    overflow-x: clip;
+  }
+  .prepared-viewing-background,
+  .prepared-viewing-sell .prepared-viewing-background {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    object-position: 58% 50%;
+  }
+  /* Затемнение под белый текст; у рваных краёв сходит на нет. */
+  .prepared-viewing::after {
+    content: "";
+    position: absolute;
+    inset: 24px 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      #0000 0,
+      #00000080 96px,
+      #00000080 calc(100% - 96px),
+      #0000 100%
+    );
+    pointer-events: none;
+  }
+  .prepared-viewing-inner {
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .prepared-viewing-copy,
+  .prepared-viewing-sell .prepared-viewing-copy {
+    width: auto;
+    max-width: 520px;
+  }
+  .prepared-viewing h2 {
+    font-size: 40px;
+  }
+  .prepared-viewing-lists ul {
+    flex: 1 1 0;
+    width: auto;
+  }
+  .prepared-viewing-lists:before {
+    left: 50%;
+  }
+  .prepared-viewing-actions {
+    flex-wrap: wrap;
+  }
+  /* «Вероятность покупки» — в потоке под текстом, композиция без изменений. */
+  .prepared-viewing-probability,
+  .prepared-viewing-sell .prepared-viewing-probability {
+    position: relative;
+    top: auto;
+    left: auto;
+    height: 120px;
+    flex: none;
+  }
+}
+@media (max-width: 767px) {
+  .prepared-viewing,
+  .prepared-viewing-sell {
+    padding: 56px 20px 96px;
+    margin-top: 0;
+    gap: 32px;
+  }
+  /* Мобильный файл — полоса x 600–2400 исходника; кадр у границы «до/после». */
+  .prepared-viewing-background,
+  .prepared-viewing-sell .prepared-viewing-background {
+    object-position: 72% 50%;
+  }
+  .prepared-viewing-copy,
+  .prepared-viewing-sell .prepared-viewing-copy {
+    max-width: none;
+  }
+  .prepared-viewing h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .prepared-viewing-note,
+  .prepared-viewing-sell .prepared-viewing-note {
+    margin-top: 24px;
+  }
+  .prepared-viewing-lists {
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .prepared-viewing-lists:before {
+    display: none;
+  }
+  .prepared-viewing-actions {
+    margin-top: 32px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .prepared-viewing-actions > .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .prepared-viewing-probability,
+  .prepared-viewing-sell .prepared-viewing-probability {
+    align-self: center;
+  }
+}
+@media (max-width: 389px) {
+  .prepared-viewing,
+  .prepared-viewing-sell {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .prepared-viewing h2 {
+    font-size: 28px;
+  }
 }

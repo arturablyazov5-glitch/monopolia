@@ -21,6 +21,8 @@
 }
 .trust-count {
   display: inline-block;
+  position: relative;
+  top: 7px;
   font: 64px/0.4 var(--font-handwriting);
   transform: rotate(-1deg);
 }
@@ -51,6 +53,25 @@
   max-width: none;
   transform: rotate(180deg);
 }
+@media (min-width: 1441px) {
+  .trust-team-edge {
+    /* Бумага, а не портреты: растягиваем только кромку по горизонтали.
+       Сохраняем пропорциональный вылет прозрачных боков исходника (67 px
+       на окно 1440), чтобы видимая бумага доходила до обоих краёв окна. */
+    width: calc(100vw * 1507 / 1440);
+    left: calc(723.5px - 50vw * 1507 / 1440);
+  }
+}
+@media (width > 1440px) {
+  .trust-team-edge {
+    /* Полоса бумаги: растягиваем только по горизонтали, сохраняя высоту кромки.
+       Выпуск 1507/1440 выводит прозрачные боковые поля за края окна,
+       как у исходной композиции на 1440; центр команды совпадает с центром окна. */
+    left: 50%;
+    width: calc(100vw * 1507 / 1440);
+    transform: translateX(-50%) rotate(180deg);
+  }
+}
 .trust-rating {
   position: absolute;
   padding: 16px 16px 12px;
@@ -77,7 +98,13 @@
   gap: 12px;
   position: relative;
 }
+.trust-rating-line > a {
+  display: block;
+  flex-shrink: 0;
+}
+.trust-rating-line > a > img,
 .trust-rating-line > img:first-child {
+  display: block;
   object-fit: contain;
 }
 .trust-rating-line > img:nth-last-of-type(1) {
@@ -131,6 +158,18 @@
 }
 .trust-reviews .carousel-controls > button {
   pointer-events: auto;
+}
+/* Ряд 960 px + 2 × (40 px стрелка + 20 px зазор + 8 px поле окна): левый край
+   слота x 240, окно уже 1296 px — правая стрелка не помещается. Как у
+   `.home-team`: стрелки по центру под рядом, 16 px ниже (Figma 1380:5160). */
+@media (min-width: 1200px) and (max-width: 1295px) {
+  .trust-reviews .carousel-controls {
+    top: calc(100% + 16px);
+    left: 0;
+    right: 0;
+    justify-content: center;
+    gap: 16px;
+  }
 }
 .trust-reviews .carousel-pagination {
   display: none;
@@ -188,8 +227,45 @@
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: max(100%, 1453.82px);
+  /* Бока исходника ступенчатые (несколько листов): на 1440 они уходят за окно на ~7 px.
+     Шире макета сохраняем тот же пропорциональный вылет, иначе у краёв окна
+     просвечивает тёмный фон соседней секции. До 1440 включительно — прежние 1453.82 px. */
+  width: max(calc(100% * 1453.82 / 1440), 1453.82px);
   height: 2143.403px;
   max-width: none;
   z-index: -1;
+}
+
+/* TASK-039: тот же способ, что у FastSale: масштаб всей сцены, а не
+   отдельных рейтингов. cqw берётся от секции; margin компенсирует transform.
+   Фон сохраняет исходный выпуск 1453.82/1440 и рваную верхнюю кромку. */
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .proven-trust {
+    container-type: inline-size;
+    --scene-scale: tan(atan2(100cqw, 1440px));
+    --scene-footer: 0px;
+    min-height: 0;
+    padding-top: 0;
+  }
+  .proven-trust-scene {
+    margin: calc(100cqw * 120 / 1440) 0
+      calc((1009px + var(--scene-footer)) * var(--scene-scale) - 1009px);
+    transform: scale(var(--scene-scale));
+    transform-origin: top left;
+  }
+  .trust-team {
+    /* Пустой группирующий блок не выходит справа; координаты портретов,
+       рейтингов и декоративной кромки остаются исходными. */
+    width: 1440px;
+  }
+  .trust-paper-background {
+    width: calc(100cqw * 1453.82 / 1440);
+    height: calc(100cqw * 2143.403 / 1440);
+  }
+}
+@media (min-width: 1200px) and (max-width: 1295px) {
+  .proven-trust {
+    /* Сохраняем недавнее положение стрелок под отзывами и место для них. */
+    --scene-footer: 80px;
+  }
 }

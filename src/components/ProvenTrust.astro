@@ -1,6 +1,7 @@
 ---
 import { imageSize } from "../lib/image-size";
 import Paper from "./Paper.astro";
+import { traceLogo } from "../data/trace-logos";
 import ReviewCard from "./ReviewCard.astro";
 import Carousel from "./Carousel.astro";
 import "../styles/proven-trust.css";
@@ -29,7 +30,7 @@ const ratings = [
   {
     logo: "domclick-full",
     label: "Домклик",
-    reviews: "206 отзывов",
+    reviews: "206 отзывов",
     x: 1031.46,
     y: 45.23,
     angle: 4.27,
@@ -38,7 +39,7 @@ const ratings = [
   {
     logo: "2gis-full",
     label: "2ГИС",
-    reviews: "164 отзыва",
+    reviews: "164 отзыва",
     x: 1115.76,
     y: 167.57,
     angle: 0,
@@ -47,7 +48,7 @@ const ratings = [
   {
     logo: "yandex-maps-full",
     label: "Яндекс Карты",
-    reviews: "39 отзывов",
+    reviews: "39 отзывов",
     x: 1110.9,
     y: -61.51,
     angle: -1,
@@ -73,11 +74,11 @@ const ratings = [
   />
   <div class="proven-trust-scene">
     <h2 id="proven-trust-title">
-      По факту за <span class="trust-count">5 000+</span> <br />
-      сделок — у нас{" "}
+      По факту за <span class="trust-count">5 000+</span> <br />
+      сделок — у нас{" "}
       <span class="trust-accent">
-        ни одного <br />
-        суда и истории обмана
+        ни одного <br />
+        суда и истории обмана
       </span>
     </h2>
     {/* Адаптив: на узких экранах рейтинги выводятся строкой под заголовком,
@@ -86,14 +87,16 @@ const ratings = [
       {ratings.map((r) => (
         <Paper class="trust-rating-mobile">
           <div class="trust-rating-line">
-            <img
-              src={`https://trace-logos.ru/assets/logos/svgs/${r.logo}.svg`}
-              alt={r.label}
-              width={r.width}
-              height="24"
-              loading="lazy"
-              decoding="async"
-            />
+            <a href={traceLogo(r.logo).href}>
+              <img
+                src={traceLogo(r.logo).src}
+                alt={traceLogo(r.logo).alt}
+                width={r.width}
+                height="24"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
             <span class="trust-rating-divider"></span>
             <img
               src="/assets/1795d.svg"
@@ -109,7 +112,7 @@ const ratings = [
         </Paper>
       ))}
     </div>
-    <div class="trust-team" aria-label="Команда Монополии">
+    <div class="trust-team" role="group" aria-label="Команда Монополии">
       {shadows.map((s) => (
         <img
           class="trust-shadow"
@@ -126,6 +129,14 @@ const ratings = [
         <img
           class:list={["trust-portrait", { mirrored: p.mirror }]}
           src={`/assets/${p.asset}.webp`}
+          srcset={
+            p.asset === "fce18"
+              ? "/assets/fce18-m.webp 1450w, /assets/fce18.webp 2336w"
+              : undefined
+          }
+          sizes={
+            p.asset === "fce18" ? "(max-width: 767px) 194px, 2336px" : undefined
+          }
           alt=""
           width={p.w}
           height={p.h}
@@ -136,7 +147,7 @@ const ratings = [
       ))}
       <img
         class="trust-team-edge"
-        src="/assets/89254.webp"
+        src="/assets/89254-no-shadow.webp"
         alt=""
         width="1507"
         height="234"
@@ -150,14 +161,16 @@ const ratings = [
             class="trust-rating-anchor"
           ></div>
           <div class="trust-rating-line">
-            <img
-              src={`https://trace-logos.ru/assets/logos/svgs/${r.logo}.svg`}
-              alt={r.label}
-              width={r.width}
-              height="24"
-              loading="lazy"
-              decoding="async"
-            />
+            <a href={traceLogo(r.logo).href}>
+              <img
+                src={traceLogo(r.logo).src}
+                alt={traceLogo(r.logo).alt}
+                width={r.width}
+                height="24"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
             <span class="trust-rating-divider"></span>
             <img
               src="/assets/1795d.svg"
@@ -176,13 +189,13 @@ const ratings = [
     <div class="trust-reviews">
       <Carousel label="Видеоотзывы клиентов">
         <ReviewCard
-          name="Светлана В."
+          name="Светлана В."
           image="/assets/188fc.webp"
           duration="0:47"
         />
-        <ReviewCard name="Инна С." image="/assets/46cf2.webp" duration="2:06" />
+        <ReviewCard name="Инна С." image="/assets/46cf2.webp" duration="2:06" />
         <ReviewCard
-          name="Дмитрий В."
+          name="Дмитрий В."
           image="/assets/11a9d.webp"
           duration="0:33"
         />

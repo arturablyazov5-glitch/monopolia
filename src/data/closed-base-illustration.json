@@ -1,0 +1,29 @@
+{
+  "title": "Квартира такая‑то",
+  "caption": "Текст",
+  "image": "/assets/a8dca.webp",
+  "photo": {
+    "id": "legacy-a8dca",
+    "kind": "figma-placeholder",
+    "alt": "",
+    "src": "/assets/a8dca.webp",
+    "width": 400,
+    "height": 277,
+    "variants": [
+      {
+        "src": "/assets/a8dca-k-360.webp",
+        "width": 360,
+        "height": 250,
+        "bytes": 10436
+      },
+      {
+        "src": "/assets/a8dca-k-mobile.webp",
+        "width": 680,
+        "height": 472,
+        "bytes": 32590
+      }
+    ]
+  },
+  "price": "6 900 000 ₽",
+  "oldPrice": "7 300 000 ₽"
+}

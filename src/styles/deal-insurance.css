@@ -1,5 +1,7 @@
 .trust-and-viewing {
   padding-top: 120px;
+  /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
+  overflow-x: clip;
 }
 .trust-and-viewing-sell {
   padding-top: 80px;
@@ -55,6 +57,9 @@
   width: 732.233px;
   height: 570.513px;
   max-width: none;
+  /* Исходник 1008×672 (1,5:1), в макете рамка 732×570: заливка Fill — обрезка по центру, не сжатие */
+  object-fit: cover;
+  object-position: 50% 50%;
 }
 .deal-insurance-shadow {
   position: absolute;
@@ -68,6 +73,9 @@
   bottom: 13.34px;
   transform: rotate(180deg);
   max-width: none;
+}
+.deal-insurance-stage {
+  display: contents;
 }
 .deal-insurance-client,
 .deal-insurance-elena {
@@ -99,4 +107,206 @@
 .deal-insurance-elena .speech-bubble p {
   background: #269dfd;
   color: white;
+}
+
+/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+@media (max-width: 1199px) {
+  .trust-and-viewing,
+  .trust-and-viewing-sell {
+    padding-top: 80px;
+  }
+  .deal-insurance {
+    width: auto;
+    height: auto;
+    margin: 0 32px;
+    flex-direction: column;
+    gap: 40px;
+    /* место под рваный край и заход показа (−60) */
+    padding-bottom: 72px;
+    --stage-k: 0.9;
+  }
+  .deal-insurance-copy {
+    width: auto;
+    max-width: 520px;
+    padding: 0;
+  }
+  .deal-insurance-heading h2 {
+    font-size: 40px;
+  }
+  .deal-insurance-hand {
+    margin-top: 14px;
+    font-size: 58px;
+  }
+  .deal-insurance-description {
+    max-width: 345px;
+  }
+  .deal-insurance-note {
+    margin: 32px 0 40px 8px;
+  }
+  /* Реплики — в потоке над фото, сцена фото + SVG-тень масштабируется
+     одним коэффициентом (центр — середина фото x 407). */
+  .deal-insurance-visual {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .deal-insurance-client,
+  .deal-insurance-elena {
+    position: static;
+  }
+  .deal-insurance-elena {
+    align-self: flex-start;
+  }
+  .deal-insurance-client {
+    order: 1;
+    align-self: flex-end;
+  }
+  .deal-insurance-stage {
+    order: 2;
+    display: block;
+    position: relative;
+    flex: none;
+    width: 820px;
+    height: 680px;
+    margin-top: calc(-56px * var(--stage-k));
+    margin-left: calc(50% - 407px * var(--stage-k));
+    margin-bottom: calc(680px * var(--stage-k) - 680px);
+    transform: scale(var(--stage-k));
+    transform-origin: 0 0;
+  }
+  .deal-insurance-photo {
+    top: 79.5px;
+  }
+  .deal-insurance-shadow {
+    top: calc(109.661px - 532.5px * 0.1717);
+  }
+  .deal-insurance-edge {
+    left: 50%;
+    bottom: 13.34px;
+    transform: translateX(-50%) rotate(180deg);
+    z-index: 1;
+  }
+}
+/* TASK-009: 1024–1199 — текст слева, реплики и фото со SVG-тенью справа
+   (как 1440); раньше всё стояло в левой колонке, справа пусто. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .deal-insurance {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    --stage-k: 0.66;
+  }
+  .deal-insurance-copy {
+    flex: 0 0 420px;
+  }
+  .deal-insurance-visual {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}
+@media (max-width: 767px) {
+  .trust-and-viewing,
+  .trust-and-viewing-sell {
+    padding-top: 56px;
+  }
+  .deal-insurance {
+    margin: 0 20px;
+    gap: 32px;
+    padding-bottom: 56px;
+    --stage-k: 0.6;
+    --bubbles: 56px;
+  }
+  .deal-insurance-heading h2 {
+    font-size: 30px;
+    line-height: 1.05;
+  }
+  .deal-insurance-hand {
+    font-size: 44px;
+  }
+  /* Телефон: сначала текст, затем сцена с фото и репликами, и только потом кнопка */
+  .deal-insurance-copy {
+    display: contents;
+  }
+  .deal-insurance-heading {
+    order: 1;
+  }
+  .deal-insurance-note {
+    order: 2;
+    margin: 24px 0 0;
+  }
+  .deal-insurance-visual {
+    order: 3;
+  }
+  .deal-insurance-actions {
+    order: 4;
+  }
+  .deal-insurance-actions .button {
+    width: 100%;
+    min-height: 52px;
+  }
+  .deal-insurance-actions {
+    align-items: stretch;
+  }
+  .deal-insurance-visual .speech-bubble p {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  .deal-insurance-client > p,
+  .deal-insurance-elena > p {
+    margin: 0 16px 4px;
+    font-size: 14px;
+  }
+  /* Реплики над своими героями; фото заканчивается перед кнопкой. */
+  .deal-insurance-visual {
+    position: relative;
+    display: block;
+    flex: none;
+    margin-inline: -20px;
+    height: calc(650px * var(--stage-k) + var(--bubbles));
+    overflow: clip;
+  }
+  .deal-insurance-stage {
+    position: absolute;
+    top: var(--bubbles);
+    left: calc(50% - 407px * var(--stage-k));
+    margin: 0;
+  }
+  .deal-insurance-elena {
+    position: absolute;
+    left: auto;
+    right: 20px;
+    top: 30px;
+    align-self: auto;
+  }
+  .deal-insurance-client {
+    position: absolute;
+    left: calc(50% - 55px);
+    right: auto;
+    top: calc(var(--bubbles) + 240px * var(--stage-k));
+    align-self: auto;
+  }
+  .deal-insurance-actions {
+    position: relative;
+    z-index: 2;
+    margin-top: -56px;
+  }
+  .deal-insurance-edge {
+    display: none;
+  }
+}
+@media (max-width: 389px) {
+  .deal-insurance {
+    margin: 0 16px;
+    --stage-k: 0.56;
+  }
+  .deal-insurance-visual {
+    margin-inline: -16px;
+  }
+  .deal-insurance-elena {
+    right: 16px;
+  }
+  .deal-insurance-heading h2 {
+    font-size: 28px;
+  }
 }

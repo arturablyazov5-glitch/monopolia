@@ -1,6 +1,8 @@
 /* «Продажа» 1380:5771: 1440 × 1382.36, заходит на 65 px под фото 1380:5760. */
 .sell-valuation {
   position: relative;
+  /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
+  overflow-x: clip;
   z-index: 2;
   margin-top: -65px;
   padding: 120px 0;
@@ -154,14 +156,6 @@
   font-size: 14px;
   line-height: 1.2;
   color: var(--color-muted);
-}
-.sell-valuation-tape {
-  position: absolute;
-  top: -18.5px;
-  left: calc(50% - 2.14px);
-  transform: translateX(-50%);
-  max-width: none;
-  box-shadow: 0 1.143px 1.143px #00000012;
 }
 
 /* 1380:5814 «05» */
@@ -398,32 +392,6 @@
   top: -6.7%;
   max-width: none;
 }
-.sell-week-consent {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font: 14px/1.2 var(--font-body);
-  color: #1e1e1e;
-  cursor: pointer;
-}
-.sell-week-consent input {
-  appearance: none;
-  flex-shrink: 0;
-  width: 16px;
-  height: 16px;
-  margin: 0;
-  border: 1px solid var(--color-diamond);
-  border-radius: 4px;
-  background: transparent center/12px no-repeat;
-  cursor: pointer;
-}
-.sell-week-consent input:checked {
-  background-color: var(--color-diamond);
-  background-image: url("/assets/40c36.svg");
-}
-.sell-week-consent u {
-  text-underline-position: from-font;
-}
 .sell-week-form-bottom {
   position: relative;
   display: flex;
@@ -480,8 +448,7 @@
     bottom: 0;
     height: 1381.979px;
     max-height: 50%;
-    background: url("/assets/34244.webp") center bottom / 1440px auto
-      no-repeat;
+    background: url("/assets/34244.webp") center bottom / 1440px auto no-repeat;
     z-index: -1;
   }
   .sell-valuation-background {
@@ -540,13 +507,42 @@
   .sell-week-form .channels .chip {
     min-height: 44px;
   }
-  .sell-week-consent input {
-    width: 20px;
-    height: 20px;
-    background-size: 14px;
-  }
 }
 
+/* TASK-009: 1024–1199 — две колонки как на 1440 вместо узкой стопки 704 px
+   (справа и слева оставались пустые поля по 160 px, буклет под текстом). */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .sell-valuation-main {
+    max-width: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+  .sell-valuation-copy {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* Буклет — растровая композиция 560 px: уменьшаем целиком, пропорции и
+     тень сохраняются */
+  .sell-valuation-visual {
+    zoom: 0.82;
+  }
+  /* Колонка текста ~450 px: два столбца пунктов по 200 px слишком узкие —
+     пункты одним столбцом */
+  .sell-valuation-points {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .sell-valuation-divider {
+    display: none;
+  }
+  .sell-week {
+    max-width: none;
+  }
+  .sell-week-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
 @media (max-width: 767px) {
   .sell-valuation {
     margin-top: -48px;
@@ -583,6 +579,25 @@
   }
   .sell-valuation-file {
     zoom: 1.55;
+  }
+  /* Телефон: сначала текст, затем буклет с PDF, и только потом кнопка */
+  .sell-valuation-main {
+    gap: 40px;
+  }
+  .sell-valuation-copy {
+    display: contents;
+  }
+  .sell-valuation-heading {
+    order: 1;
+  }
+  .sell-valuation-points {
+    order: 2;
+  }
+  .sell-valuation-visual {
+    order: 3;
+  }
+  .sell-valuation-copy > .button {
+    order: 4;
   }
 
   .sell-week {
@@ -631,9 +646,6 @@
     width: 100%;
     min-height: 52px;
   }
-  .sell-week-consent {
-    align-items: flex-start;
-  }
 }
 
 @media (max-width: 389px) {
@@ -654,4 +666,16 @@
   .sell-week-play {
     left: calc(50% + 40px);
   }
+}
+
+/* Способы связи: hover у невыбранных вариантов */
+.sell-week-form .channels .chip {
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+.sell-week-form .channels .chip:not(.selected):hover,
+.sell-week-form .channels .chip:not(.selected):focus-visible {
+  background: #e6e6e3;
 }
