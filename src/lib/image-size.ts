@@ -81,6 +81,10 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 32,
     height: 32,
   },
+  "/assets/home-hero-team/04-left-front.webp": { width: 958, height: 1496 },
+  "/assets/home-hero-team/04-left-front-shadow.svg": { width: 394, height: 579 },
+  "/assets/home-hero-team/06-right-inner.webp": { width: 771, height: 1345 },
+  "/assets/home-hero-team/06-right-inner-shadow.svg": { width: 354, height: 566 },
   "/assets/hero-team-center-portrait.webp": {
     width: 549,
     height: 1600,

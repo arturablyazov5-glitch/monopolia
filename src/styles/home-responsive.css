@@ -1148,6 +1148,10 @@
     --hero-paper: 56px;
   }
 
+  .home-desktop section[aria-labelledby] h2:not(:where(dialog *)) {
+    font-size: var(--heading-section);
+  }
+
   /* --- 1. Первый экран: заголовок, суть и обе кнопки сразу видны --- */
   .home-desktop .hero-container {
     padding-top: 8px;

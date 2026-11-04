@@ -34,26 +34,27 @@ const {
 // Команда: Figma I…;1174:9735 (1421 × 1021.151), порядок слоёв как в макете.
 const team = [
   {
-    stroke: "inner-hero-team-shadow-left.svg",
+    stroke: "home-hero-team/04-left-front-shadow.svg",
     box: "9.86% 56.74% 44.98% 24.19%",
     bleed: "-14.82% -18.41% -14.96% -36.22%",
-    photo: "hero-team-left-inner-portrait",
+    photo: "home-hero-team/04-left-front",
     pos: "--team-left:24.63%;--team-width:21.38%;--team-top:99.37px",
-    ratio: "271.495117 / 413.48706",
+    ratio: "958 / 1496",
   },
   {
-    stroke: "inner-hero-team-shadow-right.svg",
+    stroke: "home-hero-team/06-right-inner-shadow.svg",
     box: "10.53% 26.95% 43.09% 55.82%",
     bleed: "-14.34% -19.65% -15.94% -40.11%",
-    photo: "hero-team-right-center-portrait",
+    photo: "home-hero-team/06-right-inner",
     pos: "--team-left:52%;--team-width:21.13%;--team-top:99.37px",
-    ratio: "268.312653 / 491.538727",
+    ratio: "771 / 1345",
   },
   {
     stroke: "inner-hero-team-shadow-center.svg",
     box: "6.39% 41.12% 42.97% 40.2%",
     bleed: "-13.37% -17.74% -13.38% -36.62%",
     photo: "hero-team-center-portrait",
+    mobilePhoto: "hero-team-center-portrait-320w",
     pos: "--team-left:38.79%;--team-width:21.72%;--team-bottom:54.92px",
     ratio: "275.914581 / 803.424316",
   },
@@ -143,13 +144,12 @@ const team = [
             </div>
           </div>
           <picture style="display:contents">
-            {/* ≤ 767 px: портреты показаны ≈ 150 px — облегчённые 320 w для 2×. */}
-            <source
+            {layer.mobilePhoto && <source
               media="(max-width: 767px)"
-              srcset={`/assets/${layer.photo}-320w.webp 320w, /assets/${layer.photo}.webp ${imageSize("/assets/" + layer.photo + ".webp").width}w`}
+              srcset={`/assets/${layer.mobilePhoto}.webp 320w, /assets/${layer.photo}.webp ${imageSize("/assets/" + layer.photo + ".webp").width}w`}
               sizes="160px"
               style="display:none"
-            />
+            />}
             <img
               class="inner-team-portrait person-photo"
               src={"/assets/" + layer.photo + ".webp"}

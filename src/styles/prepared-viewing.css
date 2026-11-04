@@ -443,6 +443,9 @@
   .viewing-comparison-before .viewing-comparison-rating {
     left: 12px;
   }
+  .prepared-viewing-sell .viewing-comparison-before .viewing-comparison-rating {
+    top: 118px;
+  }
   .viewing-comparison-after .viewing-comparison-rating {
     right: 12px;
   }

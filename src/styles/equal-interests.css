@@ -10,8 +10,10 @@
   height: 870px;
   background: linear-gradient(#190d08 0 120px, transparent 120px);
 }
-.equal-interests-photo {
-  display: contents;
+@media (min-width: 768px) {
+  .equal-interests-photo {
+    display: contents;
+  }
 }
 .equal-interests-background {
   position: absolute;

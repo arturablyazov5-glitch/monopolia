@@ -504,26 +504,23 @@
     mask-image: linear-gradient(to bottom, #000 45%, transparent);
     pointer-events: none;
   }
-  /* Дубль блока: тот же красивый дом, зеркально — у левого края экрана,
-     чтобы дома стояли и слева, и справа (на картинке левая башня обрезана
-     краем и выглядит пятном, поэтому она не используется). */
+  /* Слева показываем отдельный дом из фона главной. */
   .inner-hero::before {
     content: "";
     position: absolute;
-    top: 260px;
+    top: 230px;
     left: -28px;
     z-index: -1;
-    width: 152px;
+    width: 170px;
     height: 320px;
-    background: url("/assets/inner-hero-background.webp") 100% 0 / auto 320px no-repeat;
-    transform: scaleX(-1);
+    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px no-repeat;
     -webkit-mask-image:
-      linear-gradient(to bottom, transparent, #000 70px),
-      linear-gradient(to right, transparent, #000 30%);
+      linear-gradient(to bottom, transparent, #000 140px),
+      linear-gradient(to left, transparent, #000 30%);
     -webkit-mask-composite: source-in;
     mask-image:
-      linear-gradient(to bottom, transparent, #000 70px),
-      linear-gradient(to right, transparent, #000 30%);
+      linear-gradient(to bottom, transparent, #000 140px),
+      linear-gradient(to left, transparent, #000 30%);
     mask-composite: intersect;
     pointer-events: none;
   }

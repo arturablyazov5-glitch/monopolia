@@ -34,6 +34,7 @@
 }
 .home-team h2 img {
   position: absolute;
+  z-index: 1;
   left: -3.3px;
   top: 16.43px;
   max-width: none;
@@ -164,15 +165,6 @@
 /* На телефоне сохраняем пропорции той же бумаги и её рваной кромки,
    подгоняя изображение под высоту секции вместо десктопных 1440 px. */
 @media (max-width: 767px) {
-  /* Clone the desktop SVG across each wrapped text fragment. */
-  .home-desktop .home-team h2 .team-heading-strike {
-    display: inline;
-    text-decoration: none;
-    background: url("/assets/team-heading-underline.svg") center 58% / 100%
-      0.38em no-repeat;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-  }
   .home-team {
     background: white;
     mask-image:
