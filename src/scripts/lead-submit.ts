@@ -2,11 +2,12 @@ import { leadSource, leadSection } from "../lib/lead-source";
 // Загружается динамически при первом фокусе/отправке формы. Секретов здесь нет.
 export async function sendLead(form: HTMLFormElement): Promise<void> {
   const endpoint = form.dataset.endpoint;
-  if (!endpoint) throw new Error("Отправка пока не настроена. Позвоните нам.");
+  if (!endpoint) throw new Error("Отправка пока не настроена. Позвоните нам.");
   const data = Object.fromEntries(new FormData(form));
+  const context = JSON.parse(form.dataset.context || "{}");
   const payload = {
     ...data,
-    ...JSON.parse(form.dataset.context || "{}"),
+    ...context,
     form: form.dataset.form || "lead",
     source: leadSource(form),
     section: form.dataset.leadSection || leadSection(form),
@@ -15,7 +16,7 @@ export async function sendLead(form: HTMLFormElement): Promise<void> {
         .querySelector(".channels[data-choice-group] [aria-pressed=true]")
         ?.getAttribute("data-value") || "",
     name: data.name || "",
-    comment: data.question || data.comment || "",
+    comment: data.question || data.comment || context.comment || "",
     consent:
       form.querySelector<HTMLInputElement>("[name=consent]")?.checked === true,
     page: location.origin + location.pathname,
@@ -33,22 +34,22 @@ export async function sendLead(form: HTMLFormElement): Promise<void> {
     });
   } catch {
     throw new Error(
-      "Нет связи с сервером. Попробуйте ещё раз или позвоните нам.",
+      "Нет связи с сервером. Попробуйте ещё раз или позвоните нам.",
     );
   }
   let result: { ok?: boolean; error?: string };
   try {
     result = await response.json();
   } catch {
-    throw new Error("Не удалось отправить заявку. Попробуйте ещё раз.");
+    throw new Error("Не удалось отправить заявку. Попробуйте ещё раз.");
   }
   if (!response.ok || result.ok !== true) {
     throw new Error(
       response.status === 429
-        ? "Слишком много попыток. Повторите через 10 минут."
+        ? "Слишком много попыток. Повторите через 10 минут."
         : response.status === 400
-          ? "Проверьте имя, телефон и согласие. Затем повторите отправку."
-          : "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+          ? "Проверьте имя, телефон и согласие. Затем повторите отправку."
+          : "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
     );
   }
 }

@@ -1,1174 +1,1187 @@
 // Исходные размеры экспортов: только серверная сборка, без клиентского JS.
 const dimensions: Record<string, { width: number; height: number }> = {
-  "/assets/009e6.webp": {
+  "/assets/staff-aleksandra-barkovskaya.webp": { width: 1280, height: 1280 },
+  "/assets/staff-ekaterina-mikhaylenko.webp": { width: 1000, height: 1000 },
+  "/assets/staff-dana-gurova.webp": { width: 1000, height: 1000 },
+  "/assets/client-review-natalya-cover.webp": { width: 793, height: 1000 },
+  "/assets/client-review-darya-cover.webp": { width: 831, height: 1049 },
+  "/assets/client-review-olga-cover.webp": { width: 834, height: 1049 },
+  "/assets/client-review-sergey-cover.webp": { width: 834, height: 1054 },
+  "/assets/icon-play.svg": { width: 51, height: 51 },
+  "/assets/catalog-browser-window-lights.svg": { width: 31, height: 13 },
+  "/assets/catalog-browser-navigation.svg": { width: 54, height: 15 },
+  "/assets/catalog-browser-reload.svg": { width: 5, height: 6 },
+  "/assets/catalog-browser-page-options.svg": { width: 7, height: 7 },
+  "/assets/catalog-browser-toolbar-actions.svg": { width: 55, height: 15 },
+  "/assets/property-selection-catalog.webp": {
     width: 856,
     height: 500,
   },
-  "/assets/00e35.svg": {
+  "/assets/rating-star.svg": {
     width: 12,
     height: 12,
   },
-  "/assets/01364.svg": {
+  "/assets/icon-speech-bubble-white.svg": {
     width: 18,
     height: 13.649,
   },
-  "/assets/019f7.svg": {
+  "/assets/logo-yandex-maps-full-export.svg": {
     width: 91.221,
     height: 24,
   },
-  "/assets/02199.webp": {
+  "/assets/blockbuster-case-background.webp": {
     width: 4096,
     height: 2196,
   },
-  "/assets/027b4.svg": {
+  "/assets/logo-monopoly-wordmark-header.svg": {
     width: 131,
     height: 13,
   },
-  "/assets/03306.webp": {
+  "/assets/staff-elena-gorbaneva-consultation.webp": {
     width: 1280,
     height: 1600,
   },
-  "/assets/06204.svg": {
+  "/assets/trust-team-shadow-right.svg": {
     width: 372.636,
     height: 447.175,
   },
-  "/assets/06546.svg": {
+  "/assets/inner-hero-team-shadow-left.svg": {
     width: 419.01,
     height: 598.479,
   },
-  "/assets/0777d.svg": {
+  "/assets/sell-steps-object-details-connector.svg": {
     width: 2,
     height: 219.538,
   },
-  "/assets/07c40.svg": {
+  "/assets/decor-yellow-price-tag.svg": {
     width: 18,
     height: 5.906,
   },
-  "/assets/0a072.svg": {
+  "/assets/social-max-color.svg": {
     width: 33.6881,
     height: 34.766,
   },
-  "/assets/0a94f.svg": {
+  "/assets/icon-yandex-map-pin.svg": {
     width: 10.08,
     height: 12.6,
   },
-  "/assets/0ab1b.webp": {
+  "/assets/office-consultation-background.webp": {
     width: 2880,
     height: 1598,
   },
-  "/assets/0ba2a.webp": {
+  "/assets/texture-paper-beige-export.webp": {
     width: 1024,
     height: 683,
   },
-  "/assets/0cd6b.svg": {
+  "/assets/buyer-director-shadow.svg": {
     width: 282.415,
     height: 384.063,
   },
-  "/assets/0cfa4.svg": {
+  "/assets/decor-light-panel.svg": {
     width: 32,
     height: 32,
   },
-  "/assets/0df0d.webp": {
+  "/assets/hero-team-center-portrait.webp": {
     width: 549,
     height: 1600,
   },
-  "/assets/0e34c.svg": {
+  "/assets/partner-ingosstrakh-home.svg": {
     width: 257.612,
     height: 82.3724,
   },
-  "/assets/0e361.svg": {
+  "/assets/icon-transaction-note.svg": {
     width: 32,
     height: 32,
   },
-  "/assets/11a9d.webp": {
+  "/assets/review-client-woman-gray.webp": {
     width: 1856,
     height: 2304,
   },
-  "/assets/11dc7.webp": {
+  "/assets/hero-team-right-inner-portrait.webp": {
     width: 969,
     height: 1600,
   },
-  "/assets/1224b.svg": {
+  "/assets/sell-steps-plan-connector.svg": {
     width: 2,
     height: 603.805,
   },
-  "/assets/123af.webp": {
+  "/assets/trust-team-left-center-portrait.webp": {
     width: 2336,
     height: 3504,
   },
-  "/assets/12c8b.svg": {
+  "/assets/logo-monopoly-wordmark-footer.svg": {
     width: 201,
     height: 20,
   },
-  "/assets/1379b.svg": {
+  "/assets/recruiting-note-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/1405e.svg": {
+  "/assets/hero-team-right-inner-shadow.svg": {
     width: 351.909,
     height: 526.222,
   },
-  "/assets/14e49.webp": {
+  "/assets/sell-realtor-comparison-background.webp": {
     width: 2880,
     height: 2524,
   },
-  "/assets/15ca4.svg": {
+  "/assets/partner-glorax.svg": {
     width: 147.629,
     height: 73.4912,
   },
-  "/assets/17477.webp": {
+  "/assets/buy-mortgage-background.webp": {
     width: 2880,
     height: 3823,
   },
-  "/assets/1795d.svg": {
+  "/assets/trust-rating-star.svg": {
     width: 13.1982,
     height: 12.7189,
   },
-  "/assets/188fc.webp": {
+  "/assets/review-svetlana-thumbnail.webp": {
     width: 893,
     height: 1600,
   },
-  "/assets/18f7e.svg": {
+  "/assets/logo-monopoly-wordmark-browser.svg": {
     width: 58.1002,
     height: 5.75175,
   },
-  "/assets/19b6a.svg": {
+  "/assets/decor-transparent-export.svg": {
     width: 32,
     height: 32,
   },
-  "/assets/1a4be.svg": {
+  "/assets/icon-house-arrow-white.svg": {
     width: 12.0132,
     height: 12.9375,
   },
-  "/assets/1b795.svg": {
+  "/assets/icon-external-link.svg": {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/1b84e.svg": {
+  "/assets/partner-domclick-green-export.svg": {
     width: 110.249,
     height: 23.8154,
   },
-  "/assets/1e08f.svg": {
+  "/assets/sell-week-story-quote.svg": {
     width: 26.0607,
     height: 20.4199,
   },
-  "/assets/1eb75.webp": {
+  "/assets/sell-gossip-neighbors-and-team.webp": {
     width: 2160,
     height: 1056,
   },
-  "/assets/2044e.svg": {
+  "/assets/partner-setlgroup-home.svg": {
     width: 179.025,
     height: 82.3724,
   },
-  "/assets/20afe.svg": {
+  "/assets/icon-city-location-pin.svg": {
     width: 10.08,
     height: 12.6,
   },
-  "/assets/2211a.webp": {
+  "/assets/relocation-airplane-photo.webp": {
     width: 134,
     height: 56,
   },
-  "/assets/225db.svg": {
+  "/assets/relocation-plane-arrow.svg": {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/22985.svg": {
+  "/assets/prepared-viewing-decor.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/22eb6.svg": {
+  "/assets/partner-dom-rf-home.svg": {
     width: 102.206,
     height: 82.3724,
   },
-  "/assets/23278.svg": {
+  "/assets/icon-quiz-cursor.svg": {
     width: 20.3387,
     height: 20.643,
   },
-  "/assets/2492b.svg": {
+  "/assets/prepared-viewing-arrows.svg": {
     width: 279.577,
     height: 32.8059,
   },
-  "/assets/2585a.svg": {
+  "/assets/social-whatsapp-color.svg": {
     width: 33.6881,
     height: 34.766,
   },
-  "/assets/26011.svg": {
+  "/assets/sell-quiz-booklet-shadow.svg": {
     width: 444.728,
     height: 326.185,
   },
-  "/assets/26881.svg": {
+  "/assets/icon-button-access.svg": {
     width: 16,
     height: 16,
   },
-  "/assets/268b2.webp": {
+  "/assets/office-future-photo-placeholder.webp": {
     width: 256,
     height: 256,
   },
-  "/assets/27025.svg": {
+  "/assets/deal-mission-quote.svg": {
     width: 42.6102,
     height: 33.2195,
   },
-  "/assets/2769b.webp": {
+  "/assets/sell-week-video-thumbnail.webp": {
     width: 960,
     height: 640,
   },
-  "/assets/287c2.svg": {
+  "/assets/company-recommendations-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/291d1.webp": {
+  "/assets/office-belogorsk-interior.webp": {
     width: 500,
     height: 375,
   },
-  "/assets/29862.webp": {
+  "/assets/staff-darya-shport.webp": {
     width: 2050,
     height: 2088,
   },
-  "/assets/298bd.svg": {
+  "/assets/logo-realtors-guild.svg": {
     width: 399.44,
     height: 352.154,
   },
-  "/assets/29925.svg": {
+  "/assets/icon-comparison-cross-sell.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/2aa91.svg": {
+  "/assets/decor-transparent-export-alternate.svg": {
     width: 32,
     height: 32,
   },
-  "/assets/2b08d.svg": {
+  "/assets/partner-lsr.svg": {
     width: 125.607,
     height: 73.4912,
   },
-  "/assets/2b2aa.webp": {
+  "/assets/background-paper-tall-white.webp": {
     width: 1600,
     height: 2359,
   },
-  "/assets/2b5ba.svg": {
+  "/assets/office-speech-tail.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/2b63b.svg": {
+  "/assets/relocation-map-sell.svg": {
     width: 5386.13,
     height: 3035.38,
   },
-  "/assets/2c9bf.svg": {
+  "/assets/icon-property-location-pin.svg": {
     width: 10,
     height: 14,
   },
-  "/assets/2ce79.svg": {
+  "/assets/director-coffee-note-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/2dc32.svg": {
+  "/assets/social-telegram-color.svg": {
     width: 35.99,
     height: 35.4799,
   },
-  "/assets/2f5bf.webp": {
+  "/assets/prepared-viewing-apartment-before.webp": {
     width: 2880,
     height: 1514,
   },
-  "/assets/3032e.webp": {
+  "/assets/property-viewing-route-map.webp": {
     width: 856,
     height: 515,
   },
-  "/assets/30984.webp": {
+  "/assets/texture-paper-warm-export.webp": {
     width: 1024,
     height: 683,
   },
-  "/assets/330ff.svg": {
+  "/assets/fast-sale-note-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/34244.webp": {
+  "/assets/sell-valuation-background.webp": {
     width: 2160,
     height: 2073,
   },
-  "/assets/34ef4.svg": {
+  "/assets/company-avito-icon.svg": {
     width: 13.3333,
     height: 28,
   },
-  "/assets/354a0.webp": {
+  "/assets/staff-elena-murashkina.webp": {
     width: 2048,
     height: 2048,
   },
-  "/assets/366fe.svg": {
+  "/assets/prepared-viewing-rating-after.svg": {
     width: 121.686,
     height: 35.9662,
   },
-  "/assets/36887.svg": {
+  "/assets/partner-domclick-green-alternate.svg": {
     width: 111.104,
     height: 24,
   },
-  "/assets/3696d.webp": {
+  "/assets/mortgage-documents-stack.webp": {
     width: 856,
     height: 819,
   },
-  "/assets/3740c.webp": {
+  "/assets/deal-mission-specialist.webp": {
     width: 770,
     height: 820,
   },
-  "/assets/38acf.svg": {
+  "/assets/buy-catalog-booklet-shadow.svg": {
     width: 735.144,
     height: 600.437,
   },
-  "/assets/394a8.svg": {
+  "/assets/inner-hero-team-shadow-center.svg": {
     width: 409.648,
     height: 655.402,
   },
-  "/assets/39c26.webp": {
+  "/assets/trust-team-left-portrait.webp": {
     width: 1376,
     height: 2064,
   },
-  "/assets/3af1e.svg": {
+  "/assets/icon-contact-max.svg": {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/3b04c.svg": {
+  "/assets/speech-tail-white-left.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/3b5fb.svg": {
+  "/assets/icon-bank-tbank-notification-mask.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/3b95d.svg": {
+  "/assets/partner-sodruzhestvo.svg": {
     width: 182.536,
     height: 73.4912,
   },
-  "/assets/3c81d.svg": {
+  "/assets/sell-valuation-booklet-shadow.svg": {
     width: 642.729,
     height: 498.849,
   },
-  "/assets/3ca51.webp": {
+  "/assets/property-sale-plan.webp": {
     width: 856,
     height: 605,
   },
-  "/assets/40519.webp": {
+  "/assets/decor-saint-george-ribbon.webp": {
     width: 1024,
     height: 550,
   },
-  "/assets/4099d.webp": {
+  "/assets/transaction-preliminary-contract.webp": {
     width: 856,
     height: 701,
   },
-  "/assets/40c36.svg": {
+  "/assets/icon-choice-check.svg": {
     width: 14,
     height: 14,
   },
-  "/assets/41fe3.svg": {
+  "/assets/partner-dom-rf.svg": {
     width: 87.8154,
     height: 73.4912,
   },
-  "/assets/44e79.svg": {
+  "/assets/honest-reviews-person-shadow.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/4574c.webp": {
+  "/assets/buyer-catalog-booklet.webp": {
     width: 1024,
     height: 763,
   },
-  "/assets/465a7.svg": {
+  "/assets/home-hero-background.svg": {
     width: 306.567,
     height: 151.698,
   },
-  "/assets/46cf2.webp": {
+  "/assets/review-client-woman-table.webp": {
     width: 1536,
     height: 2752,
   },
-  "/assets/47767.webp": {
+  "/assets/transaction-registration-documents.webp": {
     width: 569,
     height: 740,
   },
-  "/assets/47c7d.webp": {
+  "/assets/blockbuster-case-person-shadow.webp": {
     width: 4096,
     height: 2196,
   },
-  "/assets/48440.svg": {
+  "/assets/company-about-decor.svg": {
     width: 12,
     height: 28,
   },
-  "/assets/48dd3.svg": {
+  "/assets/insurance-bottom-paper-edge.svg": {
     width: 1440,
     height: 51.5,
   },
-  "/assets/4b099.webp": {
+  "/assets/catalog-building-photo.webp": {
     width: 845,
     height: 14,
   },
-  "/assets/4b2cb.svg": {
+  "/assets/icon-contact-telegram.svg": {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/4bec0.svg": {
+  "/assets/icon-yandex-map-dot.svg": {
     width: 3.5379,
     height: 3.5379,
   },
-  "/assets/50662.svg": {
+  "/assets/speech-tail-blue-left.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/52b27.svg": {
+  "/assets/transaction-documents-icon.svg": {
     width: 2,
     height: 138,
   },
-  "/assets/52c05.svg": {
+  "/assets/icon-comparison-cross.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/53384.svg": {
+  "/assets/consultation-person-shadow.svg": {
     width: 498.909,
     height: 656.2,
   },
-  "/assets/53a3a.svg": {
+  "/assets/bank-ozon-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/5559b.webp": {
+  "/assets/company-office-interior.webp": {
     width: 2880,
     height: 2880,
   },
-  "/assets/55e7e.webp": {
+  "/assets/tape-beige-export.webp": {
     width: 861,
     height: 260,
   },
-  "/assets/56094.webp": {
+  "/assets/texture-paper-crumpled.webp": {
     width: 740,
     height: 569,
   },
-  "/assets/56909.webp": {
+  "/assets/staff-elena-sidelina-at-desk.webp": {
     width: 1024,
     height: 768,
   },
-  "/assets/583a1.svg": {
+  "/assets/transaction-step-note-icon.svg": {
     width: 2,
     height: 114,
   },
-  "/assets/5ab39.webp": {
+  "/assets/buy-quiz-booklet-shadow.webp": {
     width: 1081,
     height: 812,
   },
-  "/assets/5ac82.svg": {
+  "/assets/office-building-photo.svg": {
     width: 5386.13,
     height: 3035.38,
   },
-  "/assets/5cf65.webp": {
+  "/assets/funnel-selection-icon.webp": {
     width: 172,
     height: 69,
   },
-  "/assets/5d521.svg": {
+  "/assets/trust-team-shadow-left.svg": {
     width: 387.153,
     height: 471.92,
   },
-  "/assets/5e5f6.svg": {
+  "/assets/social-max-dark.svg": {
     width: 42.1101,
     height: 43.4575,
   },
-  "/assets/60182.webp": {
+  "/assets/building-apartment-tower.webp": {
     width: 1280,
     height: 720,
   },
-  "/assets/62fba.svg": {
+  "/assets/transaction-step-connector.svg": {
     width: 2,
     height: 528.318,
   },
-  "/assets/63228.svg": {
+  "/assets/icon-menu-burger.svg": {
     width: 35.3762,
     height: 37.532,
   },
-  "/assets/634e2.svg": {
+  "/assets/transaction-step-final-connector.svg": {
     width: 2,
     height: 204,
   },
-  "/assets/66fdd.svg": {
+  "/assets/office-photo-decor.svg": {
     width: 29,
     height: 40,
   },
-  "/assets/674ff.webp": {
+  "/assets/honest-reviews-fake-review-card.webp": {
     width: 987,
     height: 916,
   },
-  "/assets/6a605.svg": {
+  "/assets/director-quote-mark.svg": {
     width: 40.6347,
     height: 31.2264,
   },
-  "/assets/6aca5.svg": {
+  "/assets/company-about-note-icon.svg": {
     width: 18.6667,
     height: 18.6667,
   },
-  "/assets/6b30f.svg": {
+  "/assets/decor-green-panel.svg": {
     width: 18,
     height: 18,
   },
-  "/assets/6c2b5.webp": {
+  "/assets/property-advertising-channels.webp": {
     width: 856,
     height: 547,
   },
-  "/assets/6c2c3.svg": {
+  "/assets/icon-comparison-check-sell.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/6d101.webp": {
+  "/assets/tape-white-export.webp": {
     width: 861,
     height: 260,
   },
-  "/assets/6d24a.webp": {
+  "/assets/trust-team-right-center-portrait.webp": {
     width: 1376,
     height: 2064,
   },
-  "/assets/6e397.svg": {
+  "/assets/blockbuster-warning-icon.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/6f018.svg": {
+  "/assets/prepared-viewing-note-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/70823.webp": {
+  "/assets/deal-mission-emoji.webp": {
     width: 160,
     height: 160,
   },
-  "/assets/70a70.svg": {
+  "/assets/risk-meter-inactive.svg": {
     width: 92,
     height: 8,
   },
-  "/assets/716a6.svg": {
+  "/assets/cases-quote-mark.svg": {
     width: 26.0607,
     height: 20.4199,
   },
-  "/assets/7186d.svg": {
+  "/assets/sell-steps-document-check-connector.svg": {
     width: 2,
     height: 643.347,
   },
-  "/assets/71f71.webp": {
+  "/assets/equal-interests-team-background.webp": {
     width: 1920,
     height: 1253,
   },
-  "/assets/720c8.svg": {
+  "/assets/relocation-route-central-sell.svg": {
     width: 686,
     height: 184.074,
   },
-  "/assets/72e89.svg": {
+  "/assets/office-history-arrow.svg": {
     width: 27.7755,
     height: 23.3,
   },
-  "/assets/73c01.svg": {
+  "/assets/honest-reviews-background.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/73ec6.svg": {
+  "/assets/telegram-person-shadow.svg": {
     width: 514.447,
     height: 665.128,
   },
-  "/assets/751ee.svg": {
+  "/assets/relocation-plane-arrow-alternate.svg": {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/76e7e.svg": {
+  "/assets/relocation-route-east.svg": {
     width: 401,
     height: 192.321,
   },
-  "/assets/78206.svg": {
+  "/assets/marketplace-wildberries-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/7b038.svg": {
+  "/assets/gossip-paper-edge.svg": {
     width: 1440,
     height: 51.5,
   },
-  "/assets/7b515.webp": {
-    width: 4093,
-    height: 2632,
+  "/assets/honest-reviews-boxing-specialist.webp": {
+    width: 3128,
+    height: 2012,
   },
-  "/assets/7c4b3.svg": {
+  "/assets/background-paper-edge-white.svg": {
     width: 1440,
     height: 80,
   },
-  "/assets/7d885.webp": {
+  "/assets/property-viewing-house.webp": {
     width: 856,
     height: 534,
   },
-  "/assets/7df21.svg": {
+  "/assets/recruiting-speech-tail.svg": {
     width: 1480,
     height: 288,
   },
-  "/assets/7e2d1.webp": {
+  "/assets/staff-pavel-barkovsky-fast-sale.webp": {
     width: 1024,
     height: 683,
   },
-  "/assets/7edf9.webp": {
+  "/assets/background-paper-edge-light.webp": {
     width: 1169,
     height: 28,
   },
-  "/assets/7fcba.webp": {
+  "/assets/blockbuster-decoration.webp": {
     width: 1024,
     height: 683,
   },
-  "/assets/806f9.svg": {
+  "/assets/service-card-notch.svg": {
     width: 10,
     height: 5,
   },
-  "/assets/80e4a.svg": {
+  "/assets/catalog-browser-decor.svg": {
     width: 14.1924,
     height: 14.1924,
   },
-  "/assets/80e7e.webp": {
+  "/assets/property-selection-funnel.webp": {
     width: 596,
     height: 891,
   },
-  "/assets/80f3d.svg": {
+  "/assets/partner-rosgosstrakh-home.svg": {
     width: 247.615,
     height: 82.3724,
   },
-  "/assets/81e63.svg": {
+  "/assets/recruiting-paper-edge.svg": {
     width: 1480,
     height: 288,
   },
-  "/assets/82a96.svg": {
+  "/assets/staff-evgeniya-matukhnova-shadow.svg": {
     width: 380.796,
     height: 409.934,
   },
-  "/assets/839cd.svg": {
+  "/assets/deal-steps-paper-edge.svg": {
     width: 1447,
     height: 95.713,
   },
-  "/assets/84d6e.svg": {
+  "/assets/social-telegram-dark.svg": {
     width: 44.9875,
     height: 44.3498,
   },
-  "/assets/85e49.svg": {
+  "/assets/bank-sovcombank-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/86311.svg": {
+  "/assets/partner-brusnika.svg": {
     width: 189.33,
     height: 73.4912,
   },
-  "/assets/86862.svg": {
+  "/assets/buyer-quote-mark.svg": {
     width: 42.6102,
     height: 33.2195,
   },
-  "/assets/86b81.svg": {
+  "/assets/fast-sale-person-shadow.svg": {
     width: 447.463,
     height: 580.875,
   },
-  "/assets/86fe5.svg": {
+  "/assets/bank-tbank-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/88d3d.svg": {
+  "/assets/risk-meter-one.svg": {
     width: 66,
     height: 10,
   },
-  "/assets/89254.webp": {
+  "/assets/trust-team-paper-edge.webp": {
     width: 3014,
     height: 468,
   },
-  "/assets/89c61.webp": {
+  "/assets/mortgage-document-photo.webp": {
     width: 1024,
     height: 967,
   },
-  "/assets/8ac19.svg": {
+  "/assets/faq-toggle-background.svg": {
     width: 38.5917,
     height: 37.8297,
   },
-  "/assets/8ad04.svg": {
+  "/assets/risk-meter-four.svg": {
     width: 66,
     height: 10,
   },
-  "/assets/8b38e.svg": {
+  "/assets/footer-background.svg": {
     width: 1440,
     height: 99.2076,
   },
-  "/assets/8db92.webp": {
-    width: 920,
-    height: 1860,
+  "/assets/staff-ekaterina-korneeva-telegram.webp": {
+    width: 1630,
+    height: 3490,
   },
-  "/assets/8dd56.svg": {
+  "/assets/sell-steps-viewing-connector.svg": {
     width: 2,
     height: 335,
   },
-  "/assets/8e4fa.svg": {
+  "/assets/decor-cross-mark.svg": {
     width: 26.0607,
     height: 20.4199,
   },
-  "/assets/905c2.webp": {
+  "/assets/prepared-viewing-apartment-after.webp": {
     width: 2880,
     height: 1310,
   },
-  "/assets/93741.svg": {
+  "/assets/sell-steps-advertising-connector.svg": {
     width: 2,
     height: 614.53,
   },
-  "/assets/94f0e.svg": {
+  "/assets/sell-week-play-arrow.svg": {
     width: 65.6246,
     height: 23.5714,
   },
-  "/assets/95626.webp": {
+  "/assets/background-brick-wall.webp": {
     width: 1600,
     height: 1600,
   },
-  "/assets/96185.webp": {
+  "/assets/certificates-background.webp": {
     width: 2880,
     height: 1241,
   },
-  "/assets/96b53.svg": {
+  "/assets/decor-red-dot.svg": {
     width: 16,
     height: 16,
   },
-  "/assets/977ff.svg": {
+  "/assets/relocation-route-central.svg": {
     width: 686,
     height: 186.419,
   },
-  "/assets/98485.svg": {
+  "/assets/icon-chevron-down.svg": {
     width: 6,
     height: 3.5,
   },
-  "/assets/99170.svg": {
+  "/assets/decor-lime-price-tag.svg": {
     width: 18,
     height: 4.782,
   },
-  "/assets/9a115.svg": {
+  "/assets/relocation-route-west-sell.svg": {
     width: 374.464,
     height: 353.86,
   },
-  "/assets/9a821.svg": {
+  "/assets/icon-contact-phone.svg": {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/9b2bf.svg": {
+  "/assets/catalog-browser-max-icon.svg": {
     width: 14.9411,
     height: 15.4192,
   },
-  "/assets/9d2b8.svg": {
+  "/assets/trust-team-shadow-left-center.svg": {
     width: 372.558,
     height: 535.36,
   },
-  "/assets/9d56c.svg": {
+  "/assets/relocation-plane-arrow-small.svg": {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/a0837.svg": {
+  "/assets/partner-lsr-home.svg": {
     width: 154.533,
     height: 82.3724,
   },
-  "/assets/a2665.svg": {
+  "/assets/logo-monopoly-mark-header.svg": {
     width: 32,
     height: 32,
   },
-  "/assets/a4273.svg": {
+  "/assets/partner-brusnika-home.svg": {
     width: 242.765,
     height: 82.3724,
   },
-  "/assets/a52e8.svg": {
+  "/assets/relocation-route-east-sell.svg": {
     width: 401.938,
     height: 191.843,
   },
-  "/assets/a646d.svg": {
+  "/assets/trust-team-shadow-director.svg": {
     width: 352.682,
     height: 574.035,
   },
-  "/assets/a89bf.svg": {
+  "/assets/bank-alfa-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/a8dca.webp": {
+  "/assets/catalog-browser-ui-icon.webp": {
     width: 400,
     height: 277,
   },
-  "/assets/a9367.svg": {
+  "/assets/decor-green-panel-alternate.svg": {
     width: 18,
     height: 18,
   },
-  "/assets/a94b2.svg": {
+  "/assets/hero-team-right-shadow.svg": {
     width: 334.354,
     height: 492.006,
   },
-  "/assets/a9a13.webp": {
+  "/assets/buy-realtor-comparison-background.webp": {
     width: 2880,
     height: 3474,
   },
-  "/assets/aad8d.svg": {
+  "/assets/blockbuster-paper-edge.svg": {
     width: 1493.19,
     height: 129.56,
   },
-  "/assets/ab4c3.svg": {
+  "/assets/logo-2gis-full-export.svg": {
     width: 84.9558,
     height: 24,
   },
-  "/assets/acaf1.webp": {
+  "/assets/building-apartment-complex.webp": {
     width: 1280,
     height: 720,
   },
-  "/assets/ae81a.webp": {
+  "/assets/transaction-key-handover.webp": {
     width: 856,
     height: 546,
   },
-  "/assets/aee4e.svg": {
+  "/assets/marketplace-domclick-icon.svg": {
     width: 36.7731,
     height: 36.3498,
   },
-  "/assets/af4c7.svg": {
+  "/assets/catalog-browser-telegram-icon.svg": {
     width: 15.962,
     height: 15.7358,
   },
-  "/assets/af69b.svg": {
+  "/assets/relocation-map-buy.svg": {
     width: 5386.13,
     height: 3035.38,
   },
-  "/assets/b03c1.svg": {
+  "/assets/staff-card-default-shadow.svg": {
     width: 961.183,
     height: 1102.93,
   },
-  "/assets/b0450.webp": {
+  "/assets/trust-team-right-portrait.webp": {
     width: 1376,
     height: 2064,
   },
-  "/assets/b2c0c.webp": {
+  "/assets/relocation-landscape.webp": {
     width: 1024,
     height: 591,
   },
-  "/assets/b6e69.svg": {
+  "/assets/icon-button-sell.svg": {
     width: 16,
     height: 16,
   },
-  "/assets/b7534.svg": {
+  "/assets/relocation-plane-arrow-west.svg": {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/b7bcb.svg": {
+  "/assets/trust-team-shadow-right-center.svg": {
     width: 324.57,
     height: 528.202,
   },
-  "/assets/b9a33.svg": {
+  "/assets/hero-team-right-center-shadow.svg": {
     width: 360.524,
     height: 560.882,
   },
-  "/assets/ba5a3.svg": {
+  "/assets/sell-steps-house-viewing-connector.svg": {
     width: 2,
     height: 397.069,
   },
-  "/assets/bb79f.svg": {
+  "/assets/logo-monopoly-mark-footer.svg": {
     width: 44,
     height: 44,
   },
-  "/assets/bcd2a.svg": {
+  "/assets/icon-play-triangle-white.svg": {
     width: 13.5201,
     height: 11.9038,
   },
-  "/assets/bcd2d.svg": {
+  "/assets/partner-glorax-home.svg": {
     width: 185.025,
     height: 82.3724,
   },
-  "/assets/bcfde.svg": {
+  "/assets/buy-steps-checks-connector.svg": {
     width: 2,
     height: 326.224,
   },
-  "/assets/bd260.webp": {
+  "/assets/hero-team-right-center-portrait.webp": {
     width: 873,
     height: 1600,
   },
-  "/assets/bd2e0.svg": {
+  "/assets/partner-pik-home.svg": {
     width: 137.623,
     height: 82.3724,
   },
-  "/assets/bf328.webp": {
+  "/assets/hero-team-left-inner-portrait.webp": {
     width: 1051,
     height: 1600,
   },
-  "/assets/c0905.webp": {
+  "/assets/transaction-buyer-documents.webp": {
     width: 856,
     height: 825,
   },
-  "/assets/c0bda.webp": {
+  "/assets/insurance-elena-and-client.webp": {
     width: 1008,
     height: 672,
   },
-  "/assets/c1cb8.svg": {
+  "/assets/team-heading-underline.svg": {
     width: 656.663,
     height: 16.6859,
   },
-  "/assets/c1e5e.svg": {
+  "/assets/partner-ingosstrakh.svg": {
     width: 200.053,
     height: 73.4912,
   },
-  "/assets/c2095.svg": {
+  "/assets/partner-etalon.svg": {
     width: 110.043,
     height: 18.8212,
   },
-  "/assets/c4ef0.svg": {
+  "/assets/staff-darya-shport-shadow.svg": {
     width: 369.514,
     height: 410.947,
   },
-  "/assets/c5c04.svg": {
+  "/assets/marketplace-avito-icon.svg": {
     width: 36.7731,
     height: 36.3498,
   },
-  "/assets/c67f9.svg": {
+  "/assets/social-instagram-dark.svg": {
     width: 42.1101,
     height: 43.4575,
   },
-  "/assets/c7b9e.svg": {
+  "/assets/relocation-plane-arrow-east.svg": {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/c8148.svg": {
+  "/assets/speech-tail-blue-right.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/c88df.svg": {
+  "/assets/catalog-assurance-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/cc146.webp": {
+  "/assets/relocation-birds.webp": {
     width: 229,
     height: 110,
   },
-  "/assets/cdeef.svg": {
+  "/assets/partner-sodruzhestvo-home.svg": {
     width: 289.429,
     height: 82.3724,
   },
-  "/assets/cdfed.svg": {
+  "/assets/prepared-viewing-rating-before.svg": {
     width: 123.739,
     height: 35.7208,
   },
-  "/assets/ced87.svg": {
+  "/assets/partner-etalon-home.svg": {
     width: 152.367,
     height: 26.0603,
   },
-  "/assets/cfc23.svg": {
+  "/assets/buy-catalog-quiz-shadow.svg": {
     width: 447.229,
     height: 319.687,
   },
-  "/assets/d302c.webp": {
+  "/assets/hero-team-left-portrait.webp": {
     width: 1089,
     height: 1600,
   },
-  "/assets/d3f27.svg": {
+  "/assets/hero-team-left-inner-shadow.svg": {
     width: 386.229,
     height: 541.326,
   },
-  "/assets/d3f82.svg": {
+  "/assets/relocation-route-west.svg": {
     width: 558.85,
     height: 159.319,
   },
-  "/assets/d3fc6.svg": {
+  "/assets/icon-check-green-square.svg": {
     width: 14,
     height: 14,
   },
-  "/assets/d40d9.svg": {
+  "/assets/rating-five-stars.svg": {
     width: 101.647,
     height: 15.2536,
   },
-  "/assets/d4241.webp": {
+  "/assets/recruiting-background.webp": {
     width: 2880,
     height: 1486,
   },
-  "/assets/d55bf.svg": {
+  "/assets/catalog-browser-search-icon.svg": {
     width: 4.78649,
     height: 4.53716,
   },
-  "/assets/d616c.svg": {
+  "/assets/icon-comparison-check.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/d6751.svg": {
+  "/assets/buy-steps-selection-connector.svg": {
     width: 2,
     height: 876.43,
   },
-  "/assets/d7ab5.webp": {
+  "/assets/hero-team-left-center-portrait.webp": {
     width: 996,
     height: 1600,
   },
-  "/assets/d8515.svg": {
+  "/assets/office-future-arrow.svg": {
     width: 27.7755,
     height: 23.3,
   },
-  "/assets/d90d7.svg": {
+  "/assets/icon-back-to-top.svg": {
     width: 46.1101,
     height: 47.4575,
   },
-  "/assets/da35e.webp": {
+  "/assets/property-card-default-photo.webp": {
     width: 740,
     height: 569,
   },
-  "/assets/db97a.svg": {
+  "/assets/social-whatsapp-dark.svg": {
     width: 42.1101,
     height: 43.4575,
   },
-  "/assets/dbe36.svg": {
+  "/assets/marketplace-avito-badge.svg": {
     width: 36.7731,
     height: 36.3498,
   },
-  "/assets/de9a1.svg": {
+  "/assets/catalog-browser-nav-dot.svg": {
     width: 2.21756,
     height: 2.21756,
   },
-  "/assets/decb5.svg": {
+  "/assets/icon-copy-email.svg": {
     width: 20,
     height: 20,
   },
-  "/assets/defcc.webp": {
+  "/assets/staff-evgeniya-matukhnova.webp": {
     width: 2048,
     height: 2048,
   },
-  "/assets/df35e.svg": {
+  "/assets/deal-steps-vertical-dash.svg": {
     width: 2,
     height: 26,
   },
-  "/assets/df945.svg": {
+  "/assets/bank-sber-logo.svg": {
     width: 40,
     height: 40,
   },
-  "/assets/e159e.webp": {
+  "/assets/background-paper-buyer-section.webp": {
     width: 1600,
     height: 1472,
   },
-  "/assets/e2c5c.svg": {
+  "/assets/partner-pik.svg": {
     width: 113.394,
     height: 73.4912,
   },
-  "/assets/e3bb7.svg": {
+  "/assets/catalog-old-price-strikethrough.svg": {
     width: 69.6587,
     height: 42.9098,
   },
-  "/assets/e453b.webp": {
+  "/assets/telegram-news-person.webp": {
     width: 1024,
     height: 682,
   },
-  "/assets/e5828.svg": {
+  "/assets/risk-meter-five.svg": {
     width: 66,
     height: 10,
   },
-  "/assets/e84d0.svg": {
+  "/assets/staff-elena-sidelina-shadow.svg": {
     width: 615.109,
     height: 675.277,
   },
-  "/assets/e8673.svg": {
+  "/assets/hero-team-left-center-shadow.svg": {
     width: 373.038,
     height: 504.376,
   },
-  "/assets/e8deb.svg": {
+  "/assets/hero-team-center-shadow.svg": {
     width: 375.997,
     height: 592.688,
   },
-  "/assets/e8fa1.svg": {
+  "/assets/staff-elena-murashkina-shadow.svg": {
     width: 368.417,
     height: 410.992,
   },
-  "/assets/ea707.svg": {
+  "/assets/relocation-route-west-sell-alternate.svg": {
     width: 556,
     height: 160.994,
   },
-  "/assets/ea997.svg": {
+  "/assets/speech-tail-white-right.svg": {
     width: 42.1834,
     height: 24.8581,
   },
-  "/assets/ec402.svg": {
+  "/assets/partner-rosgosstrakh.svg": {
     width: 192.833,
     height: 73.4912,
   },
-  "/assets/ecef0.webp": {
+  "/assets/recruiting-specialist-at-atm.webp": {
     width: 1024,
     height: 602,
   },
-  "/assets/ee32e.svg": {
+  "/assets/deal-mission-person-shadow.svg": {
     width: 137.143,
     height: 143.333,
   },
-  "/assets/ef020.svg": {
+  "/assets/sell-valuation-note-icon.svg": {
     width: 36,
     height: 36,
   },
-  "/assets/f1336.svg": {
+  "/assets/icon-button-buy.svg": {
     width: 16,
     height: 16,
   },
-  "/assets/f15a0.svg": {
+  "/assets/hero-team-left-shadow.svg": {
     width: 377.473,
     height: 483.149,
   },
-  "/assets/f2a86.svg": {
+  "/assets/marketplace-domclick-badge.svg": {
     width: 36.7731,
     height: 36.3498,
   },
-  "/assets/f2c0e.webp": {
+  "/assets/background-paper-team-section.webp": {
     width: 2880,
     height: 4375,
   },
-  "/assets/f332d.svg": {
+  "/assets/relocation-route-north.svg": {
     width: 376.629,
     height: 352.273,
   },
-  "/assets/f4e22.webp": {
+  "/assets/transaction-money-and-keys.webp": {
     width: 856,
     height: 724,
   },
-  "/assets/f53d4.svg": {
+  "/assets/inner-hero-team-shadow-right.svg": {
     width: 391.196,
     height: 616.992,
   },
-  "/assets/f5a01.svg": {
+  "/assets/icon-play-button.svg": {
     width: 46.9002,
     height: 47.09,
   },
-  "/assets/f5a77.svg": {
+  "/assets/icon-clock-dark.svg": {
     width: 12,
     height: 12,
   },
-  "/assets/f6357.svg": {
+  "/assets/icon-cases-cursor.svg": {
     width: 17.6346,
     height: 19.3498,
   },
-  "/assets/f72d2.webp": {
+  "/assets/hero-team-right-portrait.webp": {
     width: 1067,
     height: 1600,
   },
-  "/assets/f761b.svg": {
+  "/assets/buy-steps-route-connector.svg": {
     width: 2,
     height: 387.395,
   },
-  "/assets/f8bfb.svg": {
+  "/assets/relocation-belogorsk-pin.svg": {
     width: 29,
     height: 40,
   },
-  "/assets/fa68f.svg": {
+  "/assets/insurance-people-shadow.svg": {
     width: 867.935,
     height: 726.779,
   },
-  "/assets/fadd0.svg": {
+  "/assets/buy-steps-mortgage-connector.svg": {
     width: 2,
     height: 563.381,
   },
-  "/assets/fc217.svg": {
+  "/assets/speech-bubble-blue.svg": {
     width: 8.437,
     height: 10.665,
   },
-  "/assets/fcc07.svg": {
+  "/assets/catalog-browser-menu-icon.svg": {
     width: 15.6898,
     height: 16.6459,
   },
-  "/assets/fce18.webp": {
+  "/assets/staff-elena-sidelina.webp": {
     width: 2336,
     height: 3504,
   },
-  "/assets/fdd6c.svg": {
+  "/assets/partner-setlgroup.svg": {
     width: 143.296,
     height: 73.4912,
   },
-  "/assets/fe1f8.svg": {
+  "/assets/icon-contact-whatsapp.svg": {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/fe75e.svg": {
+  "/assets/risk-meter-three.svg": {
     width: 66,
     height: 10,
   },
-  "/assets/febb1.svg": {
+  "/assets/icon-nav-red-dot.svg": {
     width: 5,
     height: 5,
   },
-  "/assets/ff581.svg": {
+  "/assets/buy-steps-budget-connector.svg": {
     width: 2,
     height: 546.879,
   },
@@ -1180,10 +1193,11 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 1440,
     height: 840,
   },
-  "/assets/sell-751ee.svg": {
+  "/assets/relocation-plane-arrow-sell.svg": {
     width: 32.6049,
     height: 26.2172,
   },
+  "/assets/staff-elena-sidelina-mobile.webp": { width: 1450, height: 2175 },
 };
 
 export function imageSize(src: string, width?: number) {

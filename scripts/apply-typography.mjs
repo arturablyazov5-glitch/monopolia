@@ -15,7 +15,7 @@ const exceptions = JSON.parse(
   ),
 );
 const visible = new Set(
-  "title description label placeholder alt aria-label text question answer list lists caption note annotation badge address city cities cta ctaLabel buttonLabel formText missionAccent missionText missionTitle role name bank unit time situation checks facts stats steps columns benefitColumns actions options programs mortgage reviews homeLogos pricePerMeter ours others intro heading subtitle lead consent components".split(
+  "title description label defaultValue placeholder alt aria-label text question answer list lists caption note annotation badge address city cities cta ctaLabel buttonLabel formText missionAccent missionText missionTitle role name bank unit time situation checks facts stats steps columns benefitColumns actions options programs mortgage reviews homeLogos pricePerMeter ours others intro heading subtitle lead consent components person object result land sellQuizSuccess phone channel required textContent innerHTML message budgets commonBudget payments".split(
     " ",
   ),
 );
@@ -47,7 +47,7 @@ function files(dir) {
     .flatMap((e) =>
       e.isDirectory()
         ? files(path.join(dir, e.name))
-        : /\.(astro|ts)$/.test(e.name)
+        : /\.(astro|ts|mjs|json)$/.test(e.name)
           ? [path.join(dir, e.name)]
           : [],
     );
@@ -70,14 +70,10 @@ function correctionTypes(edit) {
 function processFile(file) {
   const rel = path.relative(root, file);
   const st = fs.statSync(file);
-  if (write && Date.now() - st.mtimeMs < 120000) {
-    skipped.push(rel);
-    return;
-  }
   // Синхронное read → parse → modify → write, без await и внешних команд.
   const raw = fs.readFileSync(file, "utf8");
   const astro = file.endsWith(".astro");
-  const prefix = astro ? "" : "---\n";
+  const prefix = astro ? "" : file.endsWith('.json') ? "---\nconst content = " : "---\n";
   const ast = parse(astro ? raw : prefix + raw + "\n---\n").ast;
   const offset = prefix.length;
   const edits = [];
@@ -107,12 +103,13 @@ function processFile(file) {
     let lead = "",
       tail = "",
       body = value;
-    if (kind === "text") {
+    // Пробелы на границах фрагментов соединяют соседние inline-узлы.
+    // Их нельзя обрезать: siteText(...) часто заканчивается перед <strong>.
+    {
       lead = body.match(/^\s*/)[0];
       tail = body.match(/\s*$/)[0];
-      body = body
-        .slice(lead.length, body.length - tail.length || undefined)
-        .replace(/[ \t]*\n[ \t]*/g, " ");
+      body = body.slice(lead.length, body.length - tail.length || undefined);
+      if (kind === "text") body = body.replace(/[ \t]*\n[ \t]*/g, " ");
     }
     body = decode(body);
     const out = rules.typografizeProtected(body, {}, protects);
@@ -158,13 +155,31 @@ function processFile(file) {
     if (n.type === "Property") {
       const name = n.key.name ?? n.key.value ?? key;
       if (forbidden.test(String(name))) return;
-      walk(n.value, String(name), mode);
+      // Таблицы бюджета/оплаты индексируются типом недвижимости;
+      // ключи остаются идентификаторами, значения — видимыми вариантами.
+      walk(n.value, ["budgets", "payments"].includes(key) ? key : String(name), mode);
       return;
     }
     if (n.type === "AssignmentPattern") {
       const name = n.left.name || key;
       if (forbidden.test(name)) return;
       walk(n.right, name, mode);
+      return;
+    }
+    if (n.type === "AssignmentExpression") {
+      const name = n.left?.property?.name || n.left?.name || key;
+      walk(n.right, name, mode);
+      return;
+    }
+    if (n.type === "ForOfStatement") {
+      const name = n.left?.declarations?.[0]?.id?.name || "";
+      walk(n.right, name, mode);
+      walk(n.body, key, mode);
+      return;
+    }
+    if (n.type === "CallExpression" && n.callee?.property?.name === "setAttribute") {
+      const name = n.arguments[0]?.value;
+      if (visible.has(name)) walk(n.arguments[1], name, mode);
       return;
     }
     if (n.type === "JSXElement") {
@@ -230,13 +245,14 @@ function processFile(file) {
   }
 }
 for (const file of files(path.join(root, "src")).filter(
-  (f) => !f.includes("/styles/") && !f.includes("/scripts/"),
+  (f) => !f.includes("/styles/") && !f.includes("/scripts/admin/"),
 ))
   processFile(file);
 console.log(
   `Типографика ${write ? "запись" : "проверка"}: ${new Set(changes.map((c) => c.file)).size} файлов, ${changes.length} фрагментов. Отложено: ${skipped.length}`,
 );
 if (skipped.length) console.log("Недавние файлы: " + skipped.join(", "));
+fs.mkdirSync("/private/tmp/claude-501", { recursive: true });
 fs.writeFileSync(
   "/private/tmp/claude-501/typo-" + (write ? "write" : "dry") + ".json",
   JSON.stringify({ changes, skipped }, null, 2),

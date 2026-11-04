@@ -11,20 +11,62 @@ const { title } = Astro.props;
 <SiteLayout title={`${title} — Монополия`} header noindex>
   <main class="legal-page">
     <h1>{title}</h1>
-    <section>
-      <h2>Оператор</h2>
-      <p>
-        ИП Сиделина Елена Юрьевна, ИНН 280403620684, ОГРНИП 316280100058921.
-      </p>
-      <p>Адрес: 676805, Амурская область, г. Белогорск, ул. Ленина, д. 48.</p>
-      <p>
-        Телефон: <a href="tel:+79245804555">+7 (924) 580-45-55</a>, эл. почта:{" "}
-        <a href="mailto:anmonopoliya@mail.ru">anmonopoliya@mail.ru</a>.
-      </p>
-    </section>
     <slot />
     <div class="legal-page-back">
-      <Button label="На главную" href="/" />
+      <Button label="На главную" href="/" />
     </div>
   </main>
 </SiteLayout>
+
+<script>
+  const page = document.querySelector<HTMLElement>(".legal-page");
+  if (page) {
+    // Внешние ссылки — в новой вкладке.
+    page.querySelectorAll<HTMLAnchorElement>('a[href^="http"]').forEach((a) => {
+      if (new URL(a.href).origin !== location.origin) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+    });
+
+    // Почта по клику копируется, снизу показывается тост.
+    const toast = document.createElement("div");
+    toast.className = "legal-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.append(toast);
+    let timer = 0;
+    const show = (text: string) => {
+      toast.textContent = text;
+      toast.classList.add("is-visible");
+      clearTimeout(timer);
+      timer = window.setTimeout(
+        () => toast.classList.remove("is-visible"),
+        2200,
+      );
+    };
+    const copy = async (text: string) => {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        const field = document.createElement("textarea");
+        field.value = text;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.append(field);
+        field.select();
+        document.execCommand("copy");
+        field.remove();
+      }
+    };
+    page
+      .querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"]')
+      .forEach((a) => {
+        a.addEventListener("click", async (event) => {
+          event.preventDefault();
+          await copy(a.href.replace(/^mailto:/, "").split("?")[0]);
+          show("Почта скопирована");
+        });
+      });
+  }
+</script>

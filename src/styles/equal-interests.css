@@ -1,5 +1,7 @@
 .equal-interests {
   position: relative;
+  /* Перекрываем дробный стык с предыдущим тёмным блоком сертификатов. */
+  margin-top: -1px;
   /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
   overflow-x: clip;
   isolation: isolate;
@@ -8,9 +10,12 @@
   height: 870px;
   background: linear-gradient(#190d08 0 120px, transparent 120px);
 }
+.equal-interests-photo {
+  display: contents;
+}
 .equal-interests-background {
   position: absolute;
-  top: 0.464px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: max(100%, 1440px);
@@ -23,7 +28,7 @@
   position: relative;
   width: var(--container-width);
   margin: 0 auto;
-  padding-top: 120px;
+  padding-top: var(--section-space);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,18 +49,51 @@
 }
 .equal-interests-actions > span {
   color: var(--color-paper);
-  font:
-    600 16px/1 "Inter Tight",
-    sans-serif;
-  letter-spacing: -0.32px;
 }
-.equal-interests-actions .button:first-child {
+.equal-interests-actions .button[href="/buy/"] {
   width: 196px;
 }
-.equal-interests-actions .button:last-child {
+.equal-interests-actions .button[href="/sell/"] {
   width: 210px;
 }
-
+/* В фото-блоке обе CTA при hover становятся белыми. Базовая заливка,
+   маска и фокус остаются общими для .button. */
+.equal-interests-actions .button:not(:disabled) {
+  --button-hover-color: #fff;
+  transition:
+    transform 0.4s ease,
+    color 0.4s ease;
+}
+.equal-interests-actions .button > img {
+  transition: filter 0.4s ease;
+}
+/* NOV02-10: плавно выводим нижний край фото в фон HonestReviews на планшетах. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-desktop .equal-interests {
+    background:
+      linear-gradient(#190d08 0 120px, transparent 120px),
+      linear-gradient(
+        to bottom,
+        var(--color-canvas) 0%,
+        var(--color-canvas) calc(100% - 180px),
+        #151515 100%
+      );
+  }
+  .home-desktop .equal-interests-background {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 68%,
+      transparent calc(100% - 11px)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 68%,
+      transparent calc(100% - 11px)
+    );
+  }
+}
 @media (width > 1440px) {
   .equal-interests::before {
     /* Продление занимает всю высоту фото, включая нахлёст на HonestReviews. */
@@ -70,7 +108,11 @@
     background: linear-gradient(#190d08, #151515);
     /* Открываем следующий фон только после его начала (y=778.496px),
        чтобы в нахлёсте не просвечивал светлый холст страницы. */
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 160px), transparent);
+    mask-image: linear-gradient(
+      to bottom,
+      #000 calc(100% - 160px),
+      transparent
+    );
   }
   .equal-interests-background {
     /* Кадр и люди сохраняют размеры сцены 1440; никаких растянутых пикселей. */

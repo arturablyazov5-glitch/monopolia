@@ -1,0 +1,25 @@
+/* Only the mobile video-review hint needs a backing over the portraits. */
+@media (max-width: 767px) {
+  .trust-reviews .mobile-scroll-hint {
+    position: relative;
+    isolation: isolate;
+    align-self: flex-start;
+    width: max-content;
+    max-width: calc(100% - 2 * var(--rg));
+  }
+
+  .trust-reviews .mobile-scroll-hint::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -7px -12px;
+    pointer-events: none;
+    background: #f0e7d7 url("/assets/textures/paper-beige.webp") center / 240px;
+    mask-image: var(--brush-square-images);
+    mask-size: 6px 6px, calc(100% - 10px) 6px, 6px 6px,
+      6px calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),
+      6px calc(100% - 10px), 6px 6px, calc(100% - 10px) 6px, 6px 6px;
+    mask-position: var(--brush-positions);
+    mask-repeat: no-repeat;
+  }
+}

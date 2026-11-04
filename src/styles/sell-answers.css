@@ -4,12 +4,12 @@
    как в Figma, сквозь неё может проступать слой карты 1380:5932. */
 .sell-answers {
   position: relative;
-  padding-top: 120px;
+  padding-top: var(--section-space);
   display: flex;
   justify-content: center;
 }
 
-/* Paper: белый фон + текстура 56094 10 %, отступы контента 52 / 72.
+/* Paper: белый контейнер paper-white, внутри — бежевые теги; отступы 52 / 72.
    Видимая кромка измерена отдельно от strokeWeight 30 в brush-stroke.css. */
 .sell-answers-card {
   width: 937px;
@@ -22,13 +22,21 @@
   justify-content: center;
   gap: 40px;
   text-align: center;
-  --paper-texture: url("/assets/56094.webp");
   box-shadow: 0 14px 14px #3d0b0b08;
 }
 /* Текстура доходит до верхней/нижней кромки; кольцо — padding фонового слоя. */
 .sell-answers-card:before {
   inset: 0;
-  opacity: 0.1;
+}
+/* Легкие складки только у белого листа: сохраняем рваный контур Paper. */
+.paper.paper-white.sell-answers-card::before {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(rgb(255 255 255 / 80%), rgb(255 255 255 / 80%)),
+    url("/assets/texture-paper-crumpled.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* 1380:5916 */
@@ -49,46 +57,22 @@
 }
 
 /* 1380:5919: метки-темы, перенос строк как в Figma за счёт габаритов li */
-.sell-answers-topics {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  gap: 8px;
-  filter: drop-shadow(0 4px 2.5px #00000005);
-}
-.sell-answers-topics > li {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* 273:967: белый + текстура 30984 50 %; видимое кольцо 0 / 1 / 0 / 1 px. */
-.sell-answers-topics span {
+.sell-answers-topics > .badge {
   position: relative;
   isolation: isolate;
-  padding: 6px 14px;
-  background: #fff;
-  font: 14px/1.2 var(--font-body);
-  color: var(--color-muted);
-  white-space: nowrap;
 }
-.sell-answers-topics span:before {
+.sell-answers-topics > .badge::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("/assets/30984.webp") center/cover;
-  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
 @media (max-width: 1199px) {
   .sell-answers {
-    padding: 80px 32px 0;
+    padding: var(--section-space) 32px 0;
   }
   .sell-answers-card {
     width: 100%;
@@ -106,14 +90,14 @@
 }
 @media (max-width: 767px) {
   .sell-answers {
-    padding: 56px 20px 0;
+    padding: var(--section-space) 20px 0;
   }
   .sell-answers-card {
-    padding: 36px 20px;
+    padding: 36px 20px 20px;
     gap: 32px;
   }
   .sell-answers-heading h2 {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.05;
   }
   .sell-answers-card > .button {
@@ -129,8 +113,9 @@
   .sell-answers-card {
     padding-left: 16px;
     padding-right: 16px;
+    padding-bottom: 16px;
   }
   .sell-answers-heading h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
   }
 }

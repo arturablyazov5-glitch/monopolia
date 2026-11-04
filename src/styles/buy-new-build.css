@@ -1,21 +1,23 @@
 /* Figma 1380:6553 + 1380:6554 — «Покупка»: разделитель и блок «05» */
 .buy-new-build {
-  padding: 120.68px 0 120px;
+  --new-build-note-overhang: 23.21px;
+  padding: calc(var(--section-space) + 0.68px) 0 var(--section-space);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 119.32px;
+  gap: calc(var(--section-space) - 0.68px);
 }
-/* Mask group 650:3345: красная заливка по маске 7edf9, 584.15 × 14.68 */
+/* Mask group 650:3345: красная заливка по маске background-paper-edge-light, 584.15 × 14.68 */
 .buy-new-build-divider {
   display: block;
   width: 584.154px;
   height: 14.681px;
   background: var(--color-diamond);
-  mask: url("/assets/7edf9.webp") no-repeat center / 584.154px 14.681px;
+  mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 584.154px 14.681px;
 }
-/* 05 — белый лист 858 × 338 без текстуры и тени, рваный край общего Paper */
+/* 05 — белый мятый лист 858 × 338, без тени. */
 .buy-new-build-card {
+  --brush-images: var(--brush-square-images);
   width: 858px;
   height: 338px;
   padding: 52px 72px;
@@ -27,8 +29,17 @@
   text-align: center;
   box-shadow: none;
 }
-.buy-new-build-card:before {
-  display: none;
+.buy-new-build-card.paper::before,
+.buy-new-build-card.paper::after {
+  mask-size:
+    8px 8px, calc(100% - 14px) 8px, 8px 8px,
+    8px calc(100% - 14px), calc(100% - 14px) calc(100% - 14px),
+    8px calc(100% - 14px), 8px 8px, calc(100% - 14px) 8px, 8px 8px;
+}
+.buy-new-build .buy-new-build-card.paper::before {
+  display: block;
+  background: url("/assets/texture-paper-crumpled.webp") center / cover;
+  opacity: 0.1;
 }
 .buy-new-build-card h2 {
   width: 714px;
@@ -44,12 +55,11 @@
 .buy-new-build-note-wrap {
   position: absolute;
   left: 50%;
-  top: -23.21px;
+  top: calc(-1 * var(--new-build-note-overhang));
   transform: translateX(-50%) rotate(-1deg);
   filter: drop-shadow(0 5px 3.5px #0000000f);
 }
 .buy-new-build-note {
-  --paper-texture: url("/assets/0ba2a.webp");
   box-shadow: none;
   padding: 8px 20px;
 }
@@ -66,8 +76,8 @@
 
 @media (max-width: 1199px) {
   .buy-new-build {
-    padding: 80px var(--buy-gutter);
-    gap: 80px;
+    padding: var(--section-space) var(--buy-gutter);
+    gap: var(--section-space);
   }
   .buy-new-build-divider {
     max-width: 100%;
@@ -89,17 +99,20 @@
   }
 }
 @media (max-width: 767px) {
+  .buy-new-build-divider {
+    display: none;
+  }
   .buy-new-build {
-    padding-top: 56px;
-    padding-bottom: 56px;
-    gap: 56px;
+    padding-top: calc(var(--section-space) + var(--new-build-note-overhang));
+    padding-bottom: var(--section-space);
+    gap: var(--section-space);
   }
   .buy-new-build-card {
-    padding: 48px 24px 32px;
+    padding: 40px 24px 24px;
     gap: 28px;
   }
   .buy-new-build-card h2 {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.1;
   }
   .buy-new-build-card > p {
@@ -112,6 +125,6 @@
 }
 @media (max-width: 539px) {
   .buy-new-build-card h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
   }
 }

@@ -66,31 +66,6 @@
 .inner-hero-net-mobile {
   display: none;
 }
-.inner-hero-market {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  margin-top: 3px;
-  padding: 6px 10px 6px 8px;
-  background: var(--color-paper);
-  border-radius: var(--radius-control);
-  font: 500 20px/1.2 var(--font-heading);
-  color: #000;
-}
-.inner-hero-market > span:last-child {
-  padding-bottom: 4px;
-}
-.market-icon {
-  position: relative;
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-}
-.market-icon img {
-  position: absolute;
-  inset: -5.92% -7.1% -7.68% -7.81%;
-  max-width: none;
-}
 .inner-hero-description {
   width: 408px;
   font: 16px/1.2 var(--font-body);
@@ -118,6 +93,10 @@
   max-width: none;
 }
 .inner-team-portrait {
+  left: var(--team-left);
+  width: var(--team-width);
+  top: var(--team-top, auto);
+  bottom: var(--team-bottom, auto);
   position: absolute;
   height: auto;
   max-width: none;
@@ -136,6 +115,29 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.inner-hero-card.paper::before {
+  inset: 1px 0 3px;
+}
+.inner-hero-card.paper::before,
+.inner-hero-card.paper::after {
+  --brush-images: var(--brush-square-images);
+  mask-size: var(--brush-sizes);
+  --brush-sizes:
+    10px 10px, calc(100% - 18px) 10px, 10px 10px, 10px calc(100% - 18px),
+    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px),
+    10px 10px, calc(100% - 18px) 10px, 10px 10px;
+  border-radius: 0;
+}
+/* У квиза и выбора города рваный край читается крупнее, как у бумажных
+   плашек макета; остальные элементы сайта сохраняют стандартную маску 8 px. */
+.inner-hero-card.paper,
+.inner-hero-city,
+.inner-hero-city-picker .city-menu {
+  --brush-sizes:
+    12px 12px, calc(100% - 22px) 12px, 12px 12px, 12px calc(100% - 22px),
+    calc(100% - 22px) calc(100% - 22px), 12px calc(100% - 22px), 12px 12px,
+    calc(100% - 22px) 12px, 12px 12px;
 }
 .inner-hero-card-top {
   display: flex;
@@ -158,7 +160,7 @@
 }
 .inner-hero-booklet-shadow {
   position: absolute;
-}/* Карточка на десктопе шире макета на 99 px: буклет и его тень остаются прежнего размера по центру */
+} /* Карточка на десктопе шире макета на 99 px: буклет и его тень остаются прежнего размера по центру */
 @media (min-width: 1200px) {
   .inner-hero-booklet {
     padding: 0 73.5px;
@@ -200,7 +202,7 @@
   width: 100%;
   appearance: none;
   border: 0;
-  border-radius: var(--radius-control);
+  border-radius: 0;
   background: var(--color-paper);
   padding: 12px 24px;
   text-align: left;
@@ -226,7 +228,7 @@
 .inner-hero-city[aria-expanded="true"] .city-chevron {
   transform: translateY(-50%) rotate(180deg);
 }
-.inner-hero-city-picker .city-menu {
+.inner-hero-city-picker .city-menu-shadow {
   left: 0;
   right: 0;
 }
@@ -238,16 +240,39 @@
   position: relative;
   filter: drop-shadow(0 4px 2.5px #00000005);
 }
+.inner-hero-card:has([data-hero-other]:not([hidden])) {
+  height: auto;
+  min-height: 526px;
+  gap: 20px;
+}
+.inner-hero-other {
+  display: block;
+  margin-top: 12px;
+}
+.inner-hero-other[hidden] {
+  display: none;
+}
+.inner-hero-other input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  background: #fff;
+  font: 14px/1.4 var(--font-body);
+}
 .inner-hero-types .chip {
-  padding: 4px 10px;
+  /* TASK-061: больше воздуха вокруг подписи, сохраняя 44 px touch target. */
+  min-height: 44px;
+  padding: 5.5px 16px;
   font: 14px/1.2 var(--font-body);
   color: var(--color-ink);
-  background: var(--color-paper);
-  opacity: 0.5;
-  transition: opacity var(--duration-fast);
+  background: #fff;
+  opacity: 1;
+  transition: color var(--duration-fast) ease;
 }
-.inner-hero-types .chip:hover {
-  opacity: 0.8;
+@media (hover: hover) {
+  .inner-hero-types .chip:not(.selected):hover {
+    color: var(--color-accent);
+  }
 }
 .inner-hero-types .chip.selected {
   background: var(--color-ink);
@@ -258,18 +283,21 @@
   display: none !important;
 }
 .inner-hero-cursor {
-  position: absolute;
-  right: 14px;
-  bottom: 9px;
-  width: 24px;
+  position: relative;
+  flex: 0 0 0;
   height: 24px;
+  margin-left: calc(-1 * var(--space-2));
+  align-self: center;
   pointer-events: none;
 }
 .inner-hero-cursor img {
   position: absolute;
-  left: 3.69%;
-  top: 3.69%;
+  left: 4px;
+  top: 2px;
   max-width: none;
+}
+.inner-hero-step {
+  display: none;
 }
 .inner-hero-submit .button {
   width: 100%;
@@ -358,10 +386,6 @@
     min-height: 44px;
     padding: 8px 14px;
   }
-  /* Курсор — иллюстрация наведения мышью, на сенсорных экранах лишний. */
-  .inner-hero-cursor {
-    display: none;
-  }
   /* Команда: группа 1421 × 1021 масштабируется целиком (фото и SVG-тени
      одним коэффициентом), центр — средний портрет (x 694.6), лица в кадре. */
   .inner-hero-team {
@@ -376,6 +400,20 @@
     margin-bottom: calc(var(--hero-visible) * var(--hero-k) - 1021.151px);
     transform: scale(var(--hero-k));
     transform-origin: 0 0;
+  }
+}
+
+/* Рваный низ скрывает прямой срез команды вместе с фоном на планшете. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .inner-hero {
+    mask-image: linear-gradient(#000, #000), url("/assets/gossip-paper-edge.svg");
+    /* Перекрытие убирает просвет между слоями при дробных координатах. */
+    mask-size:
+      100% calc(100% - 49px),
+      100% 51px;
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    mask-mode: alpha;
   }
 }
 
@@ -401,8 +439,20 @@
   }
 }
 
-/* TASK-009b: с 1024 — текст и квиз в двух колонках, команда ниже. */
+/* С 1024 — текст и квиз в двух колонках, команда в масштабе десктопа. */
 @media (min-width: 1024px) and (max-width: 1199px) {
+  .inner-hero-container {
+    min-height: 650px;
+    /* Рваная маска секции не должна заходить на карточку квиза. */
+    padding-bottom: 51px;
+  }
+  .inner-hero-team {
+    position: absolute;
+    left: calc(50% - 986px);
+    top: 298.424px;
+    margin: 0;
+    transform: none;
+  }
   .inner-hero-copy {
     flex: 1 1 0;
     min-width: 0;
@@ -412,43 +462,156 @@
   }
 }
 
-/* Телефон 360–767 */
+/* Телефон 320–767 */
 @media (max-width: 767px) {
   .inner-hero {
     --hero-k: 0.5;
     --hero-visible: 540px;
   }
+  /* Дома на фоне, как на десктопе, но мелко и справа: картинка уменьшена
+     (840 → 320 px), прижата к правому краю; ниже — цвет страницы (низ
+     картинки того же цвета, шва нет). */
+  .inner-hero-background {
+    left: auto;
+    right: -28px;
+    top: 230px;
+    z-index: -2;
+    width: auto;
+    height: 320px;
+    object-fit: initial;
+    /* верх картинки плавно растворяется, чтобы не было шва с фоном страницы */
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    mask-image: linear-gradient(to bottom, transparent, #000 140px);
+  }
+  /* Небо над картинкой с домами — цвет её верхней кромки (слева светлее,
+     справа голубее), а не серый фон; снизу плавно сходит на нет вместе с
+     появлением картинки, без резкой границы. */
+  .inner-hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 460px;
+    z-index: -3;
+    background: linear-gradient(
+      to right,
+      rgb(219 224 234),
+      rgb(206 217 231) 55%,
+      rgb(184 205 224)
+    );
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    pointer-events: none;
+  }
+  /* Дубль блока: тот же красивый дом, зеркально — у левого края экрана,
+     чтобы дома стояли и слева, и справа (на картинке левая башня обрезана
+     краем и выглядит пятном, поэтому она не используется). */
+  .inner-hero::before {
+    content: "";
+    position: absolute;
+    top: 260px;
+    left: -28px;
+    z-index: -1;
+    width: 152px;
+    height: 320px;
+    background: url("/assets/inner-hero-background.webp") 100% 0 / auto 320px no-repeat;
+    transform: scaleX(-1);
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent, #000 70px),
+      linear-gradient(to right, transparent, #000 30%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to bottom, transparent, #000 70px),
+      linear-gradient(to right, transparent, #000 30%);
+    mask-composite: intersect;
+    pointer-events: none;
+  }
   .inner-hero-container {
     margin: 0 20px;
     /* 8 + 56 — шапка телефона, 24 — отступ. */
     padding-top: 88px;
-    gap: 24px;
+    --hero-flow-gap: 24px;
+    --hero-team-width: min(calc(100cqi - 16px), 440px);
+    container-type: inline-size;
+    flex-direction: column;
+    padding-bottom: var(--space-6);
+    gap: var(--hero-flow-gap);
   }
   .inner-hero-copy {
+    flex: none;
+    width: 100%;
+    container-type: inline-size;
     gap: 12px;
   }
   .inner-hero h1 {
-    font-size: 32px;
+    font-size: var(--h1);
     line-height: 1.05;
   }
-  /* На телефоне вставка уходит на свою строку. */
+  /* TASK-054: zero-height inline box leaves every baseline on the h1 leading.
+     Forma «недвижимость» advances 6.764em; Denistina advances 4.058em,
+     with a 0.217em left overhang. Reserve that ink plus an 8px clear gap.
+     Font-relative ink centers: Forma −0.2015em, Denistina −0.3462em. */
   .inner-hero-accent {
-    margin: 4px 0 2px;
-    font-size: 46px;
-    line-height: 0.9;
+    margin: 0 0 0 calc(4px + 0.217em);
+    font-size: clamp(
+      20px,
+      calc((100cqi - var(--h1) * 6.764 - 14px) / 4.286),
+      var(--heading-hero-hand)
+    );
+    line-height: 0;
+    vertical-align: baseline;
+    /* Центр строчных букв: Forma 0.257em и Denistina 0.302em над базовой линией —
+       надпись центрируется по высоте строчных строки, а не по цифре «2». */
+    transform: translateY(calc(0.302em - var(--h1) * 0.257));
+  }
+  /* The paper covers the lower 22% of the photo. The side inset keeps its
+     torn corners outside the portraits, including at fractional widths. */
+  .inner-hero-team {
+    order: 0;
+    width: var(--hero-team-width);
+    height: auto;
+    aspect-ratio: 1.5;
+    align-self: center;
+    margin: 0;
+    transform: none;
+    overflow: clip;
+  }
+  .inner-hero-team .inner-team-stroke {
+    display: none;
+  }
+  .inner-hero-team .inner-team-portrait {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    width: 38%;
+    height: auto;
+  }
+  .inner-hero-team picture:nth-of-type(2) .inner-team-portrait {
+    left: 62%;
+  }
+  .inner-hero-team picture:nth-of-type(3) .inner-team-portrait {
+    left: 31%;
+    z-index: 1;
+  }
+  .inner-hero .inner-hero-card.paper {
+    z-index: 3;
+    margin-top: calc(
+      var(--hero-team-width) / -1.5 * 0.22 - var(--hero-flow-gap)
+    );
   }
   .inner-hero-markets {
-    gap: 8px;
-    margin-top: 4px;
+    height: 1.05em;
+    gap: calc(8px * 0.82);
+    margin-top: 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
   }
   .inner-hero-net-desktop {
     display: none;
   }
   .inner-hero-net-mobile {
     display: inline;
-  }
-  .inner-hero-market {
-    font-size: 18px;
   }
   .inner-hero-card.paper {
     width: 100%;
@@ -458,6 +621,14 @@
   .inner-hero-card-top {
     gap: 12px;
   }
+  /* The compact header hides its picker globally; the quiz has its own field. */
+  .inner-hero-card .inner-hero-city-picker {
+    display: block;
+  }
+  .inner-hero-card .inner-hero-city {
+    min-height: 48px;
+    background: #fff;
+  }
   /* Буклет с тенью — один коэффициент для картинки и координат тени. */
   .inner-hero-booklet {
     width: 360px;
@@ -466,6 +637,14 @@
   }
   .inner-hero-submit .button {
     min-height: 52px;
+  }
+  /* Счётчик первого шага под кнопкой. */
+  .inner-hero-step {
+    display: block;
+    margin: 8px 0 0;
+    text-align: center;
+    color: #777;
+    font: 14px/1.2 var(--font-body);
   }
 }
 
@@ -477,12 +656,30 @@
     margin: 0 16px;
   }
   .inner-hero h1 {
-    font-size: 30px;
-  }
-  .inner-hero-accent {
-    font-size: 44px;
+    font-size: var(--h1);
   }
   .inner-hero-booklet {
     zoom: 0.74;
+  }
+}
+
+@media (max-width: 767px) {
+  .inner-hero-copy {
+    align-items: center;
+    text-align: center;
+    min-width: 0;
+  }
+  .inner-hero h1 {
+    width: 100%;
+  }
+  .inner-hero-markets {
+    height: auto;
+    min-height: 1.4em;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .inner-hero-description {
+    max-width: 100%;
   }
 }

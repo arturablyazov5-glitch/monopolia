@@ -17,10 +17,40 @@
   top: var(--tape-y);
   transform: var(--tape-transform);
   transform-origin: 0 0;
-  box-shadow: var(--tape-shadow);
+  filter: drop-shadow(var(--tape-shadow));
   opacity: var(--tape-opacity);
   object-fit: cover;
   pointer-events: none;
 }
 .paper.service-card-coupon > .tape-layer,
-.paper.recruiting-note > .tape-layer { --tape-border: 15px; }
+.paper.recruiting-note > .tape-layer {
+  --tape-border: 15px;
+}
+
+/* Меняем origin в локальной системе бумаги; матрицу самой ленты сохраняем. */
+.paper-tape[data-tape-shift="top"] {
+  top: calc(var(--tape-y) + var(--tape-top-dy));
+}
+.paper-tape[data-tape-shift="bottom"] {
+  left: calc(var(--tape-x) - var(--tape-bottom-dx));
+  top: calc(var(--tape-y) - var(--tape-bottom-dy));
+}
+
+/* Габариты после поворота привязаны к углу бумаги: большая часть ленты
+   лежит на листе, остальная выходит за его нижний и правый край. */
+.paper-has-tape .paper-tape[data-tape-corner="bottom-right"] {
+  left: calc(100% - var(--tape-box-width) * 0.75 - var(--tape-box-left));
+  top: calc(100% - var(--tape-box-height) * 0.62 - var(--tape-box-top));
+}
+
+/* Скотч на купонах услуг должен пересекать край бумаги, а не висеть рядом. */
+.paper.service-card-coupon > .tape-layer {
+  --tape-top-dy: 10px;
+  --tape-bottom-dy: 10px;
+  --tape-bottom-dx: 8px;
+}
+.paper.service-card-coupon .paper-tape[data-tape-shift="top"] {
+  left: calc(var(--tape-x) + 6px);
+}
+
+.paper.paper-has-tape { overflow: visible; }

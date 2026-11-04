@@ -1,0 +1,28 @@
+.badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  filter: drop-shadow(0 4px 2.5px #00000005);
+}
+.badge-group > .badge {
+  padding: 6px 14px;
+  font: var(--text-small)/1.2 var(--font-body);
+  color: #1a1a1a;
+  background: white;
+  border-radius: 0;
+  transform: rotate(var(--badge-angle, -1deg));
+}
+@media (max-width: 767px) {
+  .badge-group {
+    gap: 6px;
+  }
+  .badge-group > .badge {
+    order: var(--badge-mobile-order, 0);
+    max-width: 100%;
+    padding: 6px 10px;
+    white-space: normal;
+    text-align: center;
+  }
+}

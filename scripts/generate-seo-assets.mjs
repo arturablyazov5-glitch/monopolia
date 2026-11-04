@@ -3,21 +3,21 @@ import sharp from "sharp";
 import { copyFile, mkdir } from "node:fs/promises";
 
 await mkdir("public/seo", { recursive: true });
-await copyFile("public/assets/a2665.svg", "public/favicon.svg");
+await copyFile("public/assets/logo-monopoly-mark-header.svg", "public/favicon.svg");
 for (const [size, name] of [
   [32, "favicon-32.png"],
   [180, "apple-touch-icon.png"],
 ]) {
-  await sharp("public/assets/a2665.svg", { density: 540 })
+  await sharp("public/assets/logo-monopoly-mark-header.svg", { density: 540 })
     .resize(size, size)
     .png()
     .toFile(`public/${name}`);
 }
 const portraits = [];
 for (const [photo, left] of [
-  ["bf328", 255],
-  ["bd260", 655],
-  ["0df0d", 450],
+  ["hero-team-left-inner-portrait", 255],
+  ["hero-team-right-center-portrait", 655],
+  ["hero-team-center-portrait", 450],
 ]) {
   const input = await sharp(`design-reference/original-assets/${photo}.png`)
     .resize(330, 570, { fit: "inside" })

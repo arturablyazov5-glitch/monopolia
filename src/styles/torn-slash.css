@@ -1,0 +1,13 @@
+.torn-slash {
+  display: block;
+  flex: 0 0 9px;
+  width: 9px;
+  height: 16px;
+  overflow: hidden;
+  font-size: 0;
+}
+.torn-slash > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

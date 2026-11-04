@@ -14,6 +14,14 @@ export interface TapePlacement {
   shadow: string;
   opacity: number;
 }
+/** Crisp shared tape visual; geometry and per-instance color stay unchanged. */
+export function cleanTapeSource(src: string): string {
+  const cleanTape: Record<string, string> = {
+    "/assets/tape-beige-export.webp": "/assets/tape-beige-clean.svg",
+    "/assets/tape-white-export.webp": "/assets/tape-white-clean.svg",
+  };
+  return cleanTape[src] ?? src;
+}
 export function tapesFor(node: string): TapePlacement[] {
   return (placements as Record<string, TapePlacement[]>)[node] ?? [];
 }

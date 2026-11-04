@@ -2,6 +2,19 @@
   height: 712px;
   background: var(--color-dark);
 }
+.director-frame {
+  width: var(--container-width);
+  margin: 0 auto;
+}
+.paper.director-card {
+  /* Clip the portrait as well as the paint, before the shared outer frame.
+     A rectangular overflow crop alone left the portrait's bottom straight. */
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  transform: rotate(0.15deg);
+}
 .director-card {
   width: var(--container-width);
   height: 592px;
@@ -9,11 +22,7 @@
   padding: 40px 52px;
   display: grid;
   grid-template-columns: 528px 528px;
-  --paper-texture: url("/assets/56094.webp");
   overflow: hidden;
-}
-.director-card:before {
-  opacity: 0.1;
 }
 .director-copy {
   position: relative;
@@ -65,6 +74,27 @@
   flex-shrink: 0;
   max-width: none;
 }
+.director-rating-mobile {
+  display: none;
+}
+@media (max-width: 767px) {
+  .director-rating-desktop,
+  .director-intro > a {
+    display: none;
+  }
+  .director-rating-mobile {
+    display: inline;
+  }
+  .director-intro .director-inline-logo {
+    display: inline;
+  }
+  .director-intro .director-inline-logo img {
+    display: inline-block;
+    width: auto;
+    height: 1em;
+    vertical-align: calc(-0.1em - 1px);
+  }
+}
 .director-coffee-note {
   width: 466px;
   margin-top: 40px;
@@ -72,10 +102,10 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  --paper-texture: url("/assets/0ba2a.webp");
 }
 .director-coffee-note > img:first-child {
   flex-shrink: 0;
+  align-self: flex-start;
 }
 .director-coffee-note p {
   font: 16px/1.2 var(--font-body);
@@ -124,25 +154,94 @@
   transform: scaleX(-1);
 }
 .director-signature {
+  transform: rotate(-2deg);
   position: absolute;
   bottom: 24px;
   right: 24px;
   width: 262.808px;
   height: 94.022px;
-  padding: 20px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 4px;
 }
-.director-signature p {
-  font: 500 20px/1.2 var(--font-heading);
-  margin: 0;
-  white-space: nowrap;
-  color: black;
+@media (max-width: 1199px) {
+  .director-frame {
+    width: auto;
+  }
 }
-.director-signature span {
-  font: 14px/1.2 var(--font-body);
-  color: var(--color-muted);
-  white-space: nowrap;
+@media (max-width: 767px) {
+  .home-desktop .director-invitation.director-invitation {
+    padding-top: var(--paper-frame-width, 8px);
+    /* Рамка выступает за размер карточки: отступ считаем от её видимого края. */
+    padding-bottom: calc(var(--section-space) + var(--paper-frame-width, 8px));
+  }
+}
+/* Keep the reference composition on desktop, including 1024px. Zoom scales
+   type, portrait crop and spacing together; the mobile flow stays independent. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .home-desktop .director-frame {
+    width: 1160px;
+    zoom: calc((100vw - 64px) / 1160px);
+  }
+  .home-desktop .director-frame .director-card {
+    width: 1160px;
+    height: 592px;
+    padding: 40px 52px;
+    grid-template-columns: 528px 528px;
+    gap: 0;
+  }
+  .home-desktop .director-frame .director-copy {
+    padding-bottom: 0;
+  }
+  .home-desktop .director-frame h2 {
+    font-size: 44px;
+  }
+  .home-desktop .director-frame h2 br {
+    display: inline;
+  }
+  .home-desktop .director-frame h2 span {
+    width: 148.431px;
+    font-size: 64px;
+  }
+  .home-desktop .director-frame .director-intro {
+    flex-wrap: nowrap;
+  }
+  .home-desktop .director-frame .director-coffee-note {
+    width: 466px;
+  }
+  .home-desktop .director-frame .director-cta {
+    flex-wrap: nowrap;
+    gap: 24px;
+    margin-top: 52px;
+  }
+  .home-desktop .director-frame .director-cta > p {
+    width: 306px;
+    flex-shrink: 0;
+  }
+  .home-desktop .director-frame .director-cta .button::before {
+    inset: -4px;
+  }
+  .home-desktop .director-frame .director-photo {
+    height: 512px;
+    margin: 0;
+    align-self: auto;
+    overflow: visible;
+  }
+  .home-desktop .director-frame .director-shadow {
+    left: -51.166px;
+    top: -75.335px;
+    width: 615.109px;
+    height: 675.277px;
+  }
+  .home-desktop .director-frame .director-portrait {
+    left: -338.026px;
+    top: -161.382px;
+    width: 1204.051px;
+    height: 1816.678px;
+  }
+  .home-desktop .director-frame .director-signature {
+    right: 24px;
+    bottom: 24px;
+  }
 }

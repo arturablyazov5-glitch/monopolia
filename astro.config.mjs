@@ -13,6 +13,7 @@ export default defineConfig({
         return () => server.middlewares.stack.unshift({ route: '', handle(req, res, next) {
           if (req.url?.startsWith('/admin/')) res.setHeader('X-Robots-Tag', 'noindex,nofollow');
           const pathname = new URL(req.url || '/', 'http://localhost').pathname;
+          if (pathname === '/files/company-presentation.pdf') res.setHeader('Content-Disposition', 'attachment; filename="company-presentation.pdf"');
           const isApi = pathname.startsWith('/api/');
           const isMedia = pathname.startsWith('/media/');
           if (!isApi && !isMedia && pathname !== '/lead') return next();

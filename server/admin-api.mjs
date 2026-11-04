@@ -1,19 +1,21 @@
 import {fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
+import {isIP} from 'node:net';
+import {forwardedOrigin,trustedProxy,localDevOrigin} from './proxy-origin.mjs';
 import {Storage,AdminError} from './admin-storage.mjs';
+import {ContentStorage} from './admin-content.mjs';
 import {publicCatalog} from '../src/lib/catalog-schema.mjs';
-import {createRecovery} from './admin-recovery.mjs';
 import {equal,secret,verifyPassword} from './admin-auth.mjs';
 const project=fileURLToPath(new URL('../',import.meta.url));
 const fail=(status,code,message)=>{throw new AdminError(status,code,message);};
-export async function createAdminAPI({root=project,env=process.env,now=Date.now,recoveryOptions={}}={}) {
+export async function createAdminAPI({root=project,env=process.env,now=Date.now}={}) {
   const storage=new Storage(env.DATA_DIR || resolve(root,'.local-admin'));await storage.init();
+  const content=new ContentStorage(storage.root);
   const origins=new Set((env.ALLOWED_ORIGINS || env.PUBLIC_SITE_ORIGIN || 'http://127.0.0.1:4321').split(',').map(s=>s.trim()).filter(Boolean));
   const apiOrigin=env.ADMIN_API_ORIGIN || 'http://127.0.0.1:'+String(env.PORT || 8787);
   for(const origin of [...origins,apiOrigin]) {const u=new URL(origin);if(u.origin!==origin || (u.protocol!=='https:' && !(u.protocol==='http:' && u.hostname==='127.0.0.1')))throw Error('Use exact HTTPS origins or 127.0.0.1');}
   const hosts=new Set([new URL(apiOrigin).host,...[...origins].map(o=>new URL(o).host)]);
   const sessions=new Map(),attempts=new Map();
-  const recovery=createRecovery({env,root:storage.root,now,report:event=>console.log('[admin] '+event),...recoveryOptions});
   async function body(req,binary=false) {
     const limit=binary?1572864:256*1024;
     if(req.headers['content-type']!==(binary?'application/octet-stream':'application/json'))fail(422,'content-type','Недопустимый формат запроса');
@@ -27,16 +29,25 @@ export async function createAdminAPI({root=project,env=process.env,now=Date.now,
   const handler=async(req,res)=>{
     res.setHeader('Cache-Control','no-store');res.setHeader('X-Robots-Tag','noindex,nofollow');res.setHeader('X-Content-Type-Options','nosniff');
     try {
-      if(!hosts.has(req.headers.host))fail(403,'host','Недопустимый Host');
+      const devOrigin=localDevOrigin(req.headers,env,req.socket.remoteAddress);
+      if(!hosts.has(req.headers.host) && !devOrigin)fail(403,'host','Недопустимый Host');
       const origin=req.headers.origin,raw=req.url || '';
-      if(origin && !origins.has(origin))fail(403,'origin','Недопустимый Origin');
+      const proxyOrigin=forwardedOrigin(req.headers,env,req.socket.remoteAddress);
+      const allowedOrigin=typeof origin==='string' && (origins.has(origin) || origin===proxyOrigin || origin===devOrigin);
+      if(origin && !allowedOrigin)fail(403,'origin','Недопустимый Origin');
       if(origin){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
-      const isPublic=raw==='/api/catalog' || /^\/media\/[a-f0-9]{48}\.webp$/.test(raw);
+      const isPublic=raw==='/api/catalog' || raw==='/api/content' || /^\/media\/[a-f0-9]{48}\.webp$/.test(raw);
       if(!isPublic && origin)res.setHeader('Access-Control-Allow-Credentials','true');
       if(req.method==='OPTIONS') {
-        if(!origins.has(origin))fail(403,'origin','Недопустимый Origin');
+        if(!allowedOrigin)fail(403,'origin','Недопустимый Origin');
         res.setHeader('Access-Control-Allow-Methods',isPublic?'GET, OPTIONS':'GET, POST, PUT, DELETE, OPTIONS');
         res.setHeader('Access-Control-Allow-Headers','Content-Type, X-Admin-CSRF, X-Admin-Request');res.writeHead(204);return res.end();
+      }
+      if(req.method==='GET' && raw==='/api/content') {
+        const {data,tag}=await content.public();
+        res.setHeader('Cache-Control','public, max-age=0, must-revalidate');res.setHeader('ETag',tag);
+        if(req.headers['if-none-match']===tag){res.writeHead(304);return res.end();}
+        return send(res,200,{ok:true,...data});
       }
       if(req.method==='GET' && raw==='/api/catalog') {
         const catalog=publicCatalog(await storage.catalog()),tag='"catalog-'+catalog.revision+'"';
@@ -48,14 +59,14 @@ export async function createAdminAPI({root=project,env=process.env,now=Date.now,
         const bytes=await storage.readMedia(raw);res.writeHead(200,{'Content-Type':'image/webp','Cache-Control':'public, max-age=31536000, immutable'});return res.end(bytes);
       }
       if(!raw.startsWith('/api/admin/'))fail(404,'route','Маршрут отсутствует');
-      if(req.method!=='GET' && !origins.has(origin))fail(403,'origin','Недопустимый Origin');
-      const cookie=(id,age)=>'monopoly_admin_session='+id+'; HttpOnly; SameSite=Strict; Path=/api/admin/; Max-Age='+age+(String(req.headers.host).split(':')[0]==='127.0.0.1'?'':'; Secure');
+      if(req.method!=='GET' && !allowedOrigin)fail(403,'origin','Недопустимый Origin');
+      const cookie=(id,age)=>'monopoly_admin_session='+id+'; HttpOnly; SameSite=Strict; Path=/api/admin/; Max-Age='+age+((String(req.headers.host).split(':')[0]==='127.0.0.1' && !(trustedProxy(env,req.socket.remoteAddress) && req.headers['x-forwarded-proto']==='https'))?'':'; Secure');
       const peer=req.socket.remoteAddress;
-      const trusted=env.TRUST_PROXY==='1' && ['127.0.0.1','::1','::ffff:127.0.0.1'].includes(peer);
-      const ip=trusted && typeof req.headers['x-real-ip']==='string'?req.headers['x-real-ip']:peer;
-      if(req.method==='POST' && raw==='/api/admin/recovery/start')return send(res,200,recovery.start(ip));
+      const trusted=trustedProxy(env,peer);
+      const forwarded=typeof req.headers['x-forwarded-for']==='string'?req.headers['x-forwarded-for'].split(',')[0].trim():'';
+      const ip=trusted && isIP(forwarded)?forwarded:peer;
       if(req.method==='POST' && raw==='/api/admin/session') {
-        const key='account',times=(attempts.get(key)||[]).filter(t=>now()-t<60000);
+        const key='login:'+ip,times=(attempts.get(key)||[]).filter(t=>now()-t<60000);
         if(times.length>=5){res.setHeader('Retry-After','60');fail(429,'login-limit','Слишком много попыток. Подождите минуту.');}
         times.push(now());attempts.set(key,times);
         const b=await body(req);
@@ -76,11 +87,13 @@ export async function createAdminAPI({root=project,env=process.env,now=Date.now,
       }
       if(!equal(req.headers['x-admin-csrf'],s.csrf))fail(403,'csrf','Недопустимый CSRF');
       if(req.method==='DELETE' && raw==='/api/admin/session'){sessions.delete(id);res.setHeader('Set-Cookie',cookie('',0));return send(res,200,{loggedOut:true});}
+      if(req.method==='GET' && raw==='/api/admin/content')return send(res,200,await content.admin());
+      if(req.method==='PUT' && raw==='/api/admin/content')return send(res,200,await content.save(await body(req)));
       if(req.method==='GET' && raw==='/api/admin/catalog')return send(res,200,await storage.catalog());
       if(req.method==='PUT' && raw==='/api/admin/catalog')return send(res,200,await storage.save(await body(req)));
       if(req.method==='POST' && raw==='/api/admin/media')return send(res,200,await storage.upload(await body(req,true)));
       fail(404,'route','Маршрут отсутствует');
     } catch(e){send(res,e instanceof AdminError?e.status:e.code==='ENOENT'?404:500,{error:{code:e instanceof AdminError?e.code:'operation',message:e instanceof AdminError?e.message:'Операция не выполнена',...(e.fields?{fields:e.fields}:{})}});}
   };
-  return {handler,storage,recovery,close:async()=>{sessions.clear();await recovery.close();await storage.close();}};
+  return {handler,storage,content,close:async()=>{sessions.clear();await Promise.all([storage.close(),content.close()]);}};
 }

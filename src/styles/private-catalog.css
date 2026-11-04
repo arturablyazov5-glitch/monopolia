@@ -1,5 +1,5 @@
 .private-catalog {
-  padding: 120px 0 0;
+  padding: var(--section-space) 0 0;
   height: 766.432px;
   background: var(--color-canvas);
   display: flex;
@@ -19,10 +19,13 @@
 .private-catalog-count-space {
   color: transparent;
 }
+.private-catalog-mobile-intro {
+  display: none;
+}
 .private-catalog-count {
   position: absolute;
   left: 210.525px;
-  top: 53.74px;
+  top: 51.74px;
   font: 64px/0.4 var(--font-handwriting);
   color: var(--color-diamond);
   transform: rotate(-1deg);
@@ -36,30 +39,7 @@
   gap: 10px;
   font: 500 var(--text-heading)/1 var(--font-heading);
 }
-.private-catalog-market {
-  margin-top: 3px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 10px 6px 8px;
-  background: white;
-  border-radius: 4px;
-  font: 500 var(--text-card)/1.2 var(--font-heading);
-}
-.private-catalog-market-icon {
-  position: relative;
-  display: block;
-  width: 32px;
-  height: 32px;
-}
-.private-catalog-market-icon img {
-  position: absolute;
-  left: -2.5px;
-  top: -1.894px;
-  max-width: none;
-}
 .private-catalog-card {
-  --paper-texture: url("/assets/0ba2a.webp");
   margin-top: 5.568px;
   width: 641px;
   height: 328.295px;
@@ -86,42 +66,21 @@
   text-align: center;
   font: 500 var(--text-card)/1.2 var(--font-heading);
 }
-.private-catalog-underline {
+.private-catalog-assurance-detail {
+  position: relative;
+  display: inline-block;
+}
+.private-catalog-assurance-detail::after {
+  content: "";
   position: absolute;
-  left: 114.63px;
-  top: 93.57px;
-  width: 422.298px;
-  height: 6.512px;
-  background: var(--color-diamond);
-  mask: url("/assets/4b099.webp") no-repeat 0 0 / 584.154px 14.681px;
+  right: 0;
+  bottom: -9px;
+  width: 87%;
+  height: 14px;
+  background: url("/assets/catalog-assurance-underline.svg") no-repeat right center / 100% 100%;
+  transform: rotate(1deg);
+  pointer-events: none;
 }
 .private-catalog-checks {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  filter: drop-shadow(0 4px 2.5px #00000005);
-}
-.private-catalog-checks .badge {
-  padding: 6px 14px;
-  font: var(--text-small)/1.2 var(--font-body);
-  color: #1a1a1a; /* Figma 1433:9833: текст меток #1A1A1A */
-  border-radius: 0;
-  background: white;
-  transform: rotate(-1deg);
-}
-.private-catalog-checks .badge:nth-child(5),
-.private-catalog-checks .badge:nth-child(6),
-.private-catalog-checks .badge:nth-child(9) {
-  transform: rotate(2deg);
-}
-.private-catalog-checks .badge:nth-child(2) {
-  transform: rotate(1deg);
-}
-.private-catalog-checks .badge:nth-child(4) {
-  transform: rotate(-2deg);
-}
-.private-catalog-checks .badge:nth-child(7) {
-  transform: rotate(-0.5deg);
 }

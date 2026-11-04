@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // «Продажа», Figma 1380:5771: бумажный фон с рваными краями,
 // блок «Узнайте реальную цену» (1380:5777) и «Хотите продать жилье на этой неделе?» (1380:5814).
 import Button from "./Button.astro";
@@ -13,8 +14,8 @@ const columns = [
     `Покажем, на каком месте вы${nb}окажетесь среди конкурентов в${nb}вашем районе`,
   ],
   [
-    `Назовем реальную цену — не${nb}ту, что хочется, а${nb}ту, по${nb}которой реально купят`,
-    `Скажем честно, сколько займет продажа, чтобы не${nb}зависнуть на${nb}рынке на${nb}полгода`,
+    `Назовём реальную цену — не${nb}ту, что хочется, а${nb}ту, по${nb}которой реально купят`,
+    `Скажем честно, сколько займёт продажа, чтобы не${nb}зависнуть на${nb}рынке на${nb}полгода`,
   ],
 ];
 ---
@@ -22,7 +23,7 @@ const columns = [
 <section class="sell-valuation" data-node-id="1380:5771">
   <img
     class="sell-valuation-background"
-    src="/assets/34244.webp"
+    src="/assets/sell-valuation-background.webp"
     alt=""
     width="1440"
     height="1381.979"
@@ -37,19 +38,19 @@ const columns = [
     <div class="sell-valuation-copy">
       <div class="sell-valuation-heading">
         <h2 id="sell-valuation-title">
-          Узнайте реальную цену
+          {siteText("sell-valuation.text.1")}
           <br />
-          вашей недвижимости <span class="sr-only">за 5 минут</span>
+          {siteText("sell-valuation.text.2")} <span class="sr-only">{siteText("sell-valuation.text.3")}</span>
         </h2>
         <div class="sell-valuation-hand" aria-hidden="true">
-          <span>за 5 минут</span>
+          <span>{siteText("sell-valuation.text.3")}</span>
         </div>
       </div>
-      <div class="sell-valuation-points">
+      <div class="sell-valuation-points column-grid-mobile">
         {columns.map((items, index) => (
           <>
-            {index > 0 && <span class="sell-valuation-divider" />}
-            <ul>
+            {index > 0 && <span class="sell-valuation-divider column-divider" aria-hidden="true" />}
+            <ul class="bullet-list">
               {items.map((item) => (
                 <li>{item}</li>
               ))}
@@ -57,12 +58,12 @@ const columns = [
           </>
         ))}
       </div>
-      <Button label="Получить анализ объекта" subject="Анализ объекта" />
+      <Button popup="analysis" label={siteText("sell-valuation.label.4")} subject="Анализ объекта" />
     </div>
     <div class="sell-valuation-visual" data-node-id="1380:5791">
       <div class="sell-valuation-shadow">
         <img
-          src="/assets/3c81d.svg"
+          src="/assets/sell-valuation-booklet-shadow.svg"
           alt=""
           width="642.729"
           height="498.849"
@@ -72,7 +73,7 @@ const columns = [
       </div>
       <div class="sell-valuation-report">
         <img
-          src="/assets/4574c.webp"
+          src="/assets/buyer-catalog-booklet.webp"
           alt="Пример отчёта с анализом объекта"
           width="1024"
           height="763"
@@ -83,7 +84,7 @@ const columns = [
       <div class="sell-valuation-file" data-node-id="1380:5794">
         <Paper class="sell-valuation-file-card" tapeNode="1380:5795" node="1380:5795">
           <img
-            src="/assets/ef020.svg"
+            src="/assets/sell-valuation-note-icon.svg"
             alt=""
             width="36"
             height="36"
@@ -91,8 +92,8 @@ const columns = [
             decoding="async"
           />
           <p>
-            <span>PDF‑файл</span>
-            <small>0,5 МБ</small>
+            <span>{siteText("sell-valuation.text.5")}</span>
+            <small>{siteText("sell-valuation.text.6")}</small>
           </p>
         </Paper>
       </div>

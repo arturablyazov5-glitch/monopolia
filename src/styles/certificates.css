@@ -21,6 +21,13 @@
   height: 100%;
   margin: 0 auto;
 }
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .certificates-scene {
+    left: 50%;
+    margin-left: 0;
+    transform: translateX(-50%);
+  }
+}
 .certificates-content {
   position: absolute;
   top: 180px;
@@ -55,80 +62,72 @@
   font: var(--text-small)/1.2 var(--font-body);
   text-align: left;
 }
-.certificate-sheet {
+/* Цельная композиция из Figma (1380:5114 + 1380:5117): лента и два листа
+   с прозрачностью запечены в один растр 1440×500.681 от верха секции. */
+.certificates-art {
   position: absolute;
-  top: 135.188px;
-  left: 1157px;
-  width: 377px;
-  height: 376px;
-  opacity: 0.6;
-}
-.certificate-sheet img {
-  width: 377px;
-  height: 376px;
-  max-width: none;
-}
-.certificate-sheet::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    200.112deg,
-    #16161600 10.188%,
-    #18121082 40.382%,
-    #19120eb5 52.061%,
-    #190f0a 69.436%
-  );
-}
-.certificate-sheet.second {
-  left: 1197px;
-  top: 135.188px;
-  transform: rotate(10.16deg);
-}
-.certificate-sheet.second::after {
-  background: linear-gradient(
-    169.804deg,
-    #16161600 1.8903%,
-    #17131182 38.89%,
-    #18110eb5 53.201%,
-    #190d08 74.492%
-  );
-}
-.certificates-ribbon {
-  position: absolute;
-  left: -197px;
   top: 0;
-  width: 657.281px;
-  height: 814.215px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.certificates-ribbon > div {
-  position: relative;
-  width: 718px;
-  height: 386px;
-  flex: none;
-  transform: rotate(64.53deg) scaleY(-1);
-  opacity: 0.2;
-}
-.certificates-ribbon img {
-  width: 718px;
-  height: 386px;
+  left: 0;
+  width: 1440px;
+  height: 500.681px;
   max-width: none;
+  pointer-events: none;
 }
-.certificates-ribbon > div::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(82.855deg, #221e1c00 34.253%, #221e1c 56.626%);
+@media (min-width: 1200px) {
+  .certificates-art {
+    display: none;
+  }
+  .certificates-scene::before,
+  .certificates-scene::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 500.681px;
+    background: url("/assets/certificates-composition.webp") no-repeat;
+    background-size: 1440px 500.681px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .certificates-scene::before {
+    left: calc((1440px - 100vw) / 2);
+    width: 560px;
+    background-position: left top;
+  }
+  .certificates-scene::after {
+    right: calc((1440px - 100vw) / 2);
+    width: 400px;
+    background-position: right top;
+  }
+  .certificates-content,
+  .certificates-divider {
+    z-index: 1;
+  }
 }
 .certificates-divider {
   position: absolute;
   left: 427.923px;
   top: 486px;
-  width: 584.154px;
-  height: 14.681px;
-  background: #e5e5e5;
-  mask: url("/assets/7edf9.webp") no-repeat center / 584.154px 14.681px;
+}
+
+@media (max-width: 767px) {
+  .home-desktop .certificates .certificates-art {
+    top: 32px;
+    right: -45px;
+    left: auto;
+    width: 720px;
+    height: auto;
+    clip-path: inset(0 0 0 550px);
+  }
+  .home-desktop .certificates .certificates-scene::before {
+    display: block;
+    top: 8px;
+    left: -8px;
+    width: 120px;
+    height: 250px;
+    z-index: 1;
+    background-size: 720px 250px;
+  }
+  .home-desktop .certificates .certificates-content {
+    z-index: 1;
+  }
 }

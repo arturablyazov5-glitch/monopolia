@@ -1,79 +1,43 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import "../styles/company-about.css";
+import "../styles/company-office-frame.css";
+import "../styles/text-rough.css";
 const stats = [
-  ["20 лет", "на рынке в Белогорске", "и Амурской области"],
-  ["5 000+", "клиентов и ни одного", "судебного спора"],
-  ["300", "сделок в год — одна", "каждый рабочий день"],
+  [siteText("company-about.stats.1"), siteText("company-about.stats.2"), siteText("company-about.stats.3")],
+  ["5 000+", siteText("company-about.stats.4"), siteText("company-about.stats.5")],
+  ["300", siteText("company-about.stats.6"), siteText("company-about.stats.7")],
 ];
 ---
 
 <section
+  data-surface="dark"
   class="company-about"
   aria-labelledby="company-title"
   data-node-id="1380:5237"
 >
+  <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute">
+    <filter id="rough-edge" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="7" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
   <div class="company-container">
-    <div class="company-office">
-      <img
-        class="company-office-photo"
-        src="/assets/5559b.webp"
-        srcset="/assets/5559b-m.webp 760w, /assets/5559b.webp 1106w"
-        sizes="(max-width: 767px) calc(100vw - 64px), 1106px"
-        width="548"
-        height="577"
-        alt="Офис агентства Монополия в Белогорске"
-        loading="lazy"
-        decoding="async"
-      />
-      <div class="company-partners">
-        <span class="company-superagent">
-          <img
-            src="/assets/6aca5.svg"
-            width="18.667"
-            height="18.667"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          Суперагент
-        </span>
-        <span>и</span>
-        <span class="company-avito">
-          <img
-            src="/assets/34ef4.svg"
-            width="13.333"
-            height="28"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          <span>Надежный партнер</span>
-          <img
-            src="/assets/48440.svg"
-            width="12"
-            height="28"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </span>
-      </div>
-    </div>
     <div class="company-copy">
       <div class="company-intro">
         <h2 id="company-title">
-          Монополия — название, <br />
-          на которое вдохновила <br />
-          нас игра
+          {siteText("company-about.text.10")} <br />
+          {siteText("company-about.text.11")} <br />
+          {siteText("company-about.text.12")}
         </h2>
         <p>
-          Белогорская компания с Московским уровнем сервиса, потому что клиенты в маленьком городе заслуживают не меньше
+          {siteText("company-about.text.13")}
         </p>
       </div>
       <Paper class="company-recommendations" tapeNode="I1380:5258;569:1388">
         <img
-          src="/assets/287c2.svg"
+          src="/assets/company-recommendations-icon.svg"
           width="36"
           height="36"
           alt=""
@@ -81,15 +45,15 @@ const stats = [
           decoding="async"
         />
         <p>
-          40% клиентов возвращаются к нам снова, еще 40% приходят по рекомендациям, а <strong>конкуренты направляют к нам</strong> сложные сделки
+          {siteText("company-about.text.14")} <strong>{siteText("company-about.text.15")}</strong> {siteText("company-about.text.16")}
         </p>
-        
+
       </Paper>
       <div class="company-stats">
         {stats.map(([value, first, second]) => (
           <div>
             <div class="company-number">
-              {value}
+              <span class="text-rough">{value}</span>
               <i aria-hidden="true"></i>
             </div>
             <p>
@@ -100,24 +64,57 @@ const stats = [
         ))}
       </div>
       <div class="company-download">
-        <button class="button red" type="button" data-company-presentation>
-          Скачать презентацию компании
-        </button>
-        <p>Познакомимся поближе, чтобы вы знали, кому платите комиссию :)</p>
+        <a class="button red" href="/files/company-presentation.pdf" download="company-presentation.pdf" target="_blank" rel="noopener">
+          {siteText("company-about.text.17")}
+        </a>
+        <p>{siteText("company-about.text.18")}</p>
       </div>
-      <p class="company-download-status" role="status" hidden>
-        Презентация компании пока не добавлена.
-      </p>
+    </div>
+    <div class="company-office">
+      <img
+        class="company-office-photo"
+        src="/assets/company-office-interior.webp"
+        srcset="/assets/company-office-interior-mobile.webp 760w, /assets/company-office-interior.webp 1106w"
+        sizes="(max-width: 767px) calc(100vw - 64px), 1106px"
+        width="548"
+        height="577"
+        alt="Офис агентства Монополия в Белогорске"
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="company-partners brush-stroke">
+        <span class="company-superagent">
+          <img
+            src="/assets/company-about-note-icon.svg"
+            width="18.667"
+            height="18.667"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          {siteText("company-about.text.8")}
+        </span>
+        <span>и</span>
+        <span class="company-avito">
+          <img
+            src="/assets/company-avito-icon.svg"
+            width="13.333"
+            height="28"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+          <span>{siteText("company-about.text.9")}</span>
+          <img
+            src="/assets/company-about-decor.svg"
+            width="12"
+            height="28"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </div>
     </div>
   </div>
 </section>
-<script>
-  document
-    .querySelector("[data-company-presentation]")
-    ?.addEventListener("click", () => {
-      const status = document.querySelector<HTMLElement>(
-        ".company-download-status",
-      );
-      if (status) status.hidden = false;
-    });
-</script>

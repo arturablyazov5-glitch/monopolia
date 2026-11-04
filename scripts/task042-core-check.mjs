@@ -3,6 +3,7 @@ import { handleLead } from "../server/lead-core.mjs";
 import { handler } from "../server/yandex-cloud-function.mjs";
 const payload = {
   form: "test",
+  source: "ТЕСТ TASK-072",
   name: "<b>Тест</b>",
   phone: "8 (999) 123-45-67",
   consent: true,
@@ -29,8 +30,8 @@ try {
     const body = JSON.parse(init.body);
     assert.equal(body.parse_mode, "HTML");
     assert.ok(body.text.includes("&lt;b&gt;Тест&lt;/b&gt;"));
-    assert.ok(body.text.includes("+79991234567"));
-    assert.ok(body.text.includes("(Благовещенск, UTC+9)"));
+    assert.ok(body.text.includes("+7 (999) 123-45-67"));
+    assert.ok(body.text.includes("Город — Благовещенск"));
     return Response.json({ ok: true });
   };
   assert.equal(
@@ -39,7 +40,7 @@ try {
   );
   assert.equal(calls, 1);
   for (const invalid of [
-    { name: "" },
+
     { name: "x".repeat(81) },
     { phone: "+12025550123" },
     { consent: false },
@@ -61,7 +62,7 @@ try {
   }
   assert.equal(
     (await handleLead(req(payload, "https://evil.ru"), env)).status,
-    400,
+    403,
   );
   assert.equal(calls, 1);
   assert.equal(

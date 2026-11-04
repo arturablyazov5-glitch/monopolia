@@ -1,75 +1,63 @@
+import { siteText } from "./site-texts.mjs";
 // Строки сравнения «Самостоятельно / С риелтором» (Figma 1380:6996–7002,
 // «Покупка»). Для ComparisonTable variant="risk"; risk — шкала 1–5 из макета.
-// Неразрывный пробел после коротких предлогов, союзов и чисел — переносы как в макете.
-const short =
-  /(^|\s)(в|к|с|о|у|и|а|на|по|за|до|из|от|не|но|или|для|без|при|под)\s/gi;
-export const typograph = (text: string) =>
-  text
-    .replace(short, "$1$2\u00a0")
-    .replace(short, "$1$2\u00a0")
-    .replace(/(\d)\s/g, "$1\u00a0");
-
 const rows = [
   {
     node: "1380:6996",
-    label: "Скорость покупки",
+    label: siteText("sell-realtor-comparison.label.1"),
     risk: 1,
     others:
-      "До 6‑24 месяцев. Много времени уходит на просмотр неактуальных объявлений",
-    ours: "Подбираем варианты в среднем за 5 дней из закрытой базы, где 800+ эксклюзивных объектов",
+      siteText("realtor-comparison.others.8"),
+    ours: siteText("realtor-comparison.ours.9"),
   },
   {
     node: "1380:6997",
-    label: "Проверка объекта",
+    label: siteText("realtor-comparison.label.10"),
     risk: 5,
     others:
-      "Риск купить проблемный объект, который заберут после покупки или придется судиться годами",
-    ours: "Проверим объект по 52 параметрам: аресты, долги, обременения, прописанные жильцы и т. д.",
+      siteText("realtor-comparison.others.11"),
+    ours: siteText("realtor-comparison.ours.12"),
   },
   {
     node: "1380:6998",
-    label: "Проверка собственника",
+    label: siteText("realtor-comparison.label.13"),
     risk: 5,
     others:
-      "Риск, что продавец, его родные и государство отсудят объект после покупки",
-    ours: "Проверяем собственника на банкротство, судебные ограничения и другие юридические риски",
+      siteText("realtor-comparison.others.14"),
+    ours: siteText("realtor-comparison.ours.15"),
   },
   {
     node: "1380:6999",
-    label: "Оформление сделки",
+    label: siteText("sell-realtor-comparison.label.7"),
     risk: 5,
     others:
-      "Продавец может изменить условия перед сделкой, а ошибки в договоре — оставят вас без защиты",
-    ours: "Мы составляем юридически грамотные предварительный и основной договоры, а также контролируем сделку",
+      siteText("realtor-comparison.others.16"),
+    ours: siteText("sell-realtor-comparison.ours.9"),
   },
   {
     node: "1380:7000",
-    label: "Переплата",
+    label: siteText("sell-realtor-comparison.label.13"),
     risk: 4,
     others:
-      "Риск переплатить или долго искать объект из‑за нереалистичных ожиданий",
-    ours: "Помогаем купить объект без переплаты или до 30% ниже рыночной цены",
+      siteText("realtor-comparison.others.17"),
+    ours: siteText("realtor-comparison.ours.18"),
   },
   {
     node: "1380:7001",
-    label: "Координация и переговоры",
+    label: siteText("realtor-comparison.label.19"),
     risk: 3,
     others:
-      "Согласовывать звонки и показы придется самому. Из‑за задержек можно упустить подходящий объект",
-    ours: "Представляем ваши интересы на переговорах, координируем всех участников и планируем показы под ваш график",
+      siteText("realtor-comparison.others.20"),
+    ours: siteText("realtor-comparison.ours.21"),
   },
   {
     node: "1380:7002",
-    label: "Оформление ипотеки",
+    label: siteText("realtor-comparison.label.22"),
     risk: 5,
     others:
-      "Риск отказа или одобрения на невыгодных условиях с переплатой миллионов рублей",
-    ours: "Подбираем банки с выгодными условиями и подаем заявку. Вероятность одобрения ~91%",
+      siteText("realtor-comparison.others.23"),
+    ours: siteText("realtor-comparison.ours.24"),
   },
 ];
 
-export const buyRealtorComparison = rows.map((row) => ({
-  ...row,
-  others: typograph(row.others),
-  ours: typograph(row.ours),
-}));
+export const buyRealtorComparison = rows;

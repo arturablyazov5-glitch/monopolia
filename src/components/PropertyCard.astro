@@ -17,11 +17,11 @@ interface Props {
 }
 const {
   cardImage,
-  title = "1-комнатная квартира, 40 м², 5/8 этажей",
-  image = "/assets/da35e.webp",
+  title = "1‑комнатная квартира, 40 м², 5/8 этажей",
+  image = "/assets/property-card-default-photo.webp",
   address = "Благовещенск, ул. Конная, д. 1",
-  price = "4 900 000 ₽",
-  oldPrice = "7 000 000 ₽",
+  price = "4 900 000 ₽",
+  oldPrice = "7 000 000 ₽",
   pricePerMeter = "122 500 ₽/м²",
   mortgage = "В ипотеку от 30 000 ₽ в месяц",
   discount = "−30%",
@@ -30,7 +30,7 @@ const {
 
 <Paper class="property-card" node="1380:6451">
   <div class="property-photo">
-    {cardImage && cardImage.large !== "/assets/da35e.webp" ? (
+    {cardImage && cardImage.large !== "/assets/property-card-default-photo.webp" ? (
       <picture style="display: contents">
         <source style="display: none" srcset={`${cardImage.small} 360w, ${cardImage.large} 680w`}
           sizes="(max-width: 767px) min(288px, calc(100vw - 92px)), (max-width: 1199px) calc((100vw - 180px) / 2), 336px" />
@@ -41,15 +41,13 @@ const {
     )}
     {discount ? (
       <Badge text={discount} class="discount" />
-    ) : (
-      <span class="discount" aria-hidden="true" />
-    )}
+    ) : null}
   </div>
   <div>
     <h3 data-card="title">{title}</h3>
     <p class="location">
       <img
-        src="/assets/2c9bf.svg"
+        src="/assets/icon-property-location-pin.svg"
         width="10"
         height="14"
         alt=""
@@ -71,5 +69,5 @@ const {
     </p>
   </div>
   <hr />
-  <Button label="Записаться на просмотр" subject={title} />
+  <Button popup="viewing" label="Записаться на просмотр" subject={title} />
 </Paper>

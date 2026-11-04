@@ -1,9 +1,18 @@
+import { updateCityTexts } from "../data/city-forms";
 /**
  * Выпадающие списки города: шапка и первый экран внутренних страниц.
- * Любой [data-city-picker] работает одинаково, выбор общий: сохраняется
- * в localStorage и сразу применяется ко всем спискам на странице.
+ * Выбор города общий для шапки и карточек квизов и сохраняется в localStorage.
  */
 const KEY = "city";
+
+// The header remains the source for city-dependent page content.
+export function getHeaderCity() {
+  return (
+    document
+      .querySelector<HTMLElement>("header [data-city-picker] [data-city-label]")
+      ?.textContent?.trim() ?? ""
+  );
+}
 
 const readSaved = () => {
   try {
@@ -19,26 +28,38 @@ export function initCityPickers() {
   ];
   if (!pickers.length) return;
 
-  const apply = (value: string) => {
-    pickers.forEach((picker) => {
+  const apply = (value: string, targets = pickers) => {
+    targets.forEach((picker) => {
       const label = picker.querySelector<HTMLElement>("[data-city-label]");
       if (label) label.textContent = value;
       picker
         .querySelectorAll<HTMLElement>("[data-city-option]")
         .forEach((o) =>
-          o.setAttribute("aria-selected", String(o.dataset.cityOption === value)),
+          o.setAttribute(
+            "aria-selected",
+            String(o.dataset.cityOption === value),
+          ),
         );
       const field = picker.querySelector<HTMLInputElement>("input[name=city]");
       if (field) field.value = value;
     });
+    if (targets.some((picker) => picker.closest("header"))) {
+      updateCityTexts(getHeaderCity());
+      window.dispatchEvent(
+        new CustomEvent("city-changed", { detail: { city: getHeaderCity() } }),
+      );
+    }
   };
 
   const known = (value: string | null): value is string =>
     !!value &&
-    pickers[0].querySelector(`[data-city-option="${CSS.escape(value)}"]`) !== null;
+    pickers[0].querySelector(`[data-city-option="${CSS.escape(value)}"]`) !==
+      null;
 
   const saved = readSaved();
-  if (known(saved)) apply(saved);
+  const initial = known(saved) ? saved : getHeaderCity();
+  if (known(initial)) apply(initial);
+  updateCityTexts(getHeaderCity());
 
   const choose = (value: string) => {
     apply(value);
@@ -53,8 +74,9 @@ export function initCityPickers() {
   });
 
   pickers.forEach((picker) => {
-    const toggle = picker.querySelector<HTMLButtonElement>("[data-city-toggle]")!;
-    const list = picker.querySelector<HTMLElement>(".city-menu")!;
+    const toggle =
+      picker.querySelector<HTMLButtonElement>("[data-city-toggle]")!;
+    const list = picker.querySelector<HTMLElement>("[data-city-menu]")!;
     const options = [
       ...picker.querySelectorAll<HTMLElement>("[data-city-option]"),
     ];
@@ -66,8 +88,11 @@ export function initCityPickers() {
       const open = list.hidden;
       pickers.forEach((p) => {
         if (p !== picker) {
-          p.querySelector<HTMLElement>(".city-menu")!.hidden = true;
-          p.querySelector("[data-city-toggle]")!.setAttribute("aria-expanded", "false");
+          p.querySelector<HTMLElement>("[data-city-menu]")!.hidden = true;
+          p.querySelector("[data-city-toggle]")!.setAttribute(
+            "aria-expanded",
+            "false",
+          );
         }
       });
       setOpen(open);
@@ -85,7 +110,10 @@ export function initCityPickers() {
       if (key === "Escape" && !list.hidden) {
         setOpen(false);
         toggle.focus();
-      } else if ((key === "ArrowDown" || key === "ArrowUp") && target === toggle) {
+      } else if (
+        (key === "ArrowDown" || key === "ArrowUp") &&
+        target === toggle
+      ) {
         e.preventDefault();
         setOpen(true);
         options[0].focus();

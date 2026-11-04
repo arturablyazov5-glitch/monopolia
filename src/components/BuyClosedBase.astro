@@ -1,25 +1,28 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:6462: 800+ эксклюзивных объектов, карточка проверки,
 // кнопка доступа и окно Safari 1380:6483 с превью закрытой базы.
+import { currentMonth } from "../scripts/calendar.mjs";
 import Paper from "./Paper.astro";
 import Badge from "./Badge.astro";
+import BadgeGroup from "./BadgeGroup.astro";
 import Button from "./Button.astro";
 import "../styles/buy-closed-base.css";
 import { selectPreview } from "../lib/catalog";
 import "../styles/property-media.css";
 
 const checks = [
-  "Залог",
-  "Наследство",
-  "Прописка",
-  "Банкротство",
-  "Аварийность дома",
-  "Арест",
-  "Психическое здоровье собственника",
-  "Пакет документов",
-  "И еще 43+ параметра",
+  siteText("private-catalog.checks.1"),
+  siteText("private-catalog.checks.2"),
+  siteText("private-catalog.checks.3"),
+  siteText("private-catalog.checks.4"),
+  siteText("private-catalog.checks.5"),
+  siteText("private-catalog.checks.6"),
+  siteText("private-catalog.checks.7"),
+  siteText("private-catalog.checks.8"),
+  siteText("private-catalog.checks.9"),
 ];
-// Девять одинаковых карточек kv 1380:6542–6550 — как в макете
+// Примеры из публичных объявлений агентства для иллюстрации закрытой базы.
 const listings = selectPreview();
 ---
 
@@ -33,9 +36,21 @@ const listings = selectPreview();
       <h2 id="buy-closed-base-title" class="buy-closed-base-title">
         <span class="buy-closed-base-title-row">
           <span class="buy-closed-base-hand">800+</span>
-          эксклюзивных объектов
+          {siteText("buy-closed-base.text.1")}
         </span>
-        за сентябрь в закрытой базе
+        <span>
+          за <span data-current-month>{currentMonth()}</span> в закрытой базе
+          <script is:inline>
+            {
+              const el = document.currentScript.previousElementSibling;
+              el.textContent = new Intl.DateTimeFormat("ru-RU", {
+                month: "long",
+                timeZone: "Asia/Yakutsk",
+              }).format(new Date());
+              document.currentScript.remove();
+            }
+          </script>
+        </span>
       </h2>
       <div class="buy-closed-base-card-wrap">
         <Paper
@@ -44,18 +59,24 @@ const listings = selectPreview();
           node="1380:6480"
         >
           <p>
-            Каждый проверили <strong>по 52 параметрам,</strong> <br />
-            чтобы исключить все риски при оформлении сделки
+            {siteText("buy-closed-base.text.3")}{" "}
+            <strong>{siteText("buy-closed-base.text.4")}</strong> <br />
+            {siteText("private-catalog.text.18")}
           </p>
-          <div class="buy-closed-base-checks">
-            {checks.map((text) => (
-              <Badge text={text} />
+          <BadgeGroup class="buy-closed-base-checks">
+            {checks.map((text, index) => (
+              <Badge
+                text={text}
+                angle={[-1, 1, -1, -2, 2, 2, -0.5, -1, 2][index]}
+                mobileOrder={[0, 0, 0, 1, 1, 0, 2, 3, 3][index]}
+              />
             ))}
-          </div>
+          </BadgeGroup>
         </Paper>
       </div>
       <Button
-        label="Получить доступ к базе"
+        popup="closed-base"
+        label={siteText("private-catalog.label.19")}
         subject="Доступ к закрытой базе недвижимости"
       />
     </div>
@@ -69,7 +90,7 @@ const listings = selectPreview();
       />
       <img
         class="buy-closed-base-shadow"
-        src="/assets/38acf.svg"
+        src="/assets/buy-catalog-booklet-shadow.svg"
         alt=""
         width="735.144"
         height="600.437"
@@ -85,46 +106,18 @@ const listings = selectPreview();
       aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
       data-node-id="1380:6483"
     >
-      <div class="buy-safari-toolbar">
+      <div class="buy-safari-toolbar" aria-hidden="true">
         <div class="buy-safari-left">
-          <span class="buy-safari-lights">
-            <i class="close"></i>
-            <i class="minimize"></i>
-            <i class="zoom"></i>
-          </span>
-          <span class="buy-safari-controls">
-            <span class="buy-safari-pill buy-safari-pulldown">
-              <b>◫</b>
-              <b>⌄</b>
-            </span>
-            <span class="buy-safari-pill buy-safari-segment">
-              <b>‹</b>
-              <i></i>
-              <b class="faded">›</b>
-            </span>
-          </span>
+          <img class="buy-safari-lights" src="/assets/catalog-browser-window-lights.svg" alt="" width="31" height="13" />
+          <img class="buy-safari-controls" src="/assets/catalog-browser-navigation.svg" alt="" width="54" height="15" />
         </div>
-        <span class="buy-safari-pill buy-safari-search">
-          <span class="buy-safari-search-icon">
-            <img
-              src="/assets/d55bf.svg"
-              alt=""
-              width="4.786"
-              height="4.537"
-              loading="lazy"
-              decoding="async"
-            />
-          </span>
+        <span class="buy-safari-search">
+          <img src="/assets/catalog-browser-page-options.svg" alt="" width="7" height="7" />
           <span class="buy-safari-url">monopoly‑base.ru</span>
-          <b class="faded">↻</b>
+          <img src="/assets/catalog-browser-reload.svg" alt="" width="5" height="6" />
         </span>
         <div class="buy-safari-right">
-          <span class="buy-safari-pill buy-safari-actions">
-            <b>↓</b>
-            <b>⇧</b>
-            <b>+</b>
-            <b>⧉</b>
-          </span>
+          <img class="buy-safari-actions" src="/assets/catalog-browser-toolbar-actions.svg" alt="" width="55" height="15" />
         </div>
       </div>
 
@@ -132,7 +125,7 @@ const listings = selectPreview();
         <div class="buy-safari-header">
           <span class="buy-safari-brand">
             <img
-              src="/assets/80e4a.svg"
+              src="/assets/catalog-browser-decor.svg"
               alt=""
               width="14.1924"
               height="14.1924"
@@ -141,23 +134,23 @@ const listings = selectPreview();
             />
             <span class="buy-safari-brand-text">
               <img
-                src="/assets/18f7e.svg"
+                src="/assets/logo-monopoly-wordmark-browser.svg"
                 alt=""
                 width="58.1002"
                 height="5.75175"
                 loading="lazy"
                 decoding="async"
               />
-              <span>Агентство недвижимости с 2006 года</span>
+              <span>{siteText("site-header.text.4")}</span>
             </span>
           </span>
           <span class="buy-safari-nav">
-            <span>Хочу продать</span>
-            <span>Хочу купить</span>
+            <span>{siteText("site-header.label.1")}</span>
+            <span>{siteText("site-header.label.2")}</span>
             <span class="buy-safari-nav-base">
-              Закрытая база
+              {siteText("buy-closed-base.text.5")}
               <img
-                src="/assets/de9a1.svg"
+                src="/assets/catalog-browser-nav-dot.svg"
                 alt=""
                 width="2.21756"
                 height="2.21756"
@@ -172,7 +165,7 @@ const listings = selectPreview();
                 <span class="buy-safari-icon">
                   <img
                     class="telegram"
-                    src="/assets/af4c7.svg"
+                    src="/assets/catalog-browser-telegram-icon.svg"
                     alt=""
                     width="15.962"
                     height="15.7358"
@@ -183,7 +176,7 @@ const listings = selectPreview();
                 <span class="buy-safari-icon">
                   <img
                     class="max"
-                    src="/assets/9b2bf.svg"
+                    src="/assets/catalog-browser-max-icon.svg"
                     alt=""
                     width="14.9411"
                     height="15.4192"
@@ -195,14 +188,15 @@ const listings = selectPreview();
               <span class="buy-safari-phone">
                 <b>+7 (924) 580-45-55</b>
                 <span class="buy-safari-status">
-                  <i></i>Сейчас работаем
+                  <i></i>
+                  {siteText("buy-closed-base.text.6")}
                 </span>
               </span>
             </span>
             <span class="buy-safari-icon">
               <img
                 class="menu"
-                src="/assets/fcc07.svg"
+                src="/assets/catalog-browser-menu-icon.svg"
                 alt=""
                 width="15.6898"
                 height="16.6459"
@@ -213,77 +207,55 @@ const listings = selectPreview();
           </span>
         </div>
 
-        {listings.map((listing) =>
-          listing ? (
-            <div class="buy-safari-listing">
-              <div class="buy-safari-photo">
-                <picture>
-                  <source
-                    style="display: none"
-                    media={
-                      listing.photo?.id === "legacy-a8dca"
-                        ? "(max-width: 767px)"
-                        : undefined
-                    }
-                    srcset={
-                      listing.photo?.id === "legacy-a8dca"
-                        ? "/assets/a8dca-k-360.webp 360w, /assets/a8dca-k-mobile.webp 680w"
-                        : listing.photo?.variants
-                            .map((v) => v.src + " " + v.width + "w")
-                            .join(", ")
-                    }
-                    sizes="(max-width: 539px) calc((100vw - 68px) / 2), (max-width: 767px) calc((100vw - 76px) / 2), 190px"
-                  />
-                  <img
-                    src={listing.image}
-                    alt=""
-                    width={
-                      listing.photo?.id === "legacy-a8dca"
-                        ? 400
-                        : listing.photo?.width
-                    }
-                    height={
-                      listing.photo?.id === "legacy-a8dca"
-                        ? 277
-                        : listing.photo?.height
-                    }
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </picture>
-                <span class="buy-safari-prices">
-                  <span
-                    class="buy-safari-old-price"
-                    aria-hidden={!listing.oldPrice || undefined}
-                  >
-                    <span>
-                      {listing.oldPrice}
-                      <img
-                        src="/assets/e3bb7.svg"
-                        hidden={!listing.oldPrice || undefined}
-                        alt=""
-                        width="69.6587"
-                        height="42.9098"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </span>
+        {listings.map((listing) => (
+          <div class="buy-safari-listing">
+            <div class="buy-safari-photo">
+              <img
+                src={listing.image}
+                alt=""
+                width={listing.photo.width}
+                height={listing.photo.height}
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="buy-safari-prices">
+                <span class="buy-safari-old-price" title="Условная старая цена для иллюстрации">
+                  <span>
+                    {listing.illustrativeOldPrice}
+                    <img
+                      src="/assets/catalog-old-price-strikethrough.svg"
+                      alt=""
+                      width="69.6587"
+                      height="42.9098"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </span>
-                  <span class="buy-safari-price">{listing.price}</span>
                 </span>
-              </div>
-              <span class="buy-safari-caption">
-                <b>{listing.title}</b>
-                <span>{listing.caption}</span>
+                <span class="buy-safari-price">{listing.price}</span>
               </span>
             </div>
-          ) : (
-            <div class="buy-safari-listing" aria-hidden="true" />
-          ),
-        )}
+            <span class="buy-safari-caption">
+              <b>{listing.title}</b>
+              <span>{listing.caption}</span>
+            </span>
+          </div>
+        ))}
 
-        <span class="buy-safari-more">Загрузить еще 800+</span>
+        <span class="buy-safari-more">
+          {siteText("buy-closed-base.text.7")}
+        </span>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  import { currentMonth } from "../scripts/calendar.mjs";
+  const updateMonth = () =>
+    document
+      .querySelectorAll("[data-current-month]")
+      .forEach((el) => (el.textContent = currentMonth()));
+  document.addEventListener("visibilitychange", updateMonth);
+  setInterval(updateMonth, 60 * 60 * 1000);
+</script>

@@ -1,15 +1,23 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
-import SocialLinks from "./SocialLinks.astro";
-import ChoiceGroup from "./ChoiceGroup.astro";
+import FormSocial from "./FormSocial.astro";
+import ContactMethods from "./ContactMethods.astro";
+import PhoneField from "./PhoneField.astro";
+import ResumeField from "./ResumeField.astro";
 import ConsentCheckbox from "./ConsentCheckbox.astro";
+import PersonLabel from "./PersonLabel.astro";
+import ExpertProfile from "./ExpertProfile.astro";
 interface Props {
   id?: string;
   compact?: boolean;
-  variant?: "question" | "contact";
+  variant?: "question" | "contact" | "popup";
   title?: string;
   buttonLabel?: string;
   endpoint?: string;
+  description?: string;
+  note?: string;
+  resume?: boolean;
   subject?: string;
   /** Figma node панели; у внутренних страниц — свои instance */
   node?: string;
@@ -18,23 +26,31 @@ const {
   id = "question",
   compact = false,
   variant = "question",
-  title = "Остались вопросы?\nЗадайте их здесь",
-  buttonLabel = variant === "question" ? "Задать вопрос" : "Оставить заявку",
+  title = siteText("lead-form.title.1"),
+  buttonLabel = variant === "question"
+    ? siteText("lead-form.buttonlabel.2")
+    : siteText("lead-form.buttonlabel.3"),
   endpoint,
+  description,
+  note,
+  resume = false,
   subject = "",
   node = "1380:5753",
 } = Astro.props;
 ---
 
-<div class:list={["lead-panel", { compact: compact }]} data-node-id={node}>
+<div
+  class:list={[
+    "lead-panel",
+    { compact: compact, "popup-panel": variant === "popup" },
+  ]}
+  data-node-id={node}
+>
   <form
-    class="lead-form"
+    class:list={["lead-form", { "popup-form": variant === "popup" }]}
+    novalidate
     data-form={id}
-    data-lead-source={
-      id === "modal"
-        ? "Модальная форма"
-        : `${["home-question", "sell-question", "buy-question"].includes(id) ? "Форма внизу страницы · " : ""}${title.replace(/\n/g, " ")} · Кнопка «${buttonLabel}»`
-    }
+    data-lead-source={`${["home-question", "sell-question", "buy-question"].includes(id) ? "Форма внизу страницы · " : ""}${title.replace(/\n/g, " ")} · Кнопка «${buttonLabel}»`}
     data-endpoint={
       endpoint ??
       (import.meta.env.PUBLIC_LEAD_ENDPOINT ||
@@ -44,81 +60,130 @@ const {
     <span hidden aria-hidden="true">
       <input name="honeypot" tabindex="-1" autocomplete="off" />
     </span>
-    <h2 id={id + "-title"}>
-      {title.split("\n").map((line, i) => (
-        <>
-          {i > 0 && " "}
-          {i > 0 && <br />}
-          {line}
-        </>
-      ))}
-    </h2>
-    <input name="subject" type="hidden" value={subject} />
-    {variant === "question" ? (
+    {variant === "popup" ? (
       <>
-        <label class="sr-only" for={id + "-question"}>
-          Ваш вопрос
-        </label>
-        <textarea
-          id={id + "-question"}
-          name="question"
-          maxlength="1200"
-          placeholder="Напишите свой вопрос"
-          required
-        ></textarea>
+        <h2 id={id + "-title"} class="popup-title">
+          {title}
+        </h2>
+        <slot name="context" />
+        <div class="popup-body">
+          <p id={id + "-description"} class="popup-description">
+            {description}
+          </p>
+          <slot name="media" />
+          <div class="popup-fields">
+            <slot name="expert" />
+            <label class="sr-only" for={id + "-phone"}>
+              Телефон
+            </label>
+            <PhoneField id={id + "-phone"} />
+            {resume && <ResumeField id={id + "-resume"} />}
+            <div class="popup-channel">
+              <p>Выберите удобный способ связи:</p>
+              <ContactMethods />
+              <input
+                class="sr-only"
+                type="text"
+                name="channel"
+                value=""
+                tabindex="-1"
+                autocomplete="off"
+                required
+                aria-label="Способ связи"
+              />
+            </div>
+            <ConsentCheckbox />
+            <div class="popup-actions">
+              <div class="popup-submit">
+                <Button label={buttonLabel} type="submit" />
+                {note && <p class="popup-action-note">{note}</p>}
+              </div>
+              {note && <hr class="popup-actions-divider" />}
+              <FormSocial />
+            </div>
+            <p class="form-result" role="status" aria-live="polite" hidden></p>
+          </div>
+        </div>
+        <input name="subject" type="hidden" value={subject} />
       </>
     ) : (
       <>
-        <label class="sr-only" for={id + "-name"}>
-          Ваше имя
+        <h2 id={id + "-title"}>
+          {title.split("\n").map((line, i) => (
+            <>
+              {i > 0 && " "}
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
+        </h2>
+        {!compact && variant === "question" && (
+          <ExpertProfile
+            name="Елена Горбанева"
+            role="Специалист по недвижимости"
+            src="/assets/staff-elena-gorbaneva-consultation.webp"
+          />
+        )}
+        <input name="subject" type="hidden" value={subject} />
+        {variant === "question" ? (
+          <>
+            <label class="sr-only" for={id + "-question"}>
+              {siteText("lead-form.text.4")}
+            </label>
+            <textarea
+              id={id + "-question"}
+              name="question"
+              maxlength="1200"
+              placeholder="Напишите свой вопрос"
+              required
+            ></textarea>
+          </>
+        ) : (
+          <>
+            <label class="sr-only" for={id + "-name"}>
+              Ваше имя
+            </label>
+            <input
+              id={id + "-name"}
+              name="name"
+              maxlength="80"
+              autocomplete="name"
+              placeholder="Ваше имя"
+              required
+            />
+            <>
+              <ContactMethods />
+              <input
+                class="sr-only"
+                type="text"
+                name="channel"
+                value=""
+                tabindex="-1"
+                autocomplete="off"
+                required
+                aria-label="Способ связи"
+              />
+            </>
+          </>
+        )}
+        <label class="sr-only" for={id + "-phone"}>
+          {siteText("lead-form.text.6")}
         </label>
-        <input
-          id={id + "-name"}
-          name="name"
-          maxlength="80"
-          autocomplete="name"
-          placeholder="Ваше имя"
-          required
-        />
-        <ChoiceGroup
-          name="Предпочитаемый способ связи"
-          options={["По телефону", "Telegram", "WhatsApp"]}
-          channels
-        />
-        <input type="hidden" name="channel" value="По телефону" />
+        <PhoneField id={id + "-phone"} />
+        <ConsentCheckbox />
+        <div class="form-bottom">
+          <Button label={buttonLabel} type="submit" />
+          <FormSocial />
+        </div>
+        <p class="form-result" role="status" aria-live="polite" hidden></p>
       </>
     )}
-    <label class="sr-only" for={id + "-phone"}>
-      Телефон
-    </label>
-    <input
-      id={id + "-phone"}
-      name="phone"
-      type="tel"
-      inputmode="tel"
-      autocomplete="tel"
-      placeholder="+7 (999) 999-99-99"
-      required
-    />
-    <ConsentCheckbox />
-    <div class="form-bottom">
-      <Button label={buttonLabel} type="submit" />
-      <div class="form-social">
-        <span>
-          Или свяжитесь
-          <br />
-          с нами сами
-        </span>
-        <SocialLinks />
-      </div>
-    </div>
-    <p class="form-result" role="status" aria-live="polite" hidden></p>
   </form>
   {!compact && (
     <div class="form-person">
       <img
         class="form-person-stroke"
-        src="/assets/53384.svg"
+        src="/assets/consultation-person-shadow.svg"
         alt=""
         width="498.909"
         height="656.2"
@@ -126,47 +191,46 @@ const {
         decoding="async"
       />
       <img
-        class="person"
-        src="/assets/03306.webp"
+        class="person person-photo"
+        src="/assets/staff-elena-gorbaneva-consultation.webp"
         alt="Елена Горбанева"
         loading="lazy"
         width="1280"
         height="1600"
         decoding="async"
       />
-      <div class="paper name-tag">
-        <h3>Елена Горбанева</h3>
-        <p>Специалист по недвижимости</p>
-      </div>
+      <PersonLabel
+        class="name-tag"
+        name="Елена Горбанева"
+        role="Специалист по недвижимости"
+      />
     </div>
   )}
 </div>
 <script>
+  import { formErrors } from "../lib/form-errors";
   import { applyPhoneMask } from "../lib/phone-mask";
   document
     .querySelectorAll<HTMLFormElement>(".lead-form")
     .forEach((form, formIndex) => {
       const phone = form.querySelector<HTMLInputElement>("[name=phone]")!;
-      const phoneMessage = "Введите российский телефон: +7 и 10 цифр номера.";
+      form.noValidate = true;
+      const phoneMessage = formErrors.phone;
       const validate = () => {
         const digits = phone.value.replace(/\D/g, "");
         phone.setCustomValidity(
-          /^[+\d()\s-]*$/.test(phone.value) &&
-            /^(?:[78][349]\d{9}|[349]\d{9})$/.test(digits)
+          /^\+?[\d()\s-]+$/.test(phone.value) &&
+            (phone.value.startsWith("+")
+              ? /^7\d{10}$/
+              : /^(?:[78]\d{10}|\d{10})$/
+            ).test(digits)
             ? ""
             : phoneMessage,
         );
       };
       applyPhoneMask(phone, validate);
-      // a11y: ошибки связаны с полем (aria-invalid + aria-describedby на
-      // скрытый текст ошибки) и объявляются сводкой role="alert". Вид не
-      // меняется: визуально ошибку по-прежнему показывает браузерная подсказка.
-      const messages: Record<string, string> = {
-        question: "Напишите свой вопрос.",
-        name: "Укажите ваше имя.",
-        phone: phoneMessage,
-        consent: "Нужно согласие на обработку персональных данных.",
-      };
+      // Ошибки показываются под полями после попытки отправки.
+      const messages = formErrors;
       const alertBox = document.createElement("p");
       alertBox.className = "sr-only";
       alertBox.setAttribute("role", "alert");
@@ -179,9 +243,18 @@ const {
       fields.forEach((field, index) => {
         if (!field.id) field.id = `lead-${formIndex}-${field.name}-${index}`;
         const error = document.createElement("span");
-        error.className = "sr-only";
+        error.className = "lead-field-error form-error";
+        error.hidden = true;
         error.id = `${field.id}-error`;
-        (field.closest("label") ?? field).after(error);
+        const anchor = field.closest("label") ?? field;
+        if (field.name !== "channel") {
+          const group = document.createElement("div");
+          group.className = "lead-field-group";
+          anchor.before(group);
+          group.append(anchor, error);
+        } else {
+          anchor.after(error);
+        }
         const sync = () => {
           if (field.name === "phone") validate();
           else
@@ -191,7 +264,7 @@ const {
                   ? !(field as HTMLInputElement).checked
                   : !field.value.trim()
               )
-                ? (messages[field.name] ?? "Заполните поле.")
+                ? (messages[field.name] ?? formErrors.required)
                 : "",
             );
           if (
@@ -201,6 +274,7 @@ const {
             field.removeAttribute("aria-invalid");
             field.removeAttribute("aria-describedby");
             error.textContent = "";
+            error.hidden = true;
           }
           alertBox.textContent = fields
             .filter(
@@ -214,10 +288,12 @@ const {
         sync();
         field.addEventListener("input", sync);
         field.addEventListener("change", sync);
-        field.addEventListener("invalid", () => {
+        field.addEventListener("invalid", (event) => {
+          event.preventDefault();
           field.setAttribute("aria-invalid", "true");
           field.setAttribute("aria-describedby", error.id);
           error.textContent = field.validationMessage;
+          error.hidden = false;
           queueMicrotask(() => {
             const invalid = fields.filter((item) => !item.validity.valid);
             alertBox.textContent = invalid.length
@@ -242,6 +318,7 @@ const {
           field.removeAttribute("aria-invalid");
           field.removeAttribute("aria-describedby");
           document.getElementById(`${field.id}-error`)!.textContent = "";
+          document.getElementById(`${field.id}-error`)!.hidden = true;
         });
         initialChoices.forEach(({ group, selected }) => {
           group.querySelectorAll("button").forEach((button) => {
@@ -256,7 +333,10 @@ const {
       });
       form.addEventListener("choice-change", ((e: CustomEvent) => {
         const field = form.querySelector<HTMLInputElement>("[name=channel]");
-        if (field) field.value = e.detail.value;
+        if (field) {
+          field.value = e.detail.value;
+          field.dispatchEvent(new Event("input", { bubbles: true }));
+        }
       }) as EventListener);
       let sending = false;
       const loadSubmit = () => import("../scripts/lead-submit");
@@ -270,8 +350,14 @@ const {
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         if (sending) return;
-        validate();
-        if (!form.reportValidity()) return;
+        fields.forEach((field) => field.dispatchEvent(new Event("input")));
+        if (!form.checkValidity()) {
+          const invalid = fields.find((field) => !field.validity.valid);
+          if (invalid?.name === "channel")
+            form.querySelector<HTMLButtonElement>(".channels button")?.focus();
+          else invalid?.focus();
+          return;
+        }
         sending = true;
         const submit = form.querySelector<HTMLButtonElement>("[type=submit]")!;
         submit.disabled = true;
@@ -282,14 +368,13 @@ const {
           const { sendLead } = await loadSubmit();
           await sendLead(form);
           form.reset();
-          status.hidden = false;
-          status.textContent = "Заявка отправлена. Мы свяжемся с вами.";
+          window.location.assign(`${import.meta.env.BASE_URL.replace(/\/$/, "")}/spasibo/`);
         } catch (error) {
           status.hidden = false;
           status.textContent =
             error instanceof Error
               ? error.message
-              : "Не удалось отправить заявку. Попробуйте ещё раз.";
+              : "Не удалось отправить заявку. Попробуйте ещё раз.";
         } finally {
           sending = false;
           submit.disabled = false;
@@ -305,5 +390,19 @@ const {
     position: absolute;
     left: 0;
     top: calc(100% + 4px);
+  }
+</style>
+
+<style is:global>
+  @media (max-width: 767px) {
+    .lead-form > .lead-field-group:has(.consent) ~ .form-bottom {
+      margin-top: var(--space-2);
+    }
+    #lead-dialog
+      .popup-fields
+      > .lead-field-group:has(.consent)
+      ~ .popup-actions {
+      margin-top: 0;
+    }
   }
 </style>

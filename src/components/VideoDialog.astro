@@ -1,0 +1,37 @@
+---
+import "../styles/video-dialog.css";
+---
+
+<dialog id="video-dialog" aria-labelledby="video-dialog-title">
+  <h2 id="video-dialog-title" class="sr-only">
+    Видеоотзыв
+  </h2>
+  <button
+    type="button"
+    class="video-dialog-close"
+    aria-label="Закрыть видео"
+    autofocus
+  >
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        d="M6 6 18 18M18 6 6 18"
+        stroke="currentColor"
+        stroke-width="2.5"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+  <div class="video-dialog-frame">
+    <video controls playsinline preload="none"></video>
+  </div>
+</dialog>
+<script>
+  import "../scripts/video-dialog";
+</script>

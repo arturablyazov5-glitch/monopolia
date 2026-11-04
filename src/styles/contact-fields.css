@@ -1,0 +1,113 @@
+/* Общие поля контактов: образец формы срочной продажи. */
+.paper-white,
+.lead-section-card {
+  --phone-field-fill: var(--color-paper-warm);
+  --phone-field-texture: var(--texture-paper-beige);
+}
+.contact-field.contact-field.contact-field,
+.phone-field.phone-field.phone-field,
+.channels.contact-method-options.contact-method-options .chip {
+  --brush-sizes:
+    8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px), 8px 8px,
+    calc(100% - 14px) 8px, 8px 8px;
+}
+.contact-field.contact-field.contact-field,
+.phone-field.phone-field.phone-field,
+#lead-dialog .phone-field.phone-field.phone-field {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: var(--phone-field-fill, var(--color-paper));
+  background-image: var(--phone-field-texture, none);
+  background-size: var(--texture-paper-size);
+  background-position: var(--texture-paper-position);
+  background-repeat: var(--texture-paper-repeat);
+  padding: 12px 20px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-field-text);
+  --brush-images: var(--brush-square-images);
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-clip: border-box;
+}
+.phone-field.phone-field::placeholder {
+  color: var(--color-muted);
+}
+.channels.contact-method-options.contact-method-options {
+  gap: 10px;
+}
+.channels.contact-method-options.contact-method-options .chip {
+  appearance: none;
+  --brush-sizes:
+    6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
+    calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
+    calc(100% - 10px) 6px, 6px 6px;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  gap: 8px;
+  padding: 8px 12px 6px 10px;
+  font: 14px/1.2 var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  --brush-images: var(--brush-square-images);
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-clip: border-box;
+}
+.channels.contact-method-options.contact-method-options .chip.selected {
+  background: var(--color-ink);
+  color: #fff;
+}
+.contact-method-options .choice-icon {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transform: translateY(-2px);
+}
+.contact-method-options .choice-icon img {
+  position: absolute;
+  left: -8.19%;
+  top: -6.7%;
+  max-width: none;
+}
+@media (max-width: 767px) {
+  .contact-field.contact-field.contact-field,
+  .phone-field.phone-field.phone-field,
+  #lead-dialog .phone-field.phone-field.phone-field {
+    min-height: 48px;
+    font-size: 16px;
+  }
+  .channels.contact-method-options.contact-method-options .chip {
+    min-height: 44px;
+  }
+}
+
+/* Общая группа поля и сообщения об ошибке для форм и квизов. */
+.lead-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.lead-field-error {
+  display: block;
+  margin: 8px 0 0;
+  font-size: var(--text-small);
+  line-height: 1.4;
+}
+.lead-field-group > .lead-field-error {
+  margin: 0;
+}
+.lead-field-error[hidden] {
+  display: none;
+}

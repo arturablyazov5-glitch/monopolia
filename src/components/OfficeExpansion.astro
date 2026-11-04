@@ -1,15 +1,18 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import "../styles/office-expansion.css";
+import "../styles/office-expansion-mobile.css";
 ---
 
 <section
+  data-surface="dark"
   class="office-expansion"
   aria-labelledby="expansion-title"
   data-node-id="1380:5274"
 >
   <div class="expansion-map" aria-hidden="true">
     <img
-      src="/assets/5ac82.svg"
+      src="/assets/office-building-photo.svg"
       width="5385.13"
       height="3034.879"
       alt=""
@@ -20,16 +23,26 @@ import "../styles/office-expansion.css";
   </div>
   <div class="expansion-container">
     <h2 id="expansion-title">
-      Мы добрались до Благовещенска <br />— открываем второй офис
+      {siteText("office-expansion.text.1")} <br />{siteText("office-expansion.text.2")}
     </h2>
+    <div class="expansion-locations">
+    <svg class="office-mobile-leaders" viewBox="0 0 360 400" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="office-leader-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto">
+          <path d="M0 0 6 3 0 6Z" fill="#fff" stroke="none" />
+        </marker>
+      </defs>
+      <path d="M79.2 218 C79.2 244 142 239 165 260" marker-end="url(#office-leader-arrow)" />
+      <path d="M280.8 150 C280.8 192 252 202 252 222" marker-end="url(#office-leader-arrow)" />
+    </svg>
     <div class="office-marker future-office">
       <div class="office-label-group">
         <div class="office-label">
-          Благовещенск <span>Скоро</span>
+          {siteText("office-expansion.text.3")} <span>{siteText("office-expansion.text.4")}</span>
         </div>
         <img
           class="office-arrow"
-          src="/assets/d8515.svg"
+          src="/assets/office-future-arrow.svg"
           width="27.776"
           height="23.3"
           alt=""
@@ -38,7 +51,7 @@ import "../styles/office-expansion.css";
         />
       </div>
       <img
-        src="/assets/66fdd.svg"
+        src="/assets/office-photo-decor.svg"
         width="29"
         height="40"
         alt=""
@@ -48,7 +61,7 @@ import "../styles/office-expansion.css";
     </div>
     <div class="office-marker current-office">
       <img
-        src="/assets/66fdd.svg"
+        src="/assets/office-photo-decor.svg"
         width="29"
         height="40"
         alt=""
@@ -56,10 +69,10 @@ import "../styles/office-expansion.css";
         decoding="async"
       />
       <div class="office-label-group">
-        <div class="office-label">Белогорск</div>
+        <div class="office-label">{"Белогорск"}</div>
         <img
           class="office-arrow"
-          src="/assets/72e89.svg"
+          src="/assets/office-history-arrow.svg"
           width="27.776"
           height="23.3"
           alt=""
@@ -71,18 +84,18 @@ import "../styles/office-expansion.css";
     <div class="office-photo-bubble future-photo">
       <div class="office-photo-frame">
         <img
-          src="/assets/268b2.webp"
+          src="/assets/office-belogorsk-interior.webp"
           width="200"
           height="120"
-          alt="Место для фотографии будущего офиса"
+          alt="Нейтральное размытое изображение интерьера — офис ещё не открыт"
           loading="lazy"
           decoding="async"
         />
-        <span>Фото офиса</span>
+        <span class="office-coming-soon">???</span>
       </div>
       <img
         class="office-bubble-tail"
-        src="/assets/2b5ba.svg"
+        src="/assets/office-speech-tail.svg"
         width="42.183"
         height="24.858"
         alt=""
@@ -94,7 +107,7 @@ import "../styles/office-expansion.css";
       <div class="office-photo-frame">
         <img
           class="office-photo-underlay"
-          src="/assets/268b2.webp"
+          src="/assets/office-future-photo-placeholder.webp"
           width="200"
           height="120"
           alt=""
@@ -102,7 +115,7 @@ import "../styles/office-expansion.css";
           decoding="async"
         />
         <img
-          src="/assets/291d1.webp"
+          src="/assets/office-belogorsk-interior.webp"
           width="200"
           height="120"
           alt="Интерьер офиса Монополии в Белогорске"
@@ -112,13 +125,14 @@ import "../styles/office-expansion.css";
       </div>
       <img
         class="office-bubble-tail"
-        src="/assets/2b5ba.svg"
+        src="/assets/office-speech-tail.svg"
         width="42.183"
         height="24.858"
         alt=""
         loading="lazy"
         decoding="async"
       />
+    </div>
     </div>
   </div>
 </section>

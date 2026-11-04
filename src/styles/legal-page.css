@@ -3,13 +3,15 @@
   width: min(var(--container-width), 100% - 64px);
   min-height: 60vh;
   margin: 0 auto;
-  padding: 140px 0 80px;
+  padding: 140px 0 var(--section-space);
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 .legal-page h1 {
-  font: 500 var(--text-heading) / 1.1 var(--font-heading);
+  font: 500 44px / 1.1 var(--font-heading);
+  max-width: none;
+  text-wrap: balance;
 }
 .legal-page h2 {
   font: 500 24px / 1.2 var(--font-heading);
@@ -34,6 +36,66 @@
 @media (max-width: 767px) {
   .legal-page {
     width: calc(100% - 24px);
-    padding-top: 112px;
+    padding-top: var(--section-space-double);
+  }
+  .legal-page h1 {
+    font-size: var(--h1-fluid);
+  }
+  .legal-page h2 {
+    font-size: min(20px, calc(var(--h1-fluid) - 3px));
+  }
+}
+.legal-page section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.legal-page ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font: 16px / 1.4 var(--font-body);
+  color: var(--color-muted);
+}
+.legal-page li {
+  padding-left: 24px;
+  position: relative;
+}
+.legal-page li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+}
+.legal-page li a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  z-index: 50;
+  padding: 12px 24px;
+  background: var(--color-dark);
+  color: #fff;
+  font: 500 16px / 1.2 var(--font-body);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.legal-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .legal-toast {
+    transition: none;
   }
 }

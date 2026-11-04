@@ -1,0 +1,18 @@
+---
+import Paper from "./Paper.astro";
+import "../styles/person-label.css";
+
+interface Props {
+  name: string;
+  role: string;
+  class?: string;
+  node?: string;
+}
+
+const { name, role, class: className = "", node = "" } = Astro.props;
+---
+
+<Paper class:list={["person-label", className]} node={node}>
+  <p class="person-label-name">{name}</p>
+  <p class="person-label-role">{role}</p>
+</Paper>

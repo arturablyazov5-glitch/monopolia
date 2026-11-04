@@ -1,5 +1,12 @@
 /** One hand-drawn, linear icon set shared by Astro and dynamic catalog rows. */
 export const iconPaths = {
+  logout: "M9 4H4v16h5M11 12h10m-4-4 4 4-4 4",
+  building: "M4 21V7l8-4 8 4v14M2 21h20M8 8v2m8-2v2m-8 3v2m8-2v2m-6 6v-4h4v4",
+  text: "M4 5h16M12 5v15M8 20h8M4 10V5m16 5V5",
+  external:
+    "M14 3h7v7m0-7L10 14M10 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-6",
+  chevron: "m6 9 6 6 6-6",
+  cursor: "m5 3 15 10-7 1-3 7Z",
   edit: "m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z",
   trash: "M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7",
   eye: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
@@ -15,19 +22,20 @@ export const iconPaths = {
   login: "M9 4h11v16H9M3 12h11m-4-4 4 4-4 4",
 } as const;
 export type IconName = keyof typeof iconPaths;
+export const iconAttributes = {
+  width: "18",
+  height: "18",
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  "stroke-width": "1.5",
+  "stroke-linecap": "round",
+  "stroke-linejoin": "round",
+  "aria-hidden": "true",
+} as const;
 export function icon(name: IconName) {
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  for (const [key, value] of Object.entries({
-    width: "20",
-    height: "20",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    "stroke-width": "1.8",
-    "stroke-linecap": "round",
-    "stroke-linejoin": "round",
-    "aria-hidden": "true",
-  }))
+  for (const [key, value] of Object.entries(iconAttributes))
     svg.setAttribute(key, value);
   const path = document.createElementNS(svg.namespaceURI, "path");
   path.setAttribute("d", iconPaths[name]);

@@ -1,24 +1,14 @@
 ---
+import { adminCsp } from "../../lib/frame-policy.mjs";
 import SiteHeader from "../../components/SiteHeader.astro";
 import AdminIcon from "../../components/AdminIcon.astro";
-import Paper from "../../components/Paper.astro";
-import Button from "../../components/Button.astro";
-import AdminChoiceGroup from "../../components/AdminChoiceGroup.astro";
 import "../../styles/global.css";
 import "../../styles/admin.css";
 const endpoint = import.meta.env.PUBLIC_CATALOG_ENDPOINT || "";
-const api = endpoint ? new URL(endpoint).origin : "";
+const api =
+  endpoint && !endpoint.startsWith("/") ? new URL(endpoint).origin : "";
 const media = import.meta.env.PUBLIC_MEDIA_BASE || "";
-const csp = [
-  "default-src 'self'",
-  "script-src 'self'",
-  "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' blob: data:${media ? ` ${new URL(media).origin}` : ""}`,
-  `connect-src 'self'${api ? ` ${api}` : ""}`,
-  "object-src 'none'",
-  "base-uri 'none'",
-  "form-action 'self'",
-].join("; ");
+const csp = adminCsp(api, media);
 ---
 
 <!doctype html>
@@ -27,198 +17,658 @@ const csp = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content={csp}
-    />
-    <title>Админка — Монополия</title>
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <title>Управление сайтом — Монополия</title>
   </head>
   <body class="admin-page" data-api-base={api} data-media-base={media}>
     <a class="skip-link" href="#admin-main">
-      К содержимому
+      К содержимому
     </a>
-    <div class="fixed-site-header">
-      <SiteHeader variant="admin" />
-    </div>
     <main id="admin-main" class="admin-main">
-      <div class="admin-intro">
-        <div>
-          <span class="admin-eyebrow">ВЫБОР НЕДВИЖИМОСТИ</span>
-          <h1>Объекты под контролем.</h1>
-        </div>
-        <span class="handwriting">Всё на своих местах</span>
-      </div>
-      <Paper class="admin-login">
-        <div class="admin-login-copy">
-          <span class="admin-eyebrow">ДЛЯ КОМАНДЫ МОНОПОЛИИ</span>
-          <h2>Вход в админку</h2>
-          <p>
-            Добавляйте объекты, меняйте фотографии
-            <br />и выбирайте, что показать на сайте.
+      <section class="admin-card admin-login" aria-labelledby="login-title">
+        <div class="admin-login-form">
+          <h1 id="login-title">Войти в админку</h1>
+          <p class="admin-description">
+            Используйте логин и пароль вашей команды.
           </p>
-        </div>
-        <div>
           <form id="login">
-            <label>
-              Логин
+            <label for="login-username">Логин</label>
+            <input
+              id="login-username"
+              name="username"
+              autocomplete="username"
+              required
+              maxlength="80"
+              placeholder="Введите логин"
+              aria-describedby="login-notice"
+            />
+            <label for="login-password">Пароль</label>
+            <div class="admin-password">
               <input
-                name="username"
-                autocomplete="username"
-                required
-                maxlength="80"
-                placeholder="Ваш логин"
-              />
-            </label>
-            <label>
-              Пароль
-              <input
+                id="login-password"
                 type="password"
                 name="password"
                 autocomplete="current-password"
                 required
                 maxlength="256"
-                placeholder="Ваш пароль"
+                placeholder="Введите пароль"
+                aria-describedby="login-notice"
               />
-            </label>
-            <button class="button red" type="submit">
+              <button
+                id="password-toggle"
+                type="button"
+                aria-controls="login-password"
+                aria-pressed="false"
+                aria-label="Показать пароль"
+                title="Показать пароль"
+              >
+                <AdminIcon name="eye" />
+                <AdminIcon name="eyeOff" />
+              </button>
+            </div>
+            <p
+              id="login-notice"
+              class="admin-banner error"
+              role="alert"
+              hidden
+            ></p>
+            <button class="admin-button admin-primary" type="submit">
               <AdminIcon name="login" />
-              Войти
+              <span>Войти в админку</span>
             </button>
           </form>
-          <div class="admin-recovery">
-            <button id="recovery" class="admin-text-button" type="button">
-              Получить пароль
-            </button>
-            <a
-              id="recovery-link"
-              class="recovery-link"
-              target="_blank"
-              rel="noopener"
+          <a class="admin-button admin-secondary admin-login-return" href="/">
+            Вернуться на сайт
+          </a>
+        </div>
+      </section>
+      <div id="workspace" hidden>
+        <div class="fixed-site-header">
+          <SiteHeader variant="admin" />
+        </div>
+        <div class="admin-workspace-layout">
+          <aside class="admin-sidebar" aria-label="Навигация по админке">
+            <span class="admin-eyebrow">Управление сайтом</span>
+            <div
+              class="admin-content-tabs"
+              role="group"
+              aria-label="Раздел админки"
+            >
+              <button
+                type="button"
+                id="tab-objects"
+                class="admin-nav-button"
+                aria-pressed="true"
+                aria-controls="objects-panel"
+              >
+                <AdminIcon name="building" />
+                <span>
+                  Объекты<small>Карточки недвижимости</small>
+                </span>
+              </button>
+              <button
+                type="button"
+                id="tab-texts"
+                class="admin-nav-button"
+                aria-pressed="false"
+                aria-controls="texts-panel"
+              >
+                <AdminIcon name="text" />
+                <span>
+                  Тексты сайта<small>Страницы и общие блоки</small>
+                </span>
+                <span id="text-draft-badge" class="admin-count" hidden>
+                  0
+                </span>
+              </button>
+            </div>
+            <div class="admin-sidebar-footer">
+              <a
+                class="admin-site-link"
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <AdminIcon name="external" />
+                Открыть сайт<span class="sr-only"> в новой вкладке</span>
+              </a>
+              <details class="admin-help">
+                <summary>Как работать с админкой</summary>
+                <p>
+                  <strong>Объекты:</strong> добавьте описание и фото, выберите
+                  видимость и сохраните карточку. Стрелки меняют порядок
+                  на сайте.
+                </p>
+                <p>
+                  <strong>Тексты:</strong> выберите страницу и блок, внесите
+                  правки и проверьте их в предпросмотре. Затем нажмите
+                  «Сохранить изменения».
+                </p>
+                <p>
+                  До сохранения изменения текстов видны только вам.
+                  При переключении разделов они остаются в редакторе.
+                </p>
+              </details>
+            </div>
+          </aside>
+          <div class="admin-section-panels">
+            <p
+              id="workspace-notice"
+              class="admin-banner error"
+              role="alert"
+              hidden
+            ></p>
+            <section id="objects-panel" aria-labelledby="objects-title">
+              <div class="admin-toolbar">
+                <div>
+                  <span class="admin-eyebrow">Каталог недвижимости</span>
+                  <h1 id="objects-title">
+                    Объекты <span id="object-count" class="admin-count"></span>
+                  </h1>
+                  <p>Добавляйте карточки и выбирайте, что увидят посетители.</p>
+                </div>
+                <button
+                  id="add"
+                  class="admin-button admin-primary"
+                  type="button"
+                >
+                  <AdminIcon name="plus" />
+                  Добавить объект
+                </button>
+              </div>
+              <div class="admin-catalog-summary" aria-label="Сводка каталога">
+                <span>
+                  <i class="admin-status-dot"></i>На сайте{" "}
+                  <strong id="object-visible-count">—</strong>
+                </span>
+                <span>
+                  Скрыто <strong id="object-hidden-count">—</strong>
+                </span>
+                <a href="/buy/" target="_blank" rel="noopener noreferrer">
+                  Посмотреть на сайте <AdminIcon name="external" />
+                  <span class="sr-only"> в новой вкладке</span>
+                </a>
+              </div>
+              <div class="admin-card admin-catalog-controls">
+                <label id="search-label" class="admin-search" for="search">
+                  <span class="sr-only">
+                    Поиск объектов по названию или адресу
+                  </span>
+                  <AdminIcon name="search" />
+                  <input
+                    id="search"
+                    type="search"
+                    placeholder="Название или адрес"
+                  />
+                </label>
+                <div
+                  class="admin-filter-group"
+                  role="group"
+                  aria-label="Видимость объектов"
+                >
+                  <button
+                    type="button"
+                    data-object-filter="all"
+                    aria-pressed="true"
+                  >
+                    Все
+                  </button>
+                  <button
+                    type="button"
+                    data-object-filter="visible"
+                    aria-pressed="false"
+                  >
+                    На сайте
+                  </button>
+                  <button
+                    type="button"
+                    data-object-filter="hidden"
+                    aria-pressed="false"
+                  >
+                    Скрытые
+                  </button>
+                </div>
+                <button
+                  id="reload"
+                  class="admin-icon-button"
+                  type="button"
+                  title="Обновить список"
+                  aria-label="Обновить список"
+                >
+                  <AdminIcon name="reload" />
+                </button>
+              </div>
+              <div class="admin-list-caption">
+                <p id="object-results" role="status" aria-live="polite">
+                  Загрузка объектов…
+                </p>
+                <span>Порядок карточек совпадает с порядком на сайте</span>
+              </div>
+              <div
+                id="objects"
+                aria-label="Карточки недвижимости"
+                aria-busy="false"
+              ></div>
+            </section>
+            <section
+              id="texts-panel"
+              aria-labelledby="texts-title"
+              data-view="fields"
               hidden
             >
-              Открыть Telegram ↗
-            </a>
+              <div class="admin-toolbar">
+                <div>
+                  <span class="admin-eyebrow">Редактор контента</span>
+                  <h1 id="texts-title">Тексты сайта</h1>
+                  <p>
+                    Меняйте текст и сразу проверяйте, как он выглядит
+                    на странице.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  id="content-reload"
+                  class="admin-button admin-secondary"
+                >
+                  <AdminIcon name="reload" />
+                  Обновить
+                </button>
+              </div>
+              <ol class="admin-workflow" aria-label="Порядок работы">
+                <li>
+                  <span>1</span>Выберите страницу
+                </li>
+                <li>
+                  <span>2</span>Измените текст
+                </li>
+                <li>
+                  <span>3</span>Проверьте и сохраните
+                </li>
+              </ol>
+              <nav
+                id="content-pages"
+                class="admin-content-pages"
+                aria-label="Страницы сайта"
+              ></nav>
+              <div class="admin-content-filters">
+                <label class="admin-search" for="content-search">
+                  <span class="sr-only">Поиск текстов по всем страницам</span>
+                  <AdminIcon name="search" />
+                  <input
+                    id="content-search"
+                    type="search"
+                    placeholder="Поиск по текстам сайта"
+                  />
+                </label>
+                <label class="admin-content-changed">
+                  <input id="content-changed" type="checkbox" /> Только
+                  изменённые
+                </label>
+              </div>
+              <div
+                id="content-results"
+                class="admin-content-results"
+                aria-label="Результаты поиска"
+                hidden
+              ></div>
+              <p
+                id="content-status"
+                class="admin-content-status"
+                role="status"
+                aria-live="polite"
+              >
+                Загрузка текстов…
+              </p>
+              <div
+                class="admin-content-view admin-filter-group"
+                role="group"
+                aria-label="Режим редактора"
+              >
+                <button
+                  type="button"
+                  data-content-view="fields"
+                  aria-controls="content-fields-pane"
+                  aria-pressed="true"
+                >
+                  Редактировать текст
+                </button>
+                <button
+                  type="button"
+                  data-content-view="preview"
+                  aria-controls="content-preview-pane"
+                  aria-pressed="false"
+                >
+                  Предпросмотр
+                </button>
+              </div>
+              <div class="admin-content-workbench">
+                <div id="content-fields-pane" class="admin-content-fields-pane">
+                  <details id="content-block-picker" class="admin-block-picker">
+                    <summary>
+                      <span>
+                        <small>Блок страницы</small>
+                        <strong id="content-block-label">Выберите блок</strong>
+                      </span>
+                      <AdminIcon name="chevron" />
+                    </summary>
+                    <nav
+                      id="content-blocks"
+                      class="admin-content-blocks"
+                      aria-label="Блоки выбранной страницы"
+                    ></nav>
+                  </details>
+                  <div
+                    id="content-groups"
+                    tabindex="0"
+                    aria-label="Поля текстов"
+                  ></div>
+                </div>
+                <aside
+                  id="content-preview-pane"
+                  class="admin-content-preview"
+                  aria-label="Предпросмотр страницы"
+                >
+                  <div class="admin-preview-heading">
+                    <span>
+                      <i class="admin-status-dot"></i>Предпросмотр
+                    </span>
+                    <span class="admin-preview-draft">
+                      До сохранения — только вам
+                    </span>
+                  </div>
+                  <div class="admin-content-preview-controls">
+                    <div
+                      class="admin-preview-widths admin-filter-group"
+                      role="group"
+                      aria-label="Ширина предпросмотра"
+                    >
+                      <button
+                        type="button"
+                        data-preview-width="1440"
+                        aria-pressed="true"
+                      >
+                        Компьютер
+                      </button>
+                      <button
+                        type="button"
+                        data-preview-width="768"
+                        aria-pressed="false"
+                      >
+                        Планшет
+                      </button>
+                      <button
+                        type="button"
+                        data-preview-width="390"
+                        aria-pressed="false"
+                      >
+                        Телефон
+                      </button>
+                    </div>
+                    <span id="content-preview-size">1440 px</span>
+                  </div>
+                  <div
+                    id="content-common-targets"
+                    class="admin-common-targets admin-filter-group"
+                    role="group"
+                    aria-label="Общая область"
+                    hidden
+                  >
+                    <button type="button" data-preview-target="header">
+                      Шапка
+                    </button>
+                    <button type="button" data-preview-target="footer">
+                      Подвал
+                    </button>
+                  </div>
+                  <p
+                    id="content-preview-status"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    Загрузка предпросмотра…
+                  </p>
+                  <div
+                    id="content-preview-viewport"
+                    class="admin-preview-viewport"
+                  >
+                    <iframe
+                      id="content-preview-frame"
+                      title="Живой предпросмотр главной страницы"
+                      referrerpolicy="same-origin"
+                    ></iframe>
+                  </div>
+                  <p class="admin-preview-help">
+                    <AdminIcon name="cursor" />
+                    Нажмите на текст на странице — откроется нужное поле. Формы
+                    и переходы здесь отключены.
+                  </p>
+                  <button
+                    id="content-preview-retry"
+                    type="button"
+                    class="admin-text-button"
+                    hidden
+                  >
+                    Повторить загрузку
+                  </button>
+                </aside>
+              </div>
+              <div
+                class="admin-content-savebar"
+                role="group"
+                aria-label="Сохранение текстов"
+              >
+                <div class="admin-save-state">
+                  <span
+                    id="content-dirty-count"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    Нет несохранённых изменений
+                  </span>
+                  <small id="content-save-help">
+                    Посетители увидят правки после сохранения
+                  </small>
+                </div>
+                <button
+                  type="button"
+                  id="content-discard"
+                  class="admin-button admin-secondary"
+                  disabled
+                >
+                  Отменить правки
+                </button>
+                <button
+                  type="button"
+                  id="content-save"
+                  class="admin-button admin-primary"
+                  disabled
+                >
+                  Сохранить изменения
+                </button>
+                <details
+                  id="content-review"
+                  class="admin-content-review"
+                  hidden
+                >
+                  <summary>Посмотреть изменения перед сохранением</summary>
+                  <div id="content-review-list"></div>
+                </details>
+              </div>
+            </section>
           </div>
-          <p id="login-notice" class="admin-banner" role="status" hidden></p>
         </div>
-      </Paper>
-      <div id="workspace" hidden>
-        <div class="admin-toolbar">
-          <div>
-            <h2>
-              Ваши объекты <span id="object-count"></span>
-            </h2>
-            <p>Порядок в списке — порядок на сайте.</p>
-          </div>
-          <div class="toolbar">
-            <button
-              id="reload"
-              class="button white admin-secondary"
-              type="button"
-              title="Обновить список"
-              aria-label="Обновить список"
-            >
-              <AdminIcon name="reload" />
-              <span>Обновить список</span>
-              <span class="admin-tooltip" aria-hidden="true">
-                Обновить список
-              </span>
-            </button>
-            <button id="add" class="button red" type="button">
-              <AdminIcon name="plus" />
-              Добавить объект
-            </button>
-          </div>
-        </div>
-        <label id="search-label" class="admin-search" hidden>
-          <span class="admin-search-caption">Поиск по названию</span>
-          <AdminIcon name="search" />
-          <input id="search" type="search" placeholder="Найти объект" />
-        </label>
-        <div
-          id="objects"
-          aria-label="Карточки недвижимости"
-          aria-busy="false"
-        ></div>
       </div>
     </main>
     <dialog
       id="editor"
       class="admin-dialog"
       aria-labelledby="edit-title"
+      aria-describedby="editor-description"
       hidden
     >
-      <div class="paper admin-panel">
+      <div class="admin-panel">
         <header class="admin-dialog-heading">
           <div>
-            <span class="admin-eyebrow">КАРТОЧКА НЕДВИЖИМОСТИ</span>
+            <span class="admin-eyebrow">Карточка недвижимости</span>
             <h2 id="edit-title" tabindex="-1">
               Новый объект
             </h2>
+            <p id="editor-description">
+              Заполните описание, добавьте фото и проверьте предпросмотр
+              карточки.
+            </p>
           </div>
           <button
             id="editor-close"
             class="admin-icon-button"
             type="button"
             aria-label="Закрыть редактор"
-            title="Закрыть редактор"
-            data-tooltip="Закрыть редактор"
           >
             <AdminIcon name="close" />
           </button>
         </header>
         <form id="form" novalidate>
+          <div
+            id="object-error-summary"
+            class="admin-error-summary"
+            role="alert"
+            tabindex="-1"
+            hidden
+          ></div>
           <div class="admin-editor-body">
-            <div id="fields" class="fields"></div>
-            <div id="image-editor">
-              <label class="admin-upload">
-                <AdminIcon name="camera" />
-                <span>
-                  Фотография <small>JPEG, PNG или WebP · до 15 МБ</small>
-                </span>
-                <input
-                  id="image-file"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                />
-              </label>
-              <p class="admin-photo-note">
-                Кадр 4:3 — по центру фотографии. Оригинал не публикуется.
+            <div class="admin-editor-main">
+              <section
+                class="admin-editor-section"
+                aria-labelledby="details-title"
+              >
+                <h3 id="details-title">
+                  <span>1</span>Описание и цена
+                </h3>
+                <p class="admin-field-note">
+                  Название, адрес и цена обязательны. Остальные поля можно
+                  оставить пустыми.
+                </p>
+                <div id="fields" class="fields"></div>
+              </section>
+              <section
+                id="image-editor"
+                class="admin-editor-section"
+                aria-labelledby="image-title"
+              >
+                <h3 id="image-title">
+                  <span>2</span>Фотография
+                </h3>
+                <label class="admin-upload">
+                  <AdminIcon name="camera" />
+                  <span>
+                    <strong>Выберите фотографию</strong>
+                    <small>JPEG, PNG или WebP · до 15 МБ</small>
+                  </span>
+                  <input
+                    id="image-file"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                  />
+                </label>
+                <p id="image-status" class="admin-field-note" role="status">
+                  Фото будет обрезано по центру в формате 4:3. Проверьте кадр
+                  в предпросмотре.
+                </p>
+                <canvas
+                  id="crop-preview"
+                  width="680"
+                  height="510"
+                  hidden
+                  aria-label="Кадр фотографии"
+                  role="img"
+                ></canvas>
+                <span
+                  class="field-error"
+                  data-field="image"
+                  id="error-image"
+                ></span>
+              </section>
+              <section
+                class="admin-editor-section admin-visibility"
+                aria-labelledby="visibility-title"
+              >
+                <h3 id="visibility-title">
+                  <span>3</span>Видимость
+                </h3>
+                <div class="admin-switch-row">
+                  <button
+                    id="object-visible"
+                    type="button"
+                    class="admin-switch"
+                    role="switch"
+                    aria-checked="true"
+                    aria-labelledby="object-visible-label"
+                    aria-describedby="visibility-help"
+                  >
+                    <span aria-hidden="true"></span>
+                  </button>
+                  <label id="object-visible-label" for="object-visible">
+                    Показывать на сайте
+                  </label>
+                </div>
+                <p id="visibility-help" class="admin-field-note">
+                  После сохранения карточка появится на сайте.
+                </p>
+              </section>
+            </div>
+            <aside
+              class="admin-object-preview"
+              aria-label="Предпросмотр карточки"
+            >
+              <span class="admin-eyebrow">Карточка на сайте</span>
+              <div class="admin-property-preview">
+                <div class="admin-property-photo">
+                  <img
+                    id="current-image"
+                    width="360"
+                    height="270"
+                    alt="Фото объекта в карточке"
+                    hidden
+                  />
+                  <span id="preview-photo-placeholder">
+                    <AdminIcon name="camera" />
+                    Здесь будет ваше фото
+                  </span>
+                  <span id="preview-discount" hidden></span>
+                </div>
+                <div class="admin-property-copy">
+                  <h3 id="preview-title">Название объекта</h3>
+                  <p id="preview-address">Адрес объекта</p>
+                  <div class="admin-property-price">
+                    <strong id="preview-price">Цена</strong>
+                    <del id="preview-old-price" hidden></del>
+                  </div>
+                  <p id="preview-price-per-meter" hidden></p>
+                  <p id="preview-mortgage" hidden></p>
+                </div>
+              </div>
+              <p class="admin-field-note">
+                Предпросмотр обновляется по мере заполнения. На сайте изменения
+                появятся после сохранения.
               </p>
-              <canvas
-                id="crop-preview"
-                width="680"
-                height="510"
-                hidden
-                aria-label="Кадр фотографии"
-                role="img"
-              ></canvas>
-              <img
-                id="current-image"
-                width="360"
-                height="270"
-                alt="Текущее фото"
-                hidden
-              />
-              <span
-                class="field-error"
-                data-field="image"
-                id="error-image"
-              ></span>
-            </div>
-            <div class="admin-visibility">
-              <p>Видимость на сайте</p>
-              <AdminChoiceGroup
-                name="Видимость карточки"
-                options={["Показывать", "Скрыть"]}
-              />
-            </div>
+            </aside>
           </div>
           <footer class="admin-dialog-footer">
-            <button id="cancel" class="admin-text-button" type="button">
+            <span id="object-save-status">Изменения ещё не сохранены</span>
+            <button
+              id="cancel"
+              class="admin-button admin-secondary"
+              type="button"
+            >
               Отмена
             </button>
-            <Button label="Сохранить" type="submit" />
+            <button
+              id="object-save"
+              class="admin-button admin-primary"
+              type="submit"
+            >
+              Сохранить объект
+            </button>
           </footer>
         </form>
       </div>
@@ -230,7 +680,7 @@ const csp = [
       aria-labelledby="confirm-title"
       aria-describedby="confirm-description"
     >
-      <div class="paper admin-panel">
+      <div class="admin-panel">
         <header class="admin-dialog-heading">
           <h2 id="confirm-title">Удалить объект?</h2>
           <button
@@ -238,23 +688,25 @@ const csp = [
             class="admin-icon-button"
             type="button"
             aria-label="Закрыть подтверждение"
-            title="Закрыть подтверждение"
-            data-tooltip="Закрыть"
           >
             <AdminIcon name="close" />
           </button>
         </header>
-        <p id="confirm-description">Это действие нельзя отменить.</p>
+        <p id="confirm-description">Это действие нельзя отменить.</p>
         <div class="admin-dialog-footer">
           <button
             id="confirm-cancel"
-            class="admin-text-button"
+            class="admin-button admin-secondary"
             type="button"
             autofocus
           >
-            Отмена
+            Оставить как есть
           </button>
-          <button id="confirm-ok" class="button red" type="button">
+          <button
+            id="confirm-ok"
+            class="admin-button admin-danger"
+            type="button"
+          >
             Удалить
           </button>
         </div>

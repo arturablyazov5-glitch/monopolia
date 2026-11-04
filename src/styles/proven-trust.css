@@ -1,9 +1,8 @@
 .proven-trust {
   position: relative;
   isolation: isolate;
-  background: #fff var(--paper-texture) center/cover;
   min-height: 1129px;
-  padding-top: 120px;
+  padding-top: var(--section-space);
   overflow: hidden;
 }
 .proven-trust-scene {
@@ -45,6 +44,14 @@
   transform: scaleX(-1);
 }
 .trust-team-edge {
+  /* Убираем тонкий ровный шов по границе декоративного слоя бумаги. */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 2px,
+    #000 calc(100% - 2px),
+    transparent
+  );
   position: absolute;
   top: 659px;
   left: -30px;
@@ -108,7 +115,7 @@
   object-fit: contain;
 }
 .trust-rating-line > img:nth-last-of-type(1) {
-  margin-right: -8px;
+  margin-right: calc(0.35em - 12px);
 }
 .trust-rating-divider {
   width: 1px;
@@ -130,7 +137,10 @@
 .trust-reviews .carousel-track {
   gap: 28px;
   /* Figma 1380:5188: карточки на y 0 и x 0 слота — без отступов трека. */
-  padding: 0 0 12px;
+  /* Запас под рваные края и тени карточек (иначе обрезаются прокруткой). */
+  padding: 24px 10px 36px;
+  margin: -24px -10px;
+  scroll-padding-inline: 10px;
 }
 .trust-reviews .review-card {
   flex: 0 0 301.333px;
@@ -143,9 +153,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.trust-reviews .review-card:nth-child(1) .review-photo > img {
-  object-position: 50% 24%;
 }
 .trust-reviews .carousel-controls {
   position: absolute;
@@ -184,7 +191,7 @@
   overflow: hidden;
 }
 .trust-reviews .review-card > h3 {
-  font: 500 20px/1.2 var(--font-heading);
+  font: 500 var(--h3, 20px)/1.2 var(--font-heading);
 }
 .trust-reviews .review-card > img {
   align-self: center;
@@ -193,30 +200,6 @@
   top: 16px;
   left: 16px;
   transform: none;
-}
-.trust-reviews .review-card:nth-child(1) .review-photo > img {
-  position: absolute;
-  width: 160.42%;
-  height: 232.06%;
-  left: -30.03%;
-  top: -36.33%;
-  max-width: none;
-}
-.trust-reviews .review-card:nth-child(2) .review-photo > img {
-  position: absolute;
-  width: 110.15%;
-  height: 156.33%;
-  left: -5.06%;
-  top: -8.5%;
-  max-width: none;
-}
-.trust-reviews .review-card:nth-child(3) .review-photo > img {
-  position: absolute;
-  width: 125.26%;
-  height: 123.18%;
-  left: -8.81%;
-  top: -11.62%;
-  max-width: none;
 }
 /* Фон прозрачный: в вырезах рваного верха бумаги видно фото HonestReviews. */
 .proven-trust {
@@ -267,5 +250,66 @@
   .proven-trust {
     /* Сохраняем недавнее положение стрелок под отзывами и место для них. */
     --scene-footer: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-desktop .trust-reviews .carousel-controls {
+    display: none;
+  }
+  .home-desktop .trust-reviews .carousel-track {
+    align-items: stretch;
+  }
+}
+@media (max-width: 767px) {
+  .home-desktop .trust-reviews .mobile-scroll-hint {
+    margin-inline: var(--rg);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Логотип сверху, звезда, оценка и отзывы — одной компактной строкой. */
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line {
+    display: grid;
+    grid-template-columns: 11px max-content 1px minmax(0, 1fr);
+    gap: 5px 4px;
+  }
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > .trust-rating-divider {
+    display: block;
+    width: 1px;
+    height: 14px;
+    align-self: center;
+    background: linear-gradient(to bottom, #0000 0%, #000 50%, #0000 100%);
+  }
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > img {
+    width: 11px;
+    height: auto;
+  }
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > strong {
+    font-size: 12px;
+    line-height: 1.2;
+  }
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > p {
+    margin: 0;
+    font-size: clamp(9px, 2.5vw, 11px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}
+
+/* На 320px сохраняем все три рейтинга в строке без обрезки счетчиков. */
+@media (max-width: 359px) {
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile {
+    padding-inline: 3px;
+  }
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line {
+    column-gap: 3px;
+  }
+}
+
+/* На планшетах сохраняем плавное затухание того же разделителя. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-divider {
+    background: linear-gradient(to bottom, #0000 0%, #000 50%, #0000 100%);
   }
 }

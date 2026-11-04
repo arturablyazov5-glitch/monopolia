@@ -1,6 +1,8 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import Button from "./Button.astro";
+import { tapesFor } from "../lib/tape";
 interface Props {
   title?: string;
   description?: string;
@@ -9,9 +11,9 @@ interface Props {
   node?: string;
 }
 const {
-  title = "Помощь в одобрении ипотеки с вероятностью 91%",
-  description = "Подберем выгодную программу. Поможем собрать документы и подать заявки в банк",
-  cta = "Получить консультацию",
+  title = "Помощь в одобрении ипотеки с вероятностью 91%",
+  description = siteText("home-services.description.2"),
+  cta = siteText("certificates.label.3"),
   variant = "kit",
   node = "1380:5682",
 } = Astro.props;
@@ -19,10 +21,14 @@ const perforationDots = Array.from({ length: 22 });
 ---
 
 {variant === "coupon" ? (
-  <Paper class="service-card service-card-coupon" node={node} tapeNode={node}>
+  <Paper
+    class="service-card service-card-coupon paper-light-edges"
+    node={node}
+    tapes={tapesFor(node).map((tape) => ({ ...tape, src: "/assets/tape-beige-export.webp" }))}
+  >
+    <div class="service-card-contents">
     <div class="service-card-body">
-      <h3 class="service-card-title">
-        <span class="service-card-diamond" />
+      <h3 class="service-card-title bullet-point">
         {title}
       </h3>
       <p>{description}</p>
@@ -30,7 +36,7 @@ const perforationDots = Array.from({ length: 22 });
     <div class="service-perforation" aria-hidden="true">
       <img
         class="service-notch"
-        src="/assets/806f9.svg"
+        src="/assets/service-card-notch.svg"
         alt=""
         width="10"
         height="5"
@@ -42,7 +48,7 @@ const perforationDots = Array.from({ length: 22 });
       ))}
       <img
         class="service-notch service-notch-end"
-        src="/assets/806f9.svg"
+        src="/assets/service-card-notch.svg"
         alt=""
         width="10"
         height="5"
@@ -51,20 +57,20 @@ const perforationDots = Array.from({ length: 22 });
       />
     </div>
     <div class="service-card-action">
-      <Button label={cta} tone="black" subject={`Услуга: ${title}`} />
+      <Button popup={node === "1380:5682" ? "mortgage" : node === "1380:5686" ? "analysis" : "service"} label={cta} tone="black" subject={`Услуга: ${title}`} />
+    </div>
     </div>
   </Paper>
 ) : (
   <Paper class="service-card" tape tapeNode={node} node={node}>
     <div>
-      <h3 class="diamond-line">
-        <span class="diamond" />
+      <h3 class="bullet-point">
         {title}
       </h3>
       <p>{description}</p>
     </div>
     <div class="coupon">
-      <Button label={cta} tone="black" subject={`Услуга: ${title}`} />
+      <Button popup={node === "1380:5682" ? "mortgage" : node === "1380:5686" ? "analysis" : "service"} label={cta} tone="black" subject={`Услуга: ${title}`} />
     </div>
   </Paper>
 )}

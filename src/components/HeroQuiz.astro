@@ -1,0 +1,128 @@
+---
+import ConsentCheckbox from "./ConsentCheckbox.astro";
+import ContactMethods from "./ContactMethods.astro";
+import PhoneField from "./PhoneField.astro";
+import { formErrors } from "../lib/form-errors";
+import "../styles/buy-quiz.css";
+const { variant = "buy", prefix } = Astro.props as {
+  variant?: "buy" | "sell";
+  prefix: string;
+};
+const endpoint =
+  import.meta.env.PUBLIC_LEAD_ENDPOINT || (import.meta.env.DEV ? "/lead" : "");
+---
+
+<form
+  class="buy-quiz"
+  data-form={`${variant}-hero-quiz`}
+  data-quiz-variant={variant}
+  data-lead-source={`${variant === "sell" ? "Продажа" : "Покупка"} · Квиз первого экрана`}
+  data-endpoint={endpoint}
+  novalidate
+  hidden
+>
+  <span hidden aria-hidden="true">
+    <input name="honeypot" tabindex="-1" autocomplete="off" />
+  </span>
+  <div data-quiz-questions>
+    <p class="buy-quiz-question" data-quiz-question></p>
+    <div class="buy-quiz-options" data-quiz-options></div>
+    <div data-quiz-extra hidden></div>
+    <textarea
+      class="buy-quiz-input"
+      data-quiz-other
+      maxlength="500"
+      placeholder="Например: школа рядом, отапливаемое помещение и т. д."
+      hidden
+    ></textarea>
+  </div>
+  <div data-quiz-contact hidden>
+    <p class="buy-quiz-question">
+      {variant === "sell"
+        ? "Как с вами связаться?"
+        : "Куда отправить подборку?"}
+    </p>
+    <div class="lead-field-group">
+      <label class="sr-only" for={`${prefix}-phone`}>
+        Телефон
+      </label>
+      <PhoneField
+        id={`${prefix}-phone`}
+        class="buy-quiz-input"
+        aria-describedby={`${prefix}-phone-error`}
+      />
+      <p
+        class="lead-field-error form-error"
+        id={`${prefix}-phone-error`}
+        data-quiz-error="phone"
+        role="status"
+        hidden
+      >
+        {formErrors.phone}
+      </p>
+    </div>
+    <p class="buy-quiz-channel-label">Выберите удобный способ связи:</p>
+    <div class="buy-quiz-channels lead-field-group">
+      <ContactMethods />
+      <p
+        class="lead-field-error form-error"
+        id={`${prefix}-channel-error`}
+        data-quiz-error="channel"
+        role="status"
+        hidden
+      >
+        {formErrors.channel}
+      </p>
+    </div>
+    <div class="lead-field-group">
+      <ConsentCheckbox />
+      <p
+        class="lead-field-error form-error"
+        id={`${prefix}-consent-error`}
+        data-quiz-error="consent"
+        role="status"
+        hidden
+      >
+        {formErrors.consent}
+      </p>
+    </div>
+  </div>
+  <div class="buy-quiz-controls" data-quiz-controls>
+    <button
+      type="button"
+      class="button black buy-quiz-back"
+      data-quiz-back
+      aria-label="Назад"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M19 12H5M5 12L11 18M5 12L11 6"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+    <button type="button" class="button red" data-quiz-next>
+      Далее
+    </button>
+    <p class="buy-quiz-step" data-quiz-step></p>
+  </div>
+  <p
+    class="buy-quiz-result form-error"
+    data-quiz-result
+    role="status"
+    aria-live="polite"
+    hidden
+  ></p>
+</form>
+<script>
+  import "../scripts/hero-quiz";
+</script>

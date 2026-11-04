@@ -1,13 +1,52 @@
 ---
-import LeadForm from "./LeadForm.astro";
+import HeroQuizCard from "./HeroQuizCard.astro";
+import Paper from "./Paper.astro";
+import "../styles/quiz-dialog.css";
+import "../styles/lead-popups.css";
+import LeadPopup from "./LeadPopup.astro";
+import type { PopupMode } from "./LeadPopup.astro";
+const modes: PopupMode[] = [
+  "callback",
+  "office",
+  "analysis",
+  "closed-base",
+  "service",
+  "team",
+  "mortgage",
+  "viewing",
+  "new-build",
+];
 ---
 
 <dialog id="lead-dialog" aria-labelledby="lead-purpose">
-  <button type="button" class="dialog-close" aria-label="Закрыть">
-    ×
-  </button>
-  <p id="lead-purpose"></p>
-  <LeadForm compact id="modal" />
+  <Paper class="dialog-sheet">
+    <button type="button" class="dialog-close" aria-label="Закрыть" autofocus>
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="m2 2 12 12M14 2 2 14"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+      </svg>
+    </button>
+    <p id="lead-purpose" class="sr-only"></p>
+    {modes.map((mode) => (
+      <LeadPopup mode={mode} />
+    ))}
+    <div data-dialog-form="buy" hidden>
+      <HeroQuizCard variant="buy" surface="none" />
+    </div>
+    <div data-dialog-form="sell" hidden>
+      <HeroQuizCard variant="sell" surface="none" />
+    </div>
+  </Paper>
 </dialog>
 <script>
   import {
@@ -18,69 +57,249 @@ import LeadForm from "./LeadForm.astro";
   initializeLeadSources();
   const dialog = document.querySelector<HTMLDialogElement>("#lead-dialog");
   if (dialog) {
-    document
-      .querySelectorAll<HTMLButtonElement>("[data-lead]")
-      .forEach((button) =>
-        button.addEventListener("click", () => {
-          const form = dialog.querySelector<HTMLFormElement>("form")!;
-          if (form.getAttribute("aria-busy") === "true") return;
-          form.reset();
-          form.dataset.leadSource = leadSource(button);
-          form.dataset.leadSection = leadSection(button);
-          const card = button.closest(".inner-hero-card");
-          const calc = button.closest(".buy-mortgage-calc, .range-demo");
-          const context: Record<string, string> = {};
-          if (card) {
-            context.city =
-              card.querySelector<HTMLInputElement>("[name=city]")?.value ?? "";
-            context.propertyType =
-              card
-                .querySelector<HTMLElement>(
-                  "[data-choice-group] [aria-pressed=true]",
-                )
-                ?.textContent?.trim() ?? "";
-          }
-          if (calc)
-            context.priceMillion =
-              calc.querySelector<HTMLInputElement>("input[type=range]")
-                ?.value ?? "";
-          form.dataset.context = JSON.stringify(context);
-          dialog.querySelector("#lead-purpose")!.textContent =
-            button.dataset.lead!;
-          const input =
-            dialog.querySelector<HTMLInputElement>("[name=subject]");
-          if (input)
-            input.value = button.dataset.subject ?? button.dataset.lead!;
-          // Панель меню закрывается при открытии формы: её скрытая кнопка
-          // не может принять фокус после Escape. Возвращаем его на бургер.
-          opener = button.closest(".menu-panel")
-            ? (button
-                .closest(".site-header")
-                ?.querySelector<HTMLElement>(".menu-button") ?? button)
-            : button;
-          dialog.showModal();
-        }),
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+    const clearCloseTimer = () => {
+      clearTimeout(closeTimer);
+      closeTimer = undefined;
+    };
+    const rememberFrame = (openingFromHidden = false) => {
+      const frame = getComputedStyle(dialog);
+      const opacity = frame.opacity;
+      const transform = frame.transform;
+      const backdropOpacity = getComputedStyle(dialog, "::backdrop").opacity;
+      dialog.style.setProperty(
+        "--dialog-from-opacity",
+        openingFromHidden ? "0" : opacity,
       );
-    // a11y: Escape закрывает нативный modal; после любого закрытия
-    // фокус возвращается на кнопку, которая открыла форму.
+      dialog.style.setProperty(
+        "--dialog-from-transform",
+        openingFromHidden ? "translateY(12px) scale(.98)" : transform,
+      );
+      dialog.style.setProperty(
+        "--backdrop-from-opacity",
+        openingFromHidden ? "0" : backdropOpacity,
+      );
+    };
+    const finishClose = () => {
+      clearCloseTimer();
+      dialog.classList.remove("is-opening", "is-closing");
+      if (dialog.open) dialog.close();
+    };
+    const requestClose = () => {
+      if (!dialog.open || dialog.classList.contains("is-closing")) return;
+      clearCloseTimer();
+      if (reducedMotion.matches) {
+        finishClose();
+        return;
+      }
+      rememberFrame();
+      dialog.classList.remove("is-opening");
+      dialog.classList.add("is-closing");
+      // Fallback if animationend is lost, e.g. a backgrounded browser tab.
+      closeTimer = setTimeout(finishClose, 240);
+    };
+    dialog.addEventListener("animationend", (event) => {
+      if (event.target !== dialog) return;
+      const current = dialog
+        .getAnimations()
+        .find(
+          (animation) =>
+            animation instanceof CSSAnimation &&
+            animation.animationName === event.animationName,
+        );
+      // A queued event from an interrupted animation must not finish a newer one.
+      if (!current || current.playState !== "finished") return;
+      if (
+        event.animationName === "lead-dialog-exit" &&
+        dialog.classList.contains("is-closing")
+      )
+        finishClose();
+      if (event.animationName === "lead-dialog-enter")
+        dialog.classList.remove("is-opening");
+    });
+    dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      requestClose();
+    });
+    reducedMotion.addEventListener("change", () => {
+      if (!reducedMotion.matches) return;
+      if (dialog.classList.contains("is-closing")) finishClose();
+      dialog.classList.remove("is-opening");
+    });
+    // The catalog can replace cards after load; handle their buttons as well.
+    document.addEventListener("click", (event) => {
+      const button =
+        event.target instanceof Element
+          ? event.target.closest<HTMLButtonElement>("[data-lead]")
+          : null;
+      if (!button) return;
+      if (dialog.querySelector('form[aria-busy="true"]')) return;
+      const mode = button.hasAttribute("data-callback")
+        ? "callback"
+        : button.dataset.leadPopup
+          ? button.dataset.leadPopup
+          : button.dataset.quizDialog === "buy" ||
+              button.dataset.quizDialog === "sell"
+            ? button.dataset.quizDialog
+            : "";
+      const panel = [
+        ...dialog.querySelectorAll<HTMLElement>("[data-dialog-form]"),
+      ].find((panel) => panel.dataset.dialogForm === mode);
+      if (!panel) return;
+      const reopening = dialog.open;
+      rememberFrame(!reopening);
+      clearCloseTimer();
+      dialog.classList.remove("is-closing", "is-opening");
+      const quizMode = mode === "buy" || mode === "sell";
+      dialog.classList.toggle("quiz-dialog", quizMode);
+      dialog.classList.toggle("lead-popup-dialog", !quizMode);
+      dialog
+        .querySelectorAll<HTMLElement>("[data-dialog-form]")
+        .forEach((panel) => {
+          panel.hidden = panel.dataset.dialogForm !== mode;
+        });
+      const form = panel.querySelector<HTMLFormElement>("form")!;
+      form.reset();
+      const title =
+        panel.querySelector<HTMLElement>(".popup-title")?.textContent?.trim() ||
+        (mode === "buy"
+          ? "Квиз покупки недвижимости"
+          : "Квиз продажи недвижимости");
+      form.dataset.leadSection = leadSection(button);
+      const calc = button.closest(".buy-mortgage-calc");
+      const context: Record<string, string> = {};
+      const details = panel.querySelector<HTMLElement>("[data-popup-context]");
+      const subject = button.dataset.subject || button.dataset.lead || "";
+      const property = button.closest(".property-card");
+      let detail = "";
+      if (mode === "service")
+        detail =
+          button
+            .closest(".service-card")
+            ?.querySelector("h3")
+            ?.textContent?.trim() || subject.replace(/^Услуга:\s*/, "");
+      if (mode === "viewing") {
+        const propertyTitle =
+          property?.querySelector('[data-card="title"]')?.textContent?.trim() ||
+          "";
+        const address =
+          property
+            ?.querySelector('[data-card="address"]')
+            ?.textContent?.trim() || "";
+        const price =
+          property?.querySelector('[data-card="price"]')?.textContent?.trim() ||
+          "";
+        detail = [propertyTitle, address].filter(Boolean).join(", ");
+        const image =
+          panel.querySelector<HTMLImageElement>("[data-popup-image]");
+        const photo = property?.querySelector<HTMLImageElement>(
+          ".property-photo img",
+        );
+        if (image) {
+          // Read the current card, including cards replaced by catalog-refresh.
+          image.hidden = !photo;
+          image
+            .closest("figure")
+            ?.classList.toggle("popup-media-neutral", !photo);
+          if (photo) {
+            image.src = photo.currentSrc || photo.src;
+            image.alt = propertyTitle;
+          } else {
+            image.removeAttribute("src");
+            image.alt = "";
+          }
+        }
+        context.comment = [detail, price].filter(Boolean).join(" · ");
+      }
+      if (details) {
+        details.textContent = detail;
+        details.hidden = !detail;
+      }
+      form.dataset.leadSource = [title, detail, leadSource(button)]
+        .filter(Boolean)
+        .join(" · ");
+      if (mode !== "viewing") context.comment = detail || subject;
+      if (calc)
+        context.priceMillion =
+          calc.querySelector<HTMLInputElement>("input[type=range]")?.value ??
+          "";
+      form.dataset.context = JSON.stringify(context);
+      const purpose = dialog.querySelector<HTMLElement>("#lead-purpose")!;
+      purpose.textContent = title;
+      dialog.setAttribute(
+        "aria-labelledby",
+        quizMode ? "lead-purpose" : `popup-${mode}-title`,
+      );
+      if (!quizMode)
+        dialog.setAttribute("aria-describedby", `popup-${mode}-description`);
+      else dialog.removeAttribute("aria-describedby");
+      const input = form.querySelector<HTMLInputElement>("[name=subject]");
+      if (input)
+        input.value = [title, detail || subject].filter(Boolean).join(" · ");
+      // Панель меню закрывается при открытии формы: её скрытая кнопка
+      // не может принять фокус после Escape. Возвращаем его на бургер.
+      opener = button.closest(".menu-panel")
+        ? (button
+            .closest(".site-header")
+            ?.querySelector<HTMLElement>(".menu-button") ?? button)
+        : button;
+      // Restart from the current visual frame when reopening during exit.
+      void dialog.offsetWidth;
+      if (!dialog.open) dialog.showModal();
+      dialog.scrollTop = 0;
+      // autofocus also directs showModal's native focus step here, so even
+      // reopening after editing a phone never briefly focuses a text field.
+      dialog
+        .querySelector<HTMLButtonElement>(".dialog-close")
+        ?.focus({ preventScroll: true });
+      // Begin after showModal's layout/focus work, in the same task, so the
+      // first painted frame starts at opacity 0 even on a busy mobile browser.
+      if (!reducedMotion.matches) dialog.classList.add("is-opening");
+    });
+    // All close paths finish the exit animation before native focus restoration.
     let opener: HTMLElement | null = null;
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+      const controls = [
+        ...dialog.querySelectorAll<HTMLElement>(
+          'button, a[href], input, select, textarea, [tabindex], [contenteditable="true"]',
+        ),
+      ].filter(
+        (element) =>
+          element.tabIndex >= 0 &&
+          !element.matches(":disabled") &&
+          !element.closest("[hidden], [inert]") &&
+          element.getClientRects().length > 0 &&
+          getComputedStyle(element).visibility !== "hidden",
+      );
+      const first = controls[0];
+      const last = controls.at(-1);
+      const target =
+        event.shiftKey && document.activeElement === first
+          ? last
+          : !event.shiftKey && document.activeElement === last
+            ? first
+            : null;
+      // Keep boundary Tab/Shift+Tab in the modal instead of browser chrome.
+      if (target) {
+        event.preventDefault();
+        target.focus();
+      }
+    });
     dialog.addEventListener("close", () => {
+      // A queued close event can arrive after the dialog has reopened.
+      if (dialog.open) return;
+      clearCloseTimer();
+      dialog.classList.remove("is-opening", "is-closing");
       opener?.focus();
       opener = null;
     });
     dialog
       .querySelector(".dialog-close")
-      ?.addEventListener("click", () => dialog.close());
+      ?.addEventListener("click", requestClose);
     dialog.addEventListener("click", (event) => {
-      const rect = dialog.getBoundingClientRect();
-      if (
-        event.target === dialog &&
-        (event.clientX < rect.left ||
-          event.clientX > rect.right ||
-          event.clientY < rect.top ||
-          event.clientY > rect.bottom)
-      )
-        dialog.close();
+      if (event.target === dialog) requestClose();
     });
   }
 </script>

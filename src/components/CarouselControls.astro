@@ -1,0 +1,23 @@
+---
+import ArrowButton from "./ArrowButton.astro";
+interface Props {
+  class?: string;
+  prevLabel?: string;
+  nextLabel?: string;
+}
+const { class: className = "", prevLabel, nextLabel } = Astro.props;
+---
+
+<div class:list={["carousel-arrows", className]}>
+  <ArrowButton direction="prev" ariaLabel={prevLabel} />
+  <ArrowButton ariaLabel={nextLabel} />
+</div>
+
+<style is:global>
+  .carousel-arrows {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+</style>

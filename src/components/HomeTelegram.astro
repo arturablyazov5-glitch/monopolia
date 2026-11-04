@@ -1,5 +1,8 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
+import { socialUrls } from "../data/social-links";
 import Paper from "./Paper.astro";
+import PersonLabel from "./PersonLabel.astro";
 import TapeLayer from "./TapeLayer.astro";
 import "../styles/home-telegram.css";
 ---
@@ -7,7 +10,7 @@ import "../styles/home-telegram.css";
 <section class="home-telegram" aria-labelledby="telegram-title">
   <img
     class="telegram-background"
-    src="/assets/f2c0e.webp"
+    src="/assets/background-paper-team-section.webp"
     alt=""
     loading="lazy"
     width="2880"
@@ -18,18 +21,18 @@ import "../styles/home-telegram.css";
     <Paper class="telegram-news">
       <div>
         <h2>
-          Семейную ипотеку <br />
-          завтра отменят!
+          {siteText("home-telegram.text.1")} <br />
+          {siteText("home-telegram.text.2")}
         </h2>
-        <p>Лааадно, это ненастоящая новость, но такое не исключено</p>
+        <p>{siteText("home-telegram.text.3")}</p>
       </div>
       <img
         class="telegram-news-person"
-        src="/assets/e453b.webp"
+        src="/assets/telegram-news-person.webp"
         alt=""
         loading="lazy"
-        width="1024"
-        height="682"
+        width="724"
+        height="482"
         decoding="async"
       />
     </Paper>
@@ -40,7 +43,7 @@ import "../styles/home-telegram.css";
       <div class="telegram-photo-crop">
         <img
           class="telegram-shadow"
-          src="/assets/73ec6.svg"
+          src="/assets/telegram-person-shadow.svg"
           alt=""
           width="514.447"
           height="665.128"
@@ -48,68 +51,50 @@ import "../styles/home-telegram.css";
           decoding="async"
         />
         <img
-          class="telegram-person"
-          src="/assets/8db92.webp"
-          srcset="/assets/8db92-m.webp 700w, /assets/8db92.webp 920w"
-          sizes="(max-width: 767px) 345px, 920px"
+          class="telegram-person person-photo"
+          src="/assets/staff-ekaterina-korneeva-telegram.webp"
           alt="Екатерина Корнеева показывает Telegram на телефоне"
           loading="lazy"
-          width="920"
-          height="1860"
+          width="1630"
+          height="3490"
           decoding="async"
         />
       </div>
-      <Paper class="telegram-signature">
-        <p>Екатерина Корнеева</p>
-        <span>Специалист по недвижимости</span>
-      </Paper>
+      <PersonLabel
+        class="telegram-signature"
+        name="Екатерина Корнеева"
+        role="Специалист по недвижимости"
+      />
     </div>
     <div class="telegram-copy">
-      <h2 id="telegram-title">
-        Чтобы не пропустить важное, подписывайтесь на наш Telegram
-      </h2>
+      <h2 id="telegram-title">{siteText("home-telegram.text.4")}</h2>
       <div class="telegram-benefits">
-        <ul class="diamond-list">
-          <li>Квартиры и дома по цене ниже рынка до 30%</li>
-          <li>Важные новости про недвижку и ипотеку</li>
+        <ul class="diamond-list bullet-list">
+          <li>{siteText("home-telegram.text.5")}</li>
+          <li>{siteText("home-telegram.text.6")}</li>
         </ul>
-        <div class="telegram-divider"></div>
-        <ul class="diamond-list">
-          <li>Истории‑блокбастеры наших клиентов</li>
-          <li>Полезные статьи о сложном простым языком</li>
+        <div class="telegram-divider column-divider" aria-hidden="true"></div>
+        <ul class="diamond-list bullet-list">
+          <li>{siteText("home-telegram.text.7")}</li>
+          <li>{siteText("home-telegram.text.8")}</li>
         </ul>
       </div>
-      <button
+      <a
         class="button red telegram-subscribe"
-        type="button"
-        aria-describedby="telegram-link-status"
+        href={socialUrls.Telegram}
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Подписаться на канал
+        {siteText("home-telegram.text.9")}
         <img
-          src="/assets/1b795.svg"
+          src="/assets/icon-external-link.svg"
           alt=""
           width="18.3777"
           height="18.4458"
           loading="lazy"
           decoding="async"
         />
-      </button>
-      <p
-        id="telegram-link-status"
-        class="telegram-link-status"
-        role="status"
-        hidden
-      >
-        Ссылка на канал скоро появится.
-      </p>
+      </a>
     </div>
   </div>
 </section>
-<script>
-  document
-    .querySelector<HTMLButtonElement>(".telegram-subscribe")
-    ?.addEventListener("click", () => {
-      document.querySelector<HTMLElement>("#telegram-link-status")!.hidden =
-        false;
-    });
-</script>

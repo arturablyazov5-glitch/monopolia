@@ -1,0 +1,106 @@
+---
+import {
+  relocationRoutes,
+  relocationTrainAnimations,
+} from "../data/relocation-routes";
+interface Route {
+  src: string;
+  left: number;
+  top: number;
+}
+interface Props {
+  routes: Route[];
+  mobile?: boolean;
+}
+const { routes, mobile = false } = Astro.props;
+const trainWidth = 32.6049 * (mobile ? 1.5 : 1);
+const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
+---
+
+<svg
+  class:list={["relocation-trains", { "relocation-trains--mobile": mobile }]}
+  viewBox="0 0 1160 570"
+  width="1160"
+  height="570"
+  aria-hidden="true"
+>
+  {routes.map((route) => {
+    const animation = relocationTrainAnimations[route.src];
+    // Направление и фаза принадлежат маршруту, а не порядку слоев.
+    const backwards = animation.reverse;
+    const trainDuration = `${animation.durationSeconds}s`;
+    const trainBegin = `${animation.beginSeconds}s`;
+    const points = relocationRoutes[route.src].slice(1).split(" L");
+    if (backwards) points.reverse();
+    const path = `M${points.join(" L")}`;
+    const coordinates = points.map((point) => point.split(" ").map(Number));
+    const lengths = [0];
+    for (let i = 1; i < coordinates.length; i++) {
+      lengths.push(
+        lengths[i - 1] +
+          Math.hypot(
+            coordinates[i][0] - coordinates[i - 1][0],
+            coordinates[i][1] - coordinates[i - 1][1],
+          ),
+      );
+    }
+    const duration = lengths[lengths.length - 1];
+    const flips = coordinates
+      .slice(0, -1)
+      .map((point, i) => (coordinates[i + 1][0] < point[0] ? "1 1" : "1 -1"));
+    flips.push(flips[flips.length - 1]);
+    const keyTimes = lengths.map((length) => length / duration).join(";");
+    return (
+      <g transform={`translate(${route.left} ${route.top})`}>
+        {mobile && (
+          <path
+            d={path}
+            fill="none"
+            stroke="#1a1a1a"
+            stroke-opacity="0.5"
+            stroke-width="1"
+            stroke-dasharray="4 4"
+            stroke-linecap="round"
+          />
+        )}
+        <g class="relocation-train" data-route={route.src}>
+          <animate
+            attributeName="opacity"
+            values="0;1;1;0"
+            keyTimes="0;0.025;0.975;1"
+            dur={trainDuration}
+            begin={trainBegin}
+            repeatCount="indefinite"
+          />
+          <image
+            href="/assets/relocation-train-transparent.svg"
+            x={-trainWidth / 2}
+            y={-trainHeight / 2}
+            width={trainWidth}
+            height={trainHeight}
+            transform={`scale(${flips[0]})`}
+          >
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values={flips.join(";")}
+              keyTimes={keyTimes}
+              calcMode="discrete"
+              dur={trainDuration}
+              begin={trainBegin}
+              repeatCount="indefinite"
+            />
+          </image>
+          <animateMotion
+            path={path}
+            dur={trainDuration}
+            begin={trainBegin}
+            repeatCount="indefinite"
+            rotate="auto"
+            calcMode="paced"
+          />
+        </g>
+      </g>
+    );
+  })}
+</svg>

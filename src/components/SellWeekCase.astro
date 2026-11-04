@@ -1,11 +1,15 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // «Продажа», Figma 1380:5814 «05»: видеоистория продажи за 1 день и форма связи.
 import Button from "./Button.astro";
 import ConsentCheckbox from "./ConsentCheckbox.astro";
-import ChoiceGroup from "./ChoiceGroup.astro";
+import ContactMethods from "./ContactMethods.astro";
+import PhoneField from "./PhoneField.astro";
 import Paper from "./Paper.astro";
 import PlayButton from "./PlayButton.astro";
 import SocialLinks from "./SocialLinks.astro";
+import VideoDuration from "./VideoDuration.astro";
+const storyVideo = { src: "/videos/client-review-1.mp4", duration: "2:06" };
 ---
 
 <div
@@ -13,29 +17,29 @@ import SocialLinks from "./SocialLinks.astro";
   aria-labelledby="sell-week-title"
   data-node-id="1380:5814"
 >
-  <h2 id="sell-week-title">Хотите продать жилье на этой неделе?</h2>
+  <h2 id="sell-week-title">{siteText("sell-week-case.text.1")}</h2>
   <div class="sell-week-grid">
-    <article class="sell-week-video" data-node-id="1380:5817">
+    <article class="sell-week-video brush-stroke" data-node-id="1380:5817">
       <img
         class="sell-week-video-frame"
-        src="/assets/2769b.webp"
+        src="/assets/sell-week-video-thumbnail.webp"
         alt="Кадр истории продажи жилья"
         width="960"
         height="640"
         loading="lazy"
         decoding="async"
       />
-      <span class="sell-week-duration">01:32</span>
+      <VideoDuration time={storyVideo.duration} placement="top-right" />
       <div class="sell-week-play">
         <p class="sell-week-play-hint" aria-hidden="true">
-          Посмотрите историю
+          {siteText("sell-week-case.text.2")}
           <br />
-          продажи квартиры за 1 день
+          {siteText("sell-week-case.text.3")}
         </p>
         <span class="sell-week-play-arrow" aria-hidden="true">
           <span>
             <img
-              src="/assets/94f0e.svg"
+              src="/assets/sell-week-play-arrow.svg"
               alt=""
               width="65.6246"
               height="23.5714"
@@ -46,28 +50,31 @@ import SocialLinks from "./SocialLinks.astro";
         </span>
         <PlayButton
           label="Посмотреть историю продажи квартиры за 1 день"
-          variant="red"
+          video={storyVideo.src}
         />
       </div>
       <div class="sell-week-story" data-node-id="1380:5820">
         <Paper class="sell-week-story-card">
           <Paper class="sell-week-story-label" node="1380:5821">
-            <p>История как в кино</p>
+            <p>{siteText("sell-week-case.text.4")}</p>
           </Paper>
           <p>
-            К нам обратилась Ирина, которая давно <br />
-            собиралась продавать квартиру. Она <br />
-            идеально подходила для Максима, <br />
-            который обратился к нам утром. В итоге <br />
-            <strong>оформили сделку одним днем</strong>
+            {siteText("sell-week-case.text.5")} <br />
+            {siteText("sell-week-case.text.6")} <br />
+            {siteText("sell-week-case.text.7")} <br />
+            {siteText("sell-week-case.text.8")} <br />
+            <strong>{siteText("sell-week-case.text.9")}</strong>
           </p>
-          <p class="sell-week-author">
-            Елена
-            <span>Специалист по недвижимости</span>
-          </p>
+          <div class="sell-week-author">
+            <span class="sell-week-author-photo" aria-hidden="true"></span>
+            <p class="sell-week-author-copy">
+              {siteText("sell-week-case.text.10")}
+              <span class="sell-week-author-role">{siteText("sell-week-case.text.11")}</span>
+            </p>
+          </div>
           <img
             class="sell-week-quote"
-            src="/assets/1e08f.svg"
+            src="/assets/sell-week-story-quote.svg"
             alt=""
             width="26.0607"
             height="20.4199"
@@ -93,45 +100,43 @@ import SocialLinks from "./SocialLinks.astro";
         </span>
         <div class="sell-week-form-fields">
           <h3>
-            Заполните форму, свяжемся с вами в течение 10 минут и назначим время
-            встречи
+            {siteText("sell-week-case.text.12")}
           </h3>
+          <p class="sell-week-form-intro">
+            Возможно, покупатель вашего жилья уже есть и ждёт вас
+          </p>
           <input name="subject" type="hidden" value="Срочная продажа объекта" />
           <label class="sr-only" for="sell-week-phone">
-            Телефон
+            {siteText("lead-form.text.6")}
           </label>
+          <PhoneField id="sell-week-phone" />
+          <p class="sell-week-contact-label">Выберите удобный способ связи:</p>
+          <ContactMethods />
           <input
-            id="sell-week-phone"
-            name="phone"
-            type="tel"
-            inputmode="tel"
-            autocomplete="tel"
-            placeholder="+7 (999) 999-99-99"
+            class="sr-only"
+            type="text"
+            name="channel"
+            value=""
+            tabindex="-1"
+            autocomplete="off"
             required
+            aria-label="Способ связи"
           />
-          <ChoiceGroup
-            name="Предпочитаемый способ связи"
-            options={["Телефон", "Max", "WhatsApp", "Telegram"]}
-            icons={["9a821.svg", "3af1e.svg", "fe1f8.svg", "4b2cb.svg"]}
-            selected={-1}
-            channels
-          />
-          <input type="hidden" name="channel" value="" />
           <ConsentCheckbox />
         </div>
         <div class="sell-week-form-bottom">
-          <Button label="Хочу срочно продать объект" type="submit" />
+          <Button label={siteText("sell-week-case.label.13")} type="submit" />
           <div class="sell-week-messengers">
             <span>
-              Или напишите нам
+              {siteText("sell-week-case.text.14")}
               <br />
-              в мессенджерах
+              {siteText("sell-week-case.text.15")}
             </span>
             <SocialLinks
               links={[
-                { label: "Telegram", icon: "2dc32.svg" },
-                { label: "Max", icon: "0a072.svg" },
-                { label: "WhatsApp", icon: "2585a.svg" },
+                { label: "Telegram", icon: "social-telegram-color.svg" },
+                { label: "Макс", icon: "social-max-color.svg" },
+                { label: "WhatsApp", icon: "social-whatsapp-color.svg" },
               ]}
             />
           </div>

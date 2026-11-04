@@ -1,36 +1,39 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import { imageSize } from "../lib/image-size";
 import Paper from "./Paper.astro";
 import { traceLogo } from "../data/trace-logos";
 import ReviewCard from "./ReviewCard.astro";
 import Carousel from "./Carousel.astro";
 import "../styles/proven-trust.css";
+import "../styles/reviews-scroll-hint.css";
+import "../styles/review-ratings.css";
 const portraits = [
   {
-    asset: "b0450",
+    asset: "trust-team-right-portrait",
     x: 938.347,
     y: 220.756,
     w: 377.808,
     h: 566.712,
     mirror: true,
   },
-  { asset: "39c26", x: 130.847, y: 238.309, w: 374.292, h: 561.439 },
-  { asset: "6d24a", x: 695.5, y: 68.261, w: 474, h: 711, mirror: true },
-  { asset: "123af", x: 240.5, y: 0, w: 553, h: 829, mirror: true },
-  { asset: "fce18", x: 471.5, y: 13.522, w: 538, h: 808 },
+  { asset: "trust-team-left-portrait", x: 130.847, y: 238.309, w: 374.292, h: 561.439 },
+  { asset: "trust-team-right-center-portrait", x: 695.5, y: 68.261, w: 474, h: 711, mirror: true },
+  { asset: "trust-team-left-center-portrait", x: 240.5, y: 0, w: 553, h: 829, mirror: true },
+  { asset: "staff-elena-sidelina", x: 471.5, y: 13.522, w: 538, h: 808 },
 ];
 const shadows = [
-  { asset: "a646d", x: 545.04, y: 22.887 },
-  { asset: "b7bcb", x: 754.01, y: 69.739 },
-  { asset: "06204", x: 924.176, y: 276.333 },
-  { asset: "9d2b8", x: 303.839, y: 54.608 },
-  { asset: "5d521", x: 101.342, y: 275.871 },
+  { asset: "trust-team-shadow-director", x: 545.04, y: 22.887 },
+  { asset: "trust-team-shadow-right-center", x: 754.01, y: 69.739 },
+  { asset: "trust-team-shadow-right", x: 924.176, y: 276.333 },
+  { asset: "trust-team-shadow-left-center", x: 303.839, y: 54.608 },
+  { asset: "trust-team-shadow-left", x: 101.342, y: 275.871 },
 ];
 const ratings = [
   {
     logo: "domclick-full",
     label: "Домклик",
-    reviews: "206 отзывов",
+    reviews: siteText("proven-trust.reviews.2"),
     x: 1031.46,
     y: 45.23,
     angle: 4.27,
@@ -39,7 +42,7 @@ const ratings = [
   {
     logo: "2gis-full",
     label: "2ГИС",
-    reviews: "164 отзыва",
+    reviews: siteText("proven-trust.reviews.3"),
     x: 1115.76,
     y: 167.57,
     angle: 0,
@@ -48,11 +51,37 @@ const ratings = [
   {
     logo: "yandex-maps-full",
     label: "Яндекс Карты",
-    reviews: "39 отзывов",
+    reviews: siteText("proven-trust.reviews.4"),
     x: 1110.9,
     y: -61.51,
     angle: -1,
     width: 91.626,
+  },
+];
+const videoReviews = [
+  {
+    name: "Ольга Н.",
+    image: "/assets/client-review-olga-cover.webp",
+    duration: "2:06",
+    video: "/videos/client-review-1.mp4",
+  },
+  {
+    name: "Наталья К.",
+    image: "/assets/client-review-natalya-cover.webp",
+    duration: "2:36",
+    video: "/videos/client-review-2.mp4",
+  },
+  {
+    name: "Дарья Т.",
+    image: "/assets/client-review-darya-cover.webp",
+    duration: "0:47",
+    video: "/videos/client-review-3.mp4",
+  },
+  {
+    name: "Сергей М.",
+    image: "/assets/client-review-sergey-cover.webp",
+    duration: "0:43",
+    video: "/videos/client-review-4.mp4",
   },
 ];
 ---
@@ -65,7 +94,7 @@ const ratings = [
 >
   <img
     class="trust-paper-background"
-    src="/assets/2b2aa.webp"
+    src="/assets/background-paper-tall-white.webp"
     width="1454"
     height="2143"
     alt=""
@@ -74,18 +103,19 @@ const ratings = [
   />
   <div class="proven-trust-scene">
     <h2 id="proven-trust-title">
-      По факту за <span class="trust-count">5 000+</span> <br />
-      сделок — у нас{" "}
+      {siteText("proven-trust.text.5")} <span class="trust-count">5 000+</span>{" "}
+      <br />
+      {siteText("proven-trust.text.6")}{" "}
       <span class="trust-accent">
-        ни одного <br />
-        суда и истории обмана
+        {siteText("proven-trust.text.7")} <br />
+        {siteText("proven-trust.text.8")}
       </span>
     </h2>
     {/* Адаптив: на узких экранах рейтинги выводятся строкой под заголовком,
         а в композиции команды скрываются; на десктопе этот блок display: none. */}
     <div class="trust-ratings-mobile">
       {ratings.map((r) => (
-        <Paper class="trust-rating-mobile">
+        <Paper class="trust-rating-mobile paper-torn-card">
           <div class="trust-rating-line">
             <a href={traceLogo(r.logo).href}>
               <img
@@ -97,9 +127,8 @@ const ratings = [
                 decoding="async"
               />
             </a>
-            <span class="trust-rating-divider"></span>
             <img
-              src="/assets/1795d.svg"
+              src="/assets/trust-rating-star.svg"
               alt=""
               width="13.1982"
               height="12.7189"
@@ -107,15 +136,19 @@ const ratings = [
               decoding="async"
             />
             <strong>5.0</strong>
+            <span class="trust-rating-divider" aria-hidden="true"></span>
+            <p>{r.reviews}</p>
           </div>
-          <p>{r.reviews}</p>
         </Paper>
       ))}
     </div>
     <div class="trust-team" role="group" aria-label="Команда Монополии">
       {shadows.map((s) => (
         <img
-          class="trust-shadow"
+          class:list={[
+            "trust-shadow",
+            { "trust-edge-person": ["trust-team-shadow-right", "trust-team-shadow-left"].includes(s.asset) },
+          ]}
           src={`/assets/${s.asset}.svg`}
           alt=""
           style={`left:${s.x}px;top:${s.y}px`}
@@ -127,15 +160,22 @@ const ratings = [
       ))}
       {portraits.map((p) => (
         <img
-          class:list={["trust-portrait", { mirrored: p.mirror }]}
+          class:list={[
+            "trust-portrait",
+            "person-photo",
+            {
+              mirrored: p.mirror,
+              "trust-edge-person": ["trust-team-right-portrait", "trust-team-left-portrait"].includes(p.asset),
+            },
+          ]}
           src={`/assets/${p.asset}.webp`}
           srcset={
-            p.asset === "fce18"
-              ? "/assets/fce18-m.webp 1450w, /assets/fce18.webp 2336w"
+            p.asset === "staff-elena-sidelina"
+              ? "/assets/staff-elena-sidelina-mobile.webp 1450w, /assets/staff-elena-sidelina.webp 2336w"
               : undefined
           }
           sizes={
-            p.asset === "fce18" ? "(max-width: 767px) 194px, 2336px" : undefined
+            p.asset === "staff-elena-sidelina" ? "(max-width: 767px) 194px, 2336px" : undefined
           }
           alt=""
           width={p.w}
@@ -147,7 +187,7 @@ const ratings = [
       ))}
       <img
         class="trust-team-edge"
-        src="/assets/89254-no-shadow.webp"
+        src="/assets/trust-team-paper-edge-no-shadow.webp"
         alt=""
         width="1507"
         height="234"
@@ -173,7 +213,7 @@ const ratings = [
             </a>
             <span class="trust-rating-divider"></span>
             <img
-              src="/assets/1795d.svg"
+              src="/assets/trust-rating-star.svg"
               alt=""
               width="13.1982"
               height="12.7189"
@@ -187,18 +227,10 @@ const ratings = [
       ))}
     </div>
     <div class="trust-reviews">
-      <Carousel label="Видеоотзывы клиентов">
-        <ReviewCard
-          name="Светлана В."
-          image="/assets/188fc.webp"
-          duration="0:47"
-        />
-        <ReviewCard name="Инна С." image="/assets/46cf2.webp" duration="2:06" />
-        <ReviewCard
-          name="Дмитрий В."
-          image="/assets/11a9d.webp"
-          duration="0:33"
-        />
+      <Carousel swipeHint label="Видеоотзывы клиентов">
+        {videoReviews.map((review) => (
+          <ReviewCard {...review} />
+        ))}
       </Carousel>
     </div>
   </div>

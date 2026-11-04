@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import Button from "./Button.astro";
 import type { FaqAnswerBlock } from "../data/faq";
@@ -7,6 +8,7 @@ interface Props {
   question?: string;
   answer?: string | FaqAnswerBlock[];
   cta?: string;
+  quiz?: "buy" | "sell";
   /** kit — прежний вид UI kit; accordion — карточка секции FAQ (Figma 1380:5740) */
   variant?: "kit" | "accordion";
   /** Уникальный id для связки кнопки и ответа (только accordion) */
@@ -16,9 +18,10 @@ interface Props {
   node?: string;
 }
 const {
-  question = "Как понять, что вы не обманете и не уйдете с деньгами или объектом?",
-  answer = "Это самый честный вопрос и мы его слышим часто, поэтому не просим доверять на слово. До подписания договора вы получаете все условия работы и размер комиссии на бумаге. Расчеты проходят через банк: деньги переходят к продавцу только после регистрации права собственности. Хотите разобраться подробнее — приходите на консультацию.",
-  cta = "Записаться на консультацию",
+  question = siteText("faq-card.question.1"),
+  answer = siteText("faq-card.answer.2"),
+  cta = siteText("client-cases.label.28"),
+  quiz,
   variant = "kit",
   id = "faq-card",
   open = true,
@@ -41,7 +44,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
         <span class="faq-toggle-icon" aria-hidden="true">
           <img
             class="faq-toggle-bg"
-            src="/assets/8ac19-bg.svg"
+            src="/assets/faq-toggle-background-bg.svg"
             alt=""
             width="38.5917"
             height="37.8297"
@@ -50,7 +53,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
           />
           <img
             class="faq-toggle-cross"
-            src="/assets/8ac19-cross.svg"
+            src="/assets/faq-toggle-background-cross.svg"
             alt=""
             width="38.5917"
             height="37.8297"
@@ -81,7 +84,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
             ),
           )}
         </div>
-        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} />
+        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} quiz={quiz} popup={quiz ? undefined : "office"} />
       </div>
     </div>
   </Paper>
@@ -89,7 +92,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
   <Paper class="faq-card" node={node}>
     <h3>
       <img
-        src="/assets/8ac19.svg"
+        src="/assets/faq-toggle-background.svg"
         width="30"
         height="30"
         alt=""
@@ -99,7 +102,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
       {question}
     </h3>
     <p>{blocks.filter((block) => typeof block === "string").join(" ")}</p>
-    <Button label={cta} tone="black" />
+    <Button label={cta} tone="black" popup="office" subject={`Вопрос: ${question}`} />
   </Paper>
 )}
 

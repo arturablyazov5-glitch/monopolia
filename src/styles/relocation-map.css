@@ -1,7 +1,7 @@
 /* Figma 1380:6590 — шапка блока 1380:6589 с картой «Dinosaurs_of_Russia» */
 .relocation-map {
   position: relative; /* без z-index: карта уходит под предыдущие секции */
-  padding: 120px 0;
+  padding: var(--section-space) 0;
 }
 /* 1380:6591: кадр 1441 × 3035, верх на 2132.1 px выше блока */
 .relocation-map-bg {
@@ -13,6 +13,8 @@
   overflow: hidden;
   z-index: -1;
   pointer-events: none;
+  /* The original layer spans the preceding sections; fade its physical bottom too. */
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 180px), transparent);
 }
 .relocation-map-frame {
   position: absolute;
@@ -39,7 +41,7 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    var(--color-canvas) 16.717%,
+    var(--color-canvas) var(--map-fade-start, 507px),
     #ededed00 85.815%
   );
 }
@@ -63,10 +65,10 @@
 }
 .relocation-map-hand {
   margin-top: 12px;
-  height: 21px;
+  height: auto;
   display: flex;
   align-items: center;
-  font: 52px/0.4 var(--font-handwriting);
+  font: 52px/1 var(--font-handwriting);
   color: var(--color-diamond);
   white-space: nowrap;
 }
@@ -74,6 +76,10 @@
   width: 562px;
   margin-top: 32px;
   color: var(--color-muted);
+}
+.relocation-map-heading > .button {
+  margin-top: 28px;
+  min-width: 220px;
 }
 .relocation-map-routes {
   position: absolute;
@@ -87,13 +93,27 @@
 .relocation-map-route-map {
   display: none;
 }
+.relocation-trains {
+  position: absolute;
+  inset: 0 auto auto 0;
+  max-width: none;
+  overflow: visible;
+}
+.relocation-trains--mobile {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .relocation-trains {
+    display: none;
+  }
+}
 
 /* Адаптив K: desktop ≥1200 сохраняется. */
 
 @media (max-width: 1199px) {
   .relocation-map {
     max-width: 100vw;
-    padding: 80px 32px 40px;
+    padding: var(--section-space) 32px;
     overflow: hidden;
     isolation: isolate;
   }
@@ -146,6 +166,13 @@
     position: absolute;
     inset: 0;
     z-index: -1;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 100px,
+      #000 calc(100% - 100px),
+      transparent
+    );
   }
   .relocation-map-route-map > img {
     position: absolute;
@@ -171,22 +198,95 @@
     width: var(--route-width);
     height: auto;
   }
+  .relocation-trains {
+    width: 100%;
+    height: auto;
+  }
 }
+/* Shared mobile composition for buying and selling. The full map continues
+   behind adjacent sections; map, routes and marker share one projection. */
 @media (max-width: 767px) {
   .relocation-map {
-    padding: 56px 20px 24px;
+    --relocation-composition-width: clamp(640px, 160vw, 720px);
+    padding: var(--section-space) 20px;
+    overflow-x: clip;
+    overflow-y: visible;
+    isolation: auto;
+  }
+  .relocation-map-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .relocation-map-heading {
+    display: contents;
   }
   .relocation-map-heading h2 {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.1;
+    text-align: center;
+  }
+  .sell-relocation .relocation-map-heading h2 {
+    max-width: 300px;
   }
   .relocation-map-hand {
-    font-size: 44px;
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1;
+    white-space: normal;
+    max-width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .relocation-map-text {
+    text-align: center;
+  }
+  .relocation-map-heading > .button {
+    order: 4;
+    margin-top: 24px;
   }
   .relocation-map-routes {
-    margin-top: 32px;
-    width: max(100%, 560px);
-    margin-left: calc(50% - 280px);
+    order: 3;
+    width: var(--relocation-composition-width);
+    margin: 32px 0 0;
+    isolation: auto;
+  }
+  .relocation-map-route-map {
+    inset: -800px 0 -160px;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 240px,
+      #000 calc(100% - 160px),
+      transparent
+    );
+    overflow: visible;
+  }
+  .relocation-map-route-map > img {
+    top: calc(800px - var(--relocation-composition-width) * 1.8380172414);
+    mask-image: none;
+  }
+  .relocation-map-route-map::after {
+    content: none;
+  }
+  .relocation-map-routes > img {
+    display: none;
+  }
+  .relocation-map-routes > .relocation-pin {
+    display: block;
+    width: 22px;
+    height: 30.344828px;
+    left: calc(61.3362069% - 11px) !important;
+    top: calc(63.1161404% - 30.344828px) !important;
+  }
+  .relocation-trains:not(.relocation-trains--mobile) {
+    display: none;
+  }
+  .relocation-trains--mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 0;
   }
 }
 @media (max-width: 539px) {
@@ -195,6 +295,11 @@
     padding-right: 16px;
   }
   .relocation-map-heading h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
+  }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .relocation-trains--mobile .relocation-train {
+    display: none;
   }
 }

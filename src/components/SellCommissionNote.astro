@@ -1,13 +1,14 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import AccentStatement from "./AccentStatement.astro";
 import "../styles/sell-commission-note.css";
 ---
 
 <section class="sell-commission-note" aria-label="Когда оплачивается комиссия">
   <AccentStatement node="1380:6325">
-    Кстати,{" "}
+    {siteText("realtor-comparison.text.5")}{" "}
     <strong>
-      вы платите комиссию только после зачисления денег на ваш счет
+      {siteText("sell-commission-note.text.1")}
     </strong>
   </AccentStatement>
 </section>

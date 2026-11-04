@@ -1,0 +1,209 @@
+---
+import "../styles/contact-fields.css";
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+---
+
+<div class="resume-field" data-resume-field>
+  <div class="contact-field resume-control">
+    <div class="resume-content">
+      <label class="resume-picker" for={id}>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="m8 12 6-6a3 3 0 0 1 4 4l-8 8a5 5 0 0 1-7-7l9-9"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span data-resume-name aria-live="polite">
+          Прикрепить резюме
+        </span>
+        <span class="sr-only">(необязательно)</span>
+      </label>
+      <input
+        id={id}
+        class="sr-only"
+        type="file"
+        accept=".pdf,.doc,.docx,.txt,.rtf"
+        aria-describedby={id + "-note " + id + "-error"}
+      />
+      <div class="resume-file-actions" hidden>
+        <button
+          type="button"
+          data-resume-replace
+          aria-label="Заменить резюме"
+          title="Заменить резюме"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15v5Z"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          data-resume-remove
+          aria-label="Удалить резюме"
+          title="Удалить резюме"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <p id={id + "-error"} class="resume-error" role="alert" hidden></p>
+  <p id={id + "-note"} class="resume-note">
+    Резюме можно прислать в мессенджере. Здесь отправляются ваши контакты.
+  </p>
+</div>
+
+<script>
+  import { resumeFileError } from "../lib/resume-file";
+  document
+    .querySelectorAll<HTMLElement>("[data-resume-field]")
+    .forEach((field) => {
+      const input =
+        field.querySelector<HTMLInputElement>('input[type="file"]')!;
+      const name = field.querySelector<HTMLElement>("[data-resume-name]")!;
+      const actions = field.querySelector<HTMLElement>(".resume-file-actions")!;
+      const error = field.querySelector<HTMLElement>(".resume-error")!;
+      let version = 0;
+      const clearError = () => {
+        error.hidden = true;
+        error.textContent = "";
+        input.removeAttribute("aria-invalid");
+      };
+      const sync = () => {
+        const file = input.files?.[0];
+        name.textContent = file ? file.name : "Прикрепить резюме";
+        actions.hidden = !file;
+      };
+      input.addEventListener("change", async () => {
+        const current = ++version;
+        clearError();
+        const file = input.files?.[0];
+        if (!file) return;
+        let message: string;
+        try {
+          message = await resumeFileError(file);
+        } catch {
+          message = "Не удалось прочитать файл. Выберите другой файл.";
+        }
+        if (current !== version) return;
+        if (message) {
+          input.value = "";
+          error.textContent = message;
+          error.hidden = false;
+          input.setAttribute("aria-invalid", "true");
+        }
+        sync();
+      });
+      field
+        .querySelector("[data-resume-replace]")!
+        .addEventListener("click", () => input.click());
+      field
+        .querySelector("[data-resume-remove]")!
+        .addEventListener("click", () => {
+          ++version;
+          input.value = "";
+          clearError();
+          sync();
+          input.focus({ preventScroll: true });
+        });
+      input.form?.addEventListener("reset", () => {
+        ++version;
+        clearError();
+        queueMicrotask(sync);
+      });
+    });
+</script>
+
+<style>
+  .resume-control {
+    position: relative;
+  }
+  .resume-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .resume-picker {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    min-height: 24px;
+  }
+  .resume-picker svg {
+    flex-shrink: 0;
+  }
+  .resume-picker [data-resume-name] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .resume-file-actions {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .resume-file-actions[hidden] {
+    display: none;
+  }
+  .resume-file-actions button {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font: inherit;
+    color: var(--color-ink);
+  }
+  .resume-error {
+    margin-top: 8px;
+    color: var(--color-accent);
+    font: var(--text-small)/1.4 var(--font-body);
+  }
+  .resume-note {
+    margin-top: 8px;
+    font: var(--text-small)/1.4 var(--font-body);
+    color: var(--color-muted);
+  }
+</style>

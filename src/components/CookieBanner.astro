@@ -1,0 +1,44 @@
+---
+import Button from "./Button.astro";
+import { legal } from "../data/legal";
+import "../styles/cookie-banner.css";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<section
+  class="cookie-banner"
+  role="region"
+  aria-label="Использование cookie"
+  data-cookie-banner
+  data-counter-id={import.meta.env.PUBLIC_YM_ID || ""}
+  hidden
+>
+  <div class="cookie-banner__paper paper">
+    <p>
+      Мы используем cookie и Яндекс.Метрику для анализа работы сайта и его улучшения. Нажимая «Принять», вы даете согласие на обработку данных с помощью указанных сервисов в соответствии с{" "}
+      <a
+        href={`${base}${legal.privacy.href}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Политикой конфиденциальности
+      </a>{" "}
+      и{" "}
+      <a
+        href={`${base}${legal.consent.href}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Согласием на обработку персональных данных
+      </a>
+      .
+    </p>
+    <form class="cookie-banner__actions">
+      <Button label="Принять" type="submit" />
+      <Button label="Отклонить" tone="black" type="submit" />
+    </form>
+  </div>
+</section>
+<script>
+  import("../scripts/cookie-banner");
+</script>

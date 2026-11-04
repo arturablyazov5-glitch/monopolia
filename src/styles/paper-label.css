@@ -1,0 +1,22 @@
+/* Shared compact paper surface: mask only the paint, never content or tape. */
+.paper-label {
+  --paper-mask-sizes:
+    8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px),
+    8px 8px, calc(100% - 14px) 8px, 8px 8px;
+  position: relative;
+  isolation: isolate;
+  background: transparent !important;
+}
+.paper-label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--label-fill, #fff);
+  mask-image: var(--brush-square-images);
+  mask-size: var(--paper-mask-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+}

@@ -1,0 +1,308 @@
+/* TASK-027: desktop keeps its dropdown; the same panel becomes a mobile modal. */
+.menu-mobile {
+  display: none;
+}
+.menu-panel-bottom {
+  display: contents;
+}
+.site-header nav > a[aria-current="page"],
+.site-header .menu-panel-links > li > a[aria-current="page"] {
+  color: var(--color-accent);
+}
+.menu-drawer:not([open]) {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .menu-drawer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink);
+    /* hidden permits focus-driven horizontal scrolling and cancels the slide. */
+    overflow: clip;
+  }
+  .menu-drawer::backdrop {
+    background: transparent;
+    backdrop-filter: none;
+  }
+  .menu-drawer-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--color-backdrop);
+    opacity: 0;
+  }
+  .menu-drawer-surface {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    --menu-panel-width: min(82vw, 320px);
+    width: var(--menu-panel-width);
+    height: 100%;
+    transform: translateX(100%);
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .menu-drawer[open] .menu-drawer-surface {
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .menu-drawer[data-menu-state="open"] .menu-drawer-surface {
+    transform: translateX(0);
+  }
+  .menu-drawer[data-menu-state="open"] .menu-drawer-backdrop {
+    opacity: 1;
+  }
+  /* Only the paper background is masked. The existing left-edge SVG and
+     the solid interior overlap by 2px; the other three edges stay flush.
+     Keep this layer outside the scrolling, unmasked content panel. */
+  .menu-drawer-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 100%;
+    height: 100%;
+    background: var(--color-paper);
+    mask-image: url("/assets/brush-mask-l.svg"), linear-gradient(#fff, #fff);
+    mask-size:
+      8px 100%,
+      calc(100% - 6px) 100%;
+    mask-position:
+      left top,
+      right top;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+  }
+  .menu-drawer .menu-drawer-surface > .menu-panel {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    padding: max(12px, env(safe-area-inset-top)) 20px
+      calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+    background: transparent;
+    mask: none;
+    /* The global desktop dropdown animation must not also animate this panel. */
+    animation: none;
+    font-family: var(--font-heading);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .menu-drawer .menu-panel > * {
+    flex-shrink: 0;
+  }
+  .menu-drawer .menu-panel-bottom {
+    display: block;
+    margin-top: auto;
+    padding-top: var(--space-2);
+  }
+  .menu-drawer .menu-mobile {
+    display: block;
+  }
+  .menu-drawer .menu-panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .menu-panel-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    min-width: 0;
+  }
+  .menu-panel-brand > img {
+    flex: 0 0 32px;
+  }
+  .menu-panel-brand > span {
+    display: grid;
+    gap: 6px;
+  }
+  .menu-panel-descriptor {
+    white-space: nowrap;
+    font: clamp(11px, 3.05vw, 12px)/1.2 var(--font-body);
+    letter-spacing: -0.1px;
+    color: var(--color-muted);
+  }
+  .menu-panel-close {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: var(--color-accent);
+    color: var(--color-paper);
+    font: 32px/1 var(--font-body);
+    cursor: pointer;
+  }
+  .menu-drawer .menu-panel-city {
+    margin-bottom: var(--space-2);
+  }
+  /* More specific than the compact desktop-header rules that also apply
+     below 768px. Production CSS chunk order must not hide the moved picker. */
+  .site-header .menu-drawer .menu-panel-city .city-picker {
+    display: block;
+  }
+  .site-header .menu-drawer .menu-panel-city .city {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    padding: 8px 12px;
+    background: var(--color-canvas);
+    font-size: var(--text-small);
+  }
+  .menu-drawer .city-menu li {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .menu-drawer .menu-panel-links > li > a {
+    min-height: 44px;
+    font-size: var(--text-body);
+  }
+  .menu-drawer .menu-panel-links > li + li {
+    border-top: 0;
+    background: var(--line-fade) top / 100% 1px no-repeat;
+  }
+  .menu-drawer .menu-panel-contact {
+    padding-top: var(--space-2);
+    border-top: 0;
+    background: var(--line-fade) top / 100% 1px no-repeat;
+  }
+  .menu-panel-contact-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+  }
+  .menu-panel-phone {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font: bold 16px/1.2 var(--font-body);
+    white-space: nowrap;
+  }
+  .menu-drawer .socials {
+    gap: 0;
+  }
+  .menu-drawer .socials > a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    /* Видимый зазор между иконками = --menu-social-gap (иконка 32 px в зоне
+       44 px: 12 px по умолчанию); зоны нажатия соседей чуть перекрываются. */
+    margin-inline: calc((var(--menu-social-gap) - 12px) / 2);
+  }
+  .menu-drawer .socials img {
+    width: 32px;
+    height: 32px;
+  }
+  .menu-drawer .office-status,
+  .menu-panel-hours {
+    font: var(--text-small)/1.2 var(--font-body);
+    color: var(--color-muted);
+  }
+  .menu-drawer .time {
+    padding-left: 0;
+  }
+  .menu-drawer .time::before {
+    position: static;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+    transform: none;
+  }
+  .menu-drawer .time::after {
+    display: none;
+  }
+  .menu-panel-hours {
+    margin: 4px 0 0;
+  }
+  .menu-drawer .menu-panel-actions {
+    margin-top: var(--space-3);
+  }
+  .menu-drawer .menu-panel-actions .button {
+    min-height: 44px;
+    padding-inline: 12px;
+  }
+  .site-header .menu-drawer :focus-visible {
+    outline: var(--focus-width) solid var(--color-ink);
+    outline-offset: -3px;
+  }
+}
+
+@media (max-width: 767px) {
+  .menu-drawer .menu-panel-contact {
+    background: none;
+  }
+  .menu-drawer .menu-panel-links > li > a {
+    min-height: 36px;
+  }
+  .menu-drawer .menu-panel-links li + li {
+    background: none;
+  }
+  .menu-drawer .menu-company-link {
+    display: none;
+  }
+}
+
+/* The compact drawer keeps the descriptor readable below the logo row. */
+@media (max-width: 369px) {
+  .menu-drawer .menu-panel-top {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 44px;
+    gap: 4px var(--space-2);
+  }
+  .menu-drawer .menu-panel-brand,
+  .menu-drawer .menu-panel-brand > span {
+    display: contents;
+  }
+  .menu-drawer .menu-panel-brand > img {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .menu-drawer .menu-panel-brand > span > img {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .menu-drawer .menu-panel-descriptor {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+  .menu-drawer .menu-panel-close {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+@media (max-width: 1199px) {
+  /* HOME-327: flex alignment removes the baseline offset in the drawer. */
+  .menu-drawer .time {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .menu-drawer .time::before {
+    flex: 0 0 6px;
+    width: 6px;
+    height: 6px;
+    margin-right: 0;
+  }
+}

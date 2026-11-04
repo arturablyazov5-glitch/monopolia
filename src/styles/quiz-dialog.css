@@ -1,0 +1,36 @@
+/* Quiz instances keep their shared inline styles; only the modal shell differs. */
+dialog#lead-dialog.quiz-dialog {
+  width: 555px;
+}
+#lead-dialog.quiz-dialog .dialog-sheet {
+  padding: 56px 20px 20px;
+}
+#lead-dialog.quiz-dialog .inner-hero-card {
+  max-width: 100%;
+  height: auto;
+  min-height: 526px;
+  gap: 24px;
+}
+#lead-dialog [data-dialog-form][hidden] {
+  display: none !important;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  #lead-dialog.quiz-dialog .inner-hero-quiz {
+    display: block;
+  }
+}
+@media (max-width: 767px) {
+  #lead-dialog.quiz-dialog .dialog-sheet {
+    padding: 56px 12px 16px;
+  }
+  #lead-dialog.quiz-dialog .inner-hero-card {
+    min-height: 0;
+    gap: 20px;
+  }
+}
+
+/* One outer sheet on every viewport; the embedded quiz only lays out content. */
+#lead-dialog.quiz-dialog .inner-hero-card.paper {
+  padding: 0;
+  margin: 0;
+}

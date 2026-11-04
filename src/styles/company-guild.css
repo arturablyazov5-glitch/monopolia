@@ -9,15 +9,21 @@
   height: 322px;
   margin: 0 auto;
   padding: 40px 52px;
-  transform: rotate(-1deg);
-  color: #1a1a1a;
-  --paper-texture: none;
+  transform: none;
+  color: var(--color-ink);
+  /* Paper's outer nine-piece mask supplies the white perimeter; the
+     original inner sheet and logo crop retain their layout dimensions. */
+  --brush-border: 10px;
 }
-.guild-card h2 {
+.guild-card::before {
+  content: none;
+}
+.guild-card #guild-title {
   position: relative;
   z-index: 2;
   margin: 0 0 32px;
-  font: 500 44px/1 var(--font-heading);
+  font: var(--weight-heading) var(--text-heading)/var(--leading-heading)
+    var(--font-heading);
 }
 .guild-details {
   position: relative;
@@ -29,27 +35,86 @@
 .guild-details > p {
   margin: 0;
   width: 267px;
-  font: 16px/1.2 var(--font-body);
+  font: var(--text-body)/var(--leading-body) var(--font-body);
 }
 .guild-note {
   padding: 20px 24px;
-  --paper-texture: url("/assets/0ba2a.webp");
   flex-shrink: 0;
+}
+.paper.guild-note {
+  filter: drop-shadow(0 5px 7px #0000001a);
+}
+.guild-note::after {
+  background-color: #eee9e3;
 }
 .guild-note p {
   margin: 0;
-  font: 16px/1.2 var(--font-body);
+  font: var(--text-body)/var(--leading-body) var(--font-body);
 }
 .guild-logo-crop {
   position: absolute;
   inset: 0;
+  mask-image: var(--brush-images);
+  mask-size: var(--paper-frame-mask-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
   overflow: hidden;
   pointer-events: none;
   z-index: 1;
 }
 .guild-logo-crop img {
   position: absolute;
-  right: -172.9px;
-  top: -191.35px;
+  right: calc(-184.9px - var(--brush-border));
+  top: calc(-201.35px + var(--brush-border));
   max-width: none;
+}
+
+@media (min-width: 768px) {
+  .home-desktop .guild-card #guild-title {
+    font-size: var(--text-heading);
+  }
+  .home-desktop .guild-card #guild-title br {
+    display: inline;
+  }
+}
+
+/* Keep the perimeter inside the section gutter on narrow screens. */
+@media (max-width: 767px) {
+  .home-desktop .company-guild.company-guild {
+    padding: 0 var(--space-7) var(--sec);
+  }
+  .home-desktop .guild-card.guild-card {
+    --brush-border: 8px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(50px, 14vw, 64px);
+    gap: 24px 12px;
+    padding: 24px 20px 32px;
+  }
+  .home-desktop .guild-card.guild-card #guild-title {
+    grid-row: 1;
+    grid-column: 1;
+    font-size: min(var(--h2), 5.55vw);
+    margin: 0;
+  }
+  .home-desktop .guild-card .guild-details {
+    grid-row: 2;
+    grid-column: 1 / -1;
+  }
+  .home-desktop .guild-card .guild-logo-crop {
+    position: relative;
+    inset: auto;
+    grid-row: 1;
+    grid-column: 2;
+    align-self: start;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    mask: none;
+  }
+  .home-desktop .guild-card .guild-logo-crop img {
+    width: 200%;
+    height: auto;
+    top: -125%;
+    left: 0;
+    right: auto;
+  }
 }

@@ -1,12 +1,15 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import ReferralNotification from "./ReferralNotification.astro";
 import TapedNote from "./TapedNote.astro";
 import { traceLogo } from "../data/trace-logos";
 import "../styles/referral-bonus.css";
+import { referralPeriod, referralHeadingPrefix } from "../scripts/referral-bonus.mjs";
+const period = referralPeriod();
 const notifications = [
   {
-    bank: "СберБанк",
-    time: "52 минуты назад",
+    bank: siteText("referral-bonus.bank.1"),
+    time: siteText("referral-bonus.time.2"),
     icon: "sber",
     left: 1,
     top: 0,
@@ -15,8 +18,8 @@ const notifications = [
     rotate: -15.96,
   },
   {
-    bank: "Т‑Банк",
-    time: "12 минут назад",
+    bank: siteText("referral-bonus.bank.3"),
+    time: siteText("referral-bonus.time.4"),
     icon: "t-bank",
     left: 0,
     top: 190,
@@ -25,8 +28,8 @@ const notifications = [
     rotate: 3.79,
   },
   {
-    bank: "Альфа Банк",
-    time: "7 минут назад",
+    bank: siteText("referral-bonus.bank.5"),
+    time: siteText("referral-bonus.time.6"),
     icon: "alfa-bank",
     left: 1,
     top: 80,
@@ -35,8 +38,8 @@ const notifications = [
     rotate: -10.66,
   },
   {
-    bank: "Ozon Банк",
-    time: "4 минуты назад",
+    bank: siteText("referral-bonus.bank.7"),
+    time: siteText("referral-bonus.time.8"),
     icon: "ozon-bank",
     left: 223,
     top: 48,
@@ -45,8 +48,8 @@ const notifications = [
     rotate: 4.15,
   },
   {
-    bank: "МТС Деньги",
-    time: "Сейчас",
+    bank: siteText("referral-bonus.bank.9"),
+    time: siteText("referral-bonus.time.10"),
     icon: "mts-money",
     left: 228,
     top: 140.6,
@@ -55,8 +58,8 @@ const notifications = [
     rotate: -10.03,
   },
   {
-    bank: "WB Банк",
-    time: "12 минут назад",
+    bank: siteText("referral-bonus.bank.11"),
+    time: siteText("referral-bonus.time.4"),
     icon: "wildberries",
     left: 116.8,
     top: 97.56,
@@ -69,6 +72,7 @@ const notifications = [
 
 <section
   class="referral-bonus"
+  data-referral-bonus
   aria-labelledby="sell-referral-title"
   data-node-id="1380:6343"
 >
@@ -81,7 +85,7 @@ const notifications = [
       {notifications.map((n) => (
         <div
           class="referral-notification-slot"
-          style={`left:${n.left}px;top:${n.top}px;width:${n.width}px;height:${n.height}px;--notification-rotation:${n.rotate}deg`}
+          style={`--notification-left:${n.left}px;--notification-top:${n.top}px;--notification-width:${n.width}px;--notification-height:${n.height}px;--notification-rotation:${n.rotate}deg`}
         >
           <ReferralNotification
             bank={n.bank}
@@ -96,18 +100,30 @@ const notifications = [
     <div class="referral-bonus-copy">
       <div>
         <h2 id="sell-referral-title">
-          Получите 5 000 ₽
+          {siteText("referral-bonus.text.12")}
           <br />
-          за каждого приведенного
+          {siteText("referral-bonus.text.13")}
           <br />
-          друга до конца сентября
+          <span data-referral-prefix data-content-id="referral-bonus.text.14" data-content-slots="0" data-content-parts="-1">{referralHeadingPrefix(siteText("referral-bonus.text.14"))}</span> <span data-referral-month>{period.month}</span>
         </h2>
-        <p>При заключении договора</p>
+        <p>{siteText("referral-bonus.text.15")}</p>
       </div>
-      <TapedNote tapeNode="I1380:6355;569:1388" textured rotate={-1}>
-        До конца акции: <strong>13 дней</strong>
+      <TapedNote class="referral-promotion-label" tapeNode="I1380:6355;569:1388" textured rotate={-1}>
+        {siteText("referral-bonus.text.16")}{" "}<strong><span data-referral-days>{period.days}</span>{" "}<span data-referral-word>{period.word}</span></strong>
       </TapedNote>
     </div>
   </div>
   <!-- В узле 6343 кнопки нет (сверка волны 3): кнопка H «Привести друга» убрана. -->
 </section>
+
+<script>
+  import { updateReferralBonuses } from "../scripts/referral-bonus.mjs";
+  updateReferralBonuses();
+  setInterval(updateReferralBonuses, 60 * 60 * 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) updateReferralBonuses();
+  });
+  for (const prefix of document.querySelectorAll("[data-referral-prefix]")) {
+    new MutationObserver(updateReferralBonuses).observe(prefix, { childList: true, characterData: true, subtree: true });
+  }
+</script>

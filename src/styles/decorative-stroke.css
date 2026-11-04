@@ -1,0 +1,23 @@
+/* Общая геометрия красных и светлых рисованных разделителей. */
+.decorative-stroke {
+  display: block;
+  align-self: center;
+  width: 584.154px;
+  height: 14.681px;
+  background: var(--stroke-color, var(--color-diamond));
+  mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 100% 100%;
+}
+.decorative-stroke--light {
+  --stroke-color: #e5e5e5;
+}
+@media (max-width: 1199px) {
+  .decorative-stroke {
+    max-width: 100%;
+  }
+}
+@media (max-width: 767px) {
+  .decorative-stroke {
+    width: clamp(150px, calc(45vw - 18px), 300px);
+    height: 8px;
+  }
+}

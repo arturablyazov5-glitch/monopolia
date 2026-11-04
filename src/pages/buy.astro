@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import InnerHero from "../components/InnerHero.astro";
 import BuyMortgage from "../components/BuyMortgage.astro";
@@ -22,27 +23,9 @@ import "../styles/buy-page.css";
   <main class="buy-desktop">
     <InnerHero
       node="1380:6363"
-      title={["800+ проверенных объектов", "недвижимости, которых нет"]}
+      title={[siteText("buy.title.1"), siteText("buy.title.2") + " нет"]}
       markets
-      description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
-      formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
-      image={{
-        src: "/assets/5ab39.webp",
-        ratio: "1081 / 812",
-        width: 1081,
-        height: 250.368,
-        alt: "Пример подборки объектов Монополии",
-      }}
-      shadow={{
-        src: "cfc23.svg",
-        left: 20.5,
-        top: 29.5,
-        width: 303,
-        height: 185,
-        bleed: "-36.52% -15.61% -36.28% -31.99%",
-      }}
-      buttonLabel="Смотреть подборку"
-      subject="Подборка объектов"
+      description={siteText("buy.description.3")}
     />
     <BuyMortgage />
     <BuyClosedBase />
@@ -53,12 +36,7 @@ import "../styles/buy-page.css";
     <RelocationMap />
     <DealSteps steps={buyDealSteps} />
     <RealtorComparison rows={buyRealtorComparison} />
-    <FaqSection
-      id="buy-faq"
-      items={buyFaq}
-      node="1380:7007"
-      class="inner-faq"
-    />
+    <FaqSection id="faq" items={buyFaq} node="1380:7007" class="inner-faq" />
     <LeadSection
       id="buy-question"
       node="1380:7022"

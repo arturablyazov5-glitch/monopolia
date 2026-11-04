@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // «Продажа», Figma 1380:5760: сцена с соседками и агентами, два речевых облака.
 import SpeechBubble from "./SpeechBubble.astro";
 import "../styles/sell-gossip.css";
@@ -11,7 +12,7 @@ import "../styles/sell-gossip.css";
 >
   <img
     class="sell-gossip-edge"
-    src="/assets/7b038.svg"
+    src="/assets/gossip-paper-edge.svg"
     alt=""
     width="1440"
     height="51.5"
@@ -22,12 +23,12 @@ import "../styles/sell-gossip.css";
     {/* ≤ 767 px: левая часть кадра (соседки) в высоте исходника — 2× показа. */}
     <source
       media="(max-width: 767px)"
-      srcset="/assets/1eb75-r2-m.webp"
+      srcset="/assets/sell-gossip-neighbors-and-team-mobile.webp"
       style="display:none"
     />
     <img
-      class="sell-gossip-photo"
-      src="/assets/1eb75.webp"
+      class="sell-gossip-photo person-photo"
+      src="/assets/sell-gossip-neighbors-and-team.webp"
       alt="Пожилые соседки на лавочке и два специалиста Монополии на прогулке"
       width="1440"
       height="703.806"
@@ -36,20 +37,50 @@ import "../styles/sell-gossip.css";
     />
   </picture>
   <div class="sell-gossip-content">
-    <SpeechBubble
-      class="sell-gossip-rumor"
-      loading="lazy"
-      side="left"
-      tail="3b04c.svg"
-      text={
-        "Клава, ты слыхала? Васька за квартиру\nпросит годовой бюджет Белогорска"
-      }
-    />
-    <SpeechBubble
-      class="sell-gossip-reply"
-      side="right"
-      tail="c8148.svg"
-      text={"Да не слушай их.\nПусть Монополия\nоценит твою квартиру"}
-    />
+    <div class="gossip-message">
+      <div class="gossip-avatars" aria-label="Две соседки">
+        <span
+          class="gossip-avatar"
+          style="--face-x: 146px; --face-y: 128px"
+          role="img"
+          aria-label="Соседка в цветном платке"
+        ></span>
+        <span
+          class="gossip-avatar"
+          style="--face-x: 182px; --face-y: 142px"
+          role="img"
+          aria-label="Соседка в светлом платке"
+        ></span>
+      </div>
+      <SpeechBubble
+        class="sell-gossip-rumor"
+        loading="lazy"
+        side="left"
+        tail="speech-tail-white-left.svg"
+        text={siteText("speech-bubble.text.1")}
+      />
+    </div>
+    <div class="gossip-message gossip-message-reply">
+      <SpeechBubble
+        class="sell-gossip-reply"
+        side="right"
+        tail="speech-tail-blue-right.svg"
+        text={siteText("sell-gossip.text.1")}
+      />
+      <div class="gossip-avatars" aria-label="Два специалиста Монополии">
+        <span
+          class="gossip-avatar"
+          style="--face-x: 590px; --face-y: 90px"
+          role="img"
+          aria-label="Специалист в светлой рубашке"
+        ></span>
+        <span
+          class="gossip-avatar"
+          style="--face-x: 704px; --face-y: 90px"
+          role="img"
+          aria-label="Специалист в тёмной рубашке"
+        ></span>
+      </div>
+    </div>
   </div>
 </section>

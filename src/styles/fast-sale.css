@@ -49,13 +49,12 @@
 .fast-sale-time {
   display: inline-block;
   position: relative;
-  top: 7px;
-  font: 64px/0.4 var(--font-handwriting);
+  top: 11px;
+  font: 72px/0.4 var(--font-handwriting);
   color: var(--color-diamond);
   transform: rotate(-1deg);
 }
 .fast-sale-note {
-  --paper-texture: url("/assets/0ba2a.webp");
   margin-top: 40px;
   padding: 20px 24px;
   width: max-content;
@@ -71,6 +70,9 @@
 .fast-sale-copy > .button {
   margin-top: 52px;
   width: 219px;
+}
+.fast-sale-copy > a.button:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-ink);
 }
 .fast-sale-visual {
   position: absolute;
@@ -96,20 +98,7 @@
   position: absolute;
   right: 141.431px;
   bottom: 84.91px;
-  padding: 20px 24px;
   transform: rotate(-2deg);
-}
-.fast-sale-name-title {
-  position: relative;
-  margin: 0 0 4px;
-  font: 500 var(--text-card)/1.2 var(--font-heading);
-}
-.fast-sale-name-role {
-  position: relative;
-  margin: 0;
-  font: var(--text-small)/var(--leading-body) var(--font-body);
-  color: var(--color-muted);
-  white-space: nowrap;
 }
 
 /* TASK-039: вся сцена 1440 пропорционально помещается в ширину секции.

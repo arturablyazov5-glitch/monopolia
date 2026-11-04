@@ -3,6 +3,6 @@ export const legal = {
   privacy: { href: "/privacy/", title: "Политика конфиденциальности" },
   consent: {
     href: "/consent/",
-    title: "Согласие на обработку персональных данных",
+    title: "Согласие на обработку персональных данных",
   },
 } as const;

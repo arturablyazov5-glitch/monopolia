@@ -1,0 +1,7 @@
+---
+import ChoiceGroup from "./ChoiceGroup.astro";
+import "../styles/contact-fields.css";
+interface Props { selected?: number; }
+const { selected = -1 } = Astro.props;
+---
+<ChoiceGroup class="contact-method-options" name="Способ связи" options={["Телефон", "Макс", "WhatsApp", "Telegram"]} icons={["icon-contact-phone.svg", "icon-contact-max.svg", "icon-contact-whatsapp.svg", "icon-contact-telegram.svg"]} selected={selected} channels />

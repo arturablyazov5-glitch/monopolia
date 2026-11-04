@@ -1,0 +1,13 @@
+/* Единый размер рукописных чисел на главной, продаже и покупке. */
+.handwritten-number {
+  font-family: var(--font-handwriting);
+  font-size: 64px;
+  font-weight: 400;
+  color: var(--color-diamond);
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .handwritten-number { font-size: calc(var(--h2) * 1.4545); }
+}
+@media (max-width: 767px) {
+  .handwritten-number { font-size: min(1.55em, 11vw); }
+}

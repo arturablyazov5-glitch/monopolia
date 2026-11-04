@@ -6,7 +6,8 @@
   isolation: isolate;
   margin-top: -120px;
   padding-top: 180px;
-  height: 1254px;
+  min-height: 1254px;
+  padding-bottom: 24px;
   overflow: hidden;
 }
 .team-paper-background {
@@ -51,19 +52,29 @@
 .home-team .carousel-track {
   display: flex;
   gap: 28px;
-  padding: 0;
+  /* Запас со всех сторон: рваный край и тени карточек выходят за её рамку
+     и обрезались прокруткой; margin возвращает прежнюю раскладку блока. */
+  /* Вертикально запас 24 px; по бокам — 10 px: больше нельзя, иначе в
+     зазоре (28 px) виден рваный край и тень соседней карточки. */
+  padding: 24px 10px;
+  margin: -24px -10px;
+  scroll-padding-inline: 10px;
   overflow: hidden;
-  align-items: flex-start;
+  align-items: stretch;
 }
 .home-team .staff-card {
   width: 368px;
   flex: 0 0 368px;
-  min-height: 619px;
-  --paper-texture: url("/assets/30984.webp");
 }
-.home-team .team-lawyer,
-.home-team .team-trainer {
-  height: 728px;
+/* Лаги слайдера: каждая карточка (с масками рваных краёв и тенями) —
+   на своём слое, при прокрутке она не перерисовывается заново. */
+.home-team .carousel-track {
+  will-change: scroll-position;
+}
+.home-team .carousel-track > .staff-card {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .home-team .staff-photo {
   height: 336px;
@@ -71,6 +82,7 @@
   flex-shrink: 0;
 }
 .home-team .staff-photo .badge {
+  filter: drop-shadow(0 2px 3px #0000000d);
   position: absolute;
   left: auto;
   right: 12px;
@@ -78,53 +90,13 @@
   width: max-content;
   max-width: calc(100% - 24px);
   text-align: left;
-  padding: 6px 14px;
+  padding: 10px 20px;
   font: 14px/1.2 var(--font-body);
-  white-space: nowrap;
-}
-.home-team .staff-photo .staff-backdrop {
-  inset: auto;
-  width: auto;
-  height: auto;
-  max-width: none;
-  object-fit: initial;
-  transform: none;
-}
-.home-team .team-lawyer .staff-backdrop {
-  left: -41.34px;
-  top: -15.27px;
-}
-.home-team .team-expert .staff-backdrop {
-  left: -33.78px;
-  top: -15.07px;
-}
-.home-team .team-trainer .staff-backdrop {
-  left: -35.58px;
-  top: -17.83px;
-}
-.home-team .team-lawyer .staff-person {
-  width: 400.165px;
-  height: 400px;
-  left: -32px;
-  top: -16.827px;
-  transform: scaleX(-1);
-}
-.home-team .team-expert .staff-person {
-  width: 365.217px;
-  height: 365.217px;
-  left: -15.299px;
-  top: -24.87px;
-  transform: none;
-}
-.home-team .team-trainer .staff-person {
-  width: 376.38px;
-  height: 383.736px;
-  left: -20.093px;
-  top: -38.476px;
-  transform: none;
+  /* Более широкий fallback переносится внутри max-width, сохраняя правый отступ. */
+  white-space: normal;
 }
 .home-team .staff-card h3 {
-  font: 500 20px/1.2 var(--font-heading);
+  font: 500 var(--h3, 20px)/1.2 var(--font-heading);
 }
 .home-team .staff-card .muted {
   font: 16px/1.2 var(--font-body);
@@ -134,6 +106,7 @@
   margin: 0;
   width: 100%;
   height: 1px;
+  flex-shrink: 0;
   border: 0;
   background: linear-gradient(to right, transparent, #0000001a 5%, transparent);
 }
@@ -148,9 +121,11 @@
 }
 .home-team .staff-certificate {
   /* Белая плашка: без бумажной текстуры, которую наследует карточка */
-  --paper-texture: none;
   padding: 12px 16px;
   width: 100%;
+}
+.home-team .staff-certificate::before {
+  content: none;
 }
 .staff-certificate p:first-child {
   font: 14px/1.2 var(--font-body);
@@ -184,4 +159,69 @@
 }
 .home-team .carousel-pagination {
   display: none;
+}
+
+/* На телефоне сохраняем пропорции той же бумаги и её рваной кромки,
+   подгоняя изображение под высоту секции вместо десктопных 1440 px. */
+@media (max-width: 767px) {
+  /* Clone the desktop SVG across each wrapped text fragment. */
+  .home-desktop .home-team h2 .team-heading-strike {
+    display: inline;
+    text-decoration: none;
+    background: url("/assets/team-heading-underline.svg") center 58% / 100%
+      0.38em no-repeat;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .home-team {
+    background: white;
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(#000, #000);
+    mask-size:
+      100% 32px,
+      100% calc(100% - 30px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+  }
+  .team-paper-background {
+    top: -80px;
+    left: 0;
+    transform: none;
+    width: 100%;
+    height: calc(125% + 80px);
+    object-fit: cover;
+    object-position: center top;
+    mask: none;
+  }
+}
+
+/* TG-C: compact, equal-height cards with the same native swipe as services. */
+@media (max-width: 767px) {
+  .home-desktop .home-team .carousel-track {
+    align-items: stretch;
+  }
+  .home-desktop .home-team .carousel-track > .staff-card {
+    flex-basis: min(300px, 82vw);
+    width: min(300px, 82vw);
+    height: auto;
+    gap: var(--space-4);
+  }
+  .home-desktop .home-team .staff-card .staff-photo {
+    zoom: min(0.7976, tan(atan2(calc(82vw - 32px), 336px)));
+  }
+  .home-desktop .home-team .carousel-controls {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .home-desktop .home-team .mobile-scroll-hint {
+    margin-inline: var(--rg);
+  }
+}
+
+@media (max-width: 1199px) {
+  .home-team {
+    min-height: 0;
+  }
 }

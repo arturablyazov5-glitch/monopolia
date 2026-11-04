@@ -3,12 +3,19 @@
    Белое кольцо и border элемента измеряются отдельно (см. аудит).
    Только статические SVG/CSS. Исходный контур и полноширинные экспорты сохранены. */
 :root {
-  --brush-images:
+  --brush-rounded-images:
     url("/assets/brush-mask-tl.svg"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-mask-tr.svg"), url("/assets/brush-mask-l.svg"),
     linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
     url("/assets/brush-mask-bl.svg"), url("/assets/brush-mask-b.svg"),
     url("/assets/brush-mask-br.svg");
+  --brush-images: var(--brush-rounded-images);
+  --brush-square-images:
+    url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
+    url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    url("/assets/brush-square-bl.svg"), url("/assets/brush-mask-b.svg"),
+    url("/assets/brush-square-br.svg");
   /* Стыки соседних SVG дают дробное покрытие alpha. Перекрытие 2px
      находится внутри непрозрачной части силуэта, внешний контур не меняет. */
   --brush-sizes:
@@ -26,16 +33,18 @@
 .arrow,
 .city,
 .header-call,
-.lead-form > input,
+.lead-form :is(input[name="phone"], input[name="name"]),
 .lead-form textarea,
 .inner-hero-city,
+.inner-hero-other input,
+.buy-quiz input.buy-quiz-input[type="tel"],
 .inner-hero-types .chip,
+.chip,
+.channels button,
 .sell-week-form .chip,
 .sell-week-form input[type="tel"],
 .cases-tabs .channels,
 .cases-tabs .chip.selected,
-.private-catalog-market,
-.inner-hero-market,
 .private-catalog-checks .badge,
 .buy-mortgage-programs > *,
 .sell-answers-topics span,
@@ -44,11 +53,12 @@
 .office-label,
 .office-label span,
 .staff-photo .badge,
+.deal-step-image .badge,
 .property-card .badge,
 .property-card .mortgage,
 .property-photo {
   --brush-ring: 0px;
-  --brush-outside: linear-gradient(#fff, #fff);
+  --brush-outside: linear-gradient(transparent, transparent);
   mask-image:
     var(--brush-images), var(--brush-outside), var(--brush-outside),
     var(--brush-outside), var(--brush-outside);
@@ -70,6 +80,14 @@
   mask-mode: alpha;
   background-clip: border-box;
   clip-path: none;
+}
+button.brush-stroke,
+button.arrow,
+button.chip,
+button.button {
+  appearance: none;
+  border: 0;
+  box-shadow: none;
 }
 /* У бумаги маскируется только краска, а не сам контейнер: скотч,
    вложенный фокус и исходные тени больше не проходят через маску. */
@@ -93,7 +111,7 @@
   display: block;
   position: absolute;
   inset: calc(-1 * var(--brush-border)) !important;
-  background: #fff;
+  background: var(--paper-fill, #fff);
   z-index: -2;
   pointer-events: none;
   mask-image: var(--brush-images);
@@ -146,11 +164,6 @@
 .paper.director-card {
   --brush-ring: 0px 1.75px 0px 0px;
 }
-.paper.director-card::before {
-  /* Светлая складка самой текстуры тоже входит в видимую ширину.
-     Калибровка 2×: её положение +1px даёт медианы 0.5/1.5/0.75/0px. */
-  background-position: calc(50% + 1px) center;
-}
 .paper.inner-hero-card {
   --brush-ring: 4.25px 0px 1px 0px;
 }
@@ -177,6 +190,19 @@
   --brush-border: 15px;
   --brush-ring: 3.25px 0px 0.5px 0px;
 }
+/* Одинаковая светлая кромка сверху и снизу без изменения раскладки. */
+.paper.paper-light-edges {
+  --brush-ring: 3.25px 0px;
+}
+.paper.paper-light-edges::before,
+.paper.paper-light-edges::after {
+  --brush-images:
+    url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
+    url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
+    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    url("/assets/brush-mirror-bl.svg"), url("/assets/brush-mirror-b.svg"),
+    url("/assets/brush-mirror-br.svg");
+}
 .paper.recruiting-note {
   --brush-border: 15px;
   --brush-ring: 0px 2px 0px 0px;
@@ -187,7 +213,7 @@
 .sell-answers-topics span {
   --brush-ring: 0px 1px;
 }
-.lead-form > input,
+.lead-form :is(input[name="phone"], input[name="name"]),
 .lead-form textarea {
   --brush-ring-inline-end: 2px;
   --brush-ring: 0px var(--brush-ring-inline-end) 0px 0px;
@@ -201,38 +227,35 @@
 .paper.blockbuster-label::after {
   background: var(--color-dark);
 }
-/* TASK-030. Статичный фон и маска не меняются на кадрах hover.
-   Отдельная заливка композится через opacity; отрицательный z-index
-   внутри isolation оставляет текст/иконки поверх неё. Chrome создаёт
-   отдельный композитный слой на время opacity-transition. */
+/* Одна неподвижная заливка под текстом/иконками.
+   Маску заливки задаём на ::before ниже, отдельно от контента кнопки. */
 .button {
   isolation: isolate;
 }
-.button::before,
-.button::after {
+.button,
+.arrow {
+  --brush-images: var(--brush-rounded-images);
+}
+.button::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  transition: opacity 0.4s ease;
+  transition: background-color 0.4s ease;
   pointer-events: none;
 }
 .button::before {
   background: var(--button-base-color);
   opacity: 1;
 }
-.button::after {
-  background: var(--button-hover-color);
-  opacity: 0;
-}
 .button:hover:not(:disabled)::before {
-  opacity: 0;
+  background: var(--button-hover-color);
 }
 /* TASK-019. Figma: видимый силуэт кнопки (заливка + рваная обводка) выходит
    на 4 px за рамку раскладки (60 px против 52). Раскладка не меняется:
-   заливку покоя рисует ::before с inset -4px,
-   hover-слой ::after и девять тайлов маски расширены на ту же величину.
+   заливку рисует ::before с inset -4px,
+   девять тайлов маски расширены на ту же величину.
    Полосы «внешней области» отодвинуты на 4 px, чтобы они не пропускали
    гладкую заливку ::before, но пропускали outline фокуса (offset 5px).
    Только десктоп ≥1200: на меньших ширинах макета Figma нет. */
@@ -259,10 +282,45 @@
       left -52px top -52px,
       right -52px top -52px;
   }
-  .button::before,
-  .button::after {
+  .button::before {
     inset: -4px;
   }
+}
+
+/* Общий контур кнопок на самом слое заливки: hover цвета и фильтры иконок
+   не зависят от составной родительской маски с внешними полосами.
+   Размеры и отступы ::before (включая desktop inset -4px) сохраняются.
+   Девять частей здесь рассчитываются относительно уже расширенной заливки. */
+.button.button {
+  mask: none;
+  clip-path: none;
+}
+.button::before {
+  mask-image: var(--brush-images);
+  mask-size:
+    8px 8px,
+    calc(100% - 14px) 8px,
+    8px 8px,
+    8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px),
+    8px calc(100% - 14px),
+    8px 8px,
+    calc(100% - 14px) 8px,
+    8px 8px;
+  mask-position:
+    left top,
+    center top,
+    right top,
+    left center,
+    center center,
+    right center,
+    left bottom,
+    center bottom,
+    right bottom;
+  mask-repeat: no-repeat;
+  mask-origin: border-box;
+  mask-clip: border-box;
+  mask-mode: alpha;
 }
 
 /* Плашки программ ипотеки — не интерактивные: «внешние полосы» маски (для outline фокуса и тени)
@@ -302,4 +360,135 @@
 .paper.telegram-news,
 .paper.sell-week-story-card {
   filter: none;
+}
+
+/* Бумажные плашки: прямые углы, рваные края по сторонам сохраняются.
+   Меняем также углы SVG-маски: одного border-radius: 0 недостаточно. */
+.paper.paper,
+.paper.paper::before,
+.paper.paper::after,
+.lead-section-card::before,
+.inner-hero-city,
+.inner-hero-other input,
+.buy-quiz input.buy-quiz-input[type="tel"],
+.office-label,
+.office-label span,
+.lead-form input,
+.lead-form textarea,
+.chip,
+.channels button,
+.staff-card .staff-photo,
+.company-partners,
+.review-card .review-photo,
+.review-photo .duration,
+.cases-tabs .channels,
+.cases-tabs .chip,
+.case-person > span,
+.staff-photo .badge,
+.deal-step-image .badge,
+.private-catalog-checks .badge,
+.inner-hero-types .chip,
+.email-chip,
+.sell-week-duration,
+.sell-answers-topics span,
+.sell-answers-topics span::before {
+  border-radius: 0;
+}
+.paper::before,
+.paper::after,
+.lead-section-card::before,
+.inner-hero-city,
+.inner-hero-other input,
+.buy-quiz input.buy-quiz-input[type="tel"],
+.office-label,
+.office-label span,
+.lead-form input,
+.lead-form textarea,
+.chip,
+.channels button,
+.staff-card .staff-photo,
+.company-partners,
+.review-card .review-photo,
+.review-photo .duration,
+.cases-tabs .channels,
+.cases-tabs .chip,
+.case-person > span,
+.staff-photo .badge,
+.deal-step-image .badge,
+.private-catalog-checks .badge,
+.inner-hero-types .chip,
+.email-chip,
+.sell-week-duration,
+.sell-answers-topics span,
+.sell-answers-topics span::before {
+  --brush-images: var(--brush-square-images);
+}
+
+/* Варианты квиза используют тот же контур, что и кнопки перехода. */
+.inner-hero-card .inner-hero-types .chip,
+.inner-hero-card .buy-quiz-options .chip {
+  --brush-images: var(--brush-rounded-images);
+  --brush-sizes:
+    6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
+    calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
+    calc(100% - 10px) 6px, 6px 6px;
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-clip: border-box;
+  appearance: none;
+  border: 0;
+  box-shadow: none;
+  border-radius: 8px;
+}
+
+/* TG-D P4: retain the shared torn edges with square corners. */
+.property-card :is(.property-photo, .discount, .mortgage) {
+  border-radius: 0;
+  --brush-images: var(--brush-square-images);
+}
+/* Hover and keyboard focus share one opaque, readable ink layer. */
+.button.button:is(.black, .red, .white):is(:hover, :focus-visible):not(
+    :disabled
+  )::before {
+  background: var(--color-button-hover-red);
+}
+.button.button:is(.black, .red, .white):is(:hover, :focus-visible):not(
+    :disabled
+  ) {
+  color: #fff;
+  filter: none;
+}
+/* Красная кнопка на светлом фоне при наведении становится чёрной
+   (на тёмных поверхностях правила @scope в global.css сильнее). */
+.button.button.red:is(:hover, :focus-visible):not(:disabled)::before {
+  background: var(--color-dark);
+}
+.button.button.white:is(:hover, :focus-visible):not(:disabled)::before {
+  background: #dedede;
+}
+.button.button.white:is(:hover, :focus-visible):not(:disabled) {
+  color: var(--color-dark);
+}
+
+/* Paper edge depth is shared by cards and labels; controls retain their own contour. */
+.paper.paper-torn-card {
+  --paper-mask-sizes:
+    12px 12px, calc(100% - 22px) 12px, 12px 12px, 12px calc(100% - 22px),
+    calc(100% - 22px) calc(100% - 22px), 12px calc(100% - 22px), 12px 12px,
+    calc(100% - 22px) 12px, 12px 12px;
+}
+.paper::before,
+.paper::after,
+.paper-label::before {
+  mask-size: var(--paper-mask-sizes);
+}
+
+/* Embedded content can reuse paper layout without painting a second sheet. */
+.paper.paper-unframed {
+  filter: none;
+}
+.paper.paper-unframed::before,
+.paper.paper-unframed::after {
+  display: none;
 }

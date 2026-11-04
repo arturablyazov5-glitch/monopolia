@@ -1,7 +1,14 @@
 ---
+import "../styles/handwritten-number.css";
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import Paper from "./Paper.astro";
+import PersonLabel from "./PersonLabel.astro";
 import "../styles/buyer-audience.css";
+const intent = siteText("buyer-audience.text.4").match(
+  /^(\S+)(\s+\S+)?([\s\S]*)$/,
+)!;
+const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
 ---
 
 <section
@@ -11,7 +18,7 @@ import "../styles/buyer-audience.css";
 >
   <img
     class="buyer-paper-background"
-    src="/assets/e159e.webp"
+    src="/assets/background-paper-buyer-section.webp"
     fetchpriority="low"
     alt=""
     width="1440"
@@ -22,7 +29,7 @@ import "../styles/buyer-audience.css";
   <div class="buyer-audience-container">
     <img
       class="buyer-portrait-shadow"
-      src="/assets/0cd6b.svg"
+      src="/assets/buyer-director-shadow.svg"
       alt=""
       width="282.415"
       height="384.063"
@@ -30,22 +37,24 @@ import "../styles/buyer-audience.css";
       decoding="async"
     />
     <img
-      class="buyer-portrait"
-      src="/assets/56909.webp"
+      class="buyer-portrait person-photo"
+      src="/assets/staff-elena-sidelina-at-desk.webp"
       alt="Елена Сиделина за рабочим столом"
       width="844"
       height="633"
       loading="lazy"
       decoding="async"
     />
-    <Paper class="buyer-name" node="1380:4974">
-      <p class="buyer-name-title">Елена Сиделина</p>
-      <p class="buyer-name-role">Генеральный директор Монополии</p>
-    </Paper>
+    <PersonLabel
+      class="buyer-name"
+      node="1380:4974"
+      name="Елена Сиделина"
+      role="Генеральный директор Монополии"
+    />
     <div class="buyer-audience-content">
       <img
         class="buyer-quote-mark"
-        src="/assets/86862.svg"
+        src="/assets/buyer-quote-mark.svg"
         fetchpriority="low"
         alt=""
         width="42.6102"
@@ -55,27 +64,80 @@ import "../styles/buyer-audience.css";
       />
       <div class="buyer-audience-copy">
         <h2 id="buyer-audience-title">
-          А что если я скажу, <br />
-          что <span class="buyer-count-space">1 500 человек</span> <br />
-          хотят купить вашу <br />
-          недвижимость уже <br />
-          сейчас?
+          <span class="buyer-title-wide">
+            {siteText("buyer-audience.text.1")} <br />
+            {siteText("buyer-audience.text.2")}{" "}
+            <span class="buyer-count-space handwritten-number">
+              {siteText("buyer-audience.text.3")}
+            </span>{" "}
+            <br />
+            <span class="buyer-audience-target">
+              {siteText("buyer-audience.text.4")}
+            </span>{" "}
+            <br />
+            {siteText("buyer-audience.text.5")} <br />
+            {siteText("buyer-audience.text.6")}
+          </span>
+          <span class="buyer-title-mobile">
+            <span class="buyer-m-line buyer-mobile-intro">
+              <span>{siteText("buyer-audience.text.1")}</span>{" "}<span>{siteText("buyer-audience.text.2")}</span>
+              <img class="buyer-quote-mobile" src="/assets/buyer-quote-mark.svg" width="42.6102" height="33.2195" alt="" />
+            </span>
+            <span class="buyer-m-line buyer-m-count-line">
+              <span class="buyer-count-mobile handwritten-number">{siteText("buyer-audience.text.3")}</span>{" "}
+              <span class="buyer-intent-word">{intent[1]}</span>
+            </span>
+            <span class="buyer-m-line">
+              <span class="buyer-intent-next">{intent[2]}</span><span class="buyer-intent-rest">{intent[3]}</span>{" "}
+              <span class="buyer-tail-first">{tail[1]}</span>
+            </span>
+            <span class="buyer-m-line">
+              <span class="buyer-tail-rest">{tail[2].trim()}</span>{" "}
+              <span>{siteText("buyer-audience.text.6")}</span>
+            </span>
+          </span>
         </h2>
-        <span class="buyer-count" aria-hidden="true">
-          1 500 человек
+        <span class="buyer-count handwritten-number" aria-hidden="true">
+          {siteText("buyer-audience.text.3")}
         </span>
-        <Paper class="buyer-note" tapeNode="I1380:4972;569:1388" node="1380:4972">
+        <Paper
+          class="buyer-note"
+          tapeNode="I1380:4972;569:1388"
+          node="1380:4972"
+        >
           <p>
-            В нашей базе только проверенные потенциальные покупатели{" "}
-            <strong>с наличкой или с предодобренной ипотекой</strong>. Они готовы в ближайшее время купить квартиру, дом или помещение для бизнеса
+            {siteText("buyer-audience.text.7")}{" "}
+            <strong>{siteText("buyer-audience.text.8")}</strong>
+            {siteText("buyer-audience.text.9")}
           </p>
         </Paper>
       </div>
       <Button
-        label="Найти покупателя"
+        label={siteText("buyer-audience.label.10")}
         icon="sell"
-        subject="Найти покупателя для недвижимости"
+        href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/sell/`}
       />
     </div>
   </div>
 </section>
+
+<script>
+  const section = document.querySelector<HTMLElement>(".buyer-audience");
+  const target = section?.querySelector<HTMLElement>(".buyer-audience-target");
+  const title = section?.querySelector<HTMLElement>("h2");
+  const word = section?.querySelector<HTMLElement>(".buyer-intent-word");
+  if (target && title && word) {
+    // Preserve the editable full phrase; the mobile split follows content edits.
+    new MutationObserver(() => {
+      const parts = target.textContent
+        ?.trim()
+        .match(/^(\S+)(\s+\S+)?([\s\S]*)$/);
+      if (parts) {
+        word.textContent = parts[1];
+        section!.querySelector(".buyer-intent-next")!.textContent =
+          parts[2] || "";
+        section!.querySelector(".buyer-intent-rest")!.textContent = parts[3];
+      }
+    }).observe(target, { childList: true, characterData: true, subtree: true });
+  }
+</script>

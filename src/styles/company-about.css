@@ -2,8 +2,19 @@
   position: relative;
   background: #1c1c1a;
   color: white;
-  padding: 60px 0 120px;
+  padding: calc(var(--section-space) / 2) 0 var(--section-space);
   height: 757px;
+}
+/* Закрываем тонкий стык тёмных фонов между кейсами и блоком компании. */
+.company-about::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #1c1c1a;
+  pointer-events: none;
 }
 .company-container {
   width: var(--container-width);
@@ -56,12 +67,14 @@
      край .company-office и бейдж не меняются. Срезы 24px сохраняют
      глубину зазубрин при смене пропорций; 2px перекрытия внутри
      непрозрачной области исключают щели между девятью частями. */
+  /* Удалены выступы и отдельные островки фото за правым краем рамки.
+     Остальная геометрия исходных срезов сохранена. */
   mask-image:
     url("/assets/office-photo-mask-tl.svg"), url("/assets/office-photo-mask-t.svg"),
-    url("/assets/office-photo-mask-tr.svg"), url("/assets/office-photo-mask-l.svg"),
+    url("/assets/office-photo-mask-tr-clean.svg"), url("/assets/office-photo-mask-l.svg"),
     linear-gradient(#fff, #fff), url("/assets/office-photo-mask-r.svg"),
     url("/assets/office-photo-mask-bl.svg"), url("/assets/office-photo-mask-b.svg"),
-    url("/assets/office-photo-mask-br.svg");
+    url("/assets/office-photo-mask-br-clean.svg");
   mask-size:
     24px 24px, calc(100% - 44px) 24px, 24px 24px,
     24px calc(100% - 44px), calc(100% - 44px) calc(100% - 44px),
@@ -72,7 +85,28 @@
   mask-repeat: no-repeat;
   mask-mode: alpha;
 }
+/* TASK-032b: локальный Arial согласован с шириной двух надписей Inter Tight
+   (140.859375/143.1796875 и 83.7890625/85.4609375 при 16px).
+   Пока загружается веб-шрифт, плашки сохраняют ширину и запас справа. */
+@font-face {
+  font-family: "Company Partner Fallback";
+  src: local("Arial");
+  size-adjust: 98.3791%;
+}
+@font-face {
+  font-family: "Company Agent Fallback";
+  src: local("Arial");
+  size-adjust: 98.0437%;
+}
 .company-partners {
+  --company-badge-scale: 1;
+  /* Умеренный рваный край на белой плашке, без скругления. */
+  --brush-images: var(--brush-square-images);
+  --brush-sizes:
+    8px 11px, calc(100% - 14px) 11px, 8px 11px,
+    8px calc(100% - 20px), calc(100% - 14px) calc(100% - 20px),
+    8px calc(100% - 20px), 8px 11px,
+    calc(100% - 14px) 11px, 8px 11px;
   position: absolute;
   top: 32px;
   left: 24px;
@@ -82,35 +116,54 @@
   padding: 12px;
   background: white;
   color: black;
-  border-radius: 4px;
+  border-radius: 0;
   box-shadow: 0 5px 27px #0000001a;
   font: 16px/1.2 var(--font-body);
 }
 .company-superagent {
-  display: flex;
+  display: inline-flex;
+  flex: none;
+  width: max-content;
+  white-space: nowrap;
   align-items: center;
   gap: 5.333px;
   height: 32px;
   background: #ebf9e6;
   border-radius: 16px;
   color: #34ac0a;
-  padding: 0 10.667px 0 6.667px;
-  font-family: "Inter Tight", sans-serif;
+  padding: 0 max(10.667px, calc(10px / var(--company-badge-scale))) 0 6.667px;
+  font-family: "Inter Tight", "Company Agent Fallback", sans-serif;
   letter-spacing: -0.16px;
 }
 .company-avito {
-  display: flex;
+  display: inline-flex;
+  flex: none;
+  width: max-content;
+  white-space: nowrap;
   align-items: center;
   color: white;
   font:
     16px/1.2 "Inter Tight",
+    "Company Partner Fallback",
     sans-serif;
   letter-spacing: -0.16px;
 }
+/* Перекрываем стыки SVG с заливкой, чтобы не было тонких светлых линий. */
+.company-avito > img {
+  flex-shrink: 0;
+}
 .company-avito > img:first-child {
   transform: scaleX(-1);
+  margin-right: -1px;
+}
+.company-avito > img:last-child {
+  margin-left: -1px;
 }
 .company-avito > span {
+  flex: none;
+  /* Перекрытие шва на 1px остаётся за пределами 10px видимого запаса
+     текста. На телефоне компенсируем масштаб всей композиции. */
+  padding-inline-end: calc(10px / var(--company-badge-scale) + 1px);
   background: #965feb;
   height: 28px;
   display: flex;
@@ -137,7 +190,6 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  --paper-texture: url("/assets/0ba2a.webp");
   color: var(--color-text);
 }
 .company-recommendations > p {
@@ -160,10 +212,9 @@
   white-space: nowrap;
 }
 .company-number i {
-  width: 6px;
-  height: 6px;
-  transform: rotate(-45deg);
-  background: var(--color-red);
+  width: var(--bullet-diamond-width);
+  height: var(--bullet-diamond-height);
+  background: var(--bullet-diamond) center / 100% 100% no-repeat;
 }
 .company-stats p {
   margin: 0;
@@ -176,27 +227,26 @@
   gap: 16px;
 }
 .company-download .button {
+  --button-hover-color: #fff;
+  transition: color var(--duration-fast) ease;
   width: 300px;
   height: 52px;
   padding: 18px 20px;
   flex-shrink: 0;
 }
-.company-download > p {
-  margin: 0;
-  font: 14px/1.2 var(--font-body);
+.company-download .button:hover,
+.company-download .button:focus-visible {
+  color: var(--color-dark);
 }
-.company-download-status {
-  position: absolute;
-  top: 585px;
-  left: 0;
+.company-download .button:focus-visible::before {
+  background: #fff;
+}
+.company-download > p {
   margin: 0;
   font: 14px/1.2 var(--font-body);
 }
 .company-recommendations {
   color: #1a1a1a;
-}
-.company-number i {
-  background: #ff0000;
 }
 .company-office {
   /* Фото занимает внутренний контур обводки Figma: x 1,44–544, y 2,91–573
@@ -215,6 +265,7 @@
    (::before, office-edge-mask-*.svg) работает только на ≥1200. */
 @media (max-width: 1199px) {
   .company-office {
+    --brush-images: var(--brush-square-images);
     background: white;
     padding: 12px;
     mask-image: var(--brush-images);
@@ -231,5 +282,29 @@
   }
   .company-office-photo {
     display: inline;
+  }
+}
+
+/* На планшете и десктопе фото сохраняет прежнее место в сетке. */
+@media (min-width: 768px) {
+  .company-office {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .company-copy {
+    grid-row: 2;
+    grid-column: 1;
+  }
+}
+@media (min-width: 1024px) {
+  .company-copy {
+    grid-row: 1;
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-desktop .company-partners {
+    --company-badge-scale: 0.65;
   }
 }

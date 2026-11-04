@@ -1,6 +1,25 @@
 // No network until the card region approaches the viewport. No user HTML.
 import type { Card } from '../lib/catalog-schema.mjs';
+import { getHeaderCity } from '../lib/city-picker';
+import { matchesCatalogCity } from '../lib/catalog-city';
+
+function filterByCity(root: HTMLElement) {
+  const city = getHeaderCity();
+  const track = root.querySelector<HTMLElement>('.carousel-track')!;
+  let count = 0;
+  for (const card of Array.from(track.children) as HTMLElement[]) {
+    const address = card.querySelector('[data-card=address]')?.textContent ?? '';
+    card.hidden = !matchesCatalogCity(address, city);
+    if (!card.hidden) count++;
+  }
+  root.querySelector<HTMLElement>('[data-catalog-live]')!.hidden = count === 0;
+  root.querySelector<HTMLElement>('[data-catalog-empty]')!.hidden = count > 0;
+  root.querySelector('[data-carousel]')!.dispatchEvent(new Event('catalog-updated'));
+}
+
 for (const root of document.querySelectorAll<HTMLElement>('[data-catalog]')) {
+  filterByCity(root);
+  window.addEventListener('city-changed', () => filterByCity(root));
   const target=root.closest('.buy-mortgage-deals')!;
   const observer=new IntersectionObserver(entries=>{
     if(!entries.some(e=>e.isIntersecting))return;
@@ -23,7 +42,7 @@ async function refresh(root:HTMLElement) {
       if(!['title','address','price','oldPrice','pricePerMeter','mortgage','discount'].every(k=>typeof p[k as keyof Card]==='string') || !p.image)return;
       const imageURL=(src:string)=>{
         // Legacy placeholder is a site asset. Uploaded pictures stay on one allowed origin.
-        if(src==='/assets/da35e.webp')return new URL(src,location.origin).href;
+        if(src==='/assets/property-card-default-photo.webp')return new URL(src,location.origin).href;
         const url=new URL(src,base);
         if(url.origin!==base.origin || !['https:','http:'].includes(url.protocol) || url.username || url.password || !/^\/media\/[a-f0-9]{48}\.webp$/.test(url.pathname) || url.search || url.hash)throw Error();
         return url.href;
@@ -39,18 +58,16 @@ async function refresh(root:HTMLElement) {
       const img=fragment.querySelector<HTMLImageElement>('.property-photo img')!;
       img.src=large;img.alt=p.title;
       const source=fragment.querySelector<HTMLSourceElement>('source')!;
-      if(p.image.large==='/assets/da35e.webp') {
+      if(p.image.large==='/assets/property-card-default-photo.webp') {
         const picture=img.closest('picture')!;picture.replaceWith(img);img.width=336;img.height=252;
       } else source.srcset=small+' 360w, '+large+' 680w';
       const button=fragment.querySelector<HTMLElement>('[data-lead]')!;
       button.dataset.subject=p.title;
-      button.dataset.leadSource=p.title+' · Кнопка «Записаться на просмотр»';
+      button.dataset.leadSource=p.title+' · Кнопка «Записаться на просмотр»';
       cards.push(fragment);
     }
     root.querySelector('.carousel-track')!.replaceChildren(...cards);
-    root.querySelector<HTMLElement>('[data-catalog-live]')!.hidden=cards.length===0;
-    root.querySelector<HTMLElement>('[data-catalog-empty]')!.hidden=cards.length>0;
-    root.querySelector('[data-carousel]')!.dispatchEvent(new Event('catalog-updated'));
+    filterByCity(root);
     root.dataset.revision=String(data.revision);
   } catch { /* Offline, invalid data or timeout: keep the embedded cards. */ }
 }

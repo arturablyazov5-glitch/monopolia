@@ -2,7 +2,7 @@
 .faq-section {
   width: var(--container-width);
   margin: 0 auto;
-  padding: 120px 0;
+  padding: var(--section-space) 0;
 }
 .faq-section > h2 {
   font: 500 var(--text-heading) / 1 var(--font-heading);
@@ -20,6 +20,12 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+@media (max-width: 767px) {
+  .faq-section .faq-columns,
+  .faq-section .faq-column {
+    gap: 12px;
+  }
 }
 .faq-slot {
   /* Строки колонки в Figma считаются по габаритам повернутой карточки */
@@ -87,14 +93,17 @@
 }
 /* Крутится только крестик, красный квадрат остаётся на месте */
 .faq-toggle-cross {
-  transition: transform var(--duration-fast);
+  /* Плюс/крестик — один SVG: поворот сохраняет силуэт и позицию. */
+  transition: transform 0.25s ease;
 }
 .faq-toggle[aria-expanded="false"] .faq-toggle-cross {
   transform: rotate(45deg);
 }
 /* Hover на всей строке вопроса (текст и квадратик): квадратик становится тёмным (#1c1c1c), крестик остаётся белым */
 .faq-toggle-bg {
-  transition: filter var(--duration-fast) ease;
+  /* Как у .button, меняется только цвет неподвижного силуэта.
+     Сам SVG (включая рваный край) не меняет слои и непрозрачность. */
+  transition: filter 0.4s ease;
 }
 .faq-toggle:hover .faq-toggle-bg,
 .faq-toggle:focus-visible .faq-toggle-bg {
@@ -130,10 +139,20 @@
   gap: 32px;
   min-height: 0;
   overflow: hidden;
+  /* Заливка кнопки выступает на 4 px: сохраняем её рваный контур
+     внутри обрезаемой области анимации раскрытия. */
+  padding: 4px;
+  margin: -4px;
+}
+.faq-answer.is-closed .faq-answer-inner {
+  padding-block: 0;
+  margin-block: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .faq-answer,
-  .faq-answer.is-closed {
+  .faq-answer.is-closed,
+  .faq-toggle-cross,
+  .faq-toggle-bg {
     transition: none;
   }
 }
@@ -156,7 +175,7 @@
   .faq-section {
     width: calc(100% - 64px);
     max-width: 720px;
-    padding: 80px 0;
+    padding: var(--section-space) 0;
   }
   .faq-section > h2 {
     font-size: 40px;
@@ -181,10 +200,10 @@
 @media (max-width: 767px) {
   .faq-section {
     width: calc(100% - 40px);
-    padding: 56px 0;
+    padding: var(--section-space) 0 var(--section-space-double);
   }
   .faq-section > h2 {
-    font-size: 30px;
+    font-size: var(--h2);
   }
   .faq-card.faq-card-accordion {
     --faq-gap: 16px;
@@ -198,7 +217,7 @@
     inset: -14px;
   }
   .faq-question {
-    font-size: 18px;
+    font-size: var(--h3-small);
   }
   .faq-toggle {
     gap: 16px;
@@ -215,6 +234,6 @@
     width: calc(100% - 32px);
   }
   .faq-section > h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
   }
 }

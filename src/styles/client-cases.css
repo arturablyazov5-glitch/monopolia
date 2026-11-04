@@ -1,9 +1,9 @@
 .client-cases {
   position: relative;
   isolation: isolate;
-  --cases-pad: 120px;
-  height: 1015px;
-  padding-top: var(--cases-pad);
+  --cases-pad: var(--section-space);
+  min-height: 1015px;
+  padding: var(--cases-pad) 0 var(--section-space);
   overflow: hidden;
   /* Якорь #cases: заголовок встаёт под шапкой (общий scroll-padding у html), а не ниже на высоту
      верхнего отступа секции; прежний scroll-margin 96 px складывался с scroll-padding и давал +200 px */
@@ -14,11 +14,11 @@
 }
 .cases-background {
   position: absolute;
-  top: -1129px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   width: max(100%, 1453.82px);
-  height: 2143.403px;
+  height: max(100%, 2143.403px);
   max-width: none;
   z-index: -1;
 }
@@ -49,7 +49,7 @@
 .cases-tabs .channels {
   gap: 0;
   padding: 8px;
-  background: white var(--paper-texture) center/cover;
+  background-color: white;
   width: 407px;
 }
 .cases-tabs .chip {
@@ -80,51 +80,92 @@
   position: absolute;
   right: -6.5px;
   bottom: -6.74px;
+  pointer-events: none;
 }
 .cases-content {
   display: grid;
-  grid-template-columns: 425.6px 670.4px;
-  gap: 64px;
   margin-top: 40px;
+}
+.home-desktop .client-cases .cases-content {
+  grid-template-columns: minmax(0, 1fr);
 }
 .cases-content[hidden] {
   display: none;
+}
+.case-slide {
+  grid-area: 1 / 1;
+  display: none;
+  grid-template-columns: 425.6px 670.4px;
+  gap: 64px;
+  align-content: start;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    visibility 0s linear 0.25s;
+}
+.case-slide.is-active {
+  display: grid;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .case-slide,
+  .case-slide.is-active {
+    transition: none;
+  }
+}
+@media (max-width: 1199px) {
+  .home-desktop .case-slide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .home-desktop .case-slide {
+    grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+    gap: 48px;
+    align-items: start;
+  }
 }
 .case-photo {
   position: relative;
   height: 561px;
   transform: rotate(-1deg);
 }
-.case-photo > img {
+.case-photo > img,
+.case-photo-placeholder {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* TASK-022: native brush silhouette of Figma 1380:5202 (32px centred
-     image stroke, no white ring or shadow). Only the photo is masked;
-     the overlaid .case-person keeps its existing position and silhouette.
-     24px slices keep the edge depth on tablet/square mobile photos;
-     2px opaque overlaps prevent seams, as in brush-stroke.css. */
-  mask-image:
-    url("/assets/case-photo-mask-tl.svg"), url("/assets/case-photo-mask-t.svg"),
-    url("/assets/case-photo-mask-tr.svg"), url("/assets/case-photo-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/case-photo-mask-r.svg"),
-    url("/assets/case-photo-mask-bl.svg"), url("/assets/case-photo-mask-b.svg"),
-    url("/assets/case-photo-mask-br.svg");
+  /* Общий рваный контур с прямыми углами, чуть глубже контура кнопок. */
+  mask-image: var(--brush-square-images);
   mask-size:
-    24px 24px, calc(100% - 44px) 24px, 24px 24px,
-    24px calc(100% - 44px), calc(100% - 44px) calc(100% - 44px),
-    24px calc(100% - 44px), 24px 24px, calc(100% - 44px) 24px, 24px 24px;
-  mask-position:
-    left top, center top, right top, left center, center center, right center,
-    left bottom, center bottom, right bottom;
+    12px 12px, calc(100% - 22px) 12px, 12px 12px,
+    12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
+    12px calc(100% - 22px), 12px 12px, calc(100% - 22px) 12px, 12px 12px;
+  mask-position: var(--brush-positions);
   mask-repeat: no-repeat;
   mask-mode: alpha;
+}
+.case-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--color-muted);
+  background: var(--canvas);
+  font: 16px/1.2 var(--font-body);
 }
 .case-person {
   position: absolute;
   left: 24px;
   bottom: 24px;
-  padding: 16px 24px 12px 12px;
+  padding: 16px 12px 12px 12px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -135,7 +176,8 @@
   width: 52px;
   height: 52px;
   background: #d9d9d9;
-  border-radius: 4px;
+  border-radius: 0;
+  flex-shrink: 0;
 }
 .case-details {
   display: flex;
@@ -148,12 +190,15 @@
 }
 .case-object h3 {
   margin: 0;
-  font: 500 20px/1.2 var(--font-heading);
+  font: 500 var(--h3, 20px)/1.2 var(--font-heading);
 }
 .case-result {
-  --paper-texture: url("/assets/0ba2a.webp");
   padding: 20px 24px;
-  height: 78px;
+  min-height: 78px;
+}
+.case-photo-plan > img {
+  object-fit: contain;
+  background: #fff;
 }
 .case-result p {
   position: relative;
@@ -180,6 +225,7 @@
   left: 334.7px;
   width: 1px;
   background: var(--color-divider);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 5%, transparent 100%);
 }
 .case-columns h4 {
   margin: 0 0 15px;
@@ -194,20 +240,8 @@
   gap: 16px;
 }
 .case-columns li {
-  position: relative;
-  padding-left: 18.485px;
   font: 16px/1.2 var(--font-body);
   color: var(--color-muted);
-}
-.case-columns li::before {
-  content: "";
-  position: absolute;
-  left: 1.242px;
-  top: 6.242px;
-  width: 6px;
-  height: 6px;
-  background: var(--color-diamond);
-  transform: rotate(-45deg);
 }
 .case-actions {
   display: flex;
@@ -217,10 +251,34 @@
 .case-actions > .button {
   width: 275px;
 }
+.cases-mobile-cta {
+  display: none;
+}
 .case-actions > span {
   width: 1px;
   height: 52px;
   background: var(--color-divider);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 50%, transparent 100%);
+}
+@media (min-width: 1024px) {
+  .home-desktop .client-cases .case-slide {
+    align-items: stretch;
+  }
+  .home-desktop .client-cases .case-photo {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    transform: none;
+  }
+  .home-desktop .client-cases .case-photo > img,
+  .home-desktop .client-cases .case-photo-placeholder {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+  }
+  .home-desktop .client-cases .case-photo-plan > img {
+    object-fit: contain;
+  }
 }
 .case-actions > div {
   display: flex;
@@ -230,4 +288,90 @@
   margin-top: 80px;
   text-align: center;
   font: 20px/1.2 var(--font-heading);
+}
+
+@media (max-width: 767px) {
+  .home-desktop .client-cases .case-column--actions {
+    position: relative;
+    padding-top: 24px;
+  }
+  .home-desktop .client-cases .case-column--actions::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--color-divider);
+    mask-image: linear-gradient(to right, #000 0%, transparent 5%, #000 100%);
+    pointer-events: none;
+  }
+  .home-desktop .client-cases .mobile-scroll-hint {
+    margin-top: var(--space-6);
+  }
+  .home-desktop .client-cases .cases-content {
+    display: flex;
+    align-items: stretch;
+    gap: var(--space-4);
+    margin: 0 calc(-1 * var(--rg));
+    padding: var(--space-2) var(--rg) var(--space-4);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--rg);
+    scrollbar-width: none;
+  }
+  .home-desktop .client-cases .cases-content[hidden] {
+    display: none;
+  }
+  .home-desktop .client-cases .cases-content::-webkit-scrollbar {
+    display: none;
+  }
+  .home-desktop .client-cases .case-slide {
+    display: none;
+  }
+  .home-desktop .client-cases .case-slide.is-in-category {
+    display: grid;
+    grid-area: auto;
+    grid-template-columns: minmax(0, 1fr);
+    flex: 0 0 82vw;
+    min-width: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    scroll-snap-align: start;
+  }
+  .home-desktop .client-cases .case-actions .carousel-arrows {
+    display: none;
+  }
+  .home-desktop .client-cases .case-actions {
+    display: none;
+  }
+  .home-desktop .client-cases .cases-mobile-cta {
+    display: block;
+    margin-top: var(--space-4);
+  }
+  .home-desktop .client-cases .cases-mobile-cta > .button {
+    width: 100%;
+  }
+  .home-desktop .client-cases .cases-content[hidden] ~ .cases-mobile-cta {
+    display: none;
+  }
+  .cases-content:focus-visible {
+    outline: var(--focus-width) solid currentColor;
+    outline-offset: -2px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-desktop .client-cases .cases-content { gap: var(--carousel-gap); }
+}
+
+
+@media (max-width: 767px) {
+  .home-desktop .client-cases .case-slide { min-width: 0; }
+  .home-desktop .client-cases .case-result { min-width: 0; width: 100%; }
+  .home-desktop .client-cases .case-result .paper-tape[data-tape-corner="bottom-right"] {
+    left: calc(100% - var(--tape-box-width) - var(--tape-box-left) - 2px);
+  }
 }

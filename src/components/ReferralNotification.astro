@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 interface Props {
   bank: string;
   time: string;
@@ -45,6 +46,6 @@ const { bank, time, icon, href, alt = "", masked = false } = Astro.props;
       <p>{bank}</p>
       <small>{time}</small>
     </div>
-    <p>Пополнение на 5 000 ₽</p>
+    <p>{siteText("referral-notification.text.1")}</p>
   </div>
 </div>

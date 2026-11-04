@@ -1,0 +1,41 @@
+.buy-quiz { display: flex; flex-direction: column; flex: 1; gap: 32px; width: 100%; min-height: 0; }
+.buy-quiz [data-quiz-questions] { display: flex; flex-direction: column; flex: 1; gap: 12px; }
+.buy-quiz [data-quiz-options] { align-content: flex-start; }
+.buy-quiz [data-quiz-contact] { flex: 1; }
+.buy-quiz [data-quiz-contact] > .buy-quiz-question { margin-bottom: 12px; }
+.buy-quiz[hidden], .buy-quiz [hidden], .inner-hero-card [data-quiz-intro][hidden] { display: none !important; }
+.buy-quiz-question { margin: 0; font: 500 20px/1.3 var(--font-body); }
+.buy-quiz-options { display: flex; flex-wrap: wrap; gap: 10px; }
+.buy-quiz-options .chip { appearance: none; padding: 9px 14px; background: #fff; color: var(--color-ink); border: 0; box-shadow: none; cursor: pointer; }
+.buy-quiz-options .chip.selected { background: var(--color-dark); color: white; }
+.buy-quiz-options .chip { transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease; }
+@media (hover: hover) {
+  .buy-quiz-options .chip:hover { background: var(--color-accent); color: #fff; }
+}
+.buy-quiz-input { display: block; width: 100%; box-sizing: border-box; border: 0; padding: 16px 20px; background: #f4f4f4; font: inherit; }
+.buy-quiz input.buy-quiz-input[type="tel"] { background: #fff; }
+textarea.buy-quiz-input { min-height: 90px; resize: vertical; }
+.buy-quiz-channel-label { margin: 20px 0 10px; }
+.buy-quiz-channels { margin-bottom: 20px; }
+.buy-quiz-controls { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+.buy-quiz-controls .button { min-height: 54px; }
+.buy-quiz-controls .buy-quiz-back { width: 54px; height: 54px; min-width: 54px; padding: 0; cursor: pointer; }
+.buy-quiz-step { order: -1; margin: 0 auto 0 0; text-align: left; color: #777; font-size: 14px; white-space: nowrap; }
+.buy-quiz-result { margin: 0; line-height: 1.4; }
+.buy-quiz [data-quiz-contact] > .buy-quiz-result { margin-top: 20px; white-space: pre-line; }
+.buy-quiz [data-quiz-extra] > .buy-quiz-question { margin-bottom: 16px; }
+
+@media (max-width: 767px) {
+  .inner-hero-card.paper:has(.buy-quiz:not([hidden])) {
+    height: auto;
+    min-height: 0;
+  }
+  .inner-hero-card .buy-quiz,
+  .inner-hero-card .buy-quiz [data-quiz-questions],
+  .inner-hero-card .buy-quiz [data-quiz-contact] {
+    flex: none;
+  }
+  .inner-hero-card .buy-quiz-controls {
+    margin-top: 0;
+  }
+}

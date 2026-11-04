@@ -1,0 +1,27 @@
+---
+import { siteText } from "../data/site-texts.mjs";
+import "../styles/marketplace-badge.css";
+interface Props {
+  name: "avito" | "cian";
+  loading?: "eager" | "lazy";
+}
+const { name, loading = "lazy" } = Astro.props;
+const market =
+  name === "avito"
+    ? { icon: "/assets/marketplace-domclick-icon.svg", label: siteText("private-catalog.text.15") }
+    : { icon: "/assets/marketplace-avito-icon.svg", label: siteText("private-catalog.text.16") };
+---
+
+<span class="marketplace-badge brush-stroke" aria-label={market.label}>
+  <span class="marketplace-badge-icon">
+    <img
+      src={market.icon}
+      alt=""
+      width="36.7731"
+      height="36.3498"
+      loading={loading}
+      decoding="async"
+    />
+  </span>
+  <span>{market.label}</span>
+</span>

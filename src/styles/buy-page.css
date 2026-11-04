@@ -4,7 +4,7 @@
 }
 /* 1380:6364 начинается на y = 730: 80 px после первого экрана 650 px */
 .buy-desktop > .buy-mortgage {
-  margin-top: 80px;
+  margin-top: var(--section-space-compact);
 }
 
 /* Сверка с Figma (волна 3): правки общих секций только для «Покупки» */
@@ -40,6 +40,9 @@
 @media (max-width: 767px) {
   .buy-desktop {
     --buy-gutter: 20px;
+  }
+  .buy-desktop > .inner-hero .inner-hero-container {
+    padding-bottom: var(--section-space);
   }
 }
 @media (max-width: 539px) {

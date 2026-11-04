@@ -1,4 +1,4 @@
-/* TASK-043: scoped media and measured text slots; UI-kit defaults retain their layout. */
+/* TASK-043: scoped media; UI-kit defaults retain their layout. */
 .property-photo picture > img {
   width: 100%;
   height: 100%;
@@ -12,20 +12,28 @@
 .buy-mortgage-carousel .property-card {
   flex-shrink: 0;
 }
-.buy-mortgage-carousel .property-card > div > h3 {
-  height: 48px;
+/* Текст карточки занимает столько строк, сколько нужно содержимому. */
+.property-card > div {
+  min-width: 0;
 }
-.buy-mortgage-carousel .property-card .location {
-  height: 19.1875px;
+.property-card :is(h3, s, .location span, .price p, .mortgage) {
+  overflow-wrap: anywhere;
 }
-.buy-mortgage-carousel .property-card s {
-  height: 16.796875px;
+.property-card .location {
+  align-items: flex-start;
 }
-.buy-mortgage-carousel .property-card .price {
-  height: 24px;
+.property-card .location img {
+  flex: 0 0 10px;
+  margin-top: 3px;
 }
-.buy-mortgage-carousel .property-card .mortgage {
-  height: 43.1875px;
+.property-card .location span {
+  min-width: 0;
+}
+.property-card .price {
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: var(--space-2);
+  row-gap: var(--space-1);
 }
 .buy-deals-empty {
   height: 637.171875px;
@@ -37,9 +45,6 @@
   }
 }
 @media (923px <= width <= 1199px) {
-  .buy-mortgage-carousel .property-card > div > h3 {
-    height: 24px;
-  }
   .buy-deals-empty {
     height: calc((100vw - 180px) * 0.375 + 429.171875px);
   }
@@ -51,3 +56,14 @@
 }
 
 [data-catalog] [hidden] { display: none !important; }
+
+/* Скидка: один контур заливки, как у кнопок, с прямыми углами. */
+.property-card .discount.paper-label {
+  --paper-mask-sizes: var(--brush-sizes);
+  border-radius: 0;
+  mask: none;
+}
+.property-card .discount.paper-label::before {
+  border-radius: 0;
+  mask-image: var(--brush-square-images);
+}

@@ -7,4 +7,4 @@ export const catalog=data as Catalog;
 export function selectDeals(source:Catalog=catalog) {
   return source.objects.filter(p=>p.visible).map(p=>({...p,image:p.image.large,cardImage:p.image}));
 }
-export function selectPreview(){return Array.from({length:9},()=>illustration);}
+export function selectPreview(){return illustration;}

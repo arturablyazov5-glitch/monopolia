@@ -1,16 +1,18 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import PartnerLogos from "./PartnerLogos.astro";
 import "../styles/home-partners.css";
 ---
 
 <section
+  data-surface="dark"
   class="home-partners"
   aria-labelledby="partners-title"
   data-node-id="1380:5542"
 >
   <div class="home-partners-container">
-    <h2 id="partners-title">Наши партнеры</h2>
+    <h2 id="partners-title">{siteText("home-partners.text.1")}</h2>
     <PartnerLogos home />
-    <p>И еще 90+ партнеров</p>
+    <p>{siteText("home-partners.text.2")}</p>
   </div>
 </section>

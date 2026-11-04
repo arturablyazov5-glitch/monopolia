@@ -6,6 +6,7 @@ import ServiceCard from "../components/ServiceCard.astro";
 import StaffCard from "../components/StaffCard.astro";
 import Button from "../components/Button.astro";
 import Paper from "../components/Paper.astro";
+import PersonLabel from "../components/PersonLabel.astro";
 import LeadForm from "../components/LeadForm.astro";
 import PropertyCard from "../components/PropertyCard.astro";
 import SiteHeader from "../components/SiteHeader.astro";
@@ -19,7 +20,7 @@ const sections = [
   ["patterns", "Повторяющиеся блоки"],
   ["new-details", "Новые варианты"],
   ["shared-sections", "Общие секции"],
-  ["process", "Карта и сделка"],
+  ["process", "Карта и сделка"],
   ["registry", "Реестр"],
 ];
 
@@ -138,7 +139,7 @@ const demoNav = [
             <Button label="Недоступно" disabled />
           </div>
           <p class="caption">
-            52 px · Forma Medium 16 px · hover, focus и disabled добавлены для работы в браузере.
+            52 px · Forma Medium 16 px · hover, focus и disabled добавлены для работы в браузере.
           </p>
           <div>
             <ArrowButton direction="prev" disabled />
@@ -164,8 +165,8 @@ const demoNav = [
               options={["По телефону", "Telegram", "WhatsApp"]}
               channels
             />
-            <p class="diamond-line">
-              <span class="diamond"></span>Пункты преимуществ и услуг
+            <p class="bullet-point">
+              Пункты преимуществ и услуг
             </p>
             <SocialLinks />
           </Paper>
@@ -175,6 +176,20 @@ const demoNav = [
               <strong>с наличкой или с предодобренной ипотекой</strong>. Они готовы в ближайшее время купить квартиру, дом или помещение для бизнеса
             </p>
           </PaperQuote>
+        </div>
+        <div class="person-label-demo" aria-label="Варианты подписи сотрудника">
+          <PersonLabel
+            name="Елена Горбанева"
+            role="Специалист по недвижимости"
+          />
+          <PersonLabel
+            name="Павел Барковский"
+            role="Старший специалист по недвижимости"
+          />
+          <PersonLabel
+            name="Елена Сиделина"
+            role="Генеральный директор Монополии"
+          />
         </div>
       </section>
       <section id="cards">
@@ -233,7 +248,7 @@ const demoNav = [
           />
         </div>
         <Paper class="range-demo">
-          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <h3>Посчитайте ежемесячный платёж по ипотеке</h3>
           <RangeField id="housing-price" label="Стоимость жилья" />
           <Button label="Подобрать ипотеку" />
         </Paper>
@@ -292,7 +307,7 @@ const demoNav = [
         <div class="section-label">09 / ОБЩИЕ СЕКЦИИ</div>
         <h2>Первый экран, консультация, доверие и формы</h2>
         <p class="caption">
-          Контент компонентов совпадает со страницами. Заявки отправляются через общий обработчик.
+          Контент компонентов совпадает со страницами. Заявки отправляются через общий обработчик.
         </p>
         <h3 class="kit-example-label">InnerHero · Покупка</h3>
         <div class="kit-section-demo kit-hero-demo">
@@ -301,23 +316,6 @@ const demoNav = [
             title={["800+ проверенных объектов", "недвижимости, которых нет"]}
             markets
             description="За 5 дней поможем без рисков купить объект по цене ниже рынка и получить одобрение по ипотеке"
-            formText="Ответьте на 5 вопросов и получите подборку объектов, готовых к продаже, под ваши требования"
-            image={{
-              src: "/assets/5ab39.webp",
-              ratio: "1081 / 812",
-              width: 1081,
-              height: 250.368,
-            }}
-            shadow={{
-              src: "cfc23.svg",
-              left: 20.5,
-              top: 29.5,
-              width: 303,
-              height: 185,
-              bleed: "-36.52% -15.61% -36.28% -31.99%",
-            }}
-            buttonLabel="Смотреть подборку"
-            subject="Подборка объектов"
           />
         </div>
         {(["buy", "sell"] as const).map((variant) => (
@@ -392,7 +390,7 @@ const demoNav = [
         <ComparisonTable
           variant="risk"
           rows={sellRealtorComparison}
-          icons={["/assets/29925.svg", "/assets/6c2c3.svg"]}
+          icons={["/assets/icon-comparison-cross-sell.svg", "/assets/icon-comparison-check-sell.svg"]}
         />
       </section>
       <section id="registry">
@@ -426,7 +424,7 @@ const demoNav = [
             Цвета · семейства и начертания шрифтов · типографическая шкала · межстрочные интервалы · отступы · сетка · радиусы · размеры элементов управления · тени · фокус · анимация · текстуры.
           </p>
           <p class="caption">
-            src/styles/tokens.css — единый источник. Адаптивные пороги: 1200 / 800 / 540 px. Состояния и мобильная компоновка добавлены в коде.
+            src/styles/tokens.css — единый источник. Адаптивные пороги: 1200 / 800 / 540 px. Состояния и мобильная компоновка добавлены в коде.
           </p>
         </Paper>
       </section>

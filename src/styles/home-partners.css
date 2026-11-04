@@ -46,3 +46,11 @@
   text-align: center;
   margin: 16px 0 0;
 }
+
+/* Общий контейнер логотипов: на телефоне уменьшен на любой странице. */
+@media (max-width: 767px) {
+  .home-partner-logos {
+    zoom: 0.6;
+    gap: 16px;
+  }
+}

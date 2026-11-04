@@ -67,7 +67,9 @@ export async function measure(page) {
     const label = (e) =>
       `${e.tagName.toLowerCase()}${e.id ? "#" + e.id : "." + [...e.classList].join(".")}`;
     const sections = [
-      ...document.querySelectorAll("main > section, footer"),
+      ...document.querySelectorAll(
+        "main > section, main > .home-surface-run > section, footer",
+      ),
     ].map((e) => {
       const r = e.getBoundingClientRect();
       return {

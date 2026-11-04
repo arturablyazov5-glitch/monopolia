@@ -1,0 +1,37 @@
+.site-back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1001;
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+.site-back-to-top[hidden] {
+  display: none;
+}
+.site-back-to-top img {
+  position: absolute;
+  left: -1.81%;
+  top: -5.68%;
+  max-width: none;
+}
+.site-back-to-top:hover {
+  filter: brightness(0.9);
+}
+@media (max-width: 1199px) {
+  .site-back-to-top {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .site-back-to-top {
+    width: 36px;
+    height: 36px;
+  }
+  .site-back-to-top img {
+    width: 37.73px;
+    height: 38.83px;
+  }
+}

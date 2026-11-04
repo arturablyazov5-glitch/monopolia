@@ -1,0 +1,189 @@
+---
+import LeadForm from "./LeadForm.astro";
+import { imageSize } from "../lib/image-size";
+import ExpertProfile from "./ExpertProfile.astro";
+import TapedNote from "./TapedNote.astro";
+const popups = {
+  callback: {
+    title: "Обратный звонок",
+    description:
+      "Оставьте заявку, и мы свяжемся с вами в течение 10 минут и ответим на вопросы про объекты, ипотеку и документы",
+    button: "Свяжитесь со мной",
+    node: "1966:10357",
+  },
+  office: {
+    title: "Бесплатная консультация в офисе",
+    description:
+      "За 40 минут разберем вашу ситуацию, обсудим деньги, сроки и риски. Свяжемся в течение 10 минут и подберем удобное время",
+    button: "Записаться на консультацию",
+    node: "1966:10873",
+    note: "Консультация ни к чему не обязывает",
+    image: "/assets/staff-elena-gorbaneva-consultation.webp",
+    alt: "Елена Горбанева, специалист по недвижимости",
+    badge: "На этой неделе осталось 4 свободных места",
+  },
+  analysis: {
+    title: "Сделаем анализ вашего объекта перед продажей",
+    description:
+      "Свяжемся в течение 5 минут, уточним пару деталей и пришлем PDF с реальной ценой, сроками продажи и сравнением с похожими объектами в районе",
+    button: "Получить анализ объекта",
+    node: "1966:10484",
+    note: "Анализ бесплатный и ни к чему не обязывает",
+    image: "/assets/buyer-catalog-booklet.webp",
+    alt: "Пример анализа объекта Монополии",
+    badge: "PDF-файл, 0,5 МБ",
+  },
+  "closed-base": {
+    title: "Откроем доступ к закрытой базе объектов",
+    description:
+      "Свяжемся с вами в течение 10 минут и пришлем объекты из закрытой базы, подходящие под ваши требования",
+    button: "Получить доступ к базе",
+    node: "2045:3906",
+    image: "/assets/buyer-catalog-booklet.webp",
+    alt: "Пример подборки объектов Монополии",
+  },
+  service: {
+    title: "Консультация по услуге",
+    description:
+      "Свяжемся с вами в течение 10 минут и ответим на все вопросы, а если нужно — пригласим в офис и поможем разобраться в вашей ситуации",
+    button: "Получить консультацию",
+    node: "2047:3990",
+    image: "/assets/staff-elena-gorbaneva-consultation.webp",
+    alt: "Елена Горбанева, специалист по недвижимости",
+  },
+  team: {
+    title: "Приглашаем в команду Монополии",
+    description:
+      "Оставьте заявку, и мы свяжемся с вами в течение 10 минут и расскажем про вакансии, доход и обучение",
+    button: "Откликнуться",
+    node: "2049:4179",
+    image: "/assets/staff-elena-gorbaneva-consultation.webp",
+    alt: "Елена Горбанева, специалист по недвижимости",
+  },
+  mortgage: {
+    title: "Подберем ипотеку",
+    description:
+      "Свяжемся с вами в течение 10 минут и подберем выгодные условия, поможем собрать документы и правильно подадим заявку в банк",
+    button: "Подобрать ипотеку",
+    node: "2049:4257",
+    note: "Подбор бесплатный и ни к чему не обязывает",
+    image: "/assets/staff-elena-gorbaneva-consultation.webp",
+    alt: "Специалист по недвижимости Елена Горбанева",
+  },
+  viewing: {
+    title: "Запишем на просмотр",
+    description:
+      "Свяжемся с вами в течение 10 минут и подберем удобное время для просмотра объекта",
+    button: "Записаться на просмотр",
+    node: "2049:4339",
+    note: "Просмотр бесплатный и ни к чему не обязывает",
+  },
+  "new-build": {
+    title: "Подберем новостройку",
+    description:
+      "Свяжемся в течение 10 минут — уточним бюджет и район, подберем дома от застройщиков. А также поможем доработать заявку на ипотеку и подать ее в банк, чтобы повысить шанс одобрения",
+    button: "Подобрать новостройку",
+    node: "2049:4419",
+  },
+};
+export type PopupMode = keyof typeof popups;
+const { mode } = Astro.props as { mode: PopupMode };
+const data: {
+  title: string;
+  description: string;
+  button: string;
+  node: string;
+  note?: string;
+  image?: string;
+  alt?: string;
+  badge?: string;
+} = popups[mode];
+const hasExpertProfile = ["service", "office", "mortgage", "team"].includes(
+  mode,
+);
+---
+
+<div
+  data-dialog-form={mode}
+  class:list={[
+    "popup",
+    `popup-${mode}`,
+    {
+      "popup-without-media":
+        hasExpertProfile || (!data.image && mode !== "viewing"),
+    },
+  ]}
+  hidden
+>
+  <LeadForm
+    compact
+    variant="popup"
+    id={`popup-${mode}`}
+    title={data.title}
+    description={data.description}
+    buttonLabel={data.button}
+    note={data.note}
+    resume={mode === "team"}
+    node={data.node}
+  >
+    {(mode === "service" || mode === "viewing") && (
+      <p
+        slot="context"
+        class="popup-context paper paper-white"
+        data-popup-context
+        hidden
+      ></p>
+    )}
+    {hasExpertProfile && (
+      <Fragment slot="expert">
+        <ExpertProfile
+          alwaysVisible
+          name="Елена Горбанева"
+          role="Специалист по недвижимости"
+          src={data.image!}
+        />
+        {data.badge && <p class="popup-action-note">{data.badge}</p>}
+      </Fragment>
+    )}
+    {!hasExpertProfile && (data.image || mode === "viewing") && (
+      <figure
+        slot="media"
+        class:list={[
+          "popup-media",
+          {
+            "popup-media-document":
+              mode === "analysis" || mode === "closed-base",
+            "popup-media-neutral": !data.image,
+          },
+        ]}
+      >
+        <div class="popup-media-window brush-stroke">
+          {(data.image || mode === "viewing") && (
+            <img
+              class:list={[
+                {
+                  "person-photo": ["service", "team", "mortgage"].includes(
+                    mode,
+                  ),
+                },
+              ]}
+              src={data.image}
+              alt={data.alt ?? ""}
+              data-popup-image={mode === "viewing" ? "" : undefined}
+              {...(data.image ? imageSize(data.image) : {})}
+              loading="lazy"
+              hidden={!data.image}
+            />
+          )}
+        </div>
+        {data.badge && (
+          <figcaption class="popup-media-badge">
+            <TapedNote tape={false} textured>
+              {data.badge}
+            </TapedNote>
+          </figcaption>
+        )}
+      </figure>
+    )}
+  </LeadForm>
+</div>

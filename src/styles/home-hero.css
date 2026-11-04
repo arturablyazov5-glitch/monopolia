@@ -112,17 +112,11 @@
   align-items: center;
   margin-top: 32px;
 }
-.hero-actions > span {
-  font:
-    600 16px/1 "Inter Tight",
-    sans-serif;
-  letter-spacing: -0.32px;
-}
-.hero-actions .button:first-child {
-  width: 196px;
-}
-.hero-actions .button:last-child {
+.hero-actions .button[href="/sell/"] {
   width: 210px;
+}
+.hero-actions .button[href="/buy/"] {
+  width: 196px;
 }
 .hero-team {
   position: absolute;
@@ -167,7 +161,7 @@
   overflow: hidden;
   pointer-events: none;
 }
-.hero-paper-edge > img {
+.hero-paper-edge img {
   width: 100%;
   max-width: none;
   height: 1325px;
@@ -183,4 +177,74 @@
   width: 1160px;
   max-width: 1160px;
   margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .home-desktop .home-hero {
+    /* Учитываем отступ контейнера и прозрачную область над портретами. */
+    --hero-gap-buttons-photo: calc(28px + 7.1vw);
+  }
+  .home-desktop .home-hero .hero-team {
+    margin-top: calc(28px - var(--hero-gap-buttons-photo) * 0.35);
+  }
+  .hero-paper-edge img {
+    /* Векторная кромка, обведённая по background-paper-buyer-section.webp с субпиксельной точностью
+     (без «лесенки» старой грубой маски): public/assets/edges/. */
+    mask: url("/assets/edges/buyer-paper-edge.svg") center / 100% 100% no-repeat;
+  }
+}
+
+@media (max-width: 751px) {
+  .home-desktop .home-hero {
+    --hero-gap-buttons-photo: calc(48px + 7.1vw);
+  }
+}
+
+/* Мобилка: как на первом экране «Продажи/Покупки» — небо цвета картинки
+   сверху, дома по краям экрана (правый — основной картинкой, левый — вторым
+   слоем той же картинки), мелко и плавно растворяются. */
+@media (max-width: 767px) {
+  .hero-background {
+    left: auto;
+    right: -28px;
+    top: 290px;
+    transform: none;
+    width: auto;
+    height: 320px;
+    object-fit: initial;
+    z-index: -2;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    mask-image: linear-gradient(to bottom, transparent, #000 140px);
+  }
+  .home-hero::before {
+    content: "";
+    position: absolute;
+    top: 290px;
+    left: -28px;
+    z-index: -1;
+    width: 170px;
+    height: 320px;
+    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px no-repeat;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    pointer-events: none;
+  }
+  .home-hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 560px;
+    z-index: -3;
+    background: linear-gradient(
+      to right,
+      rgb(225 228 236),
+      rgb(206 217 231) 55%,
+      rgb(184 205 224)
+    );
+    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    pointer-events: none;
+  }
 }

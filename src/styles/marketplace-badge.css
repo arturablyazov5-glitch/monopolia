@@ -1,0 +1,40 @@
+.marketplace-badge {
+  --marketplace-badge-scale: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: calc(10px * var(--marketplace-badge-scale));
+  margin-top: 3px;
+  padding: calc(6px * var(--marketplace-badge-scale))
+    calc(10px * var(--marketplace-badge-scale))
+    calc(6px * var(--marketplace-badge-scale))
+    calc(8px * var(--marketplace-badge-scale));
+  background: var(--color-paper);
+  border-radius: var(--radius-control);
+  font: 500 20px/1.2 var(--font-heading);
+  color: var(--color-ink);
+}
+.marketplace-badge > span:last-child {
+  padding-bottom: calc(4px * var(--marketplace-badge-scale));
+}
+.marketplace-badge-icon {
+  position: relative;
+  width: calc(32px * var(--marketplace-badge-scale));
+  height: calc(32px * var(--marketplace-badge-scale));
+  flex-shrink: 0;
+}
+.marketplace-badge-icon img {
+  position: absolute;
+  inset: -5.92% -7.1% -7.68% -7.81%;
+  max-width: none;
+}
+@media (max-width: 767px) {
+  .marketplace-badge {
+    --marketplace-badge-scale: 0.82;
+    margin-top: 0;
+    font-size: calc(18px * var(--marketplace-badge-scale));
+  }
+  .marketplace-badge-icon img {
+    width: 115%;
+    height: auto;
+  }
+}

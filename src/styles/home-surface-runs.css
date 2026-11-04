@@ -1,0 +1,18 @@
+/* A single underpaint prevents the light page canvas from showing between
+   separately rasterized dark sections at fractional mobile coordinates. */
+.home-surface-run {
+  display: contents;
+}
+@media (max-width: 767px) {
+  .home-surface-run {
+    display: flow-root;
+    background: var(--color-dark);
+  }
+  .home-surface-run--reviews {
+    background: #151515;
+  }
+  /* Светлый стык отзывов и кейсов не должен сглаживаться в тёмную подложку. */
+  .home-surface-run:has(> .client-cases) {
+    background: linear-gradient(#fdfdfd 2px, var(--color-dark) 2px);
+  }
+}

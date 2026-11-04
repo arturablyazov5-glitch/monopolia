@@ -1,0 +1,170 @@
+/* NOV02-28: надпись поверх прежнего изображения, без обещания даты. */
+.office-coming-soon {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #1c1c1c50;
+  border-radius: 28px;
+  font: 500 20px/1 var(--font-heading);
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 4px #0008;
+}
+.office-mobile-leaders {
+  display: none;
+}
+.company-offices-map {
+  display: contents;
+}
+
+/* Один холст 360 × 400 для карты, меток и указателей.
+   Координаты городов перенесены из desktop в координаты исходного SVG:
+   Кончики меток на desktop: Благовещенск (4206.281, 2532.078),
+   Белогорск (4288, 2495.469). Координаты сняты с отрисованного desktop.
+   Crop начинается в (4036, 2233); Белогорск выше и правее.
+   Это привязка к схематичной карте сайта, не геодезическая проекция. */
+@media (max-width: 767px) {
+  .company-offices-map {
+    display: flow-root;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  .home-desktop .office-expansion {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .home-desktop .company-guild {
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(var(--color-dark), transparent);
+  }
+  .home-desktop .office-expansion .expansion-map {
+    display: none;
+  }
+  .home-desktop .expansion-locations {
+    --office-photo-border: #fff;
+    --office-photo-width: 44cqi;
+    --office-photo-height: calc(var(--office-photo-width) * 128 / 208);
+    --office-future-photo-top: 18cqi;
+    --office-label-gap: 6cqi;
+    aspect-ratio: 360 / 400;
+    isolation: isolate;
+  }
+  .home-desktop .expansion-locations::before {
+    content: "";
+    position: absolute;
+    left: -1121.1111cqi;
+    top: -620.2778cqi;
+    width: 1495.8694cqi;
+    height: 843.0222cqi;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("/assets/office-building-photo.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .home-desktop .expansion-locations .office-photo-bubble {
+    width: 44%;
+  }
+  .home-desktop .expansion-locations .future-photo {
+    left: 0;
+    top: var(--office-future-photo-top);
+  }
+  .home-desktop .expansion-locations .current-photo {
+    left: 56%;
+    top: 0;
+  }
+  .home-desktop .expansion-locations .office-photo-frame {
+    background: var(--office-photo-border);
+    border-radius: 9cqi;
+  }
+  .home-desktop .expansion-locations .future-photo .office-photo-frame::after {
+    border-color: var(--office-photo-border);
+  }
+  .home-desktop .expansion-locations .office-bubble-tail {
+    display: none;
+  }
+  .home-desktop .expansion-locations .office-photo-bubble::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--office-photo-height) - 1px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 7cqi;
+    height: 3.5cqi;
+    background: var(--office-photo-border);
+    mask: url("/assets/office-speech-tail-centered.svg") center / 100% 100% no-repeat;
+    z-index: 2;
+  }
+  .home-desktop .expansion-locations .office-photo-frame > img {
+    border-radius: 8cqi;
+  }
+  .home-desktop .expansion-locations .office-coming-soon {
+    border-radius: 8cqi;
+    font-size: 20px;
+  }
+  .home-desktop .expansion-locations .office-marker {
+    width: 0;
+    height: 0;
+    left: var(--office-pin-x);
+    top: var(--office-pin-y);
+  }
+  .home-desktop .expansion-locations .future-office {
+    --office-pin-x: 47.30035cqi;
+    --office-pin-y: 83.07725cqi;
+    --office-photo-center: 22cqi;
+    --office-photo-top: var(--office-future-photo-top);
+  }
+  .home-desktop .expansion-locations .current-office {
+    --office-pin-x: 70cqi;
+    --office-pin-y: 72.90795cqi;
+    --office-photo-center: 78cqi;
+    --office-photo-top: 0cqi;
+  }
+  .home-desktop .expansion-locations .office-marker > img {
+    position: absolute;
+    width: 6cqi;
+    max-width: none;
+    height: auto;
+    left: -3cqi;
+    bottom: 0;
+  }
+  .home-desktop .expansion-locations .office-label-group {
+    position: absolute;
+    padding: 0;
+    gap: 0;
+    width: max-content;
+    left: calc(var(--office-photo-center) - var(--office-pin-x));
+    top: calc(var(--office-photo-top) + var(--office-photo-height) + var(--office-label-gap) - var(--office-pin-y));
+    transform: translateX(-50%);
+  }
+  .home-desktop .expansion-locations .office-label {
+    width: max-content;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: clamp(11px, 3.35cqi, 18px);
+    padding: 6px;
+  }
+  .home-desktop .expansion-locations .office-label span {
+    font-size: clamp(10px, 2.8cqi, 15px);
+  }
+  .home-desktop .expansion-locations .office-arrow {
+    display: none;
+  }
+  .home-desktop .expansion-locations .office-mobile-leaders {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 5;
+    stroke-linecap: round;
+  }
+}

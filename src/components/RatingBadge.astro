@@ -25,7 +25,7 @@ const domclick = traceLogo("domclick");
   <span class="rating-map yandex" role="img" aria-label="Яндекс Карты">
     <img
       class="yandex-pin"
-      src="/assets/0a94f.svg"
+      src="/assets/icon-yandex-map-pin.svg"
       alt=""
       width="10.08"
       height="12.6"
@@ -34,7 +34,7 @@ const domclick = traceLogo("domclick");
     />
     <img
       class="yandex-dot"
-      src="/assets/4bec0.svg"
+      src="/assets/icon-yandex-map-dot.svg"
       alt=""
       width="3.5379"
       height="3.5379"
@@ -56,13 +56,13 @@ const domclick = traceLogo("domclick");
   </span>
   <b aria-label={`Рейтинг ${rating}`}>
     <img
-      src="/assets/00e35.svg"
+      src="/assets/rating-star.svg"
       alt=""
       width="12"
       height="12"
       loading={Astro.props.loading ?? "lazy"}
       decoding="async"
     />
-    {rating}
+    <span class="rating-value">{rating}</span>
   </b>
 </div>

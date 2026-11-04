@@ -61,14 +61,22 @@
 .buyer-count-space {
   color: transparent;
 }
-.buyer-count {
-  position: absolute;
-  top: 53.93px;
-  left: 83.201px;
-  white-space: nowrap;
-  font: 64px/0.4 var(--font-handwriting);
-  color: var(--color-diamond);
-  transform: rotate(-1deg);
+@media (min-width: 1200px) {
+  .buyer-count-space {
+    display: inline-block;
+    height: 0;
+    line-height: 0;
+    vertical-align: middle;
+  }
+  .buyer-count {
+    position: absolute;
+    top: 48px;
+    left: 83.201px;
+    white-space: nowrap;
+    line-height: 0.4;
+    color: var(--color-diamond);
+    transform: rotate(-1deg);
+  }
 }
 .buyer-quote-mark {
   position: absolute;
@@ -79,7 +87,6 @@
   max-width: none;
 }
 .buyer-note {
-  --paper-texture: url("/assets/0ba2a.webp");
   width: 396px;
   height: 116px;
   padding: 20px 24px;
@@ -93,21 +100,72 @@
   position: absolute;
   left: 24.444px;
   top: 483.464px;
-  padding: 20px 24px;
   transform: rotate(-2deg);
-}
-.buyer-name-title {
-  position: relative;
-  font: 500 var(--text-card)/1.2 var(--font-heading);
-  margin: 0 0 4px;
-}
-.buyer-name-role {
-  position: relative;
-  font: var(--text-small)/1.2 var(--font-body);
-  color: var(--color-muted);
-  margin: 0;
-  white-space: nowrap;
 }
 .buyer-audience-content > .button {
   width: 219px;
+}
+.buyer-audience-content > a.button:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-ink);
+}
+
+.buyer-title-wide {
+  display: contents;
+}
+.buyer-title-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .home-desktop .buyer-audience h2 {
+    text-wrap: wrap;
+  }
+  .buyer-title-wide {
+    display: none;
+  }
+  .buyer-title-mobile {
+    display: block;
+  }
+  .home-desktop .buyer-quote-mark {
+    display: none;
+  }
+  /* Мобильный заголовок: четыре явные строки, рукописная надпись встроена
+     в строку со словом «хотят» (inline, без отдельного блока). Всё на CSS. */
+  .buyer-m-line {
+    display: block;
+  }
+  .buyer-mobile-intro {
+    position: relative;
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+  }
+  .buyer-quote-mobile {
+    position: absolute;
+    width: 0.95em;
+    height: auto;
+    left: calc(100% + 0.15em);
+    top: -0.55em;
+  }
+  .buyer-count-mobile {
+    /* Нулевая высота: надпись не раздувает строку, центр глифов совпадает
+       с центром строки (line-height: 0 центрирует глифы по вертикали). */
+    display: inline-block;
+    height: 0;
+    margin-right: 0.12em;
+    line-height: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+    color: var(--color-diamond);
+    transform: translateY(calc(0.07em - 4px)) rotate(-1deg);
+  }
+  .buyer-m-count-line {
+    white-space: nowrap;
+  }
+}
+@media (max-width: 339px) {
+  /* На 320 px «купить вашу недвижимость» не помещалась в одну строку. */
+  .buyer-title-mobile {
+    font-size: 0.84em;
+  }
 }

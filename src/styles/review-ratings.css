@@ -1,0 +1,30 @@
+/* NOV03-11: spacing belongs to the rating divider, not every row gap. */
+.home-desktop .proven-trust .trust-rating-divider {
+  flex-shrink: 0;
+  background: #000;
+  opacity: 0.1;
+}
+
+@media (max-width: 1199px) {
+  .home-desktop .proven-trust .trust-ratings-mobile .trust-rating-mobile .trust-rating-divider {
+    background: #000;
+    opacity: 0.1;
+    margin-inline: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-desktop .proven-trust .trust-ratings-mobile .trust-rating-mobile .trust-rating-line {
+    grid-template-columns: 11px max-content 15px minmax(0, 1fr);
+  }
+
+  .home-desktop .proven-trust .trust-ratings-mobile .trust-rating-mobile .trust-rating-divider {
+    justify-self: center;
+    margin-inline: 0;
+  }
+
+  .home-desktop .proven-trust .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > p {
+    white-space: normal;
+    overflow-wrap: normal;
+  }
+}

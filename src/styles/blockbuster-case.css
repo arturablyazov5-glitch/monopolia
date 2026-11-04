@@ -8,7 +8,7 @@
 .blockbuster-scene {
   position: absolute;
   left: 50%;
-  transform: translateX(-50%) scaleX(-1);
+  transform: translateX(-50%);
   top: 37.252px;
   width: max(100% + 40px, 1480px);
   height: 866.965px;
@@ -21,16 +21,6 @@
   height: 100%;
   object-fit: cover;
   max-width: none;
-}
-.blockbuster-fade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    #ffffffcc 13.438%,
-    #ffffff85 31.639%,
-    #ffffff00 52.396%
-  );
 }
 .blockbuster-edge {
   position: absolute;
@@ -52,11 +42,11 @@
   margin: 0 auto 12px;
   padding: 8px 20px;
   transform: rotate(-1deg);
-  --paper-texture: url("/assets/7fcba.webp");
+
   color: white;
 }
 .blockbuster-label:before {
-  opacity: 1;
+  background: url("/assets/blockbuster-decoration.webp") center/cover;
 }
 .blockbuster-label:after {
   display: none;
@@ -125,7 +115,7 @@
   .blockbuster-scene {
     top: calc(100cqw * 37.252 / 1440);
     width: 1480px;
-    transform: translateX(-50%) scale(var(--scene-scale)) scaleX(-1);
+    transform: translateX(-50%) scale(var(--scene-scale));
     transform-origin: 50% 0;
   }
   .blockbuster-edge {
@@ -138,9 +128,25 @@
 }
 
 @media (width > 1440px) {
+  .blockbuster-case {
+    /* TASK-058: фон за маской взят из усреднённых крайних колонок
+       скомпонованного кадра 1440 (небо → горизонт → снег):
+       #e2ebf1, #c7d3dc, #9eb5c5, #97979f, #a4a9b7.
+       Так исходный кадр мягко растворяется в продолжение пейзажа,
+       а не в чужую тёмную заливку. */
+    background: linear-gradient(
+      to bottom,
+      #e2ebf1 0 15.7%,
+      #c7d3dc 33.7%,
+      #9eb5c5 42.7%,
+      #97979f 47.2%,
+      #abb0bb 56.2%,
+      #a4a9b7 100%
+    );
+  }
   .blockbuster-scene {
     /* Фото и люди сохраняют кадрирование 1440. Вся сцена вместе с
-       белым верхним градиентом плавно переходит в --color-dark. */
+       белым верхним градиентом плавно переходит в фон пейзажа. */
     width: 1480px;
     mask-image: linear-gradient(
       to right,
@@ -155,5 +161,36 @@
        прозрачных полей за окно не оставляет вертикальных обрывов. */
     width: calc(100% * 1493.19 / 1440);
     height: 129.56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .home-desktop .blockbuster-case {
+    --blockbuster-edge-height: 32px;
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-size: 100% var(--blockbuster-edge-height), 100% calc(100% - var(--blockbuster-edge-height) + 1px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+  }
+  .home-desktop .blockbuster-case::before {
+    content: none;
+  }
+  .home-desktop .blockbuster-edge {
+    display: none;
+  }
+  .home-desktop .blockbuster-case .blockbuster-content .speech-bubble p {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+  /* Speech follows the heads in the centered photo. */
+  .home-desktop .blockbuster-case .blockbuster-warning {
+    left: max(12px, calc(50% - 183px));
+    bottom: calc(var(--scene-h) * 0.55 + 48px);
+    width: 142px;
+  }
+  .home-desktop .blockbuster-case .blockbuster-reply {
+    right: max(12px, calc(50% - 183px));
+    width: 132px;
+    bottom: calc(var(--scene-h) * 0.55 + 36px);
   }
 }

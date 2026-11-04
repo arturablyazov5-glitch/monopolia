@@ -4,8 +4,9 @@
   /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
   overflow-x: clip;
   z-index: 1;
-  height: 712.5px;
-  margin-top: 80px;
+  min-height: 712.5px;
+  aspect-ratio: 1440 / 712.5;
+  margin-top: var(--section-space-compact);
 }
 .sell-gossip-edge {
   position: absolute;
@@ -22,12 +23,12 @@
   left: 50%;
   transform: translateX(-50%);
   width: max(100%, 1440px);
-  height: 703.806px;
+  height: auto;
   max-width: none;
 }
 .sell-gossip-content {
   position: relative;
-  width: 1160px;
+  width: 1156px;
   height: 100%;
   margin: 0 auto;
 }
@@ -59,6 +60,8 @@
 @media (max-width: 1199px) {
   .sell-gossip {
     height: 600px;
+    min-height: 0;
+    aspect-ratio: auto;
     /* Рваный верх фото ложится на низ первого экрана. */
     margin-top: -32px;
     overflow: clip;
@@ -82,49 +85,102 @@
   .sell-gossip-reply {
     left: auto;
     right: 18%;
-    top: 160px;
+    top: 156px;
   }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  /* Фото перекрывает команду: его верх тоже должен повторять рваную кромку. */
+  .sell-gossip-photo {
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(#000, #000);
+    /* Перекрываем сплошную часть SVG, чтобы дробные пиксели не давали шов. */
+    mask-size:
+      100% 51px,
+      100% calc(100% - 49px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    mask-mode: alpha;
+  }
+}
+/* Mobile chat uses the same dialogue and four crops of the original photo. */
+.gossip-message {
+  display: contents;
+}
+.gossip-avatars {
+  display: none;
 }
 @media (max-width: 767px) {
-  /* Реплики — над сценой, фото ниже (лица соседок не перекрываются). */
-  .sell-gossip {
-    height: 580px;
-    margin-top: 0;
+  .sell-desktop .sell-gossip {
+    height: auto;
+    overflow: clip;
+    padding: 24px 16px var(--section-space);
   }
-  .sell-gossip-edge {
-    top: 168px;
+  .sell-desktop .sell-gossip-edge,
+  .sell-desktop .sell-gossip-photo {
+    display: none;
   }
-  .sell-gossip-photo {
-    top: 176.5px;
-    height: calc(100% - 176.5px);
-    /* Мобильный файл — левая часть кадра (соседки на лавочке). */
-    object-position: 0 50%;
+  .sell-desktop .sell-gossip .sell-gossip-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    margin: 0 auto;
+    gap: 28px;
   }
-  .sell-gossip-content {
-    margin: 0 20px;
+  .gossip-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
   }
-  .sell-gossip-content .speech-bubble {
-    max-width: 290px;
+  .gossip-message-reply {
+    justify-content: flex-end;
   }
-  .sell-gossip-content .speech-bubble p {
-    padding: 12px 16px;
-    font-size: 16px;
+  .gossip-avatars {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0;
+    margin-top: 18px;
+  }
+  .gossip-avatar {
+    width: 56px;
+    height: 56px;
+    flex: 0 0 56px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background-image: url("/assets/sell-gossip-neighbors-and-team.webp");
+    background-size: 691.2px 337.92px;
+    background-position: calc(25px - var(--face-x) * 0.8)
+      calc(25px - var(--face-y) * 0.8);
+    background-repeat: no-repeat;
+  }
+  .gossip-avatar:first-child {
+    z-index: 1;
+  }
+  .gossip-avatar + .gossip-avatar {
+    margin-left: -8px;
+  }
+  .sell-desktop .sell-gossip .sell-gossip-content .speech-bubble {
+    position: relative;
+    inset: auto;
+    width: fit-content;
+    max-width: 100%;
+    margin: -8px 0 0;
+    padding: 0;
+  }
+  .sell-desktop .sell-gossip .sell-gossip-content .speech-bubble p {
+    padding: 12px;
+    font-size: 14px;
+    white-space: pre-line;
+  }
+  .sell-desktop .sell-gossip .sell-gossip-content .sell-gossip-reply {
+    width: 230px;
+  }
+  .sell-desktop .sell-gossip .sell-gossip-content .sell-gossip-reply p {
     white-space: normal;
   }
-  .sell-gossip-content .speech-bubble > img {
+  .sell-desktop .sell-gossip .sell-gossip-content .speech-bubble > img {
     margin-top: -14px;
-  }
-  .sell-gossip-rumor {
-    top: 24px;
-  }
-  .sell-gossip-content .sell-gossip-reply {
-    right: 0;
-    top: 104px;
-    max-width: 240px;
-  }
-}
-@media (max-width: 389px) {
-  .sell-gossip-content {
-    margin: 0 16px;
   }
 }

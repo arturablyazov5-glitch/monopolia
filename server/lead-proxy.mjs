@@ -3,7 +3,6 @@ import { handleLead } from "./lead-core.mjs";
 
 import { createAdminAPI } from "./admin-api.mjs";
 const admin = await createAdminAPI();
-void admin.recovery.startPolling().catch(() => console.warn('[admin] recovery_start_unavailable'));
 
 const port = Number(process.env.PORT || 8787);
 const server = createServer(async (incoming, outgoing) => {
@@ -33,7 +32,7 @@ const server = createServer(async (incoming, outgoing) => {
             body: "{}",
           }),
           process.env,
-          { ip: incoming.socket.remoteAddress },
+          { ip: incoming.socket.remoteAddress, remoteAddress: incoming.socket.remoteAddress },
         );
         outgoing.writeHead(
           response.status,
@@ -62,6 +61,7 @@ const server = createServer(async (incoming, outgoing) => {
         : peer;
     const response = await handleLead(request, process.env, {
       ip,
+      remoteAddress: peer,
       report: (event) => console.log(`[lead-proxy] ${event}`),
     });
     outgoing.writeHead(response.status, Object.fromEntries(response.headers));

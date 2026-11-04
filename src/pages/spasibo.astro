@@ -1,0 +1,26 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Button from "../components/Button.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import "../styles/spasibo.css";
+---
+
+<SiteLayout title="Спасибо за заявку — Монополия" noindex>
+  <main class="spasibo" data-node-id="2049:4507">
+    <div class="spasibo-check" aria-hidden="true">
+      ✓
+    </div>
+    <h1>Спасибо! Мы получили вашу заявку, будьте на связи</h1>
+    <p class="spasibo-description">
+      Свяжемся с вами в течение 10 минут в рабочее время
+    </p>
+    <Button label="На главную" href={import.meta.env.BASE_URL} tone="black" />
+    <div class="spasibo-contacts">
+      <p>Или свяжитесь с нами удобным способом</p>
+      <a class="spasibo-phone" href="tel:+79245804555">
+        +7 (924) 580-45-55
+      </a>
+      <SocialLinks size={40} />
+    </div>
+  </main>
+</SiteLayout>

@@ -1,3 +1,5 @@
+import { formatPrice, priceForEditing } from "./price-format";
+import { createContentEditor } from "./content-editor";
 import type {
   Catalog,
   Property,
@@ -17,6 +19,8 @@ let csrf = "",
   visible = true,
   busy = false,
   dirty = false;
+let objectFilter = "all";
+let resumeObject = false;
 let photoPromise: Promise<void> | null = null;
 const labels = {
   title: "Заголовок",
@@ -36,13 +40,45 @@ const limits = {
   mortgage: 100,
   discount: 8,
 };
+const fieldHints: Record<keyof typeof labels, [string, string]> = {
+  title: [
+    "Например: 2-комнатная квартира, 52 м²",
+    "Тип объекта, площадь и этаж — коротко и по делу.",
+  ],
+  address: [
+    "Город, улица, дом",
+    "Укажите город, чтобы посетитель понял расположение.",
+  ],
+  price: ["5 950 000 ₽", "Полная стоимость объекта с валютой."],
+  oldPrice: ["6 400 000 ₽", "Необязательно. Будет показана зачёркнутой."],
+  pricePerMeter: ["114 423 ₽/м²", "Необязательно. Цена за квадратный метр."],
+  mortgage: [
+    "от 35 000 ₽/мес.",
+    "Необязательно. Подпись об ипотечном платеже.",
+  ],
+  discount: ["−7%", "Необязательно. Короткая отметка на фото."],
+};
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, text = "") => {
   const node = document.createElement(tag);
   node.textContent = text;
   return node;
 };
 let toastTimer: ReturnType<typeof setTimeout>;
+function dismissMessage() {
+  clearTimeout(toastTimer);
+  const toast = $("#message");
+  if (toast.matches(":popover-open")) toast.hidePopover();
+  toast.hidden = true;
+}
 function message(text: string, error = false) {
+  if (!$(".admin-login").hidden) {
+    dismissMessage();
+    const notice = $("#login-notice");
+    notice.hidden = false;
+    notice.textContent = text;
+    notice.classList.toggle("error", error);
+    return;
+  }
   const toast = $("#message");
   toast.textContent = text;
   toast.classList.toggle("error", error);
@@ -53,11 +89,97 @@ function message(text: string, error = false) {
     toast.hidePopover();
     toast.hidden = true;
   }, 4200);
-  if (!$(".admin-login").hidden) {
-    const notice = $("#login-notice");
-    notice.hidden = false;
-    notice.textContent = text;
+}
+function clearObjectErrors() {
+  $("#object-error-summary").hidden = true;
+  $("#object-error-summary").replaceChildren();
+  document
+    .querySelectorAll<HTMLElement>("#form [data-field]")
+    .forEach((node) => {
+      node.textContent = "";
+    });
+  document
+    .querySelectorAll("#form [aria-invalid]")
+    .forEach((node) => node.removeAttribute("aria-invalid"));
+}
+function objectErrors(fields: FieldError[], focus = true) {
+  clearObjectErrors();
+  const summary = $("#object-error-summary");
+  summary.append(el("h3", "Проверьте поля карточки"));
+  for (const field of fields) {
+    const name = field.path.replace(/^objects\.\d+\./, "").split(".")[0];
+    const input =
+      name === "image"
+        ? $("#image-file")
+        : document.querySelector<HTMLInputElement>(`#form [name="${name}"]`);
+    const slot = document.querySelector<HTMLElement>(
+      `#form [data-field="${name}"]`,
+    );
+    if (!input || !slot) continue;
+    slot.textContent = field.message;
+    input.setAttribute("aria-invalid", "true");
+    const link = el("a", field.message);
+    link.href = "#" + input.id;
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      input.focus();
+    });
+    summary.append(link);
   }
+  summary.hidden = false;
+  if (focus) summary.focus();
+}
+function refreshObjectErrorSummary() {
+  const summary = $("#object-error-summary");
+  if (summary.hidden || !summary.querySelector("a")) return;
+  const fields = [
+    ...document.querySelectorAll<HTMLElement>("#form [data-field]"),
+  ]
+    .filter((node) => node.textContent)
+    .map((node) => ({ path: node.dataset.field!, message: node.textContent! }));
+  if (!fields.length) {
+    clearObjectErrors();
+    return;
+  }
+  // Keep the remaining error links accurate without moving focus while typing.
+  objectErrors(fields, false);
+}
+function updateObjectPreview() {
+  const form = $<HTMLFormElement>("#form");
+  const read = (name: keyof typeof labels) => {
+    const text = (
+      form.elements.namedItem(name) as HTMLInputElement
+    ).value.trim();
+    return ["price", "oldPrice", "pricePerMeter"].includes(name)
+      ? formatPrice(text, name === "pricePerMeter")
+      : text;
+  };
+  for (const [name, fallback] of [
+    ["title", "Название объекта"],
+    ["address", "Адрес объекта"],
+    ["price", "Цена"],
+    ["oldPrice", ""],
+    ["pricePerMeter", ""],
+    ["mortgage", ""],
+    ["discount", ""],
+  ] as const) {
+    const target = $(
+      "#preview-" +
+        name.replace(/[A-Z]/g, (letter) => "-" + letter.toLowerCase()),
+    );
+    const value = read(name);
+    target.textContent = value || fallback;
+    target.hidden = !fallback && !value;
+  }
+  $("#preview-photo-placeholder").hidden = !$("#current-image").hidden;
+  $("#visibility-help").textContent = visible
+    ? "После сохранения карточка появится на сайте."
+    : "Карточка останется в админке. Посетители её не увидят.";
+  $("#object-save-status").textContent = dirty
+    ? "Есть несохранённые изменения"
+    : editing
+      ? "Карточка сохранена. Можно внести изменения."
+      : "Изменения ещё не сохранены";
 }
 const editor = $<HTMLDialogElement>("#editor"),
   confirmation = $<HTMLDialogElement>("#confirmation");
@@ -141,6 +263,8 @@ async function requestClose() {
     closeEditor();
 }
 editor.addEventListener("cancel", (event) => {
+  // File inputs also emit a bubbling cancel event when the picker is dismissed.
+  if (event.target !== editor) return;
   event.preventDefault();
   void requestClose();
 });
@@ -153,7 +277,7 @@ for (const dialog of [editor, confirmation])
     if (event.key !== "Tab") return;
     const controls = [
       ...dialog.querySelectorAll<HTMLElement>(
-        'button:not(:disabled),input:not(:disabled),a[href],[tabindex="0"]',
+        'button:not(:disabled),input:not(:disabled),textarea:not(:disabled),select:not(:disabled),summary,a[href],[tabindex="0"]',
       ),
     ].filter((n) => n.getClientRects().length);
     const first = controls[0],
@@ -199,28 +323,26 @@ async function api(path: string, method = "GET", body?: unknown) {
 }
 function errors(error: unknown) {
   const e = error as APIError;
-  for (const node of document.querySelectorAll<HTMLElement>("[data-field]"))
-    node.textContent = "";
-  for (const node of document.querySelectorAll("input[aria-invalid]"))
-    node.removeAttribute("aria-invalid");
-  for (const field of e.fields || []) {
-    const name = field.path.replace(/^objects\.\d+\./, "").split(".")[0];
-    const slot = document.querySelector<HTMLElement>(`[data-field="${name}"]`);
-    if (slot) slot.textContent = field.message;
-    const input = document.querySelector<HTMLInputElement>(
-      `#form [name="${name}"]`,
-    );
-    input?.setAttribute("aria-invalid", "true");
-  }
-  message(
+  if (editor.open && e.fields?.length) objectErrors(e.fields);
+  const errorText =
     e instanceof TypeError
-      ? "Нет связи с сервером. Попробуйте ещё раз."
-      : e.message || "Нет связи с сервером",
-    true,
-  );
-  document
-    .querySelector<HTMLInputElement>("#form [aria-invalid=true]")
-    ?.focus();
+      ? "Нет связи с сервером. Ваши поля сохранены в редакторе. Попробуйте ещё раз."
+      : e.message || "Нет связи с сервером";
+  if (editor.open || (!$("#texts-panel").hidden && !$("#workspace").hidden))
+    dismissMessage();
+  else message(errorText, true);
+  if (editor.open && !e.fields?.length) {
+    const summary = $("#object-error-summary");
+    summary.replaceChildren(
+      el("h3", "Не удалось сохранить карточку"),
+      el("p", errorText),
+    );
+    summary.hidden = false;
+    summary.focus();
+  } else if (!$("#workspace").hidden && !editor.open) {
+    $("#workspace-notice").textContent = errorText;
+    $("#workspace-notice").hidden = false;
+  }
   if (e.status === 409 && editor.open) {
     const banner = el("div");
     banner.className = "admin-banner";
@@ -250,15 +372,24 @@ function errors(error: unknown) {
     $("#fields").before(banner);
   }
   if (e.status === 401) {
-    closeEditor();
+    if (editor.open) {
+      resumeObject = true;
+      editor.close();
+      editor.hidden = true;
+      scrollUnlock();
+    }
     $("#workspace").hidden = true;
     $(".admin-login").hidden = false;
     $("#logout").hidden = true;
     csrf = "";
+    $("#login-notice").textContent =
+      "Сессия завершилась. Войдите снова, чтобы продолжить работу.";
+    $("#login-notice").hidden = false;
+    $("#login-username").focus();
   }
 }
 function photoURL(value: string) {
-  if (value === "/assets/da35e.webp") return value;
+  if (value === "/assets/property-card-default-photo.webp") return value;
   const url = new URL(value, media || location.origin),
     allowed = new URL(media || location.origin);
   if (
@@ -294,15 +425,17 @@ function closeEditor() {
 async function load() {
   const container = $("#objects");
   container.setAttribute("aria-busy", "true");
+  $("#object-results").textContent = "Загрузка объектов…";
   $<HTMLButtonElement>("#add").disabled = true;
   $<HTMLButtonElement>("#reload").disabled = true;
   $(".admin-login").hidden = true;
   $("#workspace").hidden = false;
   $("#logout").hidden = false;
+  $("#workspace-notice").hidden = true;
   container.replaceChildren(
     ...Array.from({ length: 3 }, () => {
       const n = el("div");
-      n.className = "paper admin-skeleton";
+      n.className = "admin-card admin-skeleton";
       n.setAttribute("aria-label", "Загружаем объекты…");
       return n;
     }),
@@ -312,8 +445,9 @@ async function load() {
     render();
   } catch (error) {
     errors(error);
+    $("#object-results").textContent = "Не удалось обновить список";
     const state = el("div");
-    state.className = "paper admin-state";
+    state.className = "admin-card admin-state";
     state.append(
       icon("reload"),
       el("h3", "Не удалось загрузить объекты"),
@@ -321,7 +455,7 @@ async function load() {
     );
     const retry = el("button", "Повторить");
     retry.type = "button";
-    retry.className = "button red";
+    retry.className = "admin-button admin-primary";
     retry.addEventListener("click", () => void load());
     state.append(retry);
     container.replaceChildren(state);
@@ -338,6 +472,15 @@ async function save(objects: Property[]) {
     ...document.querySelectorAll<HTMLButtonElement>("button"),
   ].filter((b) => !b.disabled);
   buttons.forEach((b) => (b.disabled = true));
+  const inputs = [
+    ...editor.querySelectorAll<HTMLInputElement>("input:not(:disabled)"),
+  ];
+  inputs.forEach((input) => {
+    input.disabled = true;
+  });
+  $("#object-save").textContent = "Сохраняем…";
+  $("#object-save-status").textContent = "Сохраняем карточку…";
+  $("#form").setAttribute("aria-busy", "true");
   const active = document.activeElement as HTMLElement,
     activeId = active.closest<HTMLElement>("[data-id]")?.dataset.id,
     activeAction = active.dataset.action;
@@ -347,6 +490,7 @@ async function save(objects: Property[]) {
       objects,
     });
     render();
+    $("#workspace-notice").hidden = true;
     if (!editor.open && activeId && activeAction)
       document
         .querySelector<HTMLButtonElement>(
@@ -361,24 +505,37 @@ async function save(objects: Property[]) {
   } finally {
     busy = false;
     buttons.filter((b) => b.isConnected).forEach((b) => (b.disabled = false));
+    inputs.forEach((input) => {
+      input.disabled = false;
+    });
+    $("#object-save").textContent = "Сохранить объект";
+    $("#form").setAttribute("aria-busy", "false");
+    if (editor.open) updateObjectPreview();
   }
 }
 function render() {
+  if (!catalog) return;
   const container = $("#objects");
   container.replaceChildren();
-  $("#search-label").hidden = catalog.objects.length <= 12;
+  $("#search-label").hidden = false;
+  $("#object-visible-count").textContent = String(
+    catalog.objects.filter((item) => item.visible).length,
+  );
+  $("#object-hidden-count").textContent = String(
+    catalog.objects.filter((item) => !item.visible).length,
+  );
   $("#object-count").textContent = String(catalog.objects.length);
   const query = $<HTMLInputElement>("#search").value.toLocaleLowerCase().trim();
   if (!catalog.objects.length) {
     const state = el("div");
-    state.className = "paper admin-state";
+    state.className = "admin-card admin-state";
     state.append(
       icon("plus"),
       el("h3", "Пока нет объектов"),
       el("p", "Добавьте первый — он появится в подборке на сайте."),
     );
     const add = el("button");
-    add.className = "button red";
+    add.className = "admin-button admin-primary";
     add.type = "button";
     add.append(icon("plus"), document.createTextNode("Добавить объект"));
     add.addEventListener("click", () => edit(null));
@@ -388,13 +545,14 @@ function render() {
   let matches = 0;
   catalog.objects.forEach((p, index) => {
     if (
-      catalog.objects.length > 12 &&
-      !p.title.toLocaleLowerCase().includes(query)
+      ![p.title, p.address].join(" ").toLocaleLowerCase().includes(query) ||
+      (objectFilter === "visible" && !p.visible) ||
+      (objectFilter === "hidden" && p.visible)
     )
       return;
     matches++;
     const row = el("article");
-    row.className = "paper admin-object" + (p.visible ? "" : " is-hidden");
+    row.className = "admin-card admin-object" + (p.visible ? "" : " is-hidden");
     row.dataset.id = p.id;
     const img = el("img");
     img.src = photoURL(p.image.small);
@@ -413,9 +571,16 @@ function render() {
     const address = el("p", p.address);
     address.className = "admin-address";
     copy.append(address);
-    const status = el("span", p.visible ? "Показывается" : "Скрыта");
+    const status = el("span", p.visible ? "На сайте" : "Скрыт с сайта");
     status.className = "admin-status";
-    copy.append(status);
+    const footer = el("div");
+    footer.className = "admin-object-footer";
+    const meta = el("div");
+    meta.className = "admin-object-meta";
+    const order = el("span", "№ " + String(index + 1).padStart(2, "0"));
+    order.className = "admin-order";
+    meta.append(order, status);
+    footer.append(meta);
     row.append(copy);
     const actions = el("div");
     actions.className = "admin-actions";
@@ -436,6 +601,10 @@ function render() {
       b.dataset.action = name;
       b.disabled = disabled;
       b.append(icon(name));
+      if (["edit", "eye", "eyeOff"].includes(name)) {
+        b.classList.add("admin-action-label");
+        b.append(el("span", label));
+      }
       b.addEventListener("click", fn);
       actions.append(b);
     };
@@ -453,6 +622,22 @@ function render() {
           objects[index].visible = !p.visible;
         }),
     );
+    for (const [label, delta, name] of [
+      ["Выше", -1, "up"],
+      ["Ниже", 1, "down"],
+    ] as const)
+      action(
+        label,
+        name,
+        () =>
+          void change((objects) => {
+            [objects[index], objects[index + delta]] = [
+              objects[index + delta],
+              objects[index],
+            ];
+          }),
+        index + delta < 0 || index + delta >= catalog.objects.length,
+      );
     action(
       "Удалить",
       "trash",
@@ -472,35 +657,34 @@ function render() {
           }
         })(),
     );
-    for (const [label, delta, name] of [
-      ["Выше", -1, "up"],
-      ["Ниже", 1, "down"],
-    ] as const)
-      action(
-        label,
-        name,
-        () =>
-          void change((objects) => {
-            [objects[index], objects[index + delta]] = [
-              objects[index + delta],
-              objects[index],
-            ];
-          }),
-        index + delta < 0 || index + delta >= catalog.objects.length,
-      );
-    row.append(actions);
+    footer.append(actions);
+    row.append(footer);
     container.append(row);
   });
   if (catalog.objects.length && !matches) {
     const state = el("div");
-    state.className = "paper admin-state";
+    state.className = "admin-card admin-state";
     state.append(
       icon("search"),
       el("h3", "Ничего не найдено"),
-      el("p", "Попробуйте другое название."),
+      el("p", "Попробуйте другой запрос или выберите «Все»."),
     );
+    const reset = el("button", "Сбросить поиск и фильтр");
+    reset.className = "admin-button admin-secondary";
+    reset.type = "button";
+    reset.addEventListener("click", () => {
+      $<HTMLInputElement>("#search").value = "";
+      objectFilter = "all";
+      updateFilters();
+      render();
+    });
+    state.append(reset);
     container.append(state);
   }
+  $("#object-results").textContent =
+    query || objectFilter !== "all"
+      ? `Найдено: ${matches} из ${catalog.objects.length}`
+      : `Всего объектов: ${catalog.objects.length}`;
 }
 function edit(property: Property | null) {
   if (photoPromise) {
@@ -522,14 +706,14 @@ function edit(property: Property | null) {
   document
     .querySelectorAll("input[aria-invalid]")
     .forEach((n) => n.removeAttribute("aria-invalid"));
-  const group = $("[data-choice-group]");
-  group.querySelectorAll<HTMLButtonElement>("button").forEach((b, i) => {
-    b.classList.toggle("selected", i === (visible ? 0 : 1));
-    b.setAttribute("aria-pressed", String(i === (visible ? 0 : 1)));
-  });
+  $("#object-visible").setAttribute("aria-checked", String(visible));
   $("#crop-preview").hidden = true;
   $("#current-image").hidden = !image;
   if (image) $<HTMLImageElement>("#current-image").src = photoURL(image.large);
+  clearObjectErrors();
+  $("#image-status").textContent =
+    "Фото будет обрезано по центру в формате 4:3. Проверьте кадр в предпросмотре.";
+  updateObjectPreview();
   $("#edit-title").textContent = editing ? "Изменить объект" : "Новый объект";
   editorOpener = document.activeElement as HTMLElement;
   editor.hidden = false;
@@ -545,36 +729,63 @@ for (const [name, label] of Object.entries(labels)) {
     ),
     input = el("input");
   input.name = name;
+  if (["price", "oldPrice", "pricePerMeter"].includes(name)) {
+    input.inputMode = "decimal";
+    let initial = "";
+    input.addEventListener("focus", () => {
+      initial = input.value;
+      input.value = priceForEditing(input.value);
+    });
+    input.addEventListener("blur", () => {
+      input.value = formatPrice(input.value, name === "pricePerMeter");
+      if (input.value !== initial) dirty = true;
+      updateObjectPreview();
+    });
+  }
+  input.id = "object-" + name;
+  const [placeholder, hint] = fieldHints[name as keyof typeof labels];
+  input.placeholder = placeholder;
+  const help = el("small", hint);
+  help.className = "admin-field-hint";
+  help.id = "hint-" + name;
   input.maxLength = limits[name as keyof typeof limits];
   input.required = ["title", "address", "price"].includes(name);
-  input.setAttribute("aria-describedby", "error-" + name);
+  input.setAttribute("aria-describedby", "hint-" + name + " error-" + name);
   const error = el("span");
   error.className = "field-error";
   error.dataset.field = name;
   error.id = "error-" + name;
-  wrapper.append(input, error);
+  wrapper.append(input, help, error);
   $("#fields").append(wrapper);
 }
-$("#form").addEventListener("input", () => {
+$("#form").addEventListener("input", (event) => {
   dirty = true;
+  const input = event.target as HTMLInputElement;
+  if (input.name && input.value.trim()) {
+    input.removeAttribute("aria-invalid");
+    const error = document.querySelector(`[data-field="${input.name}"]`);
+    if (error) error.textContent = "";
+    refreshObjectErrorSummary();
+  }
+  updateObjectPreview();
 });
-const choiceGroup = $("[data-choice-group]");
-choiceGroup.querySelectorAll<HTMLButtonElement>("button").forEach((button) =>
-  button.addEventListener("click", () => {
-    choiceGroup.querySelectorAll("button").forEach((item) => {
-      const selected = item === button;
-      item.classList.toggle("selected", selected);
-      item.setAttribute("aria-pressed", String(selected));
-    });
-    visible = button.dataset.value === "Показывать";
-    dirty = true;
-  }),
-);
+$("#object-visible").addEventListener("click", () => {
+  visible = !visible;
+  $("#object-visible").setAttribute("aria-checked", String(visible));
+  dirty = true;
+  updateObjectPreview();
+});
 $("#image-file").setAttribute("aria-describedby", "error-image");
 $("#image-file").addEventListener("change", () => {
   const file = $<HTMLInputElement>("#image-file").files?.[0];
   if (!file) return;
-  image = null;
+  const previousImage = image;
+  const fileInput = $<HTMLInputElement>("#image-file");
+  fileInput.disabled = true;
+  $<HTMLButtonElement>("#object-save").disabled = true;
+  $("#image-status").textContent = "Подготавливаем и загружаем фотографию…";
+  $("#error-image").textContent = "";
+  fileInput.removeAttribute("aria-invalid");
   $("#crop-preview").hidden = true;
   dirty = true;
   photoPromise = (async () => {
@@ -583,8 +794,10 @@ $("#image-file").addEventListener("change", () => {
         file,
         $<HTMLCanvasElement>("#crop-preview"),
       );
-      $("#crop-preview").hidden = false;
-      $("#current-image").hidden = true;
+      $("#current-image").hidden = false;
+      $<HTMLImageElement>("#current-image").src =
+        $<HTMLCanvasElement>("#crop-preview").toDataURL("image/webp");
+      updateObjectPreview();
       const results = [];
       for (const blob of blobs) {
         const response = await fetch(base + "/api/admin/media", {
@@ -604,12 +817,26 @@ $("#image-file").addEventListener("change", () => {
       image = { small: results[0].src, large: results[1].src };
       dirty = true;
       $("#error-image").textContent = "";
-      message("Фото готово. Проверьте кадр и сохраните карточку.");
+      refreshObjectErrorSummary();
+      $("#image-status").textContent =
+        "Фотография готова. Проверьте кадр в предпросмотре и сохраните объект.";
+      updateObjectPreview();
     } catch (e) {
+      image = previousImage;
+      $("#current-image").hidden = !image;
+      if (image)
+        $<HTMLImageElement>("#current-image").src = photoURL(image.large);
+      updateObjectPreview();
       $("#error-image").textContent = (e as Error).message;
-      message("Фото не загружено", true);
+      fileInput.setAttribute("aria-invalid", "true");
+      $("#image-status").textContent = previousImage
+        ? "Предыдущее фото сохранено. Выберите другой файл, чтобы заменить его."
+        : "Выберите другую фотографию.";
     } finally {
       photoPromise = null;
+      fileInput.disabled = false;
+      fileInput.value = "";
+      $<HTMLButtonElement>("#object-save").disabled = false;
     }
   })();
 });
@@ -620,17 +847,40 @@ $("#form").addEventListener("submit", async (event) => {
     message("Дождитесь подготовки фотографии", true);
     return;
   }
-  if (!image) {
-    $("#error-image").textContent = "Выберите фотографию";
-    $<HTMLInputElement>("#image-file").focus();
+  const issues: FieldError[] = [];
+  for (const name of ["title", "address", "price"] as const) {
+    const input = document.querySelector<HTMLInputElement>(
+      `#form [name="${name}"]`,
+    )!;
+    if (!input.value.trim())
+      issues.push({
+        path: name,
+        message: {
+          title: "Укажите название объекта",
+          address: "Укажите адрес объекта",
+          price: "Укажите цену объекта",
+        }[name],
+      });
+  }
+  if (!image)
+    issues.push({ path: "image", message: "Выберите фотографию объекта" });
+  if (issues.length) {
+    objectErrors(issues);
     return;
+  }
+  clearObjectErrors();
+  for (const name of ["price", "oldPrice", "pricePerMeter"]) {
+    const input = document.querySelector<HTMLInputElement>(
+      `#form [name="${name}"]`,
+    )!;
+    input.value = formatPrice(input.value, name === "pricePerMeter");
   }
   const form = $<HTMLFormElement>("#form"),
     p = { id: editing?.id || crypto.randomUUID(), visible, image } as Property;
   for (const name of Object.keys(labels))
     p[name as keyof typeof labels] = (
       form.elements.namedItem(name) as HTMLInputElement
-    ).value;
+    ).value.trim();
   const objects = structuredClone(catalog.objects),
     index = objects.findIndex((o) => o.id === p.id);
   if (index < 0) objects.push(p);
@@ -640,13 +890,44 @@ $("#form").addEventListener("submit", async (event) => {
 $("#add").addEventListener("click", () => edit(null));
 for (const selector of ["#cancel", "#editor-close"])
   $(selector).addEventListener("click", () => void requestClose());
+function updateFilters() {
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-object-filter]")
+    .forEach((button) =>
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.objectFilter === objectFilter),
+      ),
+    );
+}
+document
+  .querySelectorAll<HTMLButtonElement>("[data-object-filter]")
+  .forEach((button) =>
+    button.addEventListener("click", () => {
+      objectFilter = button.dataset.objectFilter!;
+      updateFilters();
+      render();
+    }),
+  );
+$("#password-toggle").addEventListener("click", () => {
+  const input = $<HTMLInputElement>("#login-password");
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  const toggle = $<HTMLButtonElement>("#password-toggle");
+  const label = show ? "Скрыть пароль" : "Показать пароль";
+  toggle.setAttribute("aria-pressed", String(show));
+  toggle.setAttribute("aria-label", label);
+  toggle.title = label;
+});
 $("#search").addEventListener("input", render);
 $("#reload").addEventListener("click", () => void load());
 $("#login").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = $<HTMLFormElement>("#login"),
-    b = form.querySelector("button")!;
+    b = form.querySelector<HTMLButtonElement>("button[type=submit]")!;
   b.disabled = true;
+  b.querySelector("span")!.textContent = "Входим…";
+  $("#login-notice").hidden = true;
   try {
     const session = await api("/api/admin/session", "POST", {
       username: (form.elements.namedItem("username") as HTMLInputElement).value,
@@ -654,20 +935,37 @@ $("#login").addEventListener("submit", async (event) => {
     });
     csrf = session.csrfToken;
     await load();
+    if (resumeObject) {
+      resumeObject = false;
+      editor.hidden = false;
+      scrollLock();
+      editor.showModal();
+      $("#object-error-summary").hidden = true;
+      updateObjectPreview();
+      $("#object-save-status").textContent =
+        "Вход восстановлен. Ваши несохранённые изменения остались в редакторе.";
+    }
   } catch (e) {
     errors(e);
   } finally {
     (form.elements.namedItem("password") as HTMLInputElement).value = "";
     b.disabled = false;
+    b.querySelector("span")!.textContent = "Войти в админку";
   }
 });
+const contentEditor = createContentEditor(api, ask, errors);
+for (const tab of ["objects", "texts"])
+  $("#tab-" + tab).addEventListener("click", () => {
+    dismissMessage();
+    $("#workspace-notice").hidden = true;
+  });
 $("#logout").addEventListener("click", async () => {
-  if (photoPromise || busy) return;
+  if (photoPromise || busy || contentEditor.busy) return;
   if (
-    dirty &&
+    (dirty || contentEditor.dirty) &&
     !(await ask(
       "Выйти без сохранения?",
-      "Изменения в карточке будут потеряны.",
+      "Несохранённые изменения будут потеряны.",
       "Выйти",
     ))
   )
@@ -675,6 +973,7 @@ $("#logout").addEventListener("click", async () => {
   try {
     await api("/api/admin/session", "DELETE");
     csrf = "";
+    contentEditor.clear();
     closeEditor();
     $("#objects").replaceChildren();
     $("#workspace").hidden = true;
@@ -685,33 +984,21 @@ $("#logout").addEventListener("click", async () => {
     errors(e);
   }
 });
-$("#recovery").addEventListener("click", async () => {
-  // Open from the click event so popup blocking does not hide the bot link.
-  const win = window.open("about:blank", "_blank");
-  if (win) win.opener = null;
-  const button = $<HTMLButtonElement>("#recovery");
-  button.disabled = true;
-  try {
-    const result = await api("/api/admin/recovery/start", "POST", {});
-    const url = new URL(result.url);
-    if (url.origin !== "https://t.me")
-      throw Error("Не удалось открыть Telegram");
-    const link = $<HTMLAnchorElement>("#recovery-link");
-    link.href = url.href;
-    link.hidden = false;
-    if (win) win.location.href = url.href;
-    message(
-      "Откройте Telegram и отправьте запрос доступа. Ссылка действует 10 минут; выдачу одобряет администратор.",
-    );
-  } catch (e) {
-    win?.close();
-    errors(e);
-  } finally {
-    button.disabled = false;
-  }
-});
 window.addEventListener("beforeunload", (event) => {
-  if (dirty) event.preventDefault();
+  if (dirty || contentEditor.dirty || contentEditor.busy)
+    event.preventDefault();
+});
+window.addEventListener("keydown", (event) => {
+  if (
+    editor.open &&
+    !confirmation.open &&
+    (event.ctrlKey || event.metaKey) &&
+    !event.altKey &&
+    event.key.toLowerCase() === "s"
+  ) {
+    event.preventDefault();
+    if (!busy && !photoPromise) $<HTMLFormElement>("#form").requestSubmit();
+  }
 });
 void (async () => {
   try {

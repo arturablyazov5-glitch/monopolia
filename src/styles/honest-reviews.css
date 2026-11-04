@@ -2,7 +2,7 @@
   position: relative;
   isolation: isolate;
   height: 676.594px;
-  padding-top: 120px;
+  padding-top: var(--section-space);
   /* Фото 1380:5132 в Figma уходит до 5066.6 — под рваный верх бумаги
      ProvenTrust (4908.71). Низ не обрезаем: фото видно в вырезах края. */
   overflow-x: clip;
@@ -71,7 +71,6 @@
   flex-shrink: 0;
 }
 .honest-reviews-note {
-  --paper-texture: url("/assets/0ba2a.webp");
   margin-top: 55.797px;
   width: 436px;
   height: 97px;
@@ -81,6 +80,9 @@
   gap: 12px;
   align-items: flex-start;
   box-shadow: var(--shadow-paper);
+}
+.honest-reviews-note .paper-tape {
+  top: calc(var(--tape-y) + 6px);
 }
 .honest-reviews-note > img:first-child {
   flex-shrink: 0;
@@ -97,6 +99,28 @@
   width: 536.874px;
   height: 498.254px;
   max-width: none;
+}
+
+/* NOV02-10: начинаем фото плавно от стыка с EqualInterests. */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .home-desktop .honest-reviews-background {
+    --honest-fade-start: 0px;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent var(--honest-fade-start),
+      #000 calc(var(--honest-fade-start) + 140px)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent var(--honest-fade-start),
+      #000 calc(var(--honest-fade-start) + 140px)
+    );
+  }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .home-desktop .honest-reviews-background {
+    --honest-fade-start: calc(91.504 * var(--u));
+  }
 }
 
 /* TASK-040: одна композиция 1440, пропорционально окну ноутбука.

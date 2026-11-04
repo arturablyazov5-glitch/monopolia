@@ -1,0 +1,6 @@
+/* TG-E — Evstafiy. Sale-only phone composition; tablet/desktop keep their geometry. */
+@media (max-width: 767px) {
+  .sell-desktop .sell-gossip {
+    margin-top: var(--section-space);
+  }
+}

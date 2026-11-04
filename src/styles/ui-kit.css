@@ -279,8 +279,8 @@
 .kit-section-demo {
   position: relative;
   isolation: isolate;
-  width: 1440px;
-  margin-left: calc((100% - 1440px) / 2);
+  width: min(1440px, 100vw);
+  margin-left: calc((100% - min(1440px, 100vw)) / 2);
   overflow: clip;
 }
 .kit-hero-demo {
@@ -326,4 +326,18 @@
 }
 .kit-variant-grid .taped-note-paper > p {
   white-space: normal;
+}
+
+.person-label-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+@media (max-width: 1439px) {
+  /* Keep fixed-size component examples reachable within their own strip. */
+  .kit-variant-grid {
+    overflow-x: auto;
+  }
 }

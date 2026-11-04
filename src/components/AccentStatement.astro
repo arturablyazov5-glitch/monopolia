@@ -7,17 +7,18 @@ interface Props {
   class?: string;
 }
 import "../styles/accent-statement.css";
+import "../styles/decorative-stroke.css";
 
 const { node = "1380:7006", class: className = "" } = Astro.props;
 ---
 
 <div class:list={["accent-statement", className]} data-node-id={node}>
-  <span class="accent-statement-stroke" aria-hidden="true"></span>
+  <span class="decorative-stroke accent-statement-stroke" aria-hidden="true"></span>
   <p>
     <slot />
   </p>
   <span
-    class="accent-statement-stroke accent-statement-stroke-end"
+    class="decorative-stroke accent-statement-stroke"
     aria-hidden="true"
   ></span>
 </div>

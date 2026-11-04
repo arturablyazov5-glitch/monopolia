@@ -1,7 +1,8 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:6839 («Покупка»): тёмная секция «Наша миссия — комиссия»
-// и 10 шагов сделки. Рваный верх 839cd.svg (повёрнут на 180°), фон #1C1C1C
-// с текстурой 47767 (10%) и градиентом. Левая колонка закреплена при
+// и 10 шагов сделки. Рваный верх deal-steps-paper-edge.svg (повёрнут на 180°), фон #1C1C1C
+// с текстурой transaction-registration-documents (10%) и градиентом. Левая колонка закреплена при
 // прокрутке, полоса прогресса показывает, какая часть шагов пройдена.
 // Шаги — данные (src/data/deal-steps.ts), для «Продажи» передать свои.
 import Paper from "./Paper.astro";
@@ -20,25 +21,25 @@ interface Props {
 }
 
 const responsiveImages = new Set([
-  "/assets/009e6.webp",
-  "/assets/3696d.webp",
-  "/assets/3032e.webp",
-  "/assets/4099d.webp",
-  "/assets/ae81a.webp",
-  "/assets/3ca51.webp",
-  "/assets/6c2b5.webp",
-  "/assets/7d885.webp",
-  "/assets/c0905.webp",
-  "/assets/f4e22.webp",
+  "/assets/property-selection-catalog.webp",
+  "/assets/mortgage-documents-stack.webp",
+  "/assets/property-viewing-route-map.webp",
+  "/assets/transaction-preliminary-contract.webp",
+  "/assets/transaction-key-handover.webp",
+  "/assets/property-sale-plan.webp",
+  "/assets/property-advertising-channels.webp",
+  "/assets/property-viewing-house.webp",
+  "/assets/transaction-buyer-documents.webp",
+  "/assets/transaction-money-and-keys.webp",
 ]);
 
 const {
   id = "buy-steps",
   class: className = "",
   steps,
-  missionTitle = "Наша миссия",
-  missionAccent = "— комиссия",
-  missionText = "Да, мы заинтересованы в комиссии, но получаем ее не за красивые глазки, а за безопасность вашей сделки, экономию времени и нервов",
+  missionTitle = siteText("deal-steps.missiontitle.1"),
+  missionAccent = siteText("deal-steps.missionaccent.2"),
+  missionText = siteText("deal-steps.missiontext.3"),
   node = "1380:6839",
 } = Astro.props;
 ---
@@ -52,7 +53,7 @@ const {
   <img
     loading="lazy"
     class="deal-steps-edge"
-    src="/assets/839cd.svg"
+    src="/assets/deal-steps-paper-edge.svg"
     width="1447"
     height="95.713"
     alt=""
@@ -62,7 +63,7 @@ const {
   <div class="deal-steps-body">
     <div class="deal-steps-bg" aria-hidden="true">
       <img
-        src="/assets/47767.webp"
+        src="/assets/transaction-registration-documents.webp"
         width="569"
         height="740"
         alt=""
@@ -77,7 +78,7 @@ const {
             <img
               loading="lazy"
               class="deal-mission-shadow"
-              src="/assets/ee32e.svg"
+              src="/assets/deal-mission-person-shadow.svg"
               width="137.143"
               height="143.333"
               alt=""
@@ -87,11 +88,11 @@ const {
               <source
                 style="display: none"
                 media="(max-width: 767px)"
-                srcset="/assets/3740c-m-perf.webp"
+                srcset="/assets/deal-mission-specialist-mobile.webp"
               />
               <img
-                class="deal-mission-photo"
-                src="/assets/3740c.webp"
+                class="deal-mission-photo person-photo"
+                src="/assets/deal-mission-specialist.webp"
                 width="131"
                 height="139"
                 alt=""
@@ -105,7 +106,7 @@ const {
             <span class="deal-mission-accent">
               {missionAccent}
               <img
-                src="/assets/70823.webp"
+                src="/assets/deal-mission-emoji.webp"
                 width="38"
                 height="38"
                 alt=""
@@ -115,15 +116,10 @@ const {
             </span>
           </h2>
           <picture style="display: contents">
-            <source
-              style="display: none"
-              media="(max-width: 767px)"
-              srcset="/assets/mobile-empty.webp"
-            />
             <img
               loading="lazy"
               class="deal-mission-quote"
-              src="/assets/27025.svg"
+              src="/assets/deal-mission-quote.svg"
               width="42.6102"
               height="33.2195"
               alt=""
@@ -159,7 +155,7 @@ const {
                 {index > 0 && (
                   <img
                     loading="lazy"
-                    src="/assets/df35e.svg"
+                    src="/assets/deal-steps-vertical-dash.svg"
                     width="2"
                     height="26"
                     alt=""
@@ -186,15 +182,15 @@ const {
                 <div class="deal-step-main">
                   {step.image && (
                     <div
-                      class="deal-step-image"
-                      style={`aspect-ratio:${step.image.width} / ${step.image.height}`}
+                      class:list={["deal-step-image", { "deal-step-image-badged": !!step.image.badge }]}
+                      style={step.image.badge ? undefined : `aspect-ratio:${step.image.width} / ${step.image.height}`}
                     >
                       <picture>
                         {responsiveImages.has(step.image.src) && (
                           <source
                             style="display: none"
                             media="(max-width: 1199px)"
-                            srcset={`${step.image.src.replace(".webp", "")}-k-560.webp 560w, ${step.image.src.replace(".webp", "")}-k-900.webp 900w, ${step.image.src.replace(".webp", "")}-k-1304.webp 1304w`}
+                            srcset={`${step.image.src.replace(".webp", "")}-560w.webp 560w, ${step.image.src.replace(".webp", "")}-900w.webp 900w, ${step.image.src.replace(".webp", "")}-1304w.webp 1304w`}
                             sizes="(max-width: 767px) calc(100vw - 116px), 632px"
                           />
                         )}
@@ -207,14 +203,25 @@ const {
                           decoding="async"
                         />
                       </picture>
+                      {step.image.badge && (
+                        <span class="badge deal-step-badge">
+                          <img
+                            src="/assets/icon-choice-check.svg"
+                            width="20"
+                            height="20"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <span class="deal-step-badge-label">{step.image.badge}</span>
+                        </span>
+                      )}
                     </div>
                   )}
                   <h3>
                     {step.textParts
                       ? step.textParts.map((part) => (
-                          <span
-                            style={part.muted ? "color:#0006" : undefined}
-                          >
+                          <span style={part.muted ? "color:#0006" : undefined}>
                             {part.text}
                           </span>
                         ))
@@ -222,7 +229,14 @@ const {
                   </h3>
                 </div>
                 {step.chips && (
-                  <ul class="deal-step-chips">
+                  <ul
+                    class="deal-step-chips"
+                    data-checks={
+                      step.chips.some((chip) => /43/.test(chip.text))
+                        ? ""
+                        : undefined
+                    }
+                  >
                     {step.chips.map((chip) => (
                       <li
                         style={
@@ -231,7 +245,7 @@ const {
                             : undefined
                         }
                       >
-                        <span
+                        <span class="paper-label"
                           style={
                             chip.rotate
                               ? `transform: rotate(${chip.rotate}deg)`
@@ -245,46 +259,57 @@ const {
                   </ul>
                 )}
                 {step.list && (
-                  <ul class="deal-step-list">
+                  <ul class="deal-step-list bullet-list">
                     {step.list.map((item) => (
-                      <li class="diamond-line">
-                        <span class="diamond" />
+                      <li>
                         {item}
                       </li>
                     ))}
                   </ul>
                 )}
                 {step.note && (
-                  <TapedNote tapeNode={id.startsWith("sell") || id.includes("sell") ? "I1380:6257;785:7567;1380:6256;569:1388" : "I1380:6928;785:7567;1380:6927;569:1388"} class="deal-step-note" icon={step.note.icon}>
+                  <TapedNote
+                    tapeNode={
+                      id.startsWith("sell") || id.includes("sell")
+                        ? "I1380:6257;785:7567;1380:6256;569:1388"
+                        : "I1380:6928;785:7567;1380:6927;569:1388"
+                    }
+                    class="deal-step-note"
+                    icon={step.note.icon}
+                  >
                     {step.note.text}
                   </TapedNote>
                 )}
                 {step.funnel && (
-                  <div class="deal-funnel">
+                  <div
+                    class="deal-funnel"
+                    style={`--funnel-width:${step.funnel.width}px`}
+                  >
                     <ul
                       class="deal-funnel-labels"
-                      style={`width:${step.funnel.width}px;height:${step.funnel.height}px`}
+                      style={`--funnel-height:${step.funnel.height}px`}
                       aria-label="Что отсеиваем"
                     >
                       {step.funnel.labels.map((label) => (
                         <li
-                          style={`left:${label.x}px;top:${label.y}px;transform:translate(-50%,-50%) rotate(${label.rotate}deg)`}
+                          class="paper-label"
+                          style={`--label-x:${label.x}px;--label-y:${label.y}px;--funnel-angle:${label.rotate}deg`}
                         >
                           {label.text}
                         </li>
                       ))}
                     </ul>
                     <picture style="display: contents">
-                      {step.funnel.image.src === "/assets/80e7e.webp" && (
+                      {step.funnel.image.src === "/assets/property-selection-funnel.webp" && (
                         <source
                           style="display: none"
                           media="(max-width: 767px)"
-                          srcset="/assets/80e7e-m-perf.webp"
+                          srcset="/assets/property-selection-funnel-mobile.webp"
                         />
                       )}
                       <img
                         class="deal-funnel-image"
-                        style={`width:${step.funnel.width}px;${step.funnel.image.src === "/assets/80e7e.webp" ? "--funnel-image-ratio:596 / 891" : ""}`}
+                        style={`--funnel-width:${step.funnel.width}px;${step.funnel.image.src === "/assets/property-selection-funnel.webp" ? "--funnel-image-ratio:596 / 891" : ""}`}
                         src={step.funnel.image.src}
                         width={step.funnel.image.width}
                         height={step.funnel.image.height}
@@ -329,13 +354,15 @@ const {
     );
     if (!list || !bar || !fill || !value) continue;
     let frame = 0;
+    let previousPercent = -1;
     const update = () => {
       frame = 0;
       const rect = list.getBoundingClientRect();
-      const passed = window.innerHeight / 2 - rect.top;
-      const ratio = Math.min(1, Math.max(0, passed / rect.height));
+      const ratio = Math.min(1, Math.max(0, (window.innerHeight / 2 - rect.top) / rect.height));
       const percent = Math.round(ratio * 100);
-      fill.style.width = `${percent}%`;
+      if (percent === previousPercent) return;
+      fill.style.transform = `scaleX(${percent / 100})`;
+      previousPercent = percent;
       value.textContent = `${percent}%`;
       bar.setAttribute("aria-valuenow", String(percent));
     };

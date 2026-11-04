@@ -1,8 +1,10 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import SocialLinks from "./SocialLinks.astro";
 import { cities as defaultCities } from "../data/cities";
 import Button from "./Button.astro";
-import { siteSections } from "../data/site-nav";
+import AdminIcon from "./AdminIcon.astro";
+import "../styles/header-menu.css";
 interface Props {
   variant?: "site" | "admin";
   nav?: { label: string; href: string }[];
@@ -15,28 +17,51 @@ interface Props {
 const {
   variant = "site",
   nav = [
-    { label: "Хочу продать", href: "/sell/" },
-    { label: "Хочу купить", href: "/buy/" },
-    { label: "Кейсы", href: "/#cases" },
+    { label: siteText("site-header.label.1"), href: "/sell/" },
+    { label: siteText("site-header.label.2"), href: "/buy/" },
+    { label: siteText("site-header.label.3"), href: "/#cases" },
   ],
   home = "/",
   city = "Белогорск",
   desktop = true,
   cities = defaultCities,
   socialLinks = [
-    { label: "Telegram", icon: "2dc32.svg" },
-    { label: "MAX", icon: "0a072.svg" },
+    { label: "Telegram", icon: "social-telegram-color.svg" },
+    { label: "Макс", icon: "social-max-color.svg" },
   ],
 } = Astro.props;
+const menuSections = [
+  { label: "Продать объект", href: "/sell/" },
+  { label: "Купить объект", href: "/buy/" },
+  { label: "Отзывы", href: "/#reviews" },
+  { label: "Кейсы", href: "/#cases" },
+  { label: "О компании", href: "/#company-title" },
+  { label: "Команда", href: "/#team" },
+  { label: "Дополнительные услуги", href: "/#services" },
+  { label: "Для соискателей", href: "/#careers" },
+  { label: "Вопрос‑ответ", href: "/#faq-title" },
+];
+const normalizePath = (path: string) => path.replace(/\/+$/, "") || "/";
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+const currentPath = normalizePath(
+  basePath && Astro.url.pathname.startsWith(`${basePath}/`)
+    ? Astro.url.pathname.slice(basePath.length)
+    : Astro.url.pathname,
+);
+const isCurrentMenuPage = (href: string) =>
+  !href.includes("#") && normalizePath(href) === currentPath;
 ---
 
 <header
-  class:list={["site-header", { desktop: desktop, "admin-site-header": variant === "admin" }]}
+  class:list={[
+    "site-header",
+    { desktop: desktop, "admin-site-header": variant === "admin" },
+  ]}
   data-node-id="1380:4922"
 >
   <a class="brand" href={home} aria-label="Монополия — главная">
     <img
-      src="/assets/a2665.svg"
+      src="/assets/logo-monopoly-mark-header.svg"
       width="32"
       height="32"
       alt=""
@@ -45,148 +70,294 @@ const {
     />
     <div class="brand-text">
       <img
-        src="/assets/027b4.svg"
+        src="/assets/logo-monopoly-wordmark-header.svg"
         width="131"
         height="13"
         alt="Монополия"
         loading="eager"
         decoding="async"
       />
-      <span class="tagline">Агентство недвижимости с 2006 года</span>
+      <span class="tagline">{siteText("site-header.text.4")}</span>
     </div>
   </a>
-  {variant === "admin" ? <><span class="admin-header-label">Админка</span><button id="logout" class="admin-text-button admin-logout" type="button" hidden>Выйти</button></> : <>
-  <div class="city-picker" data-city-picker>
-    <button
-      type="button"
-      class="city"
-      data-city-toggle
-      aria-haspopup="listbox"
-      aria-expanded="false"
-    >
-      <img
-        src="/assets/20afe.svg"
-        width="10"
-        height="13"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-      <span data-city-label>{city}</span>
-      <img
-        class="city-chevron"
-        src="/assets/98485.svg"
-        width="5"
-        height="3"
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-    </button>
-    <ul class="city-menu" role="listbox" aria-label="Город" hidden>
-      {cities.map((c) => (
-        <li role="option" aria-selected={c === city} tabindex="-1" data-city-option={c}>
-          {c}
-        </li>
-      ))}
-    </ul>
-  </div>
-  <nav aria-label="Разделы сайта">
-    {nav.map((item) => (
-      <a href={item.href}>
-        {item.label}
-        {item.label === "Кейсы" && (
+  {variant === "admin" ? (
+    <>
+      <button
+        id="logout"
+        class="admin-text-button admin-logout"
+        type="button"
+        hidden
+      >
+        <AdminIcon name="logout" />
+        Выйти
+      </button>
+    </>
+  ) : (
+    <>
+      <div class="city-picker" data-city-picker>
+        <button
+          type="button"
+          class="city"
+          data-city-toggle
+          aria-haspopup="listbox"
+          aria-expanded="false"
+        >
           <img
-            class="nav-marker"
-            src="/assets/febb1.svg"
+            src="/assets/icon-city-location-pin.svg"
+            width="10"
+            height="13"
             alt=""
-            width="5"
-            height="5"
             loading="lazy"
             decoding="async"
           />
-        )}
-      </a>
-    ))}
-  </nav>
-  <div class="header-right">
-    <div class="header-contact">
-      <div class="header-social">
-        <SocialLinks loading="lazy" links={socialLinks} />
+          <span class="header-city-label">
+            <span data-city-label>{city}</span>
+            {cities.map((name) => (
+              <span class="header-city-sizer" aria-hidden="true">
+                {name}
+              </span>
+            ))}
+          </span>
+          <img
+            class="city-chevron"
+            src="/assets/icon-chevron-down.svg"
+            width="5"
+            height="3"
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+        <div class="city-menu-shadow" data-city-menu hidden>
+          <ul class="city-menu brush-stroke" role="listbox" aria-label="Город">
+            {cities.map((c) => (
+              <li
+                role="option"
+                aria-selected={c === city}
+                tabindex="-1"
+                data-city-option={c}
+              >
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <div class="header-phone">
-        <a href="tel:+79245804555">+7 (924) 580-45-55</a>
-        <small class="office-status">
-          <span class="time" data-office-status>Пн‑Пт 09:00–18:00</span>
-        </small>
+      <nav aria-label="Разделы сайта">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            data-anchor={item.href.startsWith("/#") ? "" : undefined}
+            aria-current={isCurrentMenuPage(item.href) ? "page" : undefined}
+          >
+            {item.label}
+            {item.label === siteText("site-header.label.3") && (
+              <img
+                class="nav-marker"
+                src="/assets/icon-nav-red-dot.svg"
+                alt=""
+                width="5"
+                height="5"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </a>
+        ))}
+      </nav>
+      <div class="header-right">
+        <div class="header-contact">
+          <div class="header-social">
+            <SocialLinks loading="lazy" links={socialLinks} />
+          </div>
+          <div class="header-phone">
+            <button
+              type="button"
+              class="header-callback"
+              data-lead="Заказать обратный звонок"
+              data-callback
+              aria-label="Заказать обратный звонок: +7 (924) 580-45-55"
+              aria-haspopup="dialog"
+            >
+              +7 (924) 580-45-55
+            </button>
+            <a class="header-mobile-phone" href="tel:+79245804555">
+              +7 (924) 580-45-55
+            </a>
+            <small class="office-status">
+              <span class="time" data-office-status>
+                {siteText("site-header.text.5")}
+              </span>
+            </small>
+          </div>
+        </div>
+        <!-- Адаптив: звонок одним касанием на телефоне; на десктопе скрыто -->
+        <a
+          class="header-call"
+          href="tel:+79245804555"
+          aria-label="Позвонить: +7 (924) 580-45-55"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"
+            ></path>
+          </svg>
+        </a>
+        <button
+          type="button"
+          class="menu-button"
+          aria-label="Открыть меню"
+          aria-expanded="false"
+          aria-controls="site-menu-panel"
+        >
+          <img
+            src="/assets/icon-menu-burger.svg"
+            fetchpriority="low"
+            alt=""
+            width="32"
+            height="32"
+            loading="eager"
+            decoding="async"
+          />
+          <svg
+            class="menu-close"
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+          >
+            <rect x="4" y="5" width="25" height="24" fill="#D52D2D"></rect>
+            <path
+              d="M10 10l12 12M22 10L10 22"
+              stroke="#fff"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </button>
       </div>
-    </div>
-    <!-- Адаптив: звонок одним касанием на телефоне; на десктопе скрыто -->
-    <a
-      class="header-call"
-      href="tel:+79245804555"
-      aria-label="Позвонить: +7 (924) 580-45-55"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"
-        ></path>
-      </svg>
-    </a>
-    <button
-      type="button"
-      class="menu-button"
-      aria-label="Открыть меню"
-      aria-expanded="false"
-      aria-controls="site-menu-panel"
-    >
-      <img
-        src="/assets/63228.svg"
-        fetchpriority="low"
-        alt=""
-        width="32"
-        height="32"
-        loading="eager"
-        decoding="async"
-      />
-      <svg class="menu-close" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
-        <rect x="4" y="5" width="25" height="24" fill="#D52D2D"></rect>
-        <path d="M10 10l12 12M22 10L10 22" stroke="#fff" stroke-width="1.5" stroke-linecap="round"></path>
-      </svg>
-    </button>
-  </div>
-  <!-- Меню сайта: выпадающая панель под бургером на всех ширинах.
-       Не <nav>: правила шапки `.site-header nav` относятся к inline-навигации. -->
-  <div class="menu-panel-shadow">
-  <div
-    class="menu-panel brush-stroke"
-    id="site-menu-panel"
-    role="navigation"
-    aria-label="Все разделы сайта"
-    hidden
-  >
-    <ul>
-      {siteSections.map((item) => (
-        <li><a href={item.href}>{item.label}</a></li>
-      ))}
-    </ul>
-    <div class="menu-panel-actions">
-      <Button label="Оставить заявку" loading="lazy" />
-      <a class="menu-panel-phone" href="tel:+79245804555">+7 (924) 580-45-55</a>
-    </div>
-  </div>
-  </div>
-  </>}
+      <dialog
+        class="menu-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Меню сайта"
+      >
+        <div class="menu-drawer-backdrop" aria-hidden="true"></div>
+        <div class="menu-drawer-surface" inert></div>
+      </dialog>
+      <!-- Одна панель: desktop dropdown; на мобильных переносится в modal. -->
+      <div class="menu-panel-shadow">
+        <div
+          class="menu-panel brush-stroke"
+          id="site-menu-panel"
+          role="navigation"
+          aria-label="Все разделы сайта"
+          hidden
+        >
+          <div class="menu-mobile menu-panel-top">
+            <a
+              class="menu-panel-brand"
+              href={home}
+              aria-label="Монополия — главная"
+            >
+              <img
+                src="/assets/logo-monopoly-mark-header.svg"
+                width="32"
+                height="32"
+                alt=""
+              />
+              <span>
+                <img
+                  src="/assets/logo-monopoly-wordmark-header.svg"
+                  width="131"
+                  height="13"
+                  alt="Монополия"
+                />
+                <span class="menu-panel-descriptor">
+                  {siteText("site-header.text.4")}
+                </span>
+              </span>
+            </a>
+            <button
+              type="button"
+              class="menu-panel-close brush-stroke"
+              aria-label="Закрыть меню"
+            >
+              ×
+            </button>
+          </div>
+          <div class="menu-mobile menu-panel-city"></div>
+          <ul class="menu-panel-links">
+            {menuSections.map((item) => (
+              <li
+                class:list={{
+                  "menu-company-link": item.href === "/#company-title",
+                }}
+              >
+                <a
+                  href={item.href}
+                  data-anchor={item.href.startsWith("/#") ? "" : undefined}
+                  aria-current={
+                    isCurrentMenuPage(item.href) ? "page" : undefined
+                  }
+                >
+                  {item.label}
+                  {item.label === "Кейсы" && (
+                    <img
+                      class="nav-marker menu-panel-marker"
+                      src="/assets/icon-nav-red-dot.svg"
+                      alt=""
+                      width="5"
+                      height="5"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div class="menu-panel-bottom">
+            <div class="menu-mobile menu-panel-contact">
+              <div class="menu-panel-contact-row">
+                <a class="menu-panel-phone" href="tel:+79245804555">
+                  +7 (924) 580-45-55
+                </a>
+                <SocialLinks loading="eager" />
+              </div>
+              <small class="office-status">
+                <span class="time" data-office-status>
+                  {siteText("site-header.text.5")}
+                </span>
+              </small>
+              <p class="menu-panel-hours">
+                {siteText("site-footer.text.8")}
+                <br />
+                {siteText("site-footer.text.9")}
+              </p>
+            </div>
+            <div class="menu-panel-actions">
+              <Button
+                popup="office"
+                label="Получить консультацию"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )}
 </header>
 {variant !== "admin" && <script>
   import { initCityPickers } from "../lib/city-picker";
   initCityPickers();
   document.querySelectorAll<HTMLElement>(".site-header").forEach((header) => {
-    const officeStatus = header.querySelector<HTMLElement>(
+    const officeStatuses = header.querySelectorAll<HTMLElement>(
       "[data-office-status]",
     );
-    if (officeStatus) {
+    if (officeStatuses.length) {
       const parts = new Intl.DateTimeFormat("en-US", {
         timeZone: "Asia/Yakutsk",
         weekday: "short",
@@ -202,39 +373,388 @@ const {
         day === "Sat"
           ? minutes >= 600 && minutes < 900
           : day !== "Sun" && minutes >= 540 && minutes < 1080;
-      officeStatus.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
-      header.querySelector(".office-status")?.classList.toggle("closed", !open);
+      officeStatuses.forEach((status) => {
+        status.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
+        status.closest(".office-status")?.classList.toggle("closed", !open);
+      });
     }
     if (header.classList.contains("admin-site-header")) return;
     const menu = header.querySelector<HTMLButtonElement>(".menu-button")!;
     const panel = header.querySelector<HTMLElement>(".menu-panel")!;
-    const setOpen = (open: boolean) => {
+    const drawer = header.querySelector<HTMLDialogElement>(".menu-drawer")!;
+    const surface = drawer.querySelector<HTMLElement>(".menu-drawer-surface")!;
+    const backdrop = drawer.querySelector<HTMLElement>(
+      ".menu-drawer-backdrop",
+    )!;
+    const panelHome = panel.parentElement!;
+    const cityPicker = header.querySelector<HTMLElement>("[data-city-picker]")!;
+    const cityHome = document.createComment("header city position");
+    cityPicker.before(cityHome);
+    const mobile = window.matchMedia("(max-width: 1199px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    type MenuPhase = "closed" | "opening" | "open" | "closing";
+    let phase: MenuPhase = "closed";
+    let desiredOpen = false;
+    let revision = 0;
+    let animations: Animation[] = [];
+    let pending = Promise.resolve(true);
+    let resolvePending: ((completed: boolean) => void) | undefined;
+    let scrollY = 0;
+    let bodyStyle = "";
+    let rootStyle = "";
+    let scrollLocked = false;
+    const unlock = () => {
+      if (!scrollLocked) return;
+      scrollLocked = false;
+      document.body.style.cssText = bodyStyle;
+      document.documentElement.style.cssText = rootStyle;
+      // Avoid the site's smooth scrolling when restoring the saved position.
+      const behavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo({ top: scrollY, behavior: "instant" });
+      document.documentElement.style.scrollBehavior = behavior;
+    };
+    const reflectOpen = (open: boolean) => {
       menu.setAttribute("aria-expanded", String(open));
       menu.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
-      header.classList.toggle("menu-open", open);
-      panel.hidden = !open;
     };
+    const cancelAnimations = () => {
+      animations.forEach((animation) => animation.cancel());
+      animations = [];
+    };
+    const settlePending = (completed: boolean) => {
+      resolvePending?.(completed);
+      resolvePending = undefined;
+    };
+    const finishOpen = () => {
+      phase = "open";
+      desiredOpen = true;
+      drawer.dataset.menuState = "open";
+      surface.inert = false;
+      reflectOpen(true);
+      cancelAnimations();
+    };
+    const finishClose = () => {
+      phase = "closed";
+      desiredOpen = false;
+      drawer.dataset.menuState = "closed";
+      surface.inert = true;
+      reflectOpen(false);
+      header.classList.remove("menu-open");
+      cancelAnimations();
+      panel.hidden = true;
+      if (!drawer.open) return;
+      drawer.close();
+      unlock();
+      panelHome.append(panel);
+      cityHome.after(cityPicker);
+      cityPicker.querySelector<HTMLElement>("[data-city-menu]")!.hidden = true;
+      cityPicker
+        .querySelector("[data-city-toggle]")!
+        .setAttribute("aria-expanded", "false");
+      menu.focus({ preventScroll: true });
+    };
+    const setOpen = (open: boolean): Promise<boolean> => {
+      if (!mobile.matches && !drawer.open) {
+        reflectOpen(open);
+        header.classList.toggle("menu-open", open);
+        panel.hidden = !open;
+        return Promise.resolve(true);
+      }
+      if ((phase === "closed" && !open) || (phase === "open" && open))
+        return Promise.resolve(true);
+      if ((phase === "opening" && open) || (phase === "closing" && !open))
+        return pending;
+
+      let from = 1;
+      let fromOpacity = 0;
+      if (drawer.open) {
+        const transform = getComputedStyle(surface).transform;
+        from =
+          transform === "none"
+            ? 0
+            : Math.min(
+                1,
+                Math.max(
+                  0,
+                  new DOMMatrixReadOnly(transform).m41 /
+                    surface.getBoundingClientRect().width,
+                ),
+              );
+        fromOpacity = Number(getComputedStyle(backdrop).opacity);
+      }
+      const currentRevision = ++revision;
+      settlePending(false);
+      cancelAnimations();
+      pending = new Promise((resolve) => {
+        resolvePending = resolve;
+      });
+      desiredOpen = open;
+
+      if (phase === "closed") {
+        // Native showModal autofocus must not scroll translated content into
+        // view before our explicit preventScroll focus. The viewport also clips
+        // overflow without becoming a programmatically scrollable container.
+        surface.inert = true;
+        panel.hidden = false;
+        surface.append(panel);
+        panel.querySelector(".menu-panel-city")!.append(cityPicker);
+        scrollY = window.scrollY;
+        bodyStyle = document.body.style.cssText;
+        rootStyle = document.documentElement.style.cssText;
+        scrollLocked = true;
+        const gutter = window.innerWidth - document.documentElement.clientWidth;
+        if (gutter) document.documentElement.style.scrollbarGutter = "stable";
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = "100%";
+        drawer.showModal();
+        panel.scrollTop = 0;
+      }
+      phase = open ? "opening" : "closing";
+      drawer.dataset.menuState = phase;
+      header.classList.add("menu-open");
+      reflectOpen(open);
+      surface.inert = !open;
+      if (open)
+        panel
+          .querySelector<HTMLElement>(".menu-panel-close")!
+          .focus({ preventScroll: true });
+
+      const complete = () => {
+        if (revision !== currentRevision) return;
+        if (open) finishOpen();
+        else finishClose();
+        settlePending(true);
+      };
+      const to = open ? 0 : 1;
+      const duration = (open ? 270 : 240) * Math.abs(to - from);
+      if (reducedMotion.matches || duration < 1) {
+        complete();
+        return pending;
+      }
+      const timing: KeyframeAnimationOptions = {
+        duration,
+        easing: open ? "ease-out" : "ease-in",
+        fill: "both",
+      };
+      const slide = surface.animate(
+        [
+          { transform: `translateX(${from * 100}%)` },
+          { transform: `translateX(${to * 100}%)` },
+        ],
+        timing,
+      );
+      slide.id = "menu-slide";
+      const shade = backdrop.animate(
+        [{ opacity: fromOpacity }, { opacity: open ? 1 : 0 }],
+        timing,
+      );
+      shade.id = "menu-backdrop";
+      animations = [slide, shade];
+      void Promise.all(animations.map((animation) => animation.finished)).then(
+        complete,
+        () => {},
+      );
+      return pending;
+    };
+    // Restore body scrolling before measuring the shared anchor target.
+    const anchorTarget = (hash: string) => {
+      let id: string;
+      try {
+        id = decodeURIComponent(hash.slice(1));
+      } catch {
+        return null;
+      }
+      const element = document.getElementById(id);
+      if (!element) return null;
+      const section = element.closest<HTMLElement>("main > section") ?? element;
+      // The recruiting section starts with a photo; this menu item introduces
+      // the vacancy heading, as requested, rather than the photo above it.
+      const contentAnchor = ["reviews", "cases", "team", "services"].includes(
+        section.id,
+      );
+      const desktopFaqAnchor =
+        window.matchMedia("(min-width: 1200px)").matches && id === "faq-title";
+      return section.id === "careers" || contentAnchor || desktopFaqAnchor
+        ? (section.querySelector<HTMLElement>("h2") ?? section)
+        : section;
+    };
+    const alignAnchor = async (hash: string, behavior: ScrollBehavior) => {
+      const target = anchorTarget(hash);
+      if (!target) return;
+      await document.fonts.ready;
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      const headerBottom = header.getBoundingClientRect().bottom;
+      const contentGap =
+        window.matchMedia("(min-width: 1200px)").matches &&
+        target.matches(
+          "#proven-trust-title, #cases-title, #team-title, #services-title, #recruiting-title, #faq-title",
+        )
+          ? 32
+          : 8;
+      window.scrollTo({
+        top: Math.max(0, top - headerBottom - contentGap),
+        behavior,
+      });
+    };
+    document.addEventListener("click", (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      )
+        return;
+      const link = (event.target as Element).closest<HTMLAnchorElement>(
+        "a[href]",
+      );
+      if (!link || (link.target && link.target !== "_self")) return;
+      const url = new URL(link.href);
+      if (
+        url.origin !== location.origin ||
+        url.pathname !== location.pathname ||
+        !url.hash ||
+        !anchorTarget(url.hash)
+      )
+        return;
+      event.preventDefault();
+      if (menu.getAttribute("aria-expanded") === "true") setOpen(false);
+      if (location.hash !== url.hash) history.pushState(null, "", url);
+      void alignAnchor(
+        url.hash,
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      );
+    });
+    const alignIncomingHash = () => {
+      if (!location.hash) return;
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          void alignAnchor(location.hash, "instant");
+        }),
+      );
+    };
+    if (document.readyState === "complete") alignIncomingHash();
+    else window.addEventListener("load", alignIncomingHash, { once: true });
+    window.addEventListener("hashchange", alignIncomingHash);
+    drawer.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      setOpen(false);
+    });
+    drawer.addEventListener("click", (event) => {
+      if (event.target === drawer || event.target === backdrop)
+        void setOpen(false);
+    });
+    panel
+      .querySelector(".menu-panel-close")!
+      .addEventListener("click", () => setOpen(false));
+    drawer.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key === "Escape" &&
+          !cityPicker.querySelector<HTMLElement>("[data-city-menu]")!.hidden
+        ) {
+          event.preventDefault(); // First Esc closes the shared city list.
+        }
+      },
+      { capture: true },
+    );
+    drawer.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+      const targets = [
+        ...panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex="0"]',
+        ),
+      ].filter((item) => item.getClientRects().length > 0);
+      const first = targets[0];
+      const last = targets[targets.length - 1];
+      if (
+        event.shiftKey &&
+        (document.activeElement === first ||
+          !targets.includes(document.activeElement as HTMLElement))
+      ) {
+        event.preventDefault();
+        last?.focus();
+      } else if (
+        !event.shiftKey &&
+        (document.activeElement === last ||
+          !targets.includes(document.activeElement as HTMLElement))
+      ) {
+        event.preventDefault();
+        first?.focus();
+      }
+    });
+    mobile.addEventListener("change", () => {
+      const wasClosing = phase === "closing";
+      ++revision;
+      finishClose();
+      settlePending(wasClosing);
+    });
+    reducedMotion.addEventListener("change", () => {
+      if (
+        !reducedMotion.matches ||
+        (phase !== "opening" && phase !== "closing")
+      )
+        return;
+      ++revision;
+      if (desiredOpen) finishOpen();
+      else finishClose();
+      settlePending(true);
+    });
     menu.addEventListener("click", (e) => {
       const open = menu.getAttribute("aria-expanded") !== "true";
       setOpen(open);
       // a11y: при открытии с клавиатуры (detail 0) фокус — на первый пункт
-      if (open && e.detail === 0)
-        panel.querySelector<HTMLElement>("a")?.focus();
+      if (open && !mobile.matches && e.detail === 0)
+        panel.querySelector<HTMLElement>(".menu-panel-links a")?.focus();
     });
     // a11y: фокус ушёл из шапки (Tab дальше последнего пункта) — меню закрывается
     header.addEventListener("focusout", (e) => {
       const next = (e as FocusEvent).relatedTarget as Node | null;
       if (
         header.classList.contains("menu-open") &&
+        !drawer.open &&
         next &&
         !header.contains(next)
       )
         setOpen(false);
     });
-    // переход по разделу или открытие формы закрывают меню
-    panel
-      .querySelectorAll("a, [data-lead]")
-      .forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    // Wait for the exit and scroll restoration before navigating or opening
+    // another modal. A reopened drawer cancels the pending action.
+    panel.addEventListener("click", (event) => {
+      const action = (event.target as Element).closest<HTMLElement>(
+        "a[href], [data-lead]",
+      );
+      if (!action) return;
+      if (!drawer.open) {
+        void setOpen(false); // Existing desktop dropdown behavior.
+        return;
+      }
+      const link = action instanceof HTMLAnchorElement ? action : null;
+      if (
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        (link &&
+          (link.target === "_blank" ||
+            new URL(link.href).origin !== location.origin))
+      ) {
+        void setOpen(false);
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      void setOpen(false).then((completed) => {
+        if (completed) action.click();
+      });
+    });
     // клик/тап вне шапки закрывает открытое меню
     document.addEventListener("click", (e) => {
       if (
@@ -249,6 +769,7 @@ const {
     menu.setAttribute("aria-controls", panel.id);
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && header.classList.contains("menu-open")) {
+        if (drawer.open) return; // native cancel closes mobile modal
         setOpen(false);
         menu.focus();
       }

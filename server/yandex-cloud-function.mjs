@@ -1,6 +1,6 @@
 import { handleLead } from "./lead-core.mjs";
 
-// Архив содержит оба .mjs; entry point: yandex-cloud-function.handler, Node 22+.
+// Архив содержит lead-core, lead-sources и proxy-origin .mjs вместе с адаптером; entry point: yandex-cloud-function.handler, Node 22+.
 export async function handler(event) {
   try {
     const headers = new Headers(event.headers || {});

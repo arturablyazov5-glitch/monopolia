@@ -1,6 +1,7 @@
 ---
 import { imageSize } from "../lib/image-size";
 interface Props {
+  class?: string;
   loading?: "eager" | "lazy";
   name: string;
   options: string[];
@@ -13,7 +14,7 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
 ---
 
 <div
-  class:list={[channels ? "channels" : "chips"]}
+  class:list={[Astro.props.class, channels ? "channels" : "chips", { "choice-channels-icons": channels && !!icons?.length }]}
   role="group"
   aria-label={name}
   data-choice-group
@@ -40,7 +41,7 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
       {!channels && (
         <img
           class="choice-check"
-          src="/assets/40c36.svg"
+          src="/assets/icon-choice-check.svg"
           alt=""
           width="20"
           height="20"
@@ -51,6 +52,7 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
       {option}
     </button>
   ))}
+  <slot />
 </div>
 <script>
   document

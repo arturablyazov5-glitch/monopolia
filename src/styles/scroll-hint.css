@@ -1,0 +1,37 @@
+.mobile-scroll-hint {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mobile-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-4);
+    color: var(--color-muted);
+    font: 16px/1.2 var(--font-body);
+  }
+  .mobile-scroll-hint span {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 16px;
+    animation: mobile-scroll-arrow 1.4s ease-in-out infinite;
+  }
+  .mobile-scroll-hint img {
+    display: block;
+    transform: translateY(-2px);
+  }
+}
+@keyframes mobile-scroll-arrow {
+  50% {
+    transform: translateX(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-scroll-hint span {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .carousel > .mobile-scroll-hint { position: static; margin-top: 0; margin-bottom: var(--space-4); }
+}

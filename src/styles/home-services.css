@@ -1,7 +1,7 @@
 .home-services {
   width: var(--container-width);
   margin: 0 auto;
-  padding: 120px 0;
+  padding: var(--section-space-compact) 0 var(--section-space);
 }
 .services-heading {
   display: grid;
@@ -26,6 +26,9 @@
   gap: 40px;
   align-items: center;
   margin-top: 40px;
+}
+.services-scroll-hint {
+  display: none;
 }
 .services-slot {
   /* Строки сетки Figma считаются по габаритам повернутых карточек */
@@ -52,26 +55,27 @@
 .service-card-coupon:after {
   inset: -17px;
 }
-.service-card-coupon > .service-card-body:first-child {
+.service-card.service-card-coupon > .service-card-contents {
+  display: flex;
+  flex-direction: column;
+  margin: -15px;
+  padding: 15px;
+  /* Контент обрезается тем же силуэтом, что и фон Paper.
+     Скотч остаётся отдельным внешним слоем и не обрезается. */
+  mask-image: var(--brush-images);
+  mask-size: var(--brush-sizes);
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+}
+.service-card-coupon .service-card-body {
   display: grid;
   gap: 10px;
   /* В Figma обводка 15 px внутренняя: 24 px от внешнего края карточки */
   padding: 9px 9px 24px;
 }
 .service-card-title {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font: 500 var(--text-card)/1.2 var(--font-heading);
+  font: 500 var(--h3, var(--text-card))/1.2 var(--font-heading);
   color: #000;
-}
-.service-card-diamond {
-  flex-shrink: 0;
-  width: 7px;
-  height: 7px;
-  margin: 8px 0 0;
-  background: #f00;
-  transform: rotate(45deg);
 }
 .service-card-coupon p {
   width: 298.344px;
@@ -84,6 +88,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  overflow: hidden;
 }
 .service-perforation span {
   width: 10px;
@@ -112,4 +117,59 @@
 .service-card-coupon .button {
   padding: 18px 32px;
   font-size: 16px;
+}
+
+@media (max-width: 767px) {
+  .home-desktop .home-services .services-heading {
+    justify-items: start;
+    text-align: left;
+  }
+  .home-desktop .home-services .services-scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 28px 0 0;
+    color: var(--color-muted);
+    font: 16px/1.2 var(--font-body);
+  }
+  .home-desktop .home-services .services-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 82vw;
+    align-items: stretch;
+    gap: 16px;
+    margin: 4px calc(-1 * var(--rg)) 0;
+    padding: 24px var(--rg) 32px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--rg);
+    scrollbar-width: none;
+    touch-action: pan-x pan-y pinch-zoom;
+  }
+  .home-desktop .home-services .services-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .home-desktop .home-services .services-grid:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+  }
+  .home-desktop .home-services .services-slot {
+    padding: 0;
+    transform: none;
+    scroll-snap-align: start;
+  }
+  .home-desktop .home-services .service-card-coupon {
+    height: 100%;
+  }
+  .home-desktop .home-services .service-card-contents {
+    flex: 1;
+  }
+  .home-desktop .home-services .service-card-body {
+    flex: 1;
+    align-content: start;
+  }
+  .home-desktop .home-services .service-perforation {
+    flex-shrink: 0;
+  }
 }

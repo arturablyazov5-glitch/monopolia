@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:5932: карта, 11 шагов и сравнение способов продажи.
 import RelocationMap from "./RelocationMap.astro";
 import DealSteps from "./DealSteps.astro";
@@ -8,37 +9,37 @@ import { sellRealtorComparison } from "../data/sell-realtor-comparison";
 import "../styles/sell-process.css";
 
 const layers = [
-  { src: "/assets/f8bfb.svg", width: 29, height: 40, left: 697, top: 319.762 },
+  { src: "/assets/relocation-belogorsk-pin.svg", width: 29, height: 40, left: 697, top: 319.762 },
   {
-    src: "/assets/ea707.svg",
+    src: "/assets/relocation-route-west-sell-alternate.svg",
     width: 556,
     height: 160.994,
     left: 158,
     top: 373.01,
   },
   {
-    src: "/assets/720c8.svg",
+    src: "/assets/relocation-route-central-sell.svg",
     width: 686,
     height: 184.074,
     left: -7,
     top: 153.936,
   },
   {
-    src: "/assets/9a115.svg",
+    src: "/assets/relocation-route-west-sell.svg",
     width: 374.464,
     height: 353.86,
     left: 710.433,
     top: -43.849,
   },
   {
-    src: "/assets/a52e8.svg",
+    src: "/assets/relocation-route-east-sell.svg",
     width: 401.938,
     height: 191.843,
     left: 740,
     top: 284.655,
   },
   {
-    src: "/assets/sell-751ee.svg",
+    src: "/assets/relocation-plane-arrow-sell.svg",
     width: 32.6049,
     height: 26.2172,
     left: 538.0,
@@ -46,7 +47,7 @@ const layers = [
     rotate: 168.93,
   },
   {
-    src: "/assets/sell-751ee.svg",
+    src: "/assets/relocation-plane-arrow-sell.svg",
     width: 32.6049,
     height: 26.2172,
     left: 449.84,
@@ -54,7 +55,7 @@ const layers = [
     rotate: -156.4096,
   },
   {
-    src: "/assets/225db.svg",
+    src: "/assets/relocation-plane-arrow.svg",
     width: 32.6049,
     height: 26.2172,
     left: 976.55,
@@ -63,7 +64,7 @@ const layers = [
     flipY: true,
   },
   {
-    src: "/assets/9d56c.svg",
+    src: "/assets/relocation-plane-arrow-small.svg",
     width: 32.6049,
     height: 26.2172,
     left: 1020.205,
@@ -78,14 +79,14 @@ const layers = [
   id="sell-relocation"
   class="sell-relocation"
   node="1380:5933"
-  title="Хотите переехать из Белогорска?"
+  title={siteText("sell-process.title.1")}
   annotation="Меньше народа — больше кислорода"
-  description="У нас 100+ партнеров среди агентств и застройщиков по всей России, которые готовы помочь вам купить квартиру безопасно и выгодно"
+  description={siteText("sell-process.description.2")}
   map={{
-    src: "/assets/2b63b.svg",
+    src: "/assets/relocation-map-sell.svg",
     width: 5386.13,
     height: 3035.38,
-    fade: "linear-gradient(178.472deg, #ededed 11.018%, #ededed00 85.479%)",
+    fade: "linear-gradient(178.472deg, #ededed 825px, #ededed00 2594px)",
   }}
   layers={layers}
 />
@@ -100,8 +101,8 @@ const layers = [
   class="sell-realtor"
   node="1380:6296"
   rows={sellRealtorComparison}
-  icons={["/assets/29925.svg", "/assets/6c2c3.svg"]}
+  icons={["/assets/icon-comparison-cross-sell.svg", "/assets/icon-comparison-check-sell.svg"]}
   subject="Консультация: продажа с риелтором"
   showStatement={false}
-  background={{ src: "/assets/14e49.webp", width: 1440, height: 1262.004 }}
+  background={{ src: "/assets/sell-realtor-comparison-background.webp", width: 1440, height: 1262.004 }}
 />

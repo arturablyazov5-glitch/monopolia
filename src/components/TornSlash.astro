@@ -1,0 +1,6 @@
+---
+import slash from "../../public/assets/torn-slash.svg?raw";
+const markup = slash.replaceAll('fill="black"', 'fill="currentColor"');
+---
+
+<span class="torn-slash" aria-hidden="true" set:html={markup} />

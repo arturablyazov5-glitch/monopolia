@@ -1,37 +1,39 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
+import TornSlash from "./TornSlash.astro";
 import "../styles/equal-interests.css";
+import "../styles/mobile-photo-scene.css";
 ---
 
 <section
+  data-surface="dark"
   class="equal-interests"
   aria-labelledby="equal-interests-title"
   data-node-id="1380:5119"
 >
-  <img
-    class="equal-interests-background"
-    src="/assets/71f71.webp"
-    srcset="/assets/71f71-m.webp 1240w, /assets/71f71.webp 1920w"
-    sizes="(max-width: 767px) calc((100vw - 16px) * 1.45), 1920px"
-    width="1440"
-    height="939"
-    alt="Команда Монополии в офисе"
-    loading="lazy"
-    decoding="async"
-  />
   <div class="equal-interests-content">
     <h2 id="equal-interests-title">
-      Любим одинаково и продавцов, и покупателей — <br />
-      поэтому отстаиваем их интересы тоже одинаково
+      {siteText("equal-interests.text.1")} <br />
+      {siteText("equal-interests.text.2")}
     </h2>
-    <div class="equal-interests-actions">
-      <Button label="Купить объект" icon="buy" href="/buy/" />
-      <span aria-hidden="true">/</span>
-      <Button
-        label="Продать объект"
-        icon="sell"
-        href="/sell/"
+    <div class="equal-interests-photo mobile-photo-scene">
+      <img
+        class="equal-interests-background"
+        src="/assets/equal-interests-team-background.webp"
+        srcset="/assets/equal-interests-team-background-mobile.webp 1240w, /assets/equal-interests-team-background.webp 1920w"
+        sizes="(max-width: 767px) calc((100vw - 16px) * 1.1745), 1920px"
+        width="1440"
+        height="939"
+        alt="Команда Монополии в офисе"
+        loading="lazy"
+        decoding="async"
       />
+    </div>
+    <div class="equal-interests-actions">
+      <Button label={siteText("home-hero.label.8")} icon="sell" href="/sell/" />
+      <TornSlash />
+      <Button label={siteText("home-hero.label.7")} icon="buy" href="/buy/" />
     </div>
   </div>
 </section>

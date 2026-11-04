@@ -1,0 +1,40 @@
+---
+import "../styles/back-to-top.css";
+---
+
+<a class="footer-up site-back-to-top" href="#top" aria-label="Наверх" hidden>
+  <img
+    src="/assets/icon-back-to-top.svg"
+    alt=""
+    width="46.1101"
+    height="47.4575"
+    loading="eager"
+    decoding="async"
+  />
+</a>
+<script>
+  const backToTop =
+    document.querySelector<HTMLAnchorElement>(".site-back-to-top");
+  if (backToTop) {
+    const main = document.querySelector("main");
+    const secondBlock = main?.children.item(1);
+    const update = () => {
+      const threshold = secondBlock
+        ? secondBlock.getBoundingClientRect().top + scrollY
+        : innerHeight / 2;
+      backToTop.hidden = scrollY < threshold || scrollY < 1;
+    };
+    backToTop.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+    });
+    update();
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update, { passive: true });
+  }
+</script>

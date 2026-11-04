@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import TapedNote from "./TapedNote.astro";
 import "../styles/prepared-viewing.css";
@@ -13,19 +14,28 @@ const {
   node = variant === "buy" ? "1380:6563" : "1380:5884",
 } = Astro.props;
 const selling = variant === "sell";
+const comparisonPhoto = `/assets/prepared-viewing-apartment-${selling ? "before" : "after"}.webp`;
+const comparisonHeight = selling ? 1514 : 1310;
+const comparisonCrops = [
+  {
+    side: "before",
+    viewBox: selling ? "900 60 1050 1390" : "900 40 1050 1230",
+    label: "До подготовки",
+  },
+  {
+    side: "after",
+    viewBox: selling ? "2000 60 850 1390" : "2000 40 850 1230",
+    label: "После подготовки",
+  },
+];
 const lists = [
-  [
-    "Приведем клинеров и подскажем, что исправить перед съемкой",
-    "Снимем фото так, чтобы визуально было эстетично и красиво",
-  ],
-  [
-    "Сделаем крутой видеообзор объекта как у блогеров",
-    "Напишем текст объявления такой, чтобы хотелось сразу позвонить",
-  ],
+  [siteText("prepared-viewing.lists.1"), siteText("prepared-viewing.lists.2")],
+  [siteText("prepared-viewing.lists.3"), siteText("prepared-viewing.lists.4")],
 ];
 ---
 
 <section
+  data-surface="dark"
   class:list={["prepared-viewing", { "prepared-viewing-sell": selling }]}
   data-node-id={node}
   aria-labelledby={`${id}-title`}
@@ -34,12 +44,12 @@ const lists = [
     {/* ≤ 767 px: центральная полоса кадра (x 600–2400 из 2880) в высоте исходника. */}
     <source
       media="(max-width: 767px)"
-      srcset={`/assets/${selling ? "2f5bf" : "905c2"}-r2-m.webp`}
+      srcset={`/assets/${selling ? "prepared-viewing-apartment-before" : "prepared-viewing-apartment-after"}-mobile.webp`}
       style="display:none"
     />
     <img
       class="prepared-viewing-background"
-      src={`/assets/${selling ? "2f5bf" : "905c2"}.webp`}
+      src={`/assets/${selling ? "prepared-viewing-apartment-before" : "prepared-viewing-apartment-after"}.webp`}
       width="1440"
       height={selling ? 756.791 : 655}
       alt="Квартира до и после подготовки к показу"
@@ -52,21 +62,21 @@ const lists = [
       <h2 id={`${id}-title`}>
         {selling ? (
           <>
-            Почему жилье с нами
+            {siteText("prepared-viewing.text.5")}
             <br />
-            продается быстрее?
+            {siteText("prepared-viewing.text.6")}
           </>
         ) : (
           <>
-            Бесплатно организуем
+            {siteText("prepared-viewing.text.7")}
             <br />
-            комфортный показ объекта
+            {siteText("prepared-viewing.text.8")}
           </>
         )}
       </h2>
       {!selling && (
         <p class="prepared-viewing-description">
-          Заранее подготовим недвижимость к просмотру: внутри будет чисто и прибрано, не будет жильцов и лишних запахов
+          {siteText("prepared-viewing.text.9")}
         </p>
       )}
       <TapedNote
@@ -74,29 +84,28 @@ const lists = [
         tapeNode={selling ? "I1380:5904;569:1388" : "I1380:6585;569:1388"}
         textured
         icon={{
-          src: `/assets/${selling ? "22985" : "6f018"}.svg`,
+          src: `/assets/${selling ? "prepared-viewing-decor" : "prepared-viewing-note-icon"}.svg`,
           width: 36,
           height: 36,
         }}
       >
         {selling ? (
           <>
-            Мы сделаем так, что 
-            <strong>покупатель влюбится в жилье с первого взгляда</strong> — сделаем фоточки, как в Pinterest, и напишем продающее объявление
+            {siteText("prepared-viewing.text.10")} 
+            <strong>{siteText("prepared-viewing.text.11")}</strong> 
+            {siteText("prepared-viewing.text.12")}
           </>
         ) : (
           <>
-            <strong>
-              При этом мы ничего не скрываем и говорим о недостатках сразу.
-            </strong>{" "}
-            Фотографии и описание соответствуют реальности
+            <strong>{siteText("prepared-viewing.text.13")}</strong>{" "}
+            {siteText("prepared-viewing.text.14")}
           </>
         )}
       </TapedNote>
       {selling && (
-        <div class="prepared-viewing-lists">
+        <div class="prepared-viewing-lists column-grid-mobile column-divider column-divider--overlay column-divider--light">
           {lists.map((items) => (
-            <ul class="diamond-list">
+            <ul class="diamond-list bullet-list">
               {items.map((text) => (
                 <li>{text}</li>
               ))}
@@ -106,10 +115,12 @@ const lists = [
       )}
       <div class="prepared-viewing-actions">
         <Button
+          quiz={selling ? "sell" : undefined}
+          popup={selling ? undefined : "viewing"}
           label={
             selling
-              ? "Хочу продать быстрее и дороже"
-              : "Записаться на консультацию"
+              ? siteText("prepared-viewing.label.15")
+              : siteText("client-cases.label.28")
           }
           subject={
             selling
@@ -119,7 +130,8 @@ const lists = [
         />
         {!selling && (
           <p>
-            На этой неделе есть еще <strong>4 свободных места</strong>
+            <span>{siteText("realtor-comparison.text.3")}</span>
+            <strong>{siteText("deal-insurance.text.9")}</strong>
           </p>
         )}
       </div>
@@ -130,24 +142,87 @@ const lists = [
     role="group"
     aria-label="Подготовка повышает вероятность покупки недвижимости"
   >
-    <TapedNote tape={false} class="prepared-viewing-probability-note" textured rotate={-1}>
-      Вероятность
+    <TapedNote
+      tape={false}
+      class="prepared-viewing-probability-note"
+      textured
+      rotate={-1}
+    >
+      {siteText("prepared-viewing.text.16")}
       <br />
-      покупки недвижимости
+      {siteText("prepared-viewing.text.17")}
     </TapedNote>
     <img
       class="prepared-viewing-arrows"
-      src="/assets/2492b.svg"
+      src="/assets/prepared-viewing-arrows.svg"
       alt=""
       loading="lazy"
       width="279.577"
       height="32.8059"
       decoding="async"
     />
+    <div class="prepared-viewing-comparison" style="--comparison-split:50%">
+      {comparisonCrops.map(({ side, viewBox, label }) => (
+        <div class={`viewing-comparison-layer viewing-comparison-${side}`}>
+          <svg
+            class="viewing-comparison-photo"
+            viewBox={viewBox}
+            preserveAspectRatio="xMidYMid slice"
+            role="img"
+            aria-label={label}
+          >
+            <image
+              href={comparisonPhoto}
+              width="2880"
+              height={comparisonHeight}
+            />
+          </svg>
+          <img
+            class="viewing-comparison-arrow"
+            src="/assets/prepared-viewing-arrows.svg"
+            width="280"
+            height="36"
+            alt=""
+          />
+          <img
+            class="viewing-comparison-rating"
+            src={`/assets/prepared-viewing-rating-${side}.svg`}
+            width="112"
+            height="33"
+            alt={label}
+          />
+        </div>
+      ))}
+      <span class="viewing-comparison-handle" aria-hidden="true">
+        <span>
+          <svg
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m8 7-5 5 5 5M3 12h6m7-5 5 5-5 5m5-5h-6" />
+          </svg>
+        </span>
+      </span>
+      <input
+        class="viewing-comparison-range"
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value="50"
+        aria-label="Сравнить квартиру до и после подготовки"
+      />
+    </div>
     <div class="prepared-viewing-ratings">
       <span>
         <img
-          src="/assets/cdfed.svg"
+          src="/assets/prepared-viewing-rating-before.svg"
           alt="До подготовки"
           loading="lazy"
           width="123.739"
@@ -157,7 +232,7 @@ const lists = [
       </span>
       <span>
         <img
-          src="/assets/366fe.svg"
+          src="/assets/prepared-viewing-rating-after.svg"
           alt="После подготовки"
           loading="lazy"
           width="121.686"
@@ -168,3 +243,17 @@ const lists = [
     </div>
   </div>
 </section>
+
+<script>
+  document
+    .querySelectorAll<HTMLInputElement>(".viewing-comparison-range")
+    .forEach((input) => {
+      const update = () => {
+        const value = Number(input.value);
+        const comparison = input.parentElement as HTMLElement;
+        comparison.style.setProperty("--comparison-split", `${value}%`);
+      };
+      input.addEventListener("input", update);
+      update();
+    });
+</script>

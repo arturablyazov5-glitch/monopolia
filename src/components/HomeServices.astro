@@ -1,4 +1,6 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
+import ScrollHint from "./ScrollHint.astro";
 import ServiceCard from "./ServiceCard.astro";
 import "../styles/home-services.css";
 
@@ -6,65 +8,56 @@ const services = [
   {
     node: "1380:5682",
     tilt: -1,
-    title: "Помощь в одобрении ипотеки с вероятностью 91%",
-    description:
-      "Подберем выгодную программу. Поможем собрать документы и подать заявки в банк",
+    title: siteText("home-services.title.1"),
+    description: siteText("home-services.description.2"),
   },
   {
     node: "1380:5683",
     tilt: 2,
-    title: "Оформление сделки купли‑продажи",
-    description:
-      "Проверим документы, проконтролируем процесс и доведем сделку до регистрации в Росреестре",
+    title: siteText("home-services.title.3"),
+    description: siteText("home-services.description.4"),
   },
   {
     node: "1380:5684",
     tilt: -1,
-    title: "Юридическая проверка объекта или собственника",
-    description:
-      "Проверяем риски на объекте: ограничения, долги, аресты, судебные споры и историю собственников",
+    title: siteText("home-services.title.5"),
+    description: siteText("home-services.description.6"),
   },
   {
     node: "1380:5685",
     tilt: 1,
-    title: "Оформление всех документов",
-    description:
-      "Поможем оформить наследство, приватизацию, право собственности, перепланировку, реконструкцию и т. д.",
+    title: siteText("home-services.title.7"),
+    description: siteText("home-services.description.8"),
   },
   {
     node: "1380:5686",
     tilt: -1,
-    title: "Оценка недвижимости",
-    description:
-      "Сравним объект с аналогичными в том же районе, определим рыночную стоимость, позицию в рейтинге предложений и срок продажи",
+    title: siteText("home-services.title.9"),
+    description: siteText("home-services.description.10"),
   },
   {
     node: "1380:5687",
     tilt: 2,
-    title: "Налоговое сопровождение",
-    description:
-      "Рассчитаем сумму налогов, поможем оформить 3‑НДФЛ и получить налоговый вычет до 13% стоимости недвижимости",
+    title: siteText("home-services.title.11"),
+    description: siteText("home-services.description.12"),
   },
   {
     node: "1380:5688",
     tilt: 2,
-    title: "Подготовка объекта к заселению",
-    description:
-      "Подберем проверенных подрядчиков по ремонту, оформлению интерьера и клинингу. При необходимости поможем с переездом",
+    title: siteText("home-services.title.13"),
+    description: siteText("home-services.description.14"),
   },
   {
     node: "1380:5689",
     tilt: -2,
-    title: "Аренда недвижимости",
-    description:
-      "Подберем проверенных арендаторов или подходящие объекты для сдачи в аренду. Сопроводим сделку до подписания договора",
+    title: siteText("home-services.title.15"),
+    description: siteText("home-services.description.16"),
   },
   {
     node: "1380:5690",
     tilt: 1,
-    title: "Страхование",
-    description:
-      "Поможем застраховать объект недвижимости, автомобиль и личные риски, включая несчастные случаи",
+    title: siteText("home-services.title.17"),
+    description: siteText("home-services.description.18"),
   },
 ];
 ---
@@ -76,12 +69,16 @@ const services = [
   data-node-id="1380:5678"
 >
   <div class="services-heading">
-    <h2 id="services-title">
-      Один визит к нам вместо часовых очередей в разных кабинетах
-    </h2>
-    <p>Все вопросы решаем в одном окне — от подбора ипотеки до приватизации</p>
+    <h2 id="services-title">{siteText("home-services.text.19")}</h2>
+    <p>{siteText("home-services.text.20")}</p>
   </div>
-  <div class="services-grid">
+  <ScrollHint class="services-scroll-hint" />
+  <div
+    class="services-grid"
+    role="region"
+    aria-label="Услуги компании"
+    tabindex="0"
+  >
     {services.map(({ tilt, ...service }) => (
       <div
         class="services-slot"

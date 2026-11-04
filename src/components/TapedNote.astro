@@ -7,7 +7,7 @@ import Paper from "./Paper.astro";
 import "../styles/taped-note.css";
 
 interface Props {
-  /** Текстура 0ba2a с прозрачностью 50% (как у 1380:6985); без неё — белый лист */
+  /** Единая бежевая текстура из tokens.css; без неё — белый лист. */
   textured?: boolean;
   icon?: { src: string; width: number; height: number };
   rotate?: number;
@@ -30,10 +30,13 @@ const {
 
 <div
   class:list={["taped-note", className]}
-  style={rotate ? `transform: rotate(${rotate}deg)` : undefined}
+  style={rotate ? `--note-rotate:${rotate}deg` : undefined}
   data-node-id={node || undefined}
 >
-  <Paper class:list={["taped-note-paper", { "taped-note-plain": !textured }]} tapeNode={tape ? tapeNode : ""}>
+  <Paper
+    class:list={["taped-note-paper", { "taped-note-plain": !textured }]}
+    tapeNode={tape ? tapeNode : ""}
+  >
     {icon && (
       <img
         class="taped-note-icon"

@@ -1,15 +1,25 @@
 ---
-import ArrowButton from "./ArrowButton.astro";
-const { label = "Карточки", class: className = "" } = Astro.props;
+import ScrollHint from "./ScrollHint.astro";
+import CarouselControls from "./CarouselControls.astro";
+const {
+  label = "Карточки",
+  class: className = "",
+  swipeHint = false,
+  catalogCount,
+} = Astro.props;
 ---
 
 <div
   class:list={["carousel", className]}
   data-carousel
+  data-compact={
+    catalogCount !== undefined && catalogCount <= 3 ? "" : undefined
+  }
   role="region"
   aria-roledescription="карусель"
   aria-label={label}
 >
+  {swipeHint && <ScrollHint />}
   <div
     class="carousel-track"
     tabindex="0"
@@ -18,96 +28,112 @@ const { label = "Карточки", class: className = "" } = Astro.props;
   >
     <slot />
   </div>
-  <div class="carousel-controls">
-    <ArrowButton direction="prev" />
+  <CarouselControls class="carousel-controls" />
+  {catalogCount !== undefined && (
     <div
       class="carousel-pagination"
-      role="group"
-      aria-label="Позиция карусели"
+      aria-label="Страницы объектов"
+      hidden={catalogCount <= 3}
     ></div>
-    <ArrowButton />
-  </div>
+  )}
 </div>
 <script>
   document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((root) => {
     const track = root.querySelector<HTMLElement>(".carousel-track")!;
-    const pagination = root.querySelector<HTMLElement>(".carousel-pagination")!;
-    let cards = [...track.children] as HTMLElement[];
-    // Точки и активная позиция учитывают поля scroll-snap и конец ленты.
-    const targetLeft = (card: HTMLElement) =>
-      Math.min(
-        track.scrollWidth - track.clientWidth,
-        Math.max(
-          0,
-          card.offsetLeft -
-            track.offsetLeft -
-            (parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0),
-        ),
-      );
-    const rebuild = () => {
-    cards = [...track.children] as HTMLElement[];
-    pagination.replaceChildren();
-    cards.forEach((card, index) => {
-      const dot = document.createElement("button");
-      dot.type = "button";
-      dot.setAttribute("aria-label", `Карточка ${index + 1}`);
-      dot.addEventListener("click", () =>
-        track.scrollTo({
-          left: targetLeft(card),
+    const prev = root.querySelector<HTMLButtonElement>(
+      "[data-direction=prev]",
+    )!;
+    const next = root.querySelector<HTMLButtonElement>(
+      "[data-direction=next]",
+    )!;
+    const pagination = root.querySelector<HTMLElement>(".carousel-pagination");
+    const visibleCards = () =>
+      [...track.children].filter(
+        (el) => !(el as HTMLElement).hidden,
+      ) as HTMLElement[];
+    let cardCount = -1;
+    const hint = root.querySelector<HTMLElement>(".mobile-scroll-hint");
+    const update = () => {
+      const cards = visibleCards();
+      root.toggleAttribute("data-single", cards.length === 1);
+      // Один объект — листать нечего, подсказку «Скролльте влево» прячем.
+      if (hint) hint.style.display = cards.length <= 1 ? "none" : "";
+      if (pagination) {
+        root.toggleAttribute("data-compact", cards.length <= 3);
+        pagination.hidden = cards.length <= 3;
+        if (cards.length !== cardCount) {
+          cardCount = cards.length;
+          pagination.replaceChildren(
+            ...cards.map((_, index) => {
+              const dot = document.createElement("button");
+              dot.type = "button";
+              dot.setAttribute("aria-label", `Объект ${index + 1}`);
+              dot.addEventListener("click", () => {
+                const current = visibleCards();
+                track.scrollTo({
+                  left: current[index].offsetLeft - current[0].offsetLeft,
+                  behavior: matchMedia("(prefers-reduced-motion: reduce)")
+                    .matches
+                    ? "instant"
+                    : "smooth",
+                });
+              });
+              return dot;
+            }),
+          );
+        }
+        const step =
+          ((cards[0] as HTMLElement)?.offsetWidth || 1) +
+          (parseFloat(getComputedStyle(track).columnGap) || 0);
+        const index = Math.round(track.scrollLeft / step);
+        [...pagination.children].forEach((dot, i) =>
+          dot.setAttribute("aria-current", String(i === index)),
+        );
+      }
+      prev.disabled = track.scrollLeft < 2;
+      next.disabled =
+        track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    };
+    [prev, next].forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = track.querySelector<HTMLElement>(
+          ":scope > :not([hidden])",
+        );
+        const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        track.scrollBy({
+          left:
+            (button.dataset.direction === "next" ? 1 : -1) *
+            ((card?.offsetWidth || 0) + gap),
           behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
             ? "instant"
             : "smooth",
-        }),
-      );
-      pagination.append(dot);
+        });
+      });
     });
-    };
-    const update = () => {
-      const current = cards.reduce(
-        (nearest, card, index) =>
-          Math.abs(targetLeft(card) - track.scrollLeft) <
-          Math.abs(targetLeft(cards[nearest]) - track.scrollLeft)
-            ? index
-            : nearest,
-        0,
-      );
-      pagination
-        .querySelectorAll("button")
-        .forEach((dot, index) =>
-          dot.setAttribute("aria-current", String(index === current)),
-        );
-      (
-        root.querySelector("[data-direction=prev]") as HTMLButtonElement
-      ).disabled = track.scrollLeft < 2;
-      (
-        root.querySelector("[data-direction=next]") as HTMLButtonElement
-      ).disabled =
-        track.scrollLeft + track.clientWidth >=
-        Math.max(
-          ...cards.map(
-            (card) => card.offsetLeft - track.offsetLeft + card.offsetWidth,
-          ),
-        ) -
-          2;
-    };
-    root
-      .querySelectorAll<HTMLButtonElement>("[data-direction]")
-      .forEach((button) =>
-        button.addEventListener("click", () =>
-          track.scrollBy({
-            left:
-              (button.dataset.direction === "next" ? 1 : -1) *
-              ((cards[0]?.clientWidth || 0) + 28),
-            behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-              ? "instant"
-              : "smooth",
-          }),
-        ),
-      );
-    track.addEventListener("scroll", update, { passive: true });
+    // Не чаще раза за кадр: иначе при прокрутке считаем лишнее и слайдер лагает.
+    let frame = 0;
+    track.addEventListener(
+      "scroll",
+      () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          update();
+        });
+      },
+      { passive: true },
+    );
     new ResizeObserver(update).observe(track);
-    rebuild();
-    root.addEventListener("catalog-updated", () => { track.scrollLeft = 0; rebuild(); update(); });
+    new MutationObserver(update).observe(track, {
+      childList: true,
+      attributes: true,
+      attributeFilter: ["hidden"],
+      subtree: true,
+    });
+    root.addEventListener("catalog-updated", () => {
+      track.scrollLeft = 0;
+      update();
+    });
     update();
   });
 </script>

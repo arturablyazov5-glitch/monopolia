@@ -1,0 +1,50 @@
+/* TASK-050. Один маркер для списков и одиночных поинтов.
+   Изображение, размер и зазор до текста задаются только общими токенами.
+   1lh отсчитывает высоту первой строки, включая многострочные пункты. */
+.bullet-list {
+  list-style: none;
+}
+.bullet-list > li,
+.bullet-point {
+  position: relative;
+  padding-left: calc(var(--bullet-diamond-width) + var(--bullet-gap));
+}
+.bullet-list > li::before,
+.bullet-point::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc((1lh - var(--bullet-diamond-height)) / 2);
+  width: var(--bullet-diamond-width);
+  height: var(--bullet-diamond-height);
+  background-image: var(--bullet-diamond);
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* На телефонах сохраняем пропорции прежних интервалов списков: базовые
+   16 → 12, шаги 20 → 15, компактные шаги 12 → 9, списки с 24 → 20 px.
+   Колонки этих же списков становятся вертикальными, поэтому их промежуток
+   подчиняется тому же токену. На планшете и desktop правила не меняются. */
+@media (max-width: 767px) {
+  :root body .bullet-list.bullet-list {
+    row-gap: calc(var(--bullet-list-gap) * 0.6);
+  }
+  :root body .bullet-list.bullet-list:where(.deal-step-list) {
+    row-gap: calc(var(--bullet-list-gap) * 0.45);
+  }
+  :root body .bullet-list.bullet-list:where(.sell-steps .deal-step-list) {
+    row-gap: calc(var(--bullet-list-gap) * 0.75);
+  }
+  :root body .bullet-list.bullet-list:where(.sell-valuation-points .bullet-list, .prepared-viewing-lists .bullet-list) {
+    row-gap: var(--bullet-list-gap);
+  }
+  :root body :where(.sell-valuation-points, .prepared-viewing-lists):has(> .bullet-list) {
+    row-gap: var(--bullet-list-gap);
+  }
+  :root body :where(.telegram-benefits, .recruiting-benefits):has(> .bullet-list) {
+    row-gap: calc(var(--bullet-list-gap) * 0.6);
+  }
+}

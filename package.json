@@ -4,12 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev --host 127.0.0.1",
+    "dev": "node scripts/dev-all.mjs",
     "dev:all": "node scripts/dev-all.mjs",
+    "share": "node scripts/share.mjs",
     "build": "astro build",
     "preview": "astro preview --host 127.0.0.1",
     "check": "astro check",
-    "format": "prettier --write src"
+    "format": "prettier --write src",
+    "test": "node --test",
+    "test:content": "node --test scripts/content-admin-test.mjs",
+    "test:content:browser": "CONTENT_BROWSER_TEST=1 node --test scripts/content-admin-test.mjs",
+    "test:content:preview": "CONTENT_PREVIEW_BROWSER_TEST=1 node --test scripts/content-preview-test.mjs",
+    "dev:site": "astro dev --host 127.0.0.1"
   },
   "dependencies": {
     "astro": "^7.3.5"

@@ -1,8 +1,12 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import "../styles/global.css";
 import LeadDialog from "../components/LeadDialog.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+import VideoDialog from "../components/VideoDialog.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
+import BackToTop from "../components/BackToTop.astro";
 import { siteUrl } from "../lib/seo";
 const pageSeo: Record<string, { title: string; description: string }> = {
   "/": {
@@ -51,11 +55,11 @@ const business = {
   "@context": "https://schema.org",
   "@type": "RealEstateAgent",
   name: "Монополия",
-  telephone: "+7 (924) 580-45-55",
+  telephone: "+7 (924) 580-45-55",
   email: "anmonopoliya@mail.ru",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "ул. Ленина, д. 48",
+    streetAddress: "ул. Ленина, д. 48",
     addressLocality: "Белогорск",
     addressRegion: "Амурская область",
     postalCode: "676805",
@@ -88,20 +92,26 @@ const business = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {/* LCP mobile: фон главной / CSS-текстура квиза внутренних страниц.
-        Обнаруживаем до CSS и очереди остальных изображений. */}
-    {seo && (
+    {/* LCP mobile: фотографический фон главной. Бумага загружается из CSS. */}
+    {seo && pathname === "/" && (
       <link
         rel="preload"
         as="image"
-        href={pathname === "/" ? "/assets/home-background.webp" : "/assets/30984.webp"}
+        href="/assets/home-background-no-plane.webp"
         fetchpriority="high"
         media="(max-width: 767px)"
       />
     )}
     {/* Denistina видна на первом экране главной и продажи; не ждём CSS. */}
     {seo && pathname !== "/buy/" && (
-      <link rel="preload" href="/fonts/denistina-site.woff2" as="font" type="font/woff2" crossorigin media="(max-width: 767px)" />
+      <link
+        rel="preload"
+        href="/fonts/denistina-site.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin
+        media="(max-width: 767px)"
+      />
     )}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
@@ -141,7 +151,13 @@ const business = {
       type="font/woff2"
       crossorigin
     />
-    <link rel="preload" href="/fonts/calibri-bold-site.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/calibri-bold-site.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     {preventIndexing && <meta name="robots" content="noindex" />}
     <title>{pageTitle}</title>
     <link
@@ -152,10 +168,23 @@ const business = {
       crossorigin
     />
   </head>
-  <body id="top">
-
+  <body
+    id="top"
+    data-content-endpoint={
+      import.meta.env.PUBLIC_CONTENT_ENDPOINT ||
+      (import.meta.env.PUBLIC_CATALOG_ENDPOINT
+        ? new URL(
+            "/api/content",
+            new URL(import.meta.env.PUBLIC_CATALOG_ENDPOINT, Astro.url),
+          ).href
+        : "/api/content")
+    }
+  >
+    <script>
+      import "../scripts/content-refresh";
+    </script>
     <a class="skip-link" href="#main">
-      Перейти к содержимому
+      {siteText("site-layout.text.4")}
     </a>
     {header && (
       <div class="fixed-site-header">
@@ -164,12 +193,16 @@ const business = {
     )}
     <slot />
     {footer && <SiteFooter />}
+    <BackToTop />
     <LeadDialog />
+    <VideoDialog />
+    <CookieBanner />
     <script>
       // a11y: цель skip link — первый <main> страницы (id ставим здесь,
       // чтобы не править каждую страницу); фокус переносим в main.
       // Тень фиксированной шапки после 150 px прокрутки
-      const fixedHeader = document.querySelector<HTMLElement>(".fixed-site-header");
+      const fixedHeader =
+        document.querySelector<HTMLElement>(".fixed-site-header");
       if (fixedHeader) {
         const update = () =>
           fixedHeader.classList.toggle("is-scrolled", window.scrollY > 150);
@@ -188,6 +221,20 @@ const business = {
           main.scrollIntoView();
         });
       }
+
+      // Навигация всегда указывает на главную без JavaScript. После idle
+      // заменяем только помеченные ссылки, если такой якорь есть на этой странице.
+      const localizeAnchors = () => {
+        document
+          .querySelectorAll<HTMLAnchorElement>("a[data-anchor]")
+          .forEach((link) => {
+            const id = new URL(link.href).hash.slice(1);
+            if (id && document.getElementById(id)) link.href = `#${id}`;
+          });
+      };
+      if ("requestIdleCallback" in window)
+        window.requestIdleCallback(localizeAnchors, { timeout: 500 });
+      else setTimeout(localizeAnchors, 0);
     </script>
   </body>
 </html>

@@ -1,0 +1,29 @@
+---
+import { siteText } from "../data/site-texts.mjs";
+import SocialLinks from "./SocialLinks.astro";
+---
+
+<div class="form-social">
+  <span>
+    {siteText("lead-form.text.7")}
+    <br />
+    {siteText("lead-form.text.8")}
+  </span>
+  <SocialLinks />
+</div>
+
+<style>
+  .form-social {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-muted);
+    font: var(--text-small)/1.2 var(--font-body);
+  }
+  .form-social > span {
+    min-width: 0;
+  }
+  .form-social :global(.socials) {
+    flex-shrink: 0;
+  }
+</style>

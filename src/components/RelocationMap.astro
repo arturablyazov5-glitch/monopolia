@@ -1,7 +1,12 @@
 ---
+import Button from "./Button.astro";
+import RelocationTrains from "./RelocationTrains.astro";
+import CityText from "./CityText.astro";
+import { siteText } from "../data/site-texts.mjs";
+import { getRelocationTrainLayers } from "../data/relocation-routes";
 // Figma 1380:6590 («Покупка»): шапка блока 1380:6589 — заголовок,
 // рукописная подпись и маршруты к Белогорску поверх карты 1380:6591.
-// Карта (af69b.svg, 5385×3035) уходит на 2132 px выше блока и лежит
+// Карта (relocation-map-buy.svg, 5385×3035) уходит на 2132 px выше блока и лежит
 // под предыдущими секциями (z-index: -1), как в Figma; её верх
 // закрыт градиентом #EDEDED. Слои маршрутов передаются данными —
 // для «Продажи» (1380:5933) достаточно передать свои routes/markers.
@@ -29,13 +34,15 @@ interface Props {
   description?: string;
   layers?: MapLayer[];
   node?: string;
+  /** px от верха карты (рамка 3035 px), до которых карта полностью скрыта цветом фона */
+  fadeStart?: number;
 }
 
 // Координаты — из get_design_context 1380:6590 (с учётом inset экспорта)
 const buyLayers: MapLayer[] = [
   // Метка Белогорска 1380:6829 (в Figma ниже маршрутов)
   {
-    src: "/assets/f8bfb.svg",
+    src: "/assets/relocation-belogorsk-pin.svg",
     width: 29,
     height: 40,
     left: 697,
@@ -43,28 +50,28 @@ const buyLayers: MapLayer[] = [
     class: "relocation-pin",
   },
   {
-    src: "/assets/d3f82.svg",
+    src: "/assets/relocation-route-west.svg",
     width: 558.85,
     height: 159.319,
     left: 158,
     top: 373.51,
   },
   {
-    src: "/assets/977ff.svg",
+    src: "/assets/relocation-route-central.svg",
     width: 686,
     height: 186.419,
     left: -7,
     top: 153.95,
   },
   {
-    src: "/assets/f332d.svg",
+    src: "/assets/relocation-route-north.svg",
     width: 376.629,
     height: 352.273,
     left: 708.28,
     top: -42.75,
   },
   {
-    src: "/assets/76e7e.svg",
+    src: "/assets/relocation-route-east.svg",
     width: 401,
     height: 192.321,
     left: 740.5,
@@ -72,7 +79,7 @@ const buyLayers: MapLayer[] = [
   },
   // Поезда 1380:6834–6837: исходный SVG 32.6×26.2 (свежий экспорт Figma), центр — центр бокса Figma
   {
-    src: "/assets/751ee.svg",
+    src: "/assets/relocation-plane-arrow-alternate.svg",
     width: 32.6049,
     height: 26.2172,
     left: 538.39,
@@ -82,7 +89,7 @@ const buyLayers: MapLayer[] = [
     flipY: true,
   },
   {
-    src: "/assets/751ee.svg",
+    src: "/assets/relocation-plane-arrow-alternate.svg",
     width: 32.6049,
     height: 26.2172,
     left: 451.11,
@@ -92,7 +99,7 @@ const buyLayers: MapLayer[] = [
     flipY: true,
   },
   {
-    src: "/assets/c7b9e.svg",
+    src: "/assets/relocation-plane-arrow-east.svg",
     width: 32.6049,
     height: 26.2172,
     left: 976.57,
@@ -100,7 +107,7 @@ const buyLayers: MapLayer[] = [
     rotate: 163.84,
   },
   {
-    src: "/assets/b7534.svg",
+    src: "/assets/relocation-plane-arrow-west.svg",
     width: 32.6049,
     height: 26.2172,
     left: 1027.14,
@@ -112,13 +119,29 @@ const buyLayers: MapLayer[] = [
 const {
   id = "buy-relocation",
   class: className = "",
-  map = { src: "/assets/af69b.svg", width: 5386.13, height: 3035.38 },
-  title = "Хотите переехать в Белогорск?",
-  annotation = "В тесноте, да не в обиде",
-  description = "Поможем найти уютное жилье, в котором будете прекрасно себя чувствовать",
+  map = {
+    src: "/assets/relocation-map-buy.svg",
+    width: 5386.13,
+    height: 3035.38,
+  },
+  title = siteText("relocation-map.title.1"),
+  annotation = siteText("relocation-map.annotation.2"),
+  description = siteText("relocation-map.description.3"),
   layers = buyLayers,
   node = "1380:6590",
+  // Карта не должна заходить на блок «Страхуем сделку»: фон держится до
+  // ~60 px ниже него (на 1440 низ блока на 595 px выше начала карты-блока на «Покупке»).
+  fadeStart = 1480,
 } = Astro.props;
+
+const titleParts = title.split(/Белогорск(?:а|е)?/);
+const routes = getRelocationTrainLayers(layers);
+const selling = id === "sell-relocation";
+// Train markers are rendered by the animated SVG, not as static Figma exports.
+const staticLayers = layers.filter(
+  (layer) =>
+    !/\/(?:sell-)?relocation-plane-arrow(?:-[a-z]+)*\.svg$/.test(layer.src),
+);
 ---
 
 <section
@@ -138,23 +161,60 @@ const {
       />
       <div
         class="relocation-map-fade"
-        style={map.fade ? `background:${map.fade}` : undefined}
+        style={
+          map.fade
+            ? `background:${map.fade}`
+            : `--map-fade-start:${fadeStart}px`
+        }
       ></div>
     </div>
   </div>
   <div class="relocation-map-inner">
     <div class="relocation-map-heading" data-node-id="1380:6824">
-      <h2 id={`${id}-title`}>{title}</h2>
+      <h2 id={`${id}-title`}>
+        {titleParts.length > 1 ? (
+          <>
+            {titleParts[0]}
+            <CityText case={selling ? "from" : "to"} />
+            {titleParts[1]}
+          </>
+        ) : (
+          title
+        )}
+      </h2>
       {annotation && <p class="relocation-map-hand">{annotation}</p>}
       <p class="relocation-map-text">{description}</p>
+      <Button
+        popup="callback"
+        label="Свяжитесь со мной"
+        subject={
+          selling
+            ? "Продажа и переезд: свяжитесь со мной"
+            : "Переезд в Белогорск: свяжитесь со мной"
+        }
+      />
     </div>
     <div class="relocation-map-routes" aria-hidden="true">
       <div class="relocation-map-route-map">
-        <img src={map.src} width={map.width} height={map.height} alt="" loading="lazy" decoding="async" />
-      </div>
-      {layers.map((layer) => (
         <img
-          class={layer.class}
+          src={map.src}
+          width={map.width}
+          height={map.height}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      {staticLayers.map((layer) => (
+        <img
+          class:list={[
+            layer.class,
+            {
+              "relocation-pin": layer.src.endsWith(
+                "/relocation-belogorsk-pin.svg",
+              ),
+            },
+          ]}
           src={layer.src}
           width={layer.width}
           height={layer.height}
@@ -164,6 +224,8 @@ const {
           decoding="async"
         />
       ))}
+      <RelocationTrains routes={routes} />
+      <RelocationTrains routes={routes} mobile />
     </div>
   </div>
 </section>

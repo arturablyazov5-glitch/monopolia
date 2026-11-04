@@ -1,0 +1,22 @@
+---
+import { cityForms } from "../data/city-forms";
+interface Props {
+  case?: "name" | "in" | "from" | "to";
+}
+const { case: cityCase = "name" } = Astro.props;
+---
+
+<span data-city-case={cityCase}>{cityForms.Белогорск[cityCase]}</span>
+<script is:inline define:vars={{ cityForms }}>
+  {
+    const el = document.currentScript.previousElementSibling;
+    let city = "Белогорск";
+    try {
+      city = localStorage.getItem("city") || city;
+    } catch {}
+    el.textContent = (cityForms[city] || cityForms.Белогорск)[
+      el.dataset.cityCase
+    ];
+    document.currentScript.remove();
+  }
+</script>

@@ -2,8 +2,10 @@
 interface Props {
   text: string;
   class?: string;
+  angle?: number;
+  mobileOrder?: number;
 }
-const { text, class: className = "" } = Astro.props;
+const { text, class: className = "", angle = -1, mobileOrder = 0 } = Astro.props;
 ---
 
-<span class:list={["badge", className]}>{text}</span>
+<span class:list={["badge", "paper-label", className]} style={`--badge-angle:${angle}deg;--badge-mobile-order:${mobileOrder}`} >{text}</span>

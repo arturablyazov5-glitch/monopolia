@@ -24,6 +24,7 @@ import { homeFaq } from "../data/faq";
 import LeadSection from "../components/LeadSection.astro";
 // Адаптив главной (планшет/телефон) — после стилей секций.
 import "../styles/home-responsive.css";
+import "../styles/home-surface-runs.css";
 ---
 
 <SiteLayout title="Монополия — агентство недвижимости" header>
@@ -33,16 +34,22 @@ import "../styles/home-responsive.css";
     <FastSale />
     <PrivateCatalog />
     <Certificates />
-    <EqualInterests />
-    <HonestReviews />
+    <div class="home-surface-run home-surface-run--reviews">
+      <EqualInterests />
+      <HonestReviews />
+    </div>
     <ProvenTrust />
-    <ClientCases />
-    <CompanyAbout />
-    <CompanyGuild />
-    <OfficeExpansion />
-    <HomePartners />
-    <DirectorInvitation />
-    <BlockbusterCase />
+    <div class="home-surface-run">
+      <ClientCases />
+      <CompanyAbout />
+      <div class="company-offices-map">
+        <CompanyGuild />
+        <OfficeExpansion />
+        <HomePartners />
+      </div>
+      <DirectorInvitation />
+      <BlockbusterCase />
+    </div>
     <HomeTeam />
     <HomeTelegram />
     <HomeServices />

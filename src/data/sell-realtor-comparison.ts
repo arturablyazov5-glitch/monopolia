@@ -1,51 +1,52 @@
+import { siteText } from "./site-texts.mjs";
 // Figma 1380:6315–6320; текст и риски из макета.
 export const sellRealtorComparison = [
   {
     node: "1380:6315",
-    label: "Скорость покупки",
+    label: siteText("sell-realtor-comparison.label.1"),
     risk: 1,
     others:
-      "До 6‑24 месяцев. Много времени уходит на поиск покупателя, показы и звонки",
-    ours: "Подбираем покупателя в среднем за 14 дней из закрытой базы, где 1 500+ человек с одобренной ипотекой или наличкой",
+      siteText("sell-realtor-comparison.others.2"),
+    ours: siteText("sell-realtor-comparison.ours.3"),
   },
   {
     node: "1380:6316",
-    label: "Проверка покупателя",
+    label: siteText("sell-realtor-comparison.label.4"),
     risk: 5,
     others:
-      "Риск продать неудачно и придется судиться годами, либо покупатель заплатит фальшивыми деньгами",
-    ours: "Проверяем документы и наличные на подлинность. А также берем справку о психологическом здоровье",
+      siteText("sell-realtor-comparison.others.5"),
+    ours: siteText("sell-realtor-comparison.ours.6"),
   },
   {
     node: "1380:6317",
-    label: "Оформление сделки",
+    label: siteText("sell-realtor-comparison.label.7"),
     risk: 5,
     others:
-      "Покупатель может сорвать сделку в последний момент, а ошибки в договоре — оставят вас без денег и без недвижимости",
-    ours: "Мы составляем юридически грамотные предварительный и основной договоры, а также контролируем сделку",
+      siteText("sell-realtor-comparison.others.8"),
+    ours: siteText("sell-realtor-comparison.ours.9"),
   },
   {
     node: "1380:6318",
-    label: "Написание объявления",
+    label: siteText("sell-realtor-comparison.label.10"),
     risk: 3,
     others:
-      "Объявление и фотографии могут быть оформлены неправильно, из‑за чего продажа затянется",
-    ours: "Сделаем фото, видеообзор и напишем объявление, которое будет притягивать покупателей",
+      siteText("sell-realtor-comparison.others.11"),
+    ours: siteText("sell-realtor-comparison.ours.12"),
   },
   {
     node: "1380:6319",
-    label: "Переплата",
+    label: siteText("sell-realtor-comparison.label.13"),
     risk: 4,
     others:
-      "Риск продать дешево или долго искать покупателя из‑за нереалистичных ожиданий",
-    ours: "Помогаем продать объект по рыночной цене и даже выше",
+      siteText("sell-realtor-comparison.others.14"),
+    ours: siteText("sell-realtor-comparison.ours.15"),
   },
   {
     node: "1380:6320",
-    label: "Координация и переговоры",
+    label: siteText("sell-realtor-comparison.label.16"),
     risk: 3,
     others:
-      "Показы, звонки и торги забирают много времени. Есть риск потерять того самого покупателя в суматохе",
-    ours: "Представляем ваши интересы на переговорах, координируем всех участников и планируем показы под ваш график",
+      siteText("sell-realtor-comparison.others.17"),
+    ours: siteText("sell-realtor-comparison.ours.18"),
   },
 ];

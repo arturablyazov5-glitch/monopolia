@@ -1,24 +1,17 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
+import { clientCases } from "../data/client-cases";
 import Paper from "./Paper.astro";
 import Button from "./Button.astro";
 import ChoiceGroup from "./ChoiceGroup.astro";
-import ArrowButton from "./ArrowButton.astro";
+import ScrollHint from "./ScrollHint.astro";
+import CarouselControls from "./CarouselControls.astro";
 import "../styles/client-cases.css";
-const situation = [
-  "8 месяцев пыталась продать квартиру сама",
-  "Покупатели звонили, но не доходили до показов или пропадали после просмотра",
-  "Один покупатель был готов выйти на сделку, но в последний момент начал сильно торговаться. Сделка сорвалась",
-];
-const actions = [
-  "Написали продающее объявление с акцентом на преимущества квартиры",
-  "Сняли профессиональный видеообзор квартиры, подъезда и двора",
-  "Запустили продвижение объявления на целевые сегменты покупателей",
-  "Организовали показы в удобное для покупателей время",
-  "Все переговоры взяли на себя и защитили цену объекта",
-];
+const cases = clientCases;
 ---
 
 <section
+  data-surface="dark"
   class="client-cases"
   id="cases"
   aria-labelledby="cases-title"
@@ -26,32 +19,37 @@ const actions = [
 >
   <img
     class="cases-background"
-    src="/assets/2b2aa.webp"
+    src="/assets/background-paper-tall-white.webp"
     width="1454"
     height="2143"
     alt=""
     loading="lazy"
     decoding="async"
   />
-  <div class="cases-container">
+  <div class="cases-container" data-surface="light">
     <div class="cases-heading">
       <div>
         <h2 id="cases-title">
-          Даже когда кажется, что <br />
-          выхода нет — находим решение
+          {siteText("client-cases.text.18")} <br />
+          {siteText("client-cases.text.19")}
         </h2>
-        <p class="cases-handwriting">Читайте кейсы</p>
+        <p class="cases-handwriting">{siteText("client-cases.text.20")}</p>
       </div>
       <div class="cases-tabs">
         <ChoiceGroup
           name="Категория кейсов"
           channels
-          options={["Помогли продать", "Помогли купить", "Помогли отжать"]}
+          options={[
+            siteText("client-cases.options.21"),
+            siteText("client-cases.options.22"),
+            siteText("client-cases.options.23"),
+          ]}
         />
         <img
           class="cases-pointer"
-          src="/assets/f6357.svg"
+          src="/assets/icon-cases-cursor.svg"
           alt=""
+          aria-hidden="true"
           width="17.6346"
           height="19.3498"
           loading="lazy"
@@ -59,90 +57,263 @@ const actions = [
         />
       </div>
     </div>
-    <div class="cases-content" data-case-content>
-      <div class="case-photo">
-        <img
-          src="/assets/2769b.webp"
-          width="426"
-          height="561"
-          alt="Двухкомнатная квартира из кейса продажи"
-          loading="lazy"
-          decoding="async"
-        />
-        <Paper class="case-person">
-          <span aria-hidden="true"></span>
-          <strong>Имя</strong>
-        </Paper>
-      </div>
-      <div class="case-details">
-        <div class="case-object">
-          <p>Объект:</p>
-          <h3>2‑х комнатная квартира, 55 м², 3/5 этажей</h3>
-        </div>
-        <Paper class="case-result" tapeNode="I1380:5213;569:1388">
-          <p>
-            8 месяцев безрезультатных попыток продать квартиру самостоятельно. С Монополией вышла на сделку за 7 дней и продала квартиру на 270 000 ₽ дороже, чем планировала
-          </p>
-          <img
-            class="case-quote"
-            src="/assets/716a6.svg"
-            alt=""
-            width="26.0607"
-            height="20.4199"
-            loading="lazy"
-            decoding="async"
-          />
-        </Paper>
-        <div class="case-columns">
-          {[
-            { title: "Ситуация клиента:", items: situation },
-            { title: "Что было сделано:", items: actions },
-          ].map((col) => (
-            <div>
-              <h4>{col.title}</h4>
-              <ul>
-                {col.items.map((item) => (
-                  <li>
-                    {item.endsWith(" Сделка сорвалась") ? (
-                      <>
-                        {item.slice(0, -"Сделка сорвалась".length)}
-                        <strong>Сделка сорвалась</strong>
-                      </>
-                    ) : (
-                      item
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-        <div class="case-actions">
-          <Button
-            label="Записаться на консультацию"
-            subject="Консультация по продаже недвижимости"
-          />
-          <span></span>
-          <div>
-            <ArrowButton direction="prev" disabled />
-            <ArrowButton disabled />
+    <ScrollHint />
+    <div
+      class="cases-content"
+      data-case-content
+      role="region"
+      aria-label="Кейсы клиентов: прокрутка стрелками клавиатуры"
+      tabindex="0"
+    >
+      {cases.map((caseItem, index) => (
+        <article
+          class:list={[
+            "case-slide",
+            { "is-active": index === 0 },
+          ]}
+          data-case-slide
+          data-category={caseItem.category}
+          data-node-id={caseItem.id}
+          aria-hidden={index !== 0 ? "true" : undefined}
+        >
+          <div
+            class:list={[
+              "case-photo",
+              {
+                "case-photo-plan": caseItem.id === "1951:5075",
+              },
+            ]}
+          >
+            {caseItem.photo ? (
+              <img
+                src={caseItem.photo}
+                width="426"
+                height="561"
+                alt={caseItem.object}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="case-photo-placeholder">
+                <svg aria-hidden="true" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M6 15h8l3-5h14l3 5h8v23H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                  <circle cx="24" cy="26" r="7" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span>Фото клиента</span>
+              </div>
+            )}
+            <Paper class="case-person">
+              <strong>{caseItem.person}</strong>
+            </Paper>
           </div>
-        </div>
-      </div>
+          <div class="case-details">
+            <div class="case-object">
+              <p>{siteText("client-cases.text.24")}</p>
+              <h3>{caseItem.object}</h3>
+            </div>
+            {caseItem.result && (
+              <Paper class="case-result" tapeNode="I1380:5213;569:1388">
+                <p>{caseItem.result}</p>
+                <img
+                  class="case-quote"
+                  src="/assets/cases-quote-mark.svg"
+                  alt=""
+                  width="26.0607"
+                  height="20.4199"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </Paper>
+            )}
+            <div class="case-columns">
+              {[
+                {
+                  title: siteText("client-cases.title.25"),
+                  items: caseItem.situation,
+                },
+                {
+                  title: siteText("client-cases.title.26"),
+                  items: caseItem.actions,
+                },
+              ].map((col, index) => (
+                <div class:list={["case-column", { "case-column--actions": index === 1 }]}>
+                  <h4>{col.title}</h4>
+                  <ul class="bullet-list">
+                    {col.items.map((item) => (
+                      <li>
+                        {item.endsWith(siteText("client-cases.text.27")) ? (
+                          <>
+                            {item.slice(
+                              0,
+                              -siteText("client-cases.text.27").length,
+                            )}
+                            <strong>{siteText("client-cases.text.27")}</strong>
+                          </>
+                        ) : (
+                          item
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div class="case-actions">
+              <Button
+                popup="office"
+                label={siteText("client-cases.label.28")}
+                subject={
+                  caseItem.category === "sell"
+                    ? "Консультация по продаже недвижимости"
+                    : "Консультация по покупке недвижимости"
+                }
+              />
+              <span></span>
+              <CarouselControls
+                prevLabel="Предыдущий кейс"
+                nextLabel="Следующий кейс"
+              />
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
+    <div class="cases-mobile-cta">
+      <Button
+        popup="office"
+        label={siteText("client-cases.label.28")}
+        subject="Консультация по продаже недвижимости"
+      />
+    </div>
+    <p class="sr-only" data-case-status aria-live="polite">
+      {"Кейс 1 из"} {cases.length}
+    </p>
     <p class="cases-empty" data-case-empty hidden role="status">
-      Кейсы этой категории пока не добавлены.
+      {siteText("client-cases.text.30")}
     </p>
   </div>
 </section>
 <script>
   document.querySelectorAll<HTMLElement>(".client-cases").forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>("[data-case-slide]")];
+    const previous = [
+      ...root.querySelectorAll<HTMLButtonElement>("[data-direction=prev]"),
+    ];
+    const next = [
+      ...root.querySelectorAll<HTMLButtonElement>("[data-direction=next]"),
+    ];
+    const status = root.querySelector<HTMLElement>("[data-case-status]")!;
+    const mobile = matchMedia("(max-width: 767px)");
+    let current = 0;
+    let category = "sell";
+    let categorySlides = slides.filter(
+      (slide) => slide.dataset.category === category,
+    );
+    const content = root.querySelector<HTMLElement>("[data-case-content]")!;
+    const empty = root.querySelector<HTMLElement>("[data-case-empty]")!;
+    const cta = root.querySelector<HTMLElement>(".cases-mobile-cta > .button");
+
+    const updateCase = (index: number, focusedButton?: HTMLButtonElement) => {
+      current = Math.max(0, Math.min(index, categorySlides.length - 1));
+      content.hidden = categorySlides.length === 0;
+      cta?.setAttribute(
+        "data-subject",
+        category === "sell"
+          ? "Консультация по продаже недвижимости"
+          : "Консультация по покупке недвижимости",
+      );
+      empty.hidden = categorySlides.length !== 0;
+      slides.forEach((slide) => {
+        const active = slide === categorySlides[current];
+        slide.classList.toggle("is-active", active);
+        const included = categorySlides.includes(slide);
+        slide.classList.toggle("is-in-category", included);
+        slide.setAttribute(
+          "aria-hidden",
+          String(mobile.matches ? !included : !active),
+        );
+        slide.inert = mobile.matches ? !included : !active;
+      });
+      const previousDisabled = current === 0 || categorySlides.length <= 1;
+      const nextDisabled =
+        current === categorySlides.length - 1 || categorySlides.length <= 1;
+      previous.forEach((button) => {
+        button.disabled = previousDisabled;
+        button.setAttribute("aria-disabled", String(previousDisabled));
+      });
+      next.forEach((button) => {
+        button.disabled = nextDisabled;
+        button.setAttribute("aria-disabled", String(nextDisabled));
+      });
+      status.textContent = categorySlides.length
+        ? `Кейс ${current + 1} из ${categorySlides.length}`
+        : "В этой категории пока нет кейсов";
+
+      if (focusedButton && document.activeElement === focusedButton) {
+        const direction = focusedButton.dataset.direction!;
+        const replacement = categorySlides[
+          current
+        ].querySelector<HTMLButtonElement>(`[data-direction=${direction}]`)!;
+        const sibling = categorySlides[
+          current
+        ].querySelector<HTMLButtonElement>(
+          `[data-direction=${direction === "prev" ? "next" : "prev"}]`,
+        )!;
+        (replacement.disabled ? sibling : replacement).focus();
+      }
+    };
+
+    previous.forEach((button) =>
+      button.addEventListener("click", () => updateCase(current - 1, button)),
+    );
+    next.forEach((button) =>
+      button.addEventListener("click", () => updateCase(current + 1, button)),
+    );
+    updateCase(0);
+    mobile.addEventListener("change", () => {
+      updateCase(current);
+      content.scrollLeft = 0;
+    });
+    content.addEventListener(
+      "scroll",
+      () => {
+        if (!mobile.matches || !categorySlides.length) return;
+        const nearest = categorySlides.reduce(
+          (best, slide, index) =>
+            Math.abs(
+              slide.offsetLeft - content.offsetLeft - content.scrollLeft,
+            ) <
+            Math.abs(
+              categorySlides[best].offsetLeft -
+                content.offsetLeft -
+                content.scrollLeft,
+            )
+              ? index
+              : best,
+          0,
+        );
+        current = nearest;
+        status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
+      },
+      { passive: true },
+    );
+
     root.addEventListener("choice-change", (event) => {
       const value = (event as CustomEvent<{ value: string }>).detail.value;
-      root.querySelector<HTMLElement>("[data-case-content]")!.hidden =
-        value !== "Помогли продать";
-      root.querySelector<HTMLElement>("[data-case-empty]")!.hidden =
-        value === "Помогли продать";
+      const tabs = [
+        ...root.querySelectorAll<HTMLElement>(
+          ".cases-tabs [data-choice-group] button",
+        ),
+      ];
+      category =
+        ["sell", "buy", "other"][
+          tabs.findIndex((tab) => tab.dataset.value === value)
+        ] ?? "other";
+      categorySlides = slides.filter(
+        (slide) => slide.dataset.category === category,
+      );
+      updateCase(0);
+      content.scrollLeft = 0;
     });
   });
 </script>

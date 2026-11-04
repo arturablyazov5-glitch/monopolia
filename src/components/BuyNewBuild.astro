@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:6553 (Mask group — красный разделитель) + 1380:6554 (блок «05»):
 // бесплатный подбор новостройки, комиссия 0%.
 import Paper from "./Paper.astro";
@@ -18,19 +19,19 @@ import "../styles/buy-new-build.css";
   ></span>
   <Paper class="buy-new-build-card" node="1380:6554">
     <h2 id="buy-new-build-title">
-      Бесплатно подберем и поможем с покупкой новостройки
+      {siteText("buy-new-build.text.1")}
     </h2>
     <p>
-      А также поможем доработать заявку на ипотеку и подадим ее в банк, чтобы повысить шанс одобрения. Комиссию агентства за вас оплатит застройщик
+      {siteText("buy-new-build.text.2")}
     </p>
-    <Button
-      label="Хочу купить новостройку"
+    <Button popup="new-build"
+      label={siteText("buy-new-build.label.3")}
       subject="Подбор новостройки, комиссия 0%"
     />
     <div class="buy-new-build-note-wrap">
       <Paper class="buy-new-build-note" tapeNode="I1380:6559;569:1388" node="1380:6559">
         <p>
-          Комиссия — <strong>0%</strong>
+          {siteText("buy-new-build.text.4")} <strong>0%</strong>
         </p>
       </Paper>
     </div>

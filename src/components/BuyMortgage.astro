@@ -1,10 +1,12 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:6364: фон 1380:6365 + блок «02» (ипотека, 1380:6370)
 // и блок «03» (объекты ниже рынка, 1380:6444) на странице «Покупка».
 import Paper from "./Paper.astro";
 import Button from "./Button.astro";
 import NumberedBenefit from "./NumberedBenefit.astro";
 import PartnerLogos from "./PartnerLogos.astro";
+import "../styles/home-partners.css";
 import RangeField from "./RangeField.astro";
 import Carousel from "./Carousel.astro";
 import PropertyCard from "./PropertyCard.astro";
@@ -13,19 +15,21 @@ import "../styles/property-media.css";
 import { selectDeals, catalog } from "../lib/catalog";
 
 const programs = [
-  "Семейная ипотека",
-  "Военная ипотека",
-  "ИТ‑ипотека",
-  "Сельская ипотека",
-  "Дальневосточная и арктическая ипотека",
+  siteText("buy-mortgage.programs.1"),
+  siteText("buy-mortgage.programs.2"),
+  siteText("buy-mortgage.programs.3"),
+  siteText("buy-mortgage.programs.4"),
+  siteText("buy-mortgage.programs.5"),
 ];
 const steps = [
-  ["Подберем выгодные", "условия"],
-  ["Поможем собрать", "документы"],
-  ["Правильно подадим", "заявку в банк"],
+  [siteText("buy-mortgage.steps.6"), siteText("buy-mortgage.steps.7")],
+  [siteText("buy-mortgage.steps.8"), siteText("buy-mortgage.steps.9")],
+  [siteText("buy-mortgage.steps.10"), siteText("buy-mortgage.steps.11")],
 ];
 const deals = selectDeals();
-const endpoint = import.meta.env.PUBLIC_CATALOG_ENDPOINT || (import.meta.env.DEV ? "/api/catalog" : "");
+const endpoint =
+  import.meta.env.PUBLIC_CATALOG_ENDPOINT ||
+  (import.meta.env.DEV ? "/api/catalog" : "");
 const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
 ---
 
@@ -38,11 +42,11 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
     <source
       style="display: none"
       media="(max-width: 1199px)"
-      srcset="/assets/17477-k-mobile.webp"
+      srcset="/assets/buy-mortgage-background-mobile.webp"
     />
     <img
       class="buy-mortgage-bg"
-      src="/assets/17477.webp"
+      src="/assets/buy-mortgage-background.webp"
       alt=""
       width="1440"
       height="1911"
@@ -56,24 +60,26 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
       <div class="buy-mortgage-intro">
         <h2 id="buy-mortgage-title" class="buy-mortgage-title">
           <span class="buy-mortgage-title-row">
-            <span class="buy-mortgage-hand">9 из 10 человек</span>
-            получают
-          </span>
-          одобрение по ипотеке через нас
+            <span class="buy-mortgage-hand">
+              {siteText("buy-mortgage.text.12")}
+            </span>
+            {siteText("buy-mortgage.text.13")}
+          </span>{" "}
+          {siteText("buy-mortgage.text.14")}
         </h2>
         <ul class="buy-mortgage-programs" aria-label="Ипотечные программы">
           {programs.map((program) => (
             <li class="chip selected">
               <img
                 class="choice-check"
-                src="/assets/40c36.svg"
+                src="/assets/icon-choice-check.svg"
                 alt=""
                 width="20"
                 height="20"
                 loading="lazy"
                 decoding="async"
               />
-              {program}
+              <span class="buy-mortgage-program-label">{program}</span>
             </li>
           ))}
         </ul>
@@ -86,7 +92,7 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
               <span class="buy-mortgage-divider" aria-hidden="true" />
             )}
             <NumberedBenefit number={index + 1}>
-              {first} <br />
+              {first}<br />{" "}
               {second}
             </NumberedBenefit>
           </>
@@ -95,48 +101,57 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
     </div>
 
     <div class="buy-mortgage-banks">
-      <p>Банки‑партнеры:</p>
-      <PartnerLogos etalonIndex={7} />
+      <p>{siteText("buy-mortgage.text.15")}</p>
+      <PartnerLogos home />
     </div>
 
     <div class="buy-mortgage-cards">
       <Paper class="buy-mortgage-calc" node="1380:6420">
         <div class="buy-mortgage-calc-field">
-          <h3>Посчитайте ежемесячный платеж по ипотеке</h3>
+          <h3>{siteText("buy-mortgage.text.16")}</h3>
+          <!-- Только на мобилке: отзыв внутри калькулятора (отдельная плашка скрыта) -->
+          <div class="buy-mortgage-calc-review">
+            <span class="buy-mortgage-photo" aria-hidden="true">
+              {siteText("buy-mortgage.text.22")}
+            </span>
+            <div class="buy-mortgage-review-text">
+              <p>{siteText("buy-mortgage.text.23")}</p>
+              <p class="buy-mortgage-author">{siteText("buy-mortgage.text.24")}</p>
+            </div>
+          </div>
           <RangeField
             id="buy-housing-price"
-            label="Стоимость жилья"
+            label={siteText("buy-mortgage.label.17")}
             unit="млн"
             class="buy-mortgage-range"
           />
         </div>
         <div class="buy-mortgage-calc-result">
           <Button
-            label="Подобрать ипотеку"
+            popup="mortgage"
+            label={siteText("buy-mortgage.label.18")}
             subject="Подбор ипотеки: стоимость жилья 10,9 млн"
           />
           <div>
             <p class="buy-mortgage-payment">
-              от{" "}
+              {siteText("buy-mortgage.text.19")}{" "}
               <output for="buy-housing-price" data-base-payment="9670">
-                9 670
+                9 670
               </output>{" "}
-              ₽ / месяц
+              {siteText("buy-mortgage.text.20")}
             </p>
-            <p class="buy-mortgage-note">* Точную стоимость сообщит менеджер</p>
+            <p class="buy-mortgage-note">{siteText("buy-mortgage.text.21")}</p>
           </div>
         </div>
       </Paper>
       <Paper class="buy-mortgage-review" node="1380:6438">
-        <!-- Фото Татьяны в макете не предоставлено — плейсхолдер как в Figma -->
+        <!-- Фото Анны Стеценко отсутствует — нужен файл; нейтральная заглушка -->
         <span class="buy-mortgage-photo" aria-hidden="true">
-          Фото
+          {siteText("buy-mortgage.text.22")}
         </span>
         <div class="buy-mortgage-review-text">
-          <p>
-            Помогли одобрить ипотеку клиенту, которому банки отказывали 2 года
-          </p>
-          <p class="buy-mortgage-author">Татьяна, специалист по недвижимости</p>
+          <p>{siteText("buy-mortgage.text.23")}</p>
+          <p class="buy-mortgage-author">{siteText("buy-mortgage.text.24")}</p>
         </div>
       </Paper>
     </div>
@@ -144,32 +159,52 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
 
   <div class="buy-mortgage-deals" data-node-id="1380:6444">
     <div class="buy-mortgage-deals-heading">
-      <h2>Объекты с ценой ниже рынка — до 30%</h2>
+      <h2>{siteText("buy-mortgage.text.25")}</h2>
       <p>
-        Бывают разные ситуации — кто‑то переезжает, кому‑то срочно нужны деньги.{" "}
-        <br />
-        Поэтому у нас появляются варианты объектов по сниженной цене.
+        {siteText("buy-mortgage.text.26")} <br />
+        {siteText("buy-mortgage.text.27")}
       </p>
     </div>
-    <div data-catalog data-revision={catalog.revision} data-endpoint={endpoint} data-media-base={mediaBase} style="display: contents">
-    <div data-catalog-live hidden={deals.length === 0} style="display: contents">
-      <Carousel
-        label="Объекты с ценой ниже рынка"
-        class="buy-mortgage-carousel"
-      >
-        {deals.map((deal) => (
-          <PropertyCard {...deal} />
-        ))}
-      </Carousel>
-    </div>
-    <div data-catalog-empty hidden={deals.length > 0}>
+    <div
+      data-catalog
+      data-revision={catalog.revision}
+      data-endpoint={endpoint}
+      data-media-base={mediaBase}
+      style="display: contents"
+    >
       <div
-        class="buy-deals-empty"
-        role="img"
-        aria-label="Каталог предложений пуст"
-      />
-    </div>
-    <template data-card-template><PropertyCard title="" address="" price="" oldPrice="" pricePerMeter="" mortgage="" discount="" cardImage={{small:"",large:""}} /></template>
+        data-catalog-live
+        hidden={deals.length === 0}
+        style="display: contents"
+      >
+        <Carousel
+          label={"Объекты с ценой ниже рынка"}
+          class="buy-mortgage-carousel"
+          swipeHint
+          catalogCount={deals.length}
+        >
+          {deals.map((deal) => (
+            <PropertyCard {...deal} />
+          ))}
+        </Carousel>
+      </div>
+      <div data-catalog-empty hidden={deals.length > 0}>
+        <div class="buy-deals-empty" role="status">
+          В выбранном городе пока нет объектов.
+        </div>
+      </div>
+      <template data-card-template>
+        <PropertyCard
+          title=""
+          address=""
+          price=""
+          oldPrice=""
+          pricePerMeter=""
+          mortgage=""
+          discount=""
+          cardImage={{ small: "", large: "" }}
+        />
+      </template>
     </div>
   </div>
 </section>

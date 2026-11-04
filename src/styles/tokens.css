@@ -2,16 +2,31 @@
 :root {
   --color-accent: #ea1818;
   --color-diamond: #ff0000;
+  /* TASK-050: исходный SVG заказчика; base добавляется как у brush-mask. */
+  --bullet-diamond: url("/assets/icons/bullet-diamond.svg");
+  --bullet-diamond-width: 14px;
+  --bullet-diamond-height: 13px;
+  --bullet-gap: 10px;
   --color-ink: #1a1a1a;
   --color-muted: #505050;
   --color-canvas: #ededed;
   --color-paper: #ffffff;
+  --color-paper-warm: #f2eadc;
+  --color-button-hover-red: var(--color-accent);
   --color-dark: #1c1c1c;
+  --color-surface-dark-button-hover: var(--color-paper);
+  --color-surface-dark-button-text: var(--color-ink);
+  --color-button-white-icon: var(--color-ink);
   --color-caption: #9e9e9e;
   --color-field-text: #3b3b3b;
   --color-status: #2bb741;
   --color-disabled: #bcbcbc;
   --color-divider: #0000001a;
+  /* Меню: расстояние красной точки до текста, зазор между иконками
+     мессенджеров и градиентная линия-разделитель (слева 100 % → справа 0 %). */
+  --menu-dot-gap: 2px;
+  --menu-social-gap: 6px;
+  --line-fade: linear-gradient(to right, var(--color-divider), #0000);
   --color-backdrop: #00000099;
   --font-heading: Ruble, Forma, Arial, sans-serif;
   --font-body: Ruble, Calibri, Arial, sans-serif;
@@ -53,8 +68,21 @@
   --shadow-play: 0 3px 15px #0000001a;
   --duration-fast: 150ms;
   --focus-width: 3px;
-  --paper-texture: url("/assets/30984.webp");
-  --tape-texture: url("/assets/55e7e.webp");
+  /* Как заменить текстуру бежевых плашек:
+     замените public/assets/textures/paper-beige.webp тем же именем — изменится везде.
+     Файл используется без обработки и наложений; cover сохраняет пропорции волокон.
+     URL — от корня сайта, как brush-mask; Pages добавляет base в prepare-pages.mjs. */
+  --texture-paper-beige: url("/assets/textures/paper-beige.webp");
+  --texture-paper-size: cover;
+  --texture-paper-position: center;
+  --texture-paper-repeat: no-repeat;
+  --tape-texture: url("/assets/tape-beige-clean.svg");
+  /* Отступление от Figma по просьбе заказчика (TASK-067): единый сдвиг
+     пары верх-слева / низ-справа, по итоговому правилу «Услуг» TASK-059.
+     Положительные величины: верх вниз; низ вверх и влево, локально к листу. */
+  --tape-top-dy: 5px;
+  --tape-bottom-dy: 5px;
+  --tape-bottom-dx: 5px;
   --edge-button: polygon(
     0 3%,
     15% 1%,
@@ -88,4 +116,44 @@
     --text-heading: 34px;
     --text-display: 44px;
   }
+}
+
+/* TASK-034: mobile headings only. Body, badges and popup text keep --text-*.
+   Unitless leading scales with the font; existing heading tracking is normal. */
+@media (max-width: 767px) {
+  :root {
+    --bullet-list-gap: 20px;
+    --h1: 29px;
+    --h1-fluid: min(29px, calc((100vw - 40px) / 11.2 * 0.91));
+    --heading-section: 27px;
+    --h2: var(--heading-section);
+    --h2-compact: 25.5px;
+    --h3: 18px;
+    --h3-large: 20px;
+    --h3-small: 16.5px;
+    --heading-hand: 40px;
+    --heading-hero-hand: 42px;
+    --heading-hero-note: 27px;
+  }
+}
+@media (max-width: 389px) {
+  :root {
+    --h1: 27.3px;
+    --heading-section: var(--h2-compact);
+    --heading-hero-hand: var(--heading-hand);
+  }
+}
+
+/* Межсекционный отступ: 120 / 80 / 56 px. Двойной интервал производный;
+   глубину рваного края и вынос рамки резервирует сам компонент. */
+:root { --section-space: 120px; --section-space-double: calc(2 * var(--section-space)); --section-space-compact: 80px; --section-space-mobile: 56px; --carousel-gap: 32px; }
+@media (max-width: 1199px) { :root { --section-space: 80px; } }
+@media (max-width: 767px) { :root { --section-space: 56px; --radius-speech: 20px; } }
+
+:root {
+  /* Бумажные плашки: тот же заметный рваный край, что у кнопок,
+     с прямыми углами из --brush-square-images. */
+  --paper-mask-sizes: 10px 10px, calc(100% - 18px) 10px, 10px 10px,
+    10px calc(100% - 18px), calc(100% - 18px) calc(100% - 18px),
+    10px calc(100% - 18px), 10px 10px, calc(100% - 18px) 10px, 10px 10px;
 }

@@ -1,18 +1,24 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import Button from "./Button.astro";
 import Badge from "./Badge.astro";
+import BadgeGroup from "./BadgeGroup.astro";
+import MarketplaceBadge from "./MarketplaceBadge.astro";
 import "../styles/private-catalog.css";
+const marketIntroWords = siteText("private-catalog.text.14").split(/\s+/);
+const marketPreposition = marketIntroWords.pop();
+const marketLead = marketIntroWords.join(" ");
 const checks = [
-  "Залог",
-  "Наследство",
-  "Прописка",
-  "Банкротство",
-  "Аварийность дома",
-  "Арест",
-  "Психическое здоровье собственника",
-  "Пакет документов",
-  "И еще 43+ параметра",
+  siteText("private-catalog.checks.1"),
+  siteText("private-catalog.checks.2"),
+  siteText("private-catalog.checks.3"),
+  siteText("private-catalog.checks.4"),
+  siteText("private-catalog.checks.5"),
+  siteText("private-catalog.checks.6"),
+  siteText("private-catalog.checks.7"),
+  siteText("private-catalog.checks.8"),
+  siteText("private-catalog.checks.9"),
 ];
 ---
 
@@ -23,47 +29,28 @@ const checks = [
 >
   <div class="private-catalog-heading">
     <h2 id="private-catalog-title">
-      А если вы хотите купить недвижку — <br />у нас есть{" "}
-      <span class="private-catalog-count-space">800+ объектов</span> в закрытой базе,
+      <span class="private-catalog-intro">{siteText("private-catalog.text.10")} <br class="private-catalog-desktop-break" />{siteText("private-catalog.text.11")}</span>{" "}
+      <span class="private-catalog-count-space">{siteText("private-catalog.text.12")}</span>
+      <span class="private-catalog-tail">
+        {siteText("private-catalog.text.13")}
+        <span class="private-catalog-mobile-intro"> {marketLead}</span>
+      </span>
     </h2>
     <span class="private-catalog-count" aria-hidden="true">
-      800+ объектов
+      {siteText("private-catalog.text.12")}
     </span>
     <div class="private-catalog-markets">
-      которых нет на
-      <span class="private-catalog-market">
-        <span class="private-catalog-market-icon">
-          <img
-            src="/assets/dbe36.svg"
-            alt=""
-            width="36.7731"
-            height="36.3498"
-            loading="lazy"
-            decoding="async"
-          />
-        </span>
-        Авито
-      </span>
+      <span class="private-catalog-market-intro">{siteText("private-catalog.text.14")}</span>
+      <span class="private-catalog-mobile-intro">{marketPreposition}</span>
+      <MarketplaceBadge name="avito" />
       <span>и</span>
-      <span class="private-catalog-market">
-        <span class="private-catalog-market-icon">
-          <img
-            src="/assets/f2a86.svg"
-            alt=""
-            width="36.7731"
-            height="36.3498"
-            loading="lazy"
-            decoding="async"
-          />
-        </span>
-        Циан
-      </span>
+      <MarketplaceBadge name="cian" />
     </div>
   </div>
-  <Paper class="private-catalog-card" tapeNode="1433:9821" node="1433:9821">
+  <Paper class="private-catalog-card paper-torn-card" tapeNode="1433:9821" node="1433:9821">
     <div class="private-catalog-assurance">
       <img
-        src="/assets/c88df.svg"
+        src="/assets/catalog-assurance-icon.svg"
         alt=""
         width="36"
         height="36"
@@ -71,18 +58,17 @@ const checks = [
         decoding="async"
       />
       <p>
-        Каждый проверили по 52 параметрам, <br />
-        чтобы исключить все риски при оформлении сделки
+        {siteText("private-catalog.text.17")} <br />
+        <span class="private-catalog-assurance-detail">{siteText("private-catalog.text.18")}</span>
       </p>
-      <span class="private-catalog-underline" aria-hidden="true"></span>
     </div>
-    <div class="private-catalog-checks">
-      {checks.map((text) => (
-        <Badge text={text} />
+    <BadgeGroup class="private-catalog-checks">
+      {checks.map((text, index) => (
+        <Badge text={text} angle={[-1, 1, -1, -2, 2, 2, -0.5, -1, 2][index]} mobileOrder={[0, 0, 0, 1, 1, 0, 2, 3, 3][index]} />
       ))}
-    </div>
-    <Button
-      label="Получить доступ к базе"
+    </BadgeGroup>
+    <Button popup="closed-base"
+      label={siteText("private-catalog.label.19")}
       icon="access"
       subject="Доступ к закрытой базе недвижимости"
     />

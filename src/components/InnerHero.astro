@@ -1,26 +1,13 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import { imageSize } from "../lib/image-size";
-import { cities } from "../data/cities";
 // Общий первый экран внутренних страниц: мастер Figma 1380:5758 («Продажа»)
 // и 1380:6363 («Покупка»). Фон, команда, рейтинг, поля квиза одинаковые;
-// тексты, картинка буклета, его тень и кнопка передаются параметрами.
-import Button from "./Button.astro";
-import ChoiceGroup from "./ChoiceGroup.astro";
-import Paper from "./Paper.astro";
+// Карточка квиза общая с попапами; её контент хранится в data/hero-quiz.ts.
 import RatingBadge from "./RatingBadge.astro";
+import HeroQuizCard from "./HeroQuizCard.astro";
+import MarketplaceBadge from "./MarketplaceBadge.astro";
 import "../styles/inner-hero.css";
-
-interface Shadow {
-  /** SVG-тень буклета из Figma (файл в public/assets). */
-  src: string;
-  /** Рамка слоя в координатах слота буклета, px. */
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  /** Вынос SVG за рамку слоя (inset из Figma), CSS inset. */
-  bleed: string;
-}
 
 interface Props {
   /** data-node-id экземпляра в Figma. */
@@ -33,22 +20,6 @@ interface Props {
   /** Добавить строку «на [Авито] и [Циан]» (вариант «Покупки»). */
   markets?: boolean;
   description: string;
-  formText: string;
-  /** Изображение буклета: путь, пропорции, высота повёрнутого слоя;
-   * alt — описание, mobile — облегчённый файл для экранов ≤ 767 px. */
-  image: {
-    src: string;
-    ratio: string;
-    height: number;
-    width: number;
-    alt?: string;
-    mobile?: string;
-  };
-  shadow: Shadow;
-  buttonLabel: string;
-  buttonIcon?: boolean | "buy" | "sell" | "access";
-  subject: string;
-  options?: string[];
 }
 
 const {
@@ -58,46 +29,32 @@ const {
   accentLine = 1,
   markets = false,
   description,
-  formText,
-  image,
-  shadow,
-  buttonLabel,
-  buttonIcon = false,
-  subject,
-  options = [
-    "Квартира",
-    "Дом",
-    "Гараж",
-    "Участок",
-    "Коммерческая недвижимость",
-    "Другое",
-  ],
 } = Astro.props;
 
 // Команда: Figma I…;1174:9735 (1421 × 1021.151), порядок слоёв как в макете.
 const team = [
   {
-    stroke: "06546.svg",
+    stroke: "inner-hero-team-shadow-left.svg",
     box: "9.86% 56.74% 44.98% 24.19%",
     bleed: "-14.82% -18.41% -14.96% -36.22%",
-    photo: "bf328",
-    pos: "left:24.63%;width:21.38%;top:99.37px",
+    photo: "hero-team-left-inner-portrait",
+    pos: "--team-left:24.63%;--team-width:21.38%;--team-top:99.37px",
     ratio: "271.495117 / 413.48706",
   },
   {
-    stroke: "f53d4.svg",
+    stroke: "inner-hero-team-shadow-right.svg",
     box: "10.53% 26.95% 43.09% 55.82%",
     bleed: "-14.34% -19.65% -15.94% -40.11%",
-    photo: "bd260",
-    pos: "left:52%;width:21.13%;top:99.37px",
+    photo: "hero-team-right-center-portrait",
+    pos: "--team-left:52%;--team-width:21.13%;--team-top:99.37px",
     ratio: "268.312653 / 491.538727",
   },
   {
-    stroke: "394a8.svg",
+    stroke: "inner-hero-team-shadow-center.svg",
     box: "6.39% 41.12% 42.97% 40.2%",
     bleed: "-13.37% -17.74% -13.38% -36.62%",
-    photo: "0df0d",
-    pos: "left:38.79%;width:21.72%;bottom:54.92px",
+    photo: "hero-team-center-portrait",
+    pos: "--team-left:38.79%;--team-width:21.72%;--team-bottom:54.92px",
     ratio: "275.914581 / 803.424316",
   },
 ];
@@ -125,10 +82,15 @@ const team = [
         {title.map((line, index) => (
           <>
             {index > 0 && <br />}
-            {markets && index === title.length - 1 && line.endsWith(" нет") ? (
+            {markets &&
+            index === title.length - 1 &&
+            line.endsWith(siteText("inner-hero.text.7")) ? (
               <>
                 {line.slice(0, -4)}
-                <span class="inner-hero-net-desktop"> нет</span>
+                <span class="inner-hero-net-desktop">
+                  {" "}
+                  {siteText("inner-hero.text.7")}
+                </span>
               </>
             ) : (
               line
@@ -147,35 +109,14 @@ const team = [
         {markets && (
           <span class="inner-hero-markets">
             <span>
-              <span class="inner-hero-net-mobile">нет </span>на
-            </span>
-            <span class="inner-hero-market">
-              <span class="market-icon">
-                <img
-                  src="/assets/aee4e.svg"
-                  alt=""
-                  width="36.7731"
-                  height="36.3498"
-                  loading="eager"
-                  decoding="async"
-                />
+              <span class="inner-hero-net-mobile">
+                {siteText("inner-hero.text.7")}{" "}
               </span>
-              <span>Авито</span>
+              {siteText("inner-hero.text.8")}
             </span>
+            <MarketplaceBadge name="avito" loading="eager" />
             и
-            <span class="inner-hero-market">
-              <span class="market-icon">
-                <img
-                  src="/assets/c5c04.svg"
-                  alt=""
-                  width="36.7731"
-                  height="36.3498"
-                  loading="eager"
-                  decoding="async"
-                />
-              </span>
-              <span>Циан</span>
-            </span>
+            <MarketplaceBadge name="cian" loading="eager" />
           </span>
         )}
       </h1>
@@ -205,12 +146,12 @@ const team = [
             {/* ≤ 767 px: портреты показаны ≈ 150 px — облегчённые 320 w для 2×. */}
             <source
               media="(max-width: 767px)"
-              srcset={`/assets/${layer.photo}-r2-320.webp 320w, /assets/${layer.photo}.webp ${imageSize("/assets/" + layer.photo + ".webp").width}w`}
+              srcset={`/assets/${layer.photo}-320w.webp 320w, /assets/${layer.photo}.webp ${imageSize("/assets/" + layer.photo + ".webp").width}w`}
               sizes="160px"
               style="display:none"
             />
             <img
-              class="inner-team-portrait"
+              class="inner-team-portrait person-photo"
               src={"/assets/" + layer.photo + ".webp"}
               alt=""
               style={`${layer.pos};aspect-ratio:${layer.ratio}`}
@@ -225,124 +166,9 @@ const team = [
       ))}
     </div>
 
-    <Paper class="inner-hero-card" node={node + ";1170:9441"}>
-      <div class="inner-hero-card-top">
-        <p>{formText}</p>
-        <div class="inner-hero-quiz">
-          <div class="inner-hero-booklet">
-            <div
-              class="inner-hero-booklet-shadow"
-              style={`left:${shadow.left}px;top:${shadow.top}px;width:${shadow.width}px;height:${shadow.height}px`}
-            >
-              <img
-                src={"/assets/" + shadow.src}
-                alt=""
-                style={`inset:${shadow.bleed}`}
-                width={imageSize("/assets/" + shadow.src).width}
-                height={imageSize("/assets/" + shadow.src).height}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <div
-              class="inner-hero-booklet-frame"
-              style={`height:${image.height}px`}
-            >
-              <picture style="display:contents">
-                {image.mobile && (
-                  <source
-                    media="(max-width: 767px)"
-                    srcset={image.mobile}
-                    style="display:none"
-                  />
-                )}
-                <img
-                  src={image.src}
-                  fetchpriority="low"
-                  alt={image.alt ?? "Пример отчёта Монополии"}
-                  width={image.width}
-                  style={`aspect-ratio:${image.ratio}`}
-                  height={imageSize(image.src, image.width).height}
-                  loading="eager"
-                  decoding="async"
-                />
-              </picture>
-            </div>
-          </div>
-          <div class="inner-hero-fields">
-            <div class="city-picker inner-hero-city-picker" data-city-picker>
-              <button
-                type="button"
-                class="inner-hero-city"
-                data-city-toggle
-                aria-haspopup="listbox"
-                aria-expanded="false"
-                aria-label="Город"
-              >
-                <span data-city-label>{cities[0]}</span>
-                <img
-                  class="city-chevron"
-                  src="/assets/98485.svg"
-                  alt=""
-                  width="6"
-                  height="3.5"
-                  loading="eager"
-                  decoding="async"
-                />
-              </button>
-              <input type="hidden" name="city" value={cities[0]} />
-              <ul class="city-menu" role="listbox" aria-label="Город" hidden>
-                {cities.map((c, i) => (
-                  <li
-                    role="option"
-                    aria-selected={i === 0}
-                    tabindex="-1"
-                    data-city-option={c}
-                  >
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div class="inner-hero-types">
-              <ChoiceGroup
-                loading="eager"
-                name="Тип недвижимости"
-                options={options}
-              />
-              <span class="inner-hero-cursor" aria-hidden="true">
-                <img
-                  src="/assets/23278.svg"
-                  alt=""
-                  width="20.3387"
-                  height="20.643"
-                  loading="eager"
-                  decoding="async"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="inner-hero-submit" data-subject-base={subject}>
-        <Button
-          loading="eager"
-          label={buttonLabel}
-          source={`Квиз в шапке · Кнопка «${buttonLabel}»`}
-          icon={buttonIcon}
-          subject={`${subject}: ${options[0]}`}
-        />
-      </div>
-    </Paper>
+    <HeroQuizCard
+      variant={markets ? "buy" : "sell"}
+      node={node + ";1170:9441"}
+    />
   </div>
 </section>
-<script>
-  document.querySelectorAll<HTMLElement>(".inner-hero-card").forEach((card) => {
-    const submit = card.querySelector<HTMLElement>("[data-subject-base]");
-    const button = submit?.querySelector<HTMLButtonElement>("[data-lead]");
-    if (!submit || !button) return;
-    card.addEventListener("choice-change", ((event: CustomEvent) => {
-      button.dataset.subject = `${submit.dataset.subjectBase}: ${event.detail.value}`;
-    }) as EventListener);
-  });
-</script>

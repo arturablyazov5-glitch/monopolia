@@ -1,7 +1,6 @@
 import { readFile, chmod, lstat } from 'node:fs/promises';
 import { passwordHash } from './admin-auth.mjs';
 import { resolve } from 'node:path';
-import {parseEnv} from 'node:util';
 import {atomic} from './admin-storage.mjs';
 if (!process.stdin.isTTY || !process.stdout.isTTY) throw Error('Откройте интерактивный терминал');
 function hidden(prompt) {
@@ -28,15 +27,11 @@ try {
   const path = resolve('.env');
   let contents = '';
   try { if ((await lstat(path)).isSymbolicLink()) throw Error('Символическая ссылка запрещена'); contents = await readFile(path,'utf8'); } catch(e) { if(e.code !== 'ENOENT') throw e; }
-  const quote=["'", '"', '`'].find(q=>!first.includes(q));
-  if(!quote)throw Error('Выберите пароль без одного из видов кавычек: одинарных, двойных или обратных');
-  const encoded=quote+first+quote;
-  if(parseEnv('VALUE='+encoded).VALUE!==first)throw Error('Этот пароль нельзя сохранить в env-файле; выберите другой');
-  for (const [name,value] of [['ADMIN_PASSWORD_HASH',await passwordHash(first)],['ADMIN_PASSWORD',encoded]]) {
+  for (const [name,value] of [['ADMIN_PASSWORD_HASH',await passwordHash(first)]]) {
     const pattern=new RegExp('^'+name+'=.*$','gm');
     const line=name+'='+value;
     contents=pattern.test(contents)?contents.replace(pattern,()=>line):contents.replace(/\n?$/,'\n')+line+'\n';
   }
   await atomic(path,contents); await chmod(path,0o600);
-  console.log('Обновлены ADMIN_PASSWORD_HASH и ADMIN_PASSWORD. Пароль хранится открыто в .env для бота; защитите файл правами 600. Перезапустите сервер.');
+  console.log('Обновлён ADMIN_PASSWORD_HASH. Перезапустите сервер.');
 } catch(e) { console.error(e.message); process.exitCode = 1; }

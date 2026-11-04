@@ -1,0 +1,21 @@
+.column-divider {
+  --column-divider-color: #000;
+}
+.column-divider--light {
+  --column-divider-color: #fff;
+}
+.column-divider:not(.column-divider--overlay),
+.column-divider--overlay::before {
+  background: linear-gradient(
+    transparent 0%,
+    var(--column-divider-color) 5%,
+    transparent 100%
+  );
+  opacity: 0.1;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  :root .column-grid-mobile.column-grid-mobile {
+    column-gap: 32px;
+  }
+}

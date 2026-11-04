@@ -1,0 +1,92 @@
+---
+import { imageSize } from "../lib/image-size";
+import { expertPortraits } from "../data/expert-portraits";
+interface Props {
+  name: string;
+  role: string;
+  src: string;
+  alwaysVisible?: boolean;
+}
+const { name, role, src, alwaysVisible = false } = Astro.props;
+const portrait = expertPortraits[src];
+if (!portrait) throw new Error(`Не задан кадр портрета эксперта: ${src}`);
+---
+
+<div
+  class:list={["expert-profile", { "expert-profile-always": alwaysVisible }]}
+  style={`--profile-image-width:${portrait.width}px;--profile-image-left:${portrait.left}px;--profile-image-top:${portrait.top}px;--profile-image-rotation:${portrait.rotation}deg`}
+>
+  <span class="expert-profile-avatar">
+    <img
+      class="person-photo"
+      src={src}
+      alt={name}
+      width={imageSize(src).width}
+      height={imageSize(src).height}
+      loading="eager"
+      decoding="async"
+    />
+  </span>
+  <span class="expert-profile-info">
+    <strong>{name}</strong>
+    <span>{role}</span>
+  </span>
+</div>
+
+<style>
+  .expert-profile {
+    display: none;
+  }
+  .expert-profile.expert-profile-always {
+    display: flex;
+  }
+  .expert-profile {
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+  }
+  .expert-profile-avatar {
+    position: relative;
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    overflow: hidden;
+    border-radius: 0;
+    --brush-images: var(--brush-square-images);
+    --brush-sizes:
+      6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
+      calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
+      calc(100% - 10px) 6px, 6px 6px;
+    mask-image: var(--brush-images);
+    mask-size: var(--brush-sizes);
+    mask-position: var(--brush-positions);
+    mask-repeat: no-repeat;
+    background: var(--color-canvas);
+  }
+  .expert-profile-avatar img {
+    position: absolute;
+    top: var(--profile-image-top);
+    left: var(--profile-image-left);
+    width: var(--profile-image-width);
+    height: auto;
+    max-width: none;
+    transform: rotate(var(--profile-image-rotation));
+    transform-origin: 52% 18%;
+  }
+  .expert-profile-info {
+    display: grid;
+    gap: 4px;
+    font: 14px/1.2 var(--font-body);
+  }
+  .expert-profile-info strong {
+    font-size: 16px;
+  }
+  .expert-profile-info > span {
+    color: var(--color-muted);
+  }
+  @media (max-width: 767px) {
+    .expert-profile {
+      display: flex;
+    }
+  }
+</style>

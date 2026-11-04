@@ -19,8 +19,10 @@
   font-weight: 400;
 }
 /* Разделители 785:7946: 1 px, у первых двух колонок чёрный 5%, у третьей белый */
-.comparison-risk tbody tr:not(:last-child) > * {
-  border-bottom: 1px solid #0000000d;
+@media (min-width: 768px) {
+  .comparison-risk tbody tr:not(:last-child) > * {
+    border-bottom: 1px solid #0000000d;
+  }
 }
 .comparison-risk thead > tr > * {
   border-bottom: 1px solid #0000000d;
@@ -42,8 +44,6 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--paper-texture) center / cover;
-  opacity: 0.5;
   pointer-events: none;
 }
 /* Шапка 1380:6988: высота 72, Forma Medium 20 */
@@ -74,6 +74,7 @@
   align-items: center;
   gap: 20px;
 }
+.comparison-cell-heading { display: contents; }
 .comparison-risk-cell > img {
   flex-shrink: 0;
 }
@@ -129,34 +130,49 @@
   }
   .comparison-risk tbody tr {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    background: var(--color-canvas);
-    padding: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    background: transparent;
+    padding: 0 0 24px;
+  }
+  .comparison-risk tbody tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-divider);
   }
   .comparison-risk tbody th,
   .comparison-risk tbody td {
     display: block;
-    padding: 16px;
+    padding: 12px;
     border: 0;
   }
   .comparison-risk tbody th {
-    padding-bottom: 12px;
+    grid-column: 1 / -1;
+    padding: 0 0 4px;
+  }
+  .comparison-risk tbody td:not(.comparison-risk-ours) {
+    padding-left: 0;
   }
   .comparison-risk-label {
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.2;
   }
   .comparison-mobile-label {
     display: block;
-    margin-bottom: 10px;
-    font: 500 18px/1.2 var(--font-heading);
+    margin: 0;
+    font: 500 14px/1.2 var(--font-heading);
   }
   .comparison-risk-cell {
     align-items: flex-start;
-    gap: 12px;
-    line-height: 1.3;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .comparison-cell-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .comparison-risk .comparison-risk-ours {
-    margin-top: 8px;
+    margin-top: 0;
   }
 }

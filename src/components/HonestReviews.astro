@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import "../styles/honest-reviews.css";
 ---
@@ -10,9 +11,7 @@ import "../styles/honest-reviews.css";
 >
   <div class="honest-reviews-background">
     <img
-      src="/assets/7b515.webp"
-      srcset="/assets/7b515-m.webp 1440w, /assets/7b515.webp 2881w"
-      sizes="(max-width: 767px) 720px, 2881px"
+      src="/assets/honest-reviews-boxing-specialist.webp"
       width="1440"
       height="926"
       alt="Сотрудница Монополии в боксёрских перчатках"
@@ -24,16 +23,16 @@ import "../styles/honest-reviews.css";
     <div class="honest-reviews-copy">
       <h2 id="honest-reviews-title">
         <span class="honest-reviews-muted">
-          Развод на деньги, <br />
-          нечестные агенты —
+          {siteText("honest-reviews.text.1")} <br />
+          {siteText("honest-reviews.text.2")}
         </span>{" "}
         <br />
-        эти и другие отзывы <br />
+        {siteText("honest-reviews.text.3")} <br />
         <span class="honest-reviews-last">
-          мы удаляем{" "}
+          {siteText("honest-reviews.text.4")}{" "}
           <span class="honest-reviews-delete" aria-hidden="true">
             <img
-              src="/assets/73c01.svg"
+              src="/assets/honest-reviews-background.svg"
               width="20"
               height="20"
               alt=""
@@ -45,7 +44,7 @@ import "../styles/honest-reviews.css";
       </h2>
       <Paper class="honest-reviews-note" tapeNode="I1380:5150;569:1388" node="1380:5150">
         <img
-          src="/assets/44e79.svg"
+          src="/assets/honest-reviews-person-shadow.svg"
           width="36"
           height="36"
           alt=""
@@ -53,16 +52,14 @@ import "../styles/honest-reviews.css";
           decoding="async"
         />
         <p>
-          В Белогорске конкуренция <strong>не совсем честная</strong>. К счастью
-          площадки позволяют удалять заказные отзывы, жаль нельзя удалить
-          неправдивые слухи
+          {siteText("honest-reviews.text.5")} <strong>{siteText("honest-reviews.text.6")}</strong>{siteText("honest-reviews.text.7")}
         </p>
       </Paper>
     </div>
     <img
       class="honest-reviews-broken"
-      src="/assets/674ff.webp"
-      srcset="/assets/674ff-m.webp 760w, /assets/674ff.webp 987w"
+      src="/assets/honest-reviews-fake-review-card.webp"
+      srcset="/assets/honest-reviews-fake-review-card-mobile.webp 760w, /assets/honest-reviews-fake-review-card.webp 987w"
       sizes="(max-width: 767px) min(380px, 100vw - 40px), 987px"
       width="537"
       height="498"

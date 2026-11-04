@@ -7,14 +7,6 @@
   color: var(--color-muted);
   line-height: 19px;
 }
-.sell-steps .deal-step-list .diamond-line {
-  gap: 10px;
-}
-.sell-steps .deal-step-list .diamond {
-  width: 6px;
-  height: 6px;
-  margin: 6.24px 1.24px 0;
-}
 .sell-realtor .realtor-comparison-bg {
   top: -0.257px;
 }

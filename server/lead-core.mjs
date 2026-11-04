@@ -1,3 +1,4 @@
+import { forwardedOrigin } from "./proxy-origin.mjs";
 import { sourceName, pageName } from "./lead-sources.mjs";
 /** Общая логика Node и Yandex Cloud Functions. Без зависимостей. */
 const LIMIT = 10 * 1024;
@@ -82,11 +83,12 @@ function validate(data) {
     throw new Error();
   const form = text("form", 1, 80);
   const rawPhone = text("phone", 10, 40);
-  if (!/^[+\d()\s-]+$/.test(rawPhone)) throw new Error();
+  if (!/^\+?[\d()\s-]+$/.test(rawPhone)) throw new Error();
   let phone = rawPhone.replace(/\D/g, "");
+  if (rawPhone.startsWith("+") && !/^7\d{10}$/.test(phone)) throw new Error();
   if (phone.length === 10) phone = "7" + phone;
   if (phone[0] === "8") phone = "7" + phone.slice(1);
-  if (!/^7[349]\d{9}$/.test(phone)) throw new Error();
+  if (!/^7\d{10}$/.test(phone)) throw new Error();
   if (data.consent !== true || data.honeypot !== "") throw new Error();
   const page = text("page", 1, 1000);
   if (!["http:", "https:"].includes(new URL(page).protocol)) throw new Error();
@@ -201,7 +203,7 @@ export function formatLeadMessage(data, env = {}) {
 export async function handleLead(
   request,
   env,
-  { ip = "unknown", report = () => {} } = {},
+  { ip = "unknown", remoteAddress, report = () => {} } = {},
 ) {
   const origin = request.headers.get("origin");
   const allowed = [
@@ -223,8 +225,9 @@ export async function handleLead(
   // Origin обязателен: серверные тесты также передают origin разрешённого сайта.
   if (new URL(request.url).pathname === "/health" && request.method === "GET")
     return reply(200);
-  if (!origin || !allowed.includes(origin))
-    return reply(400, "origin_not_allowed");
+  if (!origin || (!allowed.includes(origin) &&
+      origin !== forwardedOrigin(request.headers, env, remoteAddress)))
+    return reply(403, "origin_not_allowed");
   headers["Access-Control-Allow-Origin"] = origin;
   headers["Access-Control-Allow-Methods"] = "POST, OPTIONS";
   headers["Access-Control-Allow-Headers"] = "Content-Type";

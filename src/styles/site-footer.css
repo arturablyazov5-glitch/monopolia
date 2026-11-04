@@ -7,8 +7,8 @@
   color: #fff;
   background: linear-gradient(
     to bottom,
-    transparent 99.21px,
-    var(--color-dark) 99.21px
+    transparent 98px,
+    var(--color-dark) 98px
   );
 }
 .site-footer .footer-edge {
@@ -99,6 +99,10 @@
   white-space: nowrap;
 }
 .site-footer .footer-navigation a {
+  justify-self: start;
+  width: fit-content;
+  padding: 0;
+  margin: 0;
   transition: color var(--duration-fast) ease;
 }
 .site-footer .footer-navigation a:hover,
@@ -119,15 +123,24 @@
   color: inherit;
   font: inherit;
   text-align: left;
+  text-decoration: none;
 }
 /* Единый footer на всех страницах: ссылки на документы подчёркнуты (Figma 1380:7023) */
 .site-footer .footer-doc-link {
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #a0a0a0;
+  text-underline-offset: 3px;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-underline-position: auto;
+  transition: text-decoration-color var(--duration-fast) ease;
 }
-.site-footer .footer-doc:hover,
-.site-footer .footer-doc:focus-visible {
-  color: #fff;
+.site-footer .footer-doc:hover .footer-doc-link,
+.site-footer .footer-doc:focus-visible .footer-doc-link {
+  text-decoration-color: var(--color-accent);
 }
 .site-footer .footer-doc-status {
   grid-column: 1 / -1;
@@ -234,7 +247,7 @@
   height: auto;
   max-width: none;
 }
-.site-footer .socials img[src$="84d6e.svg"] {
+.site-footer .socials img[src$="social-telegram-dark.svg"] {
   left: -6.25%;
   top: -4.73%;
 }
@@ -255,22 +268,6 @@
 .site-footer .footer-bottom small {
   font: 14px/1.2 var(--font-body);
   color: rgb(255 255 255 / 0.5);
-}
-.site-footer .footer-up {
-  position: relative;
-  display: block;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-}
-.site-footer .footer-up img {
-  position: absolute;
-  left: -1.81%;
-  top: -5.68%;
-  max-width: none;
-}
-.site-footer .footer-up:hover {
-  filter: brightness(0.9);
 }
 
 /* ===== Адаптив (R1). Планшет ≤ 1199: компания + контакты в две колонки,
@@ -302,18 +299,20 @@
     grid-row: 1;
   }
   /* Q1: зоны нажатия ≥ 44 px на планшете (были 19–37 px) */
-  .site-footer .footer-navigation nav a,
-  .site-footer .footer-doc,
+  .site-footer .footer-policy > div,
   .site-footer .footer-phone,
   .site-footer .email-chip {
     min-height: 44px;
   }
-  .site-footer .footer-navigation nav a,
   .site-footer .footer-phone {
     display: inline-flex;
     align-items: center;
   }
+  .site-footer .footer-navigation nav a {
+    align-self: center;
+  }
   .site-footer .footer-navigation nav {
+    grid-template-rows: repeat(4, minmax(44px, auto));
     row-gap: 0;
   }
 }
@@ -356,20 +355,32 @@
     grid-auto-flow: row;
     grid-template-rows: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 16px;
+    gap: 16px;
     white-space: normal;
   }
   .site-footer .footer-navigation nav a {
     display: flex;
     align-items: center;
-    min-height: 44px;
+    min-height: 0;
+    align-self: start;
+    padding: 0;
+    justify-self: start;
+    width: fit-content;
+  }
+  .site-footer .meta-note {
+    max-width: 240px;
   }
   .site-footer .footer-policy {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
   }
-  .site-footer .footer-doc {
-    min-height: 44px;
+  .site-footer .footer-navigation nav a {
+    position: relative;
+  }
+  .site-footer .footer-navigation nav a::after {
+    content: "";
+    position: absolute;
+    inset: -3px 0;
   }
   .site-footer .footer-phone-block p,
   .site-footer .footer-social p {
@@ -382,5 +393,39 @@
 @media (max-width: 389px) {
   .site-footer .container.footer-inner {
     margin: 0 16px;
+  }
+}
+
+/* На десктопе номер открывает форму, на узких экранах звонит напрямую. */
+.site-footer .footer-callback {
+  display: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+@media (min-width: 1200px) {
+  .site-footer .footer-phone-link {
+    display: none;
+  }
+  .site-footer .footer-callback {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-footer .footer-brand {
+    gap: 9px;
+  }
+  .site-footer .footer-brand > img {
+    width: 33px;
+    height: 33px;
+  }
+  .site-footer .footer-brand-text > img {
+    width: 151px;
+    height: auto;
+  }
+  .site-footer .footer-brand-text p {
+    font-size: 11px;
   }
 }

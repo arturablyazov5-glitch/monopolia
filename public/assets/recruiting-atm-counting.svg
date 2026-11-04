@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="602" viewBox="0 0 1024 602" preserveAspectRatio="none">
+  <style>
+    /* The photo stretches to its frame. Preserve the original logo proportions
+       using the SVG image viewport, including when object-fit switches to cover. */
+    .screen-brand {
+      transform-origin: 20px 30.5px;
+      transform: scaleX(calc(1024 / 602 * (100vh / 100vw)));
+    }
+    .contact-shadow { opacity: 0; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .note { animation: count 2s linear infinite; }
+      .contact-shadow { animation: contact 2s linear infinite; }
+      .note-one, .shadow-one { animation-delay: -1.5s; }
+      .note-two, .shadow-two { animation-delay: -1s; }
+      .note-three, .shadow-three { animation-delay: -.5s; }
+      .foil { animation: foil 2s ease-in-out infinite; }
+      .indicator { animation: pulse .5s ease-in-out infinite; }
+      .indicator.second { animation-delay: -.1666667s; }
+      .indicator.third { animation-delay: -.3333333s; }
+    }
+    @keyframes count {
+      0% {
+        transform: translateY(-32px) scale(.96, .94);
+        opacity: 0;
+        animation-timing-function: ease-out;
+      }
+      6% {
+        transform: translateY(-27px) scale(.98, .96);
+        opacity: 1;
+        animation-timing-function: cubic-bezier(.32, 0, .2, 1);
+      }
+      20% { transform: translateY(0) scale(1); opacity: 1; }
+      25% { transform: translateY(1px) scale(1); opacity: 1; }
+      32%, 100% { transform: translateY(3px) scale(1); opacity: 0; }
+    }
+    @keyframes contact {
+      0%, 6% { opacity: 0; transform: scale(.88, 1); }
+      16% { opacity: .16; transform: scale(.98, 1); }
+      20%, 25% { opacity: .28; transform: scale(1); }
+      32%, 100% { opacity: 0; transform: scale(1); }
+    }
+    @keyframes foil {
+      0%, 65%, 100% { opacity: .15; }
+      32% { opacity: .7; }
+    }
+    @keyframes pulse {
+      0%, 80%, 100% { opacity: .25; }
+      35% { opacity: 1; }
+    }
+  </style>
+  <!-- The transparent canvas shares the photo's intrinsic size and crop. -->
+  <svg x="190" y="382" width="154" height="135" viewBox="0 0 308 270" overflow="hidden">
+    <defs>
+      <!-- Original site logo vectors, embedded for SVG-as-image compatibility. -->
+      <symbol id="brand-mark" viewBox="0 0 32 32">
+<g>
+<path d="M29.5533 0H2.44666C1.09541 0 0 1.09541 0 2.44666V29.5533C0 30.9046 1.09541 32 2.44666 32H29.5533C30.9046 32 32 30.9046 32 29.5533V2.44666C32 1.09541 30.9046 0 29.5533 0Z" fill="#EA1818"/>
+<path d="M6.02108 8.515C7.39844 8.515 8.515 7.39844 8.515 6.02108C8.515 4.64372 7.39844 3.52715 6.02108 3.52715C4.64372 3.52715 3.52715 4.64372 3.52715 6.02108C3.52715 7.39844 4.64372 8.515 6.02108 8.515Z" fill="white"/>
+<path d="M6.02108 18.4928C7.39844 18.4928 8.515 17.3763 8.515 15.9989C8.515 14.6216 7.39844 13.505 6.02108 13.505C4.64372 13.505 3.52715 14.6216 3.52715 15.9989C3.52715 17.3763 4.64372 18.4928 6.02108 18.4928Z" fill="white"/>
+<path d="M6.02108 28.4707C7.39844 28.4707 8.515 27.3541 8.515 25.9768C8.515 24.5994 7.39844 23.4829 6.02108 23.4829C4.64372 23.4829 3.52715 24.5994 3.52715 25.9768C3.52715 27.3541 4.64372 28.4707 6.02108 28.4707Z" fill="white"/>
+<path d="M15.9989 18.4864C17.3763 18.4864 18.4929 17.3698 18.4929 15.9925C18.4929 14.6151 17.3763 13.4986 15.9989 13.4986C14.6216 13.4986 13.505 14.6151 13.505 15.9925C13.505 17.3698 14.6216 18.4864 15.9989 18.4864Z" fill="white"/>
+<path d="M25.9854 8.515C27.3627 8.515 28.4793 7.39844 28.4793 6.02108C28.4793 4.64372 27.3627 3.52715 25.9854 3.52715C24.608 3.52715 23.4914 4.64372 23.4914 6.02108C23.4914 7.39844 24.608 8.515 25.9854 8.515Z" fill="white"/>
+<path d="M25.9768 18.4864C27.3541 18.4864 28.4707 17.3698 28.4707 15.9925C28.4707 14.6151 27.3541 13.4986 25.9768 13.4986C24.5994 13.4986 23.4829 14.6151 23.4829 15.9925C23.4829 17.3698 24.5994 18.4864 25.9768 18.4864Z" fill="white"/>
+<path d="M25.9768 28.4643C27.3541 28.4643 28.4707 27.3477 28.4707 25.9703C28.4707 24.593 27.3541 23.4764 25.9768 23.4764C24.5994 23.4764 23.4829 24.593 23.4829 25.9703C23.4829 27.3477 24.5994 28.4643 25.9768 28.4643Z" fill="white"/>
+</g>
+</symbol><symbol id="brand-wordmark" viewBox="0 0 201 20">
+<g>
+<g>
+<path d="M1 19.6685V0.331491H4.69286L12.9054 13.9779H10.9487L19.0234 0.331491H22.7162L22.7438 19.6685H18.5549L18.5273 6.76796H19.3265L12.8502 17.6243H10.866L4.25192 6.76796H5.18892V19.6685H1Z" fill="white"/>
+<path d="M36.7682 20C35.2432 20 33.8286 19.7514 32.5241 19.2541C31.238 18.7569 30.1173 18.0571 29.162 17.1547C28.225 16.2523 27.4901 15.1934 26.9573 13.9779C26.4428 12.7624 26.1856 11.4365 26.1856 10C26.1856 8.56354 26.4428 7.23757 26.9573 6.0221C27.4901 4.80663 28.2341 3.7477 29.1895 2.8453C30.1449 1.94291 31.2656 1.24309 32.5517 0.745855C33.8377 0.248618 35.2341 0 36.7406 0C38.2655 0 39.6618 0.248618 40.9295 0.745855C42.2156 1.24309 43.3271 1.94291 44.2641 2.8453C45.2195 3.7477 45.9636 4.80663 46.4964 6.0221C47.0292 7.21915 47.2956 8.54512 47.2956 10C47.2956 11.4365 47.0292 12.7716 46.4964 14.0055C45.9636 15.221 45.2195 16.2799 44.2641 17.1823C43.3271 18.0663 42.2156 18.7569 40.9295 19.2541C39.6618 19.7514 38.2747 20 36.7682 20ZM36.7406 16.1878C37.6041 16.1878 38.3941 16.0405 39.1106 15.7459C39.8455 15.4512 40.4886 15.0276 41.0397 14.4751C41.5909 13.9227 42.0135 13.2689 42.3074 12.5138C42.6198 11.7587 42.7759 10.9208 42.7759 10C42.7759 9.07919 42.6198 8.24125 42.3074 7.48619C42.0135 6.73112 41.5909 6.07735 41.0397 5.52486C40.5069 4.97237 39.8731 4.5488 39.1382 4.25414C38.4033 3.95948 37.6041 3.81216 36.7406 3.81216C35.8771 3.81216 35.0779 3.95948 34.343 4.25414C33.6265 4.5488 32.9926 4.97237 32.4414 5.52486C31.8903 6.07735 31.4585 6.73112 31.1462 7.48619C30.8522 8.24125 30.7052 9.07919 30.7052 10C30.7052 10.9024 30.8522 11.7403 31.1462 12.5138C31.4585 13.2689 31.8811 13.9227 32.4139 14.4751C32.9651 15.0276 33.6081 15.4512 34.343 15.7459C35.0779 16.0405 35.8771 16.1878 36.7406 16.1878Z" fill="white"/>
+<path d="M63.963 19.6685V0.331491H68.4275V19.6685H63.963ZM50.7348 19.6685V0.331491H55.1993V19.6685H50.7348ZM54.8686 11.7403V7.9558H64.2937V11.7403H54.8686Z" fill="white"/>
+<path d="M82.4929 20C80.968 20 79.5534 19.7514 78.2489 19.2541C76.9628 18.7569 75.8421 18.0571 74.8868 17.1547C73.9498 16.2523 73.2149 15.1934 72.6821 13.9779C72.1676 12.7624 71.9104 11.4365 71.9104 10C71.9104 8.56354 72.1676 7.23757 72.6821 6.0221C73.2149 4.80663 73.9589 3.7477 74.9143 2.8453C75.8697 1.94291 76.9904 1.24309 78.2765 0.745855C79.5625 0.248618 80.9589 0 82.4654 0C83.9903 0 85.3866 0.248618 86.6543 0.745855C87.9404 1.24309 89.0519 1.94291 89.9889 2.8453C90.9443 3.7477 91.6884 4.80663 92.2212 6.0221C92.754 7.21915 93.0204 8.54512 93.0204 10C93.0204 11.4365 92.754 12.7716 92.2212 14.0055C91.6884 15.221 90.9443 16.2799 89.9889 17.1823C89.0519 18.0663 87.9404 18.7569 86.6543 19.2541C85.3866 19.7514 83.9995 20 82.4929 20ZM82.4654 16.1878C83.3289 16.1878 84.1189 16.0405 84.8354 15.7459C85.5703 15.4512 86.2134 15.0276 86.7646 14.4751C87.3157 13.9227 87.7383 13.2689 88.0322 12.5138C88.3446 11.7587 88.5007 10.9208 88.5007 10C88.5007 9.07919 88.3446 8.24125 88.0322 7.48619C87.7383 6.73112 87.3157 6.07735 86.7646 5.52486C86.2318 4.97237 85.5979 4.5488 84.863 4.25414C84.1281 3.95948 83.3289 3.81216 82.4654 3.81216C81.6019 3.81216 80.8027 3.95948 80.0678 4.25414C79.3513 4.5488 78.7174 4.97237 78.1662 5.52486C77.6151 6.07735 77.1833 6.73112 76.871 7.48619C76.577 8.24125 76.43 9.07919 76.43 10C76.43 10.9024 76.577 11.7403 76.871 12.5138C77.1833 13.2689 77.6059 13.9227 78.1387 14.4751C78.6899 15.0276 79.3329 15.4512 80.0678 15.7459C80.8027 16.0405 81.6019 16.1878 82.4654 16.1878Z" fill="white"/>
+<path d="M96.4596 19.6685V0.331491H114.042V19.6685H109.605V2.9558L110.625 3.9779H99.8769L100.897 2.9558V19.6685H96.4596Z" fill="white"/>
+<path d="M128.056 20C126.531 20 125.117 19.7514 123.812 19.2541C122.526 18.7569 121.405 18.0571 120.45 17.1547C119.513 16.2523 118.778 15.1934 118.245 13.9779C117.731 12.7624 117.474 11.4365 117.474 10C117.474 8.56354 117.731 7.23757 118.245 6.0221C118.778 4.80663 119.522 3.7477 120.478 2.8453C121.433 1.94291 122.554 1.24309 123.84 0.745855C125.126 0.248618 126.522 0 128.029 0C129.554 0 130.95 0.248618 132.218 0.745855C133.504 1.24309 134.615 1.94291 135.552 2.8453C136.508 3.7477 137.252 4.80663 137.784 6.0221C138.317 7.21915 138.584 8.54512 138.584 10C138.584 11.4365 138.317 12.7716 137.784 14.0055C137.252 15.221 136.508 16.2799 135.552 17.1823C134.615 18.0663 133.504 18.7569 132.218 19.2541C130.95 19.7514 129.563 20 128.056 20ZM128.029 16.1878C128.892 16.1878 129.682 16.0405 130.399 15.7459C131.134 15.4512 131.777 15.0276 132.328 14.4751C132.879 13.9227 133.302 13.2689 133.596 12.5138C133.908 11.7587 134.064 10.9208 134.064 10C134.064 9.07919 133.908 8.24125 133.596 7.48619C133.302 6.73112 132.879 6.07735 132.328 5.52486C131.795 4.97237 131.161 4.5488 130.426 4.25414C129.691 3.95948 128.892 3.81216 128.029 3.81216C127.165 3.81216 126.366 3.95948 125.631 4.25414C124.915 4.5488 124.281 4.97237 123.73 5.52486C123.178 6.07735 122.747 6.73112 122.434 7.48619C122.14 8.24125 121.993 9.07919 121.993 10C121.993 10.9024 122.14 11.7403 122.434 12.5138C122.747 13.2689 123.169 13.9227 123.702 14.4751C124.253 15.0276 124.896 15.4512 125.631 15.7459C126.366 16.0405 127.165 16.1878 128.029 16.1878Z" fill="white"/>
+<path d="M141.678 19.9724C141.347 19.9724 140.998 19.9448 140.63 19.8895C140.281 19.8343 139.895 19.7606 139.473 19.6685L139.748 15.884C140.006 15.9576 140.272 15.9945 140.548 15.9945C141.301 15.9945 141.889 15.6906 142.311 15.0829C142.734 14.4567 143.037 13.5635 143.221 12.4033C143.405 11.2431 143.524 9.83425 143.579 8.1768L143.855 0.331491H158.681V19.6685H154.272V2.9558L155.292 3.9779H146.776L147.685 2.90055L147.52 8.01105C147.465 9.90792 147.336 11.593 147.134 13.0663C146.932 14.5396 146.62 15.7919 146.197 16.8232C145.775 17.8545 145.196 18.6372 144.461 19.1713C143.726 19.7053 142.798 19.9724 141.678 19.9724Z" fill="white"/>
+<path d="M163.499 19.6685V0.331491H167.936V12.9282L177.141 0.331491H181.33V19.6685H176.92V7.09945L167.716 19.6685H163.499Z" fill="white"/>
+<path d="M196.591 19.6685V13.5635L197.693 14.5304H192.402C190.73 14.5304 189.288 14.2541 188.075 13.7017C186.862 13.1492 185.935 12.3481 185.292 11.2983C184.649 10.2486 184.327 8.99632 184.327 7.54144C184.327 6.03131 184.667 4.74217 185.347 3.67403C186.045 2.58748 187.019 1.75875 188.268 1.18784C189.517 0.616942 190.987 0.331491 192.677 0.331491H201V19.6685H196.591ZM184.382 19.6685L189.177 12.7348H193.697L189.095 19.6685H184.382ZM196.591 12.1271V2.81768L197.693 3.9779H192.788C191.52 3.9779 190.546 4.27256 189.866 4.86188C189.205 5.4512 188.874 6.32597 188.874 7.48619C188.874 8.60958 189.196 9.47514 189.839 10.0829C190.482 10.6906 191.428 10.9945 192.677 10.9945H197.693L196.591 12.1271Z" fill="white"/>
+</g>
+</g>
+</symbol>
+      <linearGradient id="display" x1="0" y1="0" x2="1" y2="1">
+        <stop stop-color="#30302e"/>
+        <stop offset=".55" stop-color="#20201f"/>
+        <stop offset="1" stop-color="#141414"/>
+      </linearGradient>
+      <linearGradient id="paper" x2="0" y2="1">
+        <stop stop-color="#fffdf6"/>
+        <stop offset="1" stop-color="#ddd8c8"/>
+      </linearGradient>
+      <linearGradient id="glass" x2="1" y2="1">
+        <stop stop-color="#fff" stop-opacity=".055"/>
+        <stop offset=".35" stop-color="#fff" stop-opacity=".018"/>
+        <stop offset=".36" stop-color="#fff" stop-opacity=".045"/>
+        <stop offset=".62" stop-color="#fff" stop-opacity="0"/>
+        <stop offset="1" stop-color="#fff" stop-opacity=".015"/>
+      </linearGradient>
+      <radialGradient id="backlight" cx=".5" cy=".54" r=".64">
+        <stop stop-color="#d7d0ad" stop-opacity=".085"/>
+        <stop offset="1" stop-color="#d7d0ad" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="screen-edge" cx=".5" cy=".5" r=".7">
+        <stop offset=".6" stop-color="#000" stop-opacity="0"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".38"/>
+      </radialGradient>
+      <linearGradient id="separator">
+        <stop stop-color="#fff" stop-opacity=".13"/>
+        <stop offset="1" stop-color="#fff" stop-opacity=".025"/>
+      </linearGradient>
+      <pattern id="paper-fibers" width="19" height="17" patternUnits="userSpaceOnUse">
+        <path d="m3 4 2 .5m7 8 3-.5m-13 2 1.5-.3m13-12 1 .3" stroke="#6a6754" stroke-width=".45" opacity=".15"/>
+        <path d="m7 9 2-.4m8 6 1.5.2" stroke="#fffef6" stroke-width=".6" opacity=".65"/>
+      </pattern>
+      <linearGradient id="foil" x2="1" y2="0">
+        <stop stop-color="#737c67"/>
+        <stop offset=".45" stop-color="#f7f3db"/>
+        <stop offset="1" stop-color="#8c977c"/>
+      </linearGradient>
+      <pattern id="security" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M-2 8 8-2M2 10 10 2" stroke="#898779" stroke-width=".5" opacity=".28"/>
+      </pattern>
+      <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+        <path d="M0 0h4" stroke="#000" stroke-opacity=".11"/>
+      </pattern>
+      <g id="bill">
+        <path d="M0 1 17 0 38 1 65 0 91 1 119 0 147 1 180 0 180 82 159 83 135 82 103 83 71 82 42 83 19 82 0 83Z" fill="url(#paper)" stroke="#b9b5a6" stroke-width="1"/>
+        <path d="M1 2h178v79H1Z" fill="url(#paper-fibers)"/>
+        <path d="M7 8h166v67H7Z" fill="url(#security)" stroke="#929182" stroke-width=".8"/>
+        <path d="M13 20v-6h17m120 0h17v6M13 62v7h17m120 0h17v-7" fill="none" stroke="#62685e" stroke-width="1.2"/>
+        <ellipse cx="90" cy="41" rx="27" ry="29" fill="#d2d2bf" stroke="#969b86"/>
+        <ellipse cx="90" cy="41" rx="23" ry="25" fill="none" stroke="#a7ab94"/>
+        <g fill="none" stroke="#9da38c" stroke-width=".45" opacity=".65">
+          <ellipse cx="90" cy="41" rx="18" ry="27" transform="rotate(30 90 41)"/>
+          <ellipse cx="90" cy="41" rx="18" ry="27" transform="rotate(60 90 41)"/>
+          <ellipse cx="90" cy="41" rx="18" ry="27" transform="rotate(120 90 41)"/>
+          <ellipse cx="90" cy="41" rx="18" ry="27" transform="rotate(150 90 41)"/>
+        </g>
+        <!-- Architectural engraving, echoing the site's property theme. -->
+        <path d="m73 40 17-14 17 14M77 38v19h26V38M86 57V44h8v13M72 60h36M82 38h3m10 0h3" fill="none" stroke="#6e7864" stroke-width="1.8" stroke-linejoin="round"/>
+        <g fill="#454d40" font-family="Arial, sans-serif" font-weight="700">
+          <text x="17" y="33" font-size="17">5000</text>
+          <text x="132" y="63" font-size="17">5000</text>
+        </g>
+        <path d="M18 40h35m-35 4h29m-29 4h32m76-13h31m-31 4h26" stroke="#949784" stroke-width="1"/>
+        <path d="M116 9v65" stroke="#aaa992" stroke-width="4" stroke-dasharray="5 3"/>
+        <path class="foil" d="M116 9v65" stroke="url(#foil)" stroke-width="4" stroke-dasharray="5 3" opacity=".4"/>
+        <path d="M10 79h160" stroke="#a5a08d" stroke-width=".5"/>
+        <path d="M3 3h174" stroke="#fffef4" stroke-width=".7"/>
+        <path d="M2 4v75" stroke="#fffef4" stroke-width=".6" opacity=".65"/>
+        <path d="M178 4v75" stroke="#8d8979" stroke-width=".6" opacity=".45"/>
+        <use href="#brand-wordmark" x="18" y="60" width="36" height="3.6" style="filter:brightness(0)" opacity=".5"/>
+      </g>
+    </defs>
+    <path fill="url(#display)" d="M0 0h308v270H0Z"/>
+    <path fill="url(#backlight)" d="M0 0h308v270H0Z"/>
+    <g class="screen-brand" aria-label="Монополия">
+      <use href="#brand-mark" x="20" y="18" width="25" height="25"/>
+      <use href="#brand-wordmark" x="55" y="23" width="150.75" height="15"/>
+    </g>
+    <path d="M20 56h268" stroke="url(#separator)"/>
+    <!-- Grounded stack stays visible throughout every counting phase. -->
+    <ellipse cx="154" cy="182" rx="98" ry="10" fill="#000" opacity=".3"/>
+    <g transform="translate(64 100)">
+      <use href="#bill" y="11"/>
+      <path d="M1 98h177M1 95h177M1 92h177" stroke="#8d8b7e" stroke-width="1"/>
+      <use href="#bill" y="7"/>
+      <use href="#bill" y="3"/>
+      <g fill="#141414" style="transform-origin:90px 86px">
+        <ellipse class="contact-shadow shadow-one" cx="90" cy="86" rx="88" ry="3" style="transform-origin:90px 86px"/>
+        <ellipse class="contact-shadow shadow-two" cx="90" cy="86" rx="88" ry="3" style="transform-origin:90px 86px"/>
+        <ellipse class="contact-shadow shadow-three" cx="90" cy="86" rx="88" ry="3" style="transform-origin:90px 86px"/>
+        <ellipse class="contact-shadow" cx="90" cy="86" rx="88" ry="3" style="transform-origin:90px 86px"/>
+      </g>
+      <g transform="translate(90 42)">
+        <!-- Each settled note merges into the identical top of the stack.
+             It resets only while invisible; the next note is already arriving. -->
+        <g class="note note-one"><use href="#bill" x="-90" y="-42"/></g>
+        <g class="note note-two"><use href="#bill" x="-90" y="-42"/></g>
+        <g class="note note-three"><use href="#bill" x="-90" y="-42"/></g>
+        <g class="note note-four"><use href="#bill" x="-90" y="-42"/></g>
+      </g>
+    </g>
+    <text x="154" y="226" text-anchor="middle" fill="#f4f1e9" font-family="Arial, sans-serif" font-size="19" font-weight="700">Пересчёт купюр</text>
+    <g fill="#ea1818">
+      <path class="indicator" d="m138 242 4 4-4 4-4-4Z"/>
+      <path class="indicator second" d="m154 242 4 4-4 4-4-4Z"/>
+      <path class="indicator third" d="m170 242 4 4-4 4-4-4Z"/>
+    </g>
+    <path fill="url(#scanlines)" d="M0 0h308v270H0Z"/>
+    <path fill="url(#glass)" d="M0 0h308v270H0Z"/>
+    <path fill="url(#screen-edge)" d="M0 0h308v270H0Z"/>
+    <path d="M2 268V2h304" fill="none" stroke="#fff" stroke-opacity=".07"/>
+    <path d="M306 2v266H2" fill="none" stroke="#000" stroke-opacity=".4"/>
+    <path d="M.75.75h306.5v268.5H.75Z" fill="none" stroke="#090909" stroke-width="1.5"/>
+  </svg>
+</svg>

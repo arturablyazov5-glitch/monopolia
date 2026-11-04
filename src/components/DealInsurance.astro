@@ -1,4 +1,6 @@
 ---
+import "../styles/handwritten-number.css";
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import TapedNote from "./TapedNote.astro";
 import SpeechBubble from "./SpeechBubble.astro";
@@ -23,28 +25,37 @@ const {
   <div class="deal-insurance-copy">
     <div class="deal-insurance-heading">
       <h2 id={`${id}-title`}>
-        Страхуем сделку
+        {siteText("deal-insurance.text.1")}
         <br />
-        от мошенников
+        {siteText("deal-insurance.text.2")}
+        <span class="deal-insurance-hand handwritten-number">{siteText("deal-insurance.text.3")}</span>
       </h2>
-      <p class="deal-insurance-hand">на 10 млн</p>
       <p class="deal-insurance-description">
-        Если суд признает сделку недействительной, страховая возместит убытки
+        {siteText("deal-insurance.text.4")}
       </p>
     </div>
-    <TapedNote class="deal-insurance-note" tapeNode={`I${node};1168:7198;569:1388`} textured>
-      Но к счастью, наша дотошность{" "}
+    <TapedNote
+      class="deal-insurance-note"
+      tapeNode={`I${node};1168:7198;569:1388`}
+      textured
+    >
+      {siteText("deal-insurance.text.5")}{" "}
       <strong>
-        отпугивает
+        {siteText("deal-insurance.text.6")}
         <br />
-        всех мошенников
+        {siteText("deal-insurance.text.7")}
       </strong>{" "}
-      и таких случаев не было
+      {siteText("deal-insurance.text.8")}
     </TapedNote>
     <div class="deal-insurance-actions">
-      <Button label="Записаться на консультацию" subject={subject} />
+      <Button
+        popup="service"
+        label={siteText("client-cases.label.28")}
+        subject={subject}
+      />
       <p>
-        На этой неделе есть еще <strong>4 свободных места</strong>
+        {siteText("realtor-comparison.text.3")}{" "}
+        <strong>{siteText("deal-insurance.text.9")}</strong>
       </p>
     </div>
   </div>
@@ -54,7 +65,7 @@ const {
     <div class="deal-insurance-stage">
       <img
         class="deal-insurance-shadow"
-        src="/assets/fa68f.svg"
+        src="/assets/insurance-people-shadow.svg"
         alt=""
         loading="lazy"
         width="867.935"
@@ -62,8 +73,8 @@ const {
         decoding="async"
       />
       <img
-        class="deal-insurance-photo"
-        src="/assets/c0bda.webp"
+        class="deal-insurance-photo person-photo"
+        src="/assets/insurance-elena-and-client.webp"
         width="732.233"
         height="570.513"
         alt="Елена с клиентом"
@@ -73,7 +84,7 @@ const {
     </div>
     <img
       class="deal-insurance-edge"
-      src="/assets/48dd3.svg"
+      src="/assets/insurance-bottom-paper-edge.svg"
       alt=""
       loading="lazy"
       width="1440"
@@ -81,14 +92,14 @@ const {
       decoding="async"
     />
     <div class="deal-insurance-client">
-      <p>Клиент</p>
-      <SpeechBubble side="right" tail="ea997.svg" text="🤨🤨🤨🤨" />
+      <p>{siteText("deal-insurance.text.10")}</p>
+      <SpeechBubble side="right" tail="speech-tail-white-right.svg" text="🤨🤨🤨🤨" />
     </div>
     <div class="deal-insurance-elena">
-      <p>Елена</p>
+      <p>{siteText("deal-insurance.name")}</p>
       <SpeechBubble
-        tail="50662.svg"
-        text={"Я спросила не мошенники ли они?\nОни сказали нет"}
+        tail="speech-tail-blue-left.svg"
+        text={siteText("deal-insurance.text.11")}
       />
     </div>
   </div>

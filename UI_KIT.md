@@ -53,6 +53,7 @@
 - `ArrowButton`: direction="next"|"prev", disabled.
 - `PlayButton`: label, video, variant="white"|"red". Без video — сообщение о демонстрации.
 - `Paper`: class, tape, node; содержимое через slot. `PaperQuote`: tape (по умолчанию true), цитата через slot.
+- `PersonLabel`: name и role (обязательные), class, node; бумажная подпись сотрудника, позиционирование задаёт контейнер.
 - `Badge`: text (обязательный), class.
 - `SectionHeading`: title, description, annotation, center; title выводится как h2, annotation — рукописная подпись.
 - `NumberedBenefit`: number, text; slot заменяет текст и позволяет сохранить переносы.

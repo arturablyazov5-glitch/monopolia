@@ -1,0 +1,6 @@
+---
+import "../styles/badge-group.css";
+const { class: className = "" } = Astro.props;
+---
+
+<div class:list={["badge-group", className]}><slot /></div>

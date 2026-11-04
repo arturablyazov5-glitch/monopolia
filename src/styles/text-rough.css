@@ -1,0 +1,4 @@
+/* The text stays selectable; without SVG filter support it keeps its normal edge. */
+.text-rough {
+  filter: url("#rough-edge");
+}

@@ -1,10 +1,10 @@
 /* TapedNote — заметка на лентах (Figma 569:1388), см. TapedNote.astro */
 .taped-note {
   width: fit-content;
+  transform: rotate(var(--note-rotate, 0deg));
   filter: drop-shadow(0 5px 3.5px #0000000f);
 }
 .taped-note-paper {
-  --paper-texture: url("/assets/0ba2a.webp");
   display: flex;
   align-items: center;
   gap: 12px;

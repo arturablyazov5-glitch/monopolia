@@ -1,7 +1,7 @@
 .referral-bonus {
   width: var(--container-width);
   margin: auto;
-  padding: 120px 0;
+  padding: var(--section-space) 0;
 }
 .referral-bonus-row {
   display: flex;
@@ -18,6 +18,10 @@
 }
 .referral-notification-slot {
   position: absolute;
+  left: var(--notification-left);
+  top: var(--notification-top);
+  width: var(--notification-width);
+  height: var(--notification-height);
   display: grid;
   place-items: center;
 }
@@ -59,7 +63,7 @@
 .referral-notification-tbank {
   border-radius: 8px;
   overflow: hidden;
-  mask: url("/assets/3b5fb.svg") center/40px 40px;
+  mask: url("/assets/icon-bank-tbank-notification-mask.svg") center/40px 40px;
 }
 .referral-notification-text {
   display: flex;
@@ -107,6 +111,14 @@
   margin: 1.8px 0;
 }
 
+/* Срок акции: усиливаем рваный контур краски, не маскируя текст и скотч. */
+.referral-promotion-label > .taped-note-paper {
+  --paper-mask-sizes:
+    8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px),
+    8px 8px, calc(100% - 14px) 8px, 8px 8px;
+}
+
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
 /* Текст и срок акции — первыми; композиция уведомлений (иллюстрация,
    role=img) масштабируется целиком. */
@@ -114,7 +126,7 @@
   .referral-bonus {
     width: auto;
     margin: 0 32px;
-    padding: 80px 0;
+    padding: var(--section-space) 0;
     --referral-k: 1;
   }
   .referral-bonus-row {
@@ -160,15 +172,77 @@
 @media (max-width: 767px) {
   .referral-bonus {
     margin: 0 20px;
-    padding: 56px 0 64px;
+    padding: var(--section-space) 0;
     --referral-k: min(1, calc((100vw - 32px) / 505.021px));
   }
   .referral-bonus-copy {
     gap: 24px;
+    align-items: center;
+    text-align: center;
   }
   .referral-bonus-copy h2 {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.05;
+  }
+  .referral-bonus-row {
+    gap: 24px;
+  }
+  .referral-bonus-notifications {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 8px 6px;
+    transform: none;
+  }
+  .referral-notification-slot {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(270px, calc(100% - 52px));
+    height: auto;
+    margin-top: -3px;
+    transform: translateX(-24px);
+  }
+  .referral-notification-slot:nth-child(even) {
+    transform: translateX(24px);
+    --notification-mobile-rotation: 3deg;
+  }
+  .referral-notification {
+    width: 100%;
+    height: 62px;
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 16px;
+    filter: drop-shadow(0 4px 8px #0000000d);
+    /* Мобильная стопка использует свой угол, без координат desktop-веера. */
+    transform: rotate(var(--notification-mobile-rotation, -3deg));
+  }
+  .referral-notification-icon,
+  .referral-notification-icon a,
+  .referral-notification-icon img {
+    width: 34px;
+    height: 34px;
+  }
+  .referral-notification-text {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+  }
+  .referral-notification-tbank {
+    mask-size: 100% 100%;
+  }
+  .referral-notification-text > div {
+    width: auto;
+    gap: 8px;
+  }
+  .referral-notification-text small {
+    font-size: 9px;
+  }
+  .referral-notification-text > p {
+    letter-spacing: -0.3px;
   }
 }
 @media (max-width: 389px) {
@@ -176,6 +250,6 @@
     margin: 0 16px;
   }
   .referral-bonus-copy h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
   }
 }

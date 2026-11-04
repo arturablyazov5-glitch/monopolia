@@ -1,11 +1,16 @@
 .office-consultation {
+  --office-label-offset: 10px;
   position: relative;
   isolation: isolate;
   /* Фон с рваными краями (альфа в самом WebP, 1440 : 798.7) масштабируется вместе с шириной окна:
      иначе при cover шире 1440 фото росло и обрезало рваные края сверху и снизу */
   height: max(800px, 55.469vw);
 }
+.office-consultation-photo {
+  display: contents;
+}
 .office-consultation-background {
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 50%;
@@ -19,7 +24,7 @@
   width: var(--container-width);
   height: 100%;
   margin: auto;
-  padding: 80px 0;
+  padding: var(--section-space-compact) 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,13 +43,16 @@
 }
 .office-consultation-label {
   position: absolute;
-  top: 1.8px;
+  top: calc(1.8px + var(--office-label-offset));
   left: calc(50% - 109px);
   z-index: 1;
 }
 .office-consultation-label .taped-note-paper > p {
   color: #000;
   font-weight: 700;
+}
+.office-consultation-points {
+  display: none;
 }
 .office-consultation-notes {
   display: flex;
@@ -59,6 +67,10 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
+}
+.office-consultation-actions > p > span,
+.office-consultation-actions > p > strong {
+  display: block;
 }
 .office-consultation-actions > p {
   color: #e2e2e2;
@@ -84,7 +96,7 @@
     height: auto;
     min-height: 920px;
     margin: 0 32px;
-    padding: 88px 0 80px;
+    padding: calc(var(--section-space) + 8px) 0 var(--section-space);
     justify-content: flex-start;
     gap: 24px;
   }
@@ -120,23 +132,41 @@
   }
 }
 @media (max-width: 767px) {
+  .office-consultation {
+    --office-edge-height: 20px;
+    margin-block: var(--office-edge-height);
+    padding-top: var(--section-space);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .office-consultation-label {
+    position: relative;
+    inset: auto;
+    align-self: center;
+    transform: rotate(var(--note-rotate, -1deg));
+  }
   .office-consultation-inner {
     min-height: 1140px;
     margin: 0 20px;
-    padding: 80px 0 64px;
+    padding: 0 0 var(--section-space);
   }
   .office-consultation-copy h2 {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.05;
   }
   .office-consultation-notes {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
+    display: none;
   }
-  .office-consultation-note {
-    flex: none;
-    max-width: 100%;
+  .office-consultation-points {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bullet-list-gap);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: var(--color-paper);
+    font: var(--text-body) / var(--leading-body) var(--font-body);
   }
   .office-consultation-actions {
     flex-direction: column;
@@ -153,6 +183,102 @@
     margin: 0 16px;
   }
   .office-consultation-copy h2 {
-    font-size: 28px;
+    font-size: var(--h2-compact);
+  }
+}
+
+.office-consultation-actions > p {
+  white-space: nowrap;
+  font-size: clamp(10px, 2.8vw, 14px);
+}
+.office-consultation-label {
+  width: max-content;
+  max-width: calc(100% - 48px);
+}
+@media (min-width: 768px) {
+  .office-consultation-label {
+    left: 50%;
+    transform: translateX(-50%) rotate(var(--note-rotate, -1deg));
+  }
+}
+
+@media (max-width: 767px) {
+  .office-consultation {
+    --office-scene-background: #190f0a;
+    background: var(--office-scene-background);
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .office-consultation-photo.mobile-photo-scene {
+    width: 144vw;
+    aspect-ratio: 2880 / 1498;
+    margin-top: -52px;
+    margin-bottom: 0;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #0000000a 4%,
+      #00000029 9%,
+      #00000066 15%,
+      #000000ad 22%,
+      #000000e6 29%,
+      #000 36%,
+      #000 65%,
+      #000000f5 70%,
+      #000000d9 76%,
+      #000000a6 82%,
+      #00000066 88%,
+      #00000029 94%,
+      #0000000a 98%,
+      transparent 100%
+    );
+  }
+  .office-consultation-photo > .office-consultation-background {
+    aspect-ratio: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+  }
+  .office-consultation-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 0;
+  }
+  .office-consultation-inner {
+    min-height: 0;
+    gap: var(--space-6);
+  }
+  .office-consultation-actions {
+    margin-top: 0;
+    width: 100%;
+  }
+  .office-consultation::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: calc(-1 * var(--office-edge-height));
+    height: calc(var(--office-edge-height) + 1px);
+    background: var(--office-scene-background);
+    mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+      no-repeat;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .office-consultation::after {
+    content: "";
+    position: absolute;
+    bottom: calc(-1 * var(--office-edge-height));
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: calc(var(--office-edge-height) + 1px);
+    background: var(--office-scene-background);
+    mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+      no-repeat;
+    transform: rotate(180deg);
+    pointer-events: none;
   }
 }

@@ -1,29 +1,119 @@
-{
-  "title": "Квартира такая‑то",
-  "caption": "Текст",
-  "image": "/assets/a8dca.webp",
-  "photo": {
-    "id": "legacy-a8dca",
-    "kind": "figma-placeholder",
-    "alt": "",
-    "src": "/assets/a8dca.webp",
-    "width": 400,
-    "height": 277,
-    "variants": [
-      {
-        "src": "/assets/a8dca-k-360.webp",
-        "width": 360,
-        "height": 250,
-        "bytes": 10436
-      },
-      {
-        "src": "/assets/a8dca-k-mobile.webp",
-        "width": 680,
-        "height": 472,
-        "bytes": 32590
-      }
-    ]
+[
+  {
+    "title": "ул. Вокзальная, 13",
+    "caption": "18,6 м²",
+    "price": "2 150 000 ₽",
+    "image": "/assets/closed-base-belogorsk-vokzalnaya-13.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3189?single",
+    "publishedAt": "2026-11-02",
+    "illustrativeOldPrice": "2 290 000 ₽"
   },
-  "price": "6 900 000 ₽",
-  "oldPrice": "7 300 000 ₽"
-}
+  {
+    "title": "ул. Кирова, 62",
+    "caption": "43,4 м²",
+    "price": "6 000 000 ₽",
+    "image": "/assets/closed-base-belogorsk-kirova-62.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3190?single",
+    "publishedAt": "2026-11-02",
+    "illustrativeOldPrice": "6 300 000 ₽"
+  },
+  {
+    "title": "ул. Кирова, 6",
+    "caption": "75,7 м²",
+    "price": "8 500 000 ₽",
+    "image": "/assets/closed-base-belogorsk-kirova-6.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3191?single",
+    "publishedAt": "2026-11-02",
+    "illustrativeOldPrice": "8 900 000 ₽"
+  },
+  {
+    "title": "ул. Чехова, 51/1",
+    "caption": "58,1 м²",
+    "price": "8 400 000 ₽",
+    "image": "/assets/closed-base-belogorsk-chekhova-51-1.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3176?single",
+    "publishedAt": "2026-10-19",
+    "illustrativeOldPrice": "8 750 000 ₽"
+  },
+  {
+    "title": "ул. Невского, 2",
+    "caption": "61,5 м²",
+    "price": "3 800 000 ₽",
+    "image": "/assets/closed-base-belogorsk-nevskogo-2.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3149?single",
+    "publishedAt": "2026-09-21",
+    "illustrativeOldPrice": "3 990 000 ₽"
+  },
+  {
+    "title": "ул. Скорикова, 19",
+    "caption": "28,1 м²",
+    "price": "4 500 000 ₽",
+    "image": "/assets/closed-base-belogorsk-skorikova-19.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3151?single",
+    "publishedAt": "2026-09-21",
+    "illustrativeOldPrice": "4 750 000 ₽"
+  },
+  {
+    "title": "ул. Авиационная, 11",
+    "caption": "70,4 м²",
+    "price": "4 150 000 ₽",
+    "image": "/assets/closed-base-belogorsk-aviatsionnaya-11.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3136?single",
+    "publishedAt": "2026-09-07",
+    "illustrativeOldPrice": "4 400 000 ₽"
+  },
+  {
+    "title": "ул. Невского, 3",
+    "caption": "44,8 м²",
+    "price": "3 600 000 ₽",
+    "image": "/assets/closed-base-belogorsk-nevskogo-3.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3137?single",
+    "publishedAt": "2026-09-07",
+    "illustrativeOldPrice": "3 800 000 ₽"
+  },
+  {
+    "title": "Никольское шоссе, 19",
+    "caption": "51,3 м²",
+    "price": "5 700 000 ₽",
+    "image": "/assets/closed-base-belogorsk-nikolskoye-shosse-19.webp",
+    "photo": {
+      "width": 334,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3124?single",
+    "publishedAt": "2026-08-24",
+    "illustrativeOldPrice": "5 990 000 ₽"
+  }
+]

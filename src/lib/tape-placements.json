@@ -2,7 +2,7 @@
   "1380:5795": [
     {
       "node": "I1380:5810;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 50.6665,
       "height": 15.3,
       "horizontal": "center",
@@ -22,7 +22,7 @@
   "I1380:5853;1168:7198;569:1388": [
     {
       "node": "I1380:5853;1168:7198;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -40,7 +40,7 @@
     },
     {
       "node": "I1380:5853;1168:7198;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -60,7 +60,7 @@
   "I1380:5904;569:1388": [
     {
       "node": "I1380:5904;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -78,7 +78,7 @@
     },
     {
       "node": "I1380:5904;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -98,7 +98,7 @@
   "I1380:6257;785:7567;1380:6256;569:1388": [
     {
       "node": "I1380:6257;785:7567;1380:6256;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -116,7 +116,7 @@
     },
     {
       "node": "I1380:6257;785:7567;1380:6256;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -136,7 +136,7 @@
   "I1380:6304;569:1388": [
     {
       "node": "I1380:6304;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -154,7 +154,7 @@
     },
     {
       "node": "I1380:6304;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -174,7 +174,7 @@
   "I1380:6326;786:6642;569:1388": [
     {
       "node": "I1380:6326;786:6642;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -192,7 +192,7 @@
     },
     {
       "node": "I1380:6326;786:6642;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -212,7 +212,7 @@
   "I1380:6326;1281:4701;569:1388": [
     {
       "node": "I1380:6326;1281:4701;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -230,7 +230,7 @@
     },
     {
       "node": "I1380:6326;1281:4701;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -250,7 +250,7 @@
   "I1380:6326;1281:4795;569:1388": [
     {
       "node": "I1380:6326;1281:4795;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -268,7 +268,7 @@
     },
     {
       "node": "I1380:6326;1281:4795;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -288,7 +288,7 @@
   "I1380:6355;569:1388": [
     {
       "node": "I1380:6355;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -306,7 +306,7 @@
     },
     {
       "node": "I1380:6355;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -326,7 +326,7 @@
   "I1380:4972;569:1388": [
     {
       "node": "I1380:4972;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -344,7 +344,7 @@
     },
     {
       "node": "I1380:4972;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -364,7 +364,7 @@
   "1380:4982": [
     {
       "node": "I1380:5000;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 50.66653,
       "height": 15.3,
       "horizontal": "center",
@@ -384,7 +384,7 @@
   "1433:9821": [
     {
       "node": "I1433:9847;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -402,7 +402,7 @@
     },
     {
       "node": "I1433:9848;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -422,7 +422,7 @@
   "I1380:5150;569:1388": [
     {
       "node": "I1380:5150;794:340455;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 50.66653,
       "height": 15.3,
       "horizontal": "center",
@@ -442,7 +442,7 @@
   "I1380:5213;569:1388": [
     {
       "node": "I1380:5213;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -460,7 +460,7 @@
     },
     {
       "node": "I1380:5213;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -480,13 +480,13 @@
   "I1380:5258;569:1388": [
     {
       "node": "I1380:5258;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
       "vertical": "top",
-      "x": -9.16992,
-      "y": 4.13526,
+      "x": -6.16992,
+      "y": 9.13526,
       "matrix": [
         0.8682,
         -0.49622,
@@ -498,7 +498,7 @@
     },
     {
       "node": "I1380:5258;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -516,7 +516,7 @@
     },
     {
       "node": "I1380:5258;794:340517;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -534,7 +534,7 @@
     },
     {
       "node": "I1380:5258;794:340518;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -554,7 +554,7 @@
   "I1380:5271;569:1388": [
     {
       "node": "I1380:5271;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -572,7 +572,7 @@
     },
     {
       "node": "I1380:5271;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -592,7 +592,7 @@
   "I1380:5590;569:1388": [
     {
       "node": "I1380:5590;794:340517;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -610,7 +610,7 @@
     },
     {
       "node": "I1380:5590;794:340518;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -630,7 +630,7 @@
   "I1380:5602;569:1388": [
     {
       "node": "I1380:5602;794:340455;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 50.66653,
       "height": 15.3,
       "horizontal": "center",
@@ -650,7 +650,7 @@
   "I1467:10447;569:1633": [
     {
       "node": "I1467:10447;864:4629;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -670,7 +670,7 @@
   "1380:5647": [
     {
       "node": "I1380:5654;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -688,7 +688,7 @@
     },
     {
       "node": "I1380:5655;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -708,7 +708,7 @@
   "1380:5682": [
     {
       "node": "I1380:5682;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -726,7 +726,7 @@
     },
     {
       "node": "I1380:5682;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -746,7 +746,7 @@
   "1380:5683": [
     {
       "node": "I1380:5683;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -764,7 +764,7 @@
     },
     {
       "node": "I1380:5683;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -784,7 +784,7 @@
   "1380:5684": [
     {
       "node": "I1380:5684;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -802,7 +802,7 @@
     },
     {
       "node": "I1380:5684;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -822,7 +822,7 @@
   "1380:5685": [
     {
       "node": "I1380:5685;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -840,7 +840,7 @@
     },
     {
       "node": "I1380:5685;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -860,7 +860,7 @@
   "1380:5686": [
     {
       "node": "I1380:5686;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -878,7 +878,7 @@
     },
     {
       "node": "I1380:5686;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -898,7 +898,7 @@
   "1380:5687": [
     {
       "node": "I1380:5687;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -916,7 +916,7 @@
     },
     {
       "node": "I1380:5687;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -936,7 +936,7 @@
   "1380:5688": [
     {
       "node": "I1380:5688;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -954,7 +954,7 @@
     },
     {
       "node": "I1380:5688;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -974,7 +974,7 @@
   "1380:5689": [
     {
       "node": "I1380:5689;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -992,7 +992,7 @@
     },
     {
       "node": "I1380:5689;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -1012,7 +1012,7 @@
   "1380:5690": [
     {
       "node": "I1380:5690;794:340642;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -1030,7 +1030,7 @@
     },
     {
       "node": "I1380:5690;794:340643;794:340339",
-      "src": "/assets/6d101.webp",
+      "src": "/assets/tape-white-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -1050,7 +1050,7 @@
   "I1380:5721;569:1388": [
     {
       "node": "I1380:5721;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "left",
@@ -1068,7 +1068,7 @@
     },
     {
       "node": "I1380:5721;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.91212,
       "height": 12.05244,
       "horizontal": "right",
@@ -1088,7 +1088,7 @@
   "I1380:6480;569:1388": [
     {
       "node": "I1380:6480;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1106,7 +1106,7 @@
     },
     {
       "node": "I1380:6480;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1126,7 +1126,7 @@
   "I1380:6559;569:1388": [
     {
       "node": "I1380:6559;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1144,7 +1144,7 @@
     },
     {
       "node": "I1380:6559;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1164,7 +1164,7 @@
   "I1380:6560;786:6642;569:1388": [
     {
       "node": "I1380:6560;786:6642;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1182,7 +1182,7 @@
     },
     {
       "node": "I1380:6560;786:6642;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1202,7 +1202,7 @@
   "I1380:6560;1281:4701;569:1388": [
     {
       "node": "I1380:6560;1281:4701;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1220,7 +1220,7 @@
     },
     {
       "node": "I1380:6560;1281:4701;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1240,7 +1240,7 @@
   "I1380:6560;1281:4795;569:1388": [
     {
       "node": "I1380:6560;1281:4795;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1258,7 +1258,7 @@
     },
     {
       "node": "I1380:6560;1281:4795;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1278,7 +1278,7 @@
   "I1380:6562;1168:7198;569:1388": [
     {
       "node": "I1380:6562;1168:7198;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1296,7 +1296,7 @@
     },
     {
       "node": "I1380:6562;1168:7198;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1316,7 +1316,7 @@
   "I1380:6585;569:1388": [
     {
       "node": "I1380:6585;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1334,7 +1334,7 @@
     },
     {
       "node": "I1380:6585;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1354,7 +1354,7 @@
   "I1380:6928;785:7567;1380:6927;569:1388": [
     {
       "node": "I1380:6928;785:7567;1380:6927;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1372,7 +1372,7 @@
     },
     {
       "node": "I1380:6928;785:7567;1380:6927;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",
@@ -1392,7 +1392,7 @@
   "I1380:6985;569:1388": [
     {
       "node": "I1380:6985;794:340340;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "left",
@@ -1410,7 +1410,7 @@
     },
     {
       "node": "I1380:6985;794:340399;794:340333",
-      "src": "/assets/55e7e.webp",
+      "src": "/assets/tape-beige-export.webp",
       "width": 39.9121,
       "height": 12.0524,
       "horizontal": "right",

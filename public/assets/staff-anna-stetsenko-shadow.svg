@@ -1,0 +1,34 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="382.696" height="411.305" viewBox="0 0 382.696 411.305" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Vector 319" filter="url(#filter0_dfn_0_584)">
+<path d="M82.455 356.245L88.755 282.22L110.28 212.395L163.83 185.095L151.23 173.02L143.355 158.845L142.305 141.52L145.98 123.145L153.855 102.67L168.03 76.9447L182.73 64.3447L202.155 59.0947L221.055 65.9197L234.705 70.6447L244.155 86.3947L251.505 108.97L256.23 123.67L259.905 143.095L253.08 162.52L244.155 171.445L251.505 180.895L264.105 186.145L300.33 203.995L312.405 229.72L320.28 262.27L324.48 296.395L330.255 355.72" stroke-width="25" stroke="url(#paint0_linear_0_584)" stroke-opacity="0.1" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_dfn_0_584" x="-3.8147e-06" y="0" width="382.696" height="411.305" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-20" dy="4"/>
+<feGaussianBlur stdDeviation="25"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_584"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_584" result="shape"/>
+<feGaussianBlur stdDeviation="20" result="effect2_foregroundBlur_0_584"/>
+<feTurbulence type="fractalNoise" baseFrequency="1 1" stitchTiles="stitch" numOctaves="3" result="noise" seed="7570" />
+<feColorMatrix in="noise" type="luminanceToAlpha" result="alphaNoise" />
+<feComponentTransfer in="alphaNoise" result="coloredNoise1">
+<feFuncA type="discrete" tableValues="1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 "/>
+</feComponentTransfer>
+<feComposite operator="in" in2="effect2_foregroundBlur_0_584" in="coloredNoise1" result="noise1Clipped" />
+<feFlood flood-color="rgba(0, 0, 0, 0.25)" result="color1Flood" />
+<feComposite operator="in" in2="noise1Clipped" in="color1Flood" result="color1" />
+<feMerge result="effect3_noise_0_584">
+<feMergeNode in="effect2_foregroundBlur_0_584" />
+<feMergeNode in="color1" />
+</feMerge>
+</filter>
+<linearGradient id="paint0_linear_0_584" x1="-407.894" y1="49.1199" x2="-508.169" y2="280.645" gradientUnits="userSpaceOnUse">
+<stop stop-opacity="0.5"/>
+<stop offset="1"/>
+</linearGradient>
+</defs>
+</svg>

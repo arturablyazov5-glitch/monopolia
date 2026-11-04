@@ -1,7 +1,7 @@
 /**
  * Маска российского телефона: +7 (999) 999-99-99.
  * Пропускает только цифры (буквы и символы отбрасываются, в том числе при вставке),
- * лишние цифры после десятой обрезаются.
+ * Номер ограничен десятью цифрами после префикса +7.
  */
 const format = (digits: string) =>
   "+7 (" +
@@ -13,7 +13,7 @@ const format = (digits: string) =>
 
 const nationalDigits = (value: string) => {
   const digits = value.replace(/\D/g, "");
-  return digits.startsWith("7") || digits.startsWith("8")
+  return /^\s*\+7/.test(value) || (digits.length > 10 && /^[78]/.test(digits))
     ? digits.slice(1)
     : digits;
 };

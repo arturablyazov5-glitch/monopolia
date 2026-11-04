@@ -1,8 +1,10 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 // По умолчанию — простая таблица UI kit (да / нет / текст).
 // variant="risk" — сравнение «Самостоятельно / С риелтором» со шкалой риска
 // (Figma 1380:6987 «Покупка»; тот же мастер 785:7925 на «Продаже»).
 import "../styles/comparison-risk.css";
+import RiskMeter from "./RiskMeter.astro";
 
 interface Row {
   label: string;
@@ -24,17 +26,10 @@ const {
   rows,
   caption = "Сравнение вариантов",
   variant = "default",
-  columns = ["Самостоятельно", "С риелтором"],
-  icons = ["/assets/52c05.svg", "/assets/d616c.svg"],
+  columns = [siteText("comparison-table.columns.1"), siteText("comparison-table.columns.2")],
+  icons = ["/assets/icon-comparison-cross.svg", "/assets/icon-comparison-check.svg"],
 } = Astro.props;
 
-// Исходные SVG шкалы (5 точек, бледные — opacity 0.1)
-const riskDots: Record<number, string> = {
-  1: "/assets/88d3d.svg",
-  3: "/assets/fe75e.svg",
-  4: "/assets/8ad04.svg",
-  5: "/assets/e5828.svg",
-};
 ---
 
 {variant === "risk" ? (
@@ -56,19 +51,8 @@ const riskDots: Record<number, string> = {
             <span class="comparison-risk-label">{row.label}</span>
             {row.risk && (
               <span class="comparison-risk-level">
-                Риск
-                {riskDots[row.risk] ? (
-                  <img
-                    loading="lazy"
-                    src={riskDots[row.risk]}
-                    width="66"
-                    height="10"
-                    alt={`${row.risk} из 5`}
-                    decoding="async"
-                  />
-                ) : (
-                  <span>{row.risk} из 5</span>
-                )}
+                {siteText("comparison-table.text.3")}
+                <RiskMeter value={row.risk} />
               </span>
             )}
           </th>
@@ -77,10 +61,8 @@ const riskDots: Record<number, string> = {
               role="cell"
               class:list={{ "comparison-risk-ours": index === 1 }}
             >
-              <span class="comparison-mobile-label" aria-hidden="true">
-                {columns[index]}
-              </span>
               <span class="comparison-risk-cell">
+                <span class="comparison-cell-heading">
                 <img
                   loading="lazy"
                   src={icons[index]}
@@ -89,6 +71,10 @@ const riskDots: Record<number, string> = {
                   alt={index === 1 ? "Плюс" : "Минус"}
                   decoding="async"
                 />
+                  <span class="comparison-mobile-label" aria-hidden="true">
+                    {columns[index]}
+                  </span>
+                </span>
                 {value}
               </span>
             </td>
@@ -104,8 +90,8 @@ const riskDots: Record<number, string> = {
       <thead role="rowgroup">
         <tr>
           <th scope="col">Услуга</th>
-          <th scope="col">С Монополией</th>
-          <th scope="col">Самостоятельно</th>
+          <th scope="col">{"С Монополией"}</th>
+          <th scope="col">{siteText("comparison-table.columns.1")}</th>
         </tr>
       </thead>
       <tbody role="rowgroup">
@@ -117,7 +103,7 @@ const riskDots: Record<number, string> = {
                 {typeof value === "boolean" ? (
                   <img
                     loading="lazy"
-                    src={"/assets/" + (value ? "d616c.svg" : "52c05.svg")}
+                    src={"/assets/" + (value ? "icon-comparison-check.svg" : "icon-comparison-cross.svg")}
                     alt={value ? "Да" : "Нет"}
                     width="24"
                     height="24"

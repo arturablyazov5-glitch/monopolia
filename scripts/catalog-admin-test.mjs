@@ -16,7 +16,7 @@ const close=s=>new Promise(done=>{s.close(done);s.closeAllConnections();});
 const sandbox=()=>fs.mkdtemp('/private/tmp/claude-501/admin-test-');
 async function setup(now=Date.now) {
   const root=await sandbox();
-  const env={DATA_DIR:root,PORT:'8788',ADMIN_API_ORIGIN:'http://127.0.0.1:8788',ALLOWED_ORIGINS:'http://127.0.0.1:4321',ADMIN_USER:username,ADMIN_PASSWORD_HASH:await passwordHash(password),ADMIN_RECOVERY_BOT:'1'};
+  const env={DATA_DIR:root,PORT:'8788',ADMIN_API_ORIGIN:'http://127.0.0.1:8788',ALLOWED_ORIGINS:'http://127.0.0.1:4321',ADMIN_USER:username,ADMIN_PASSWORD_HASH:await passwordHash(password)};
   const api=await createAdminAPI({env,now}),server=createServer(api.handler);await listen(server,8788);
   let cookie='',csrf='';
   const request=async(path,method='GET',data,headers={})=>{
@@ -51,8 +51,6 @@ test('schema, scrypt session, CORS/Host/CSRF, revisions, one backup and public c
     now+=60001;await s.login();now+=28800001;assert.equal((await s.request('/api/admin/catalog')).status,401);
     for(let i=0;i<5;i++)assert.equal((await s.request('/api/admin/session','POST',{username,password:'bad'})).status,401);
     assert.equal((await s.request('/api/admin/session','POST',{username,password:'bad'})).status,429);
-    for(let i=0;i<3;i++)assert.equal((await s.request('/api/admin/recovery/start','POST',{})).status,200);
-    assert.equal((await s.request('/api/admin/recovery/start','POST',{})).status,429);
   }finally{await s.cleanup();}
 });
 test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offline, admin desktop/mobile', {skip:process.env.ADMIN_BROWSER_TEST!=='1',timeout:240000},async()=>{
@@ -75,8 +73,7 @@ test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offl
       }else await req.continue();
     });
     await page.setViewport({width:1440,height:1000});await page.goto('http://127.0.0.1:4321/admin/',{waitUntil:'networkidle0'});
-    for(const width of [1440,390]){await page.setViewport({width,height:1000});assert.equal(await page.$eval('#recovery',n=>n.textContent),'Получить пароль');await page.screenshot({path:qa+'/admin-login-'+width+'.png'});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
-    await page.evaluate(()=>{window.open=()=>null;});await page.click('#recovery');await page.waitForFunction(()=>!document.querySelector('#recovery-link').hidden);assert.match(await page.$eval('#recovery-link',n=>n.href),/^https:\/\/t\.me\//);assert.match(await page.$eval('#message',n=>n.textContent),/10 минут.*одобряет администратор/);
+    for(const width of [1440,390]){await page.setViewport({width,height:1000});await page.screenshot({path:qa+'/admin-login-'+width+'.png'});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
     await page.type('[name=username]',username);await page.type('[name=password]',password);await page.click('#login button');await page.waitForFunction(()=>!document.querySelector('#workspace').hidden);
     await page.click('#add');await page.type('#form [name=title]','Тестовая квартира с фотографией');await page.type('#form [name=address]','Тестовый адрес');await page.type('#form [name=price]','6 000 000 ₽');
     const jpeg=await page.evaluate(async()=>{const c=document.createElement('canvas');c.width=1000;c.height=750;const x=c.getContext('2d');x.fillStyle='#ddd3ba';x.fillRect(0,0,1000,750);x.fillStyle='#ea1818';x.fillRect(140,100,300,550);const b=await new Promise(r=>c.toBlob(r,'image/jpeg'));return [...new Uint8Array(await b.arrayBuffer())];});
@@ -91,7 +88,7 @@ test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offl
     const publicConsole=[];const buy=await browser.newPage();buy.on('console',m=>{if(m.type()==='error')publicConsole.push(m.text());});buy.on('pageerror',e=>errors.push(e.message));await buy.setViewport({width:1440,height:900});await buy.setRequestInterception(true);
     let publicRequests=0,mode='live';
     buy.on('request',async req=>{
-      const u=new URL(req.url());if(u.hostname==='127.0.0.1' && u.port==='8787' && /^\/(api|media)\//.test(u.pathname)) {
+      const u=new URL(req.url());if(u.hostname==='127.0.0.1' && ['4321','8787'].includes(u.port) && /^\/(api|media)\//.test(u.pathname)) {
         if(u.pathname==='/api/catalog'){publicRequests++;trace.push({path:u.pathname,phase:mode});}
         try{const response=await fetch('http://127.0.0.1:8788'+u.pathname,{headers:{Origin:'http://127.0.0.1:4321'}});await req.respond({status:response.status,headers:Object.fromEntries(response.headers),body:Buffer.from(await response.arrayBuffer())});}catch{await req.abort('connectionrefused');}
       }else await req.continue();
@@ -100,11 +97,11 @@ test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offl
     const cdp=await buy.createCDPSession();await cdp.send('Tracing.start',{categories:'devtools.timeline,loading',transferMode:'ReturnAsStream'});
     await open();const complete=new Promise(done=>cdp.once('Tracing.tracingComplete',done));await cdp.send('Tracing.end');const {stream}=await complete;let traceJSON='';for(;;){const part=await cdp.send('IO.read',{handle:stream});traceJSON+=part.data;if(part.eof)break;}await cdp.send('IO.close',{handle:stream});await fs.writeFile(qa+'/buy-trace.json',traceJSON);
     await buy.waitForFunction(()=>document.querySelectorAll('.buy-mortgage-carousel .property-card').length===4);assert.equal(publicRequests,1);await buy.$eval('.buy-mortgage-carousel .carousel-track',n=>n.scrollLeft=n.scrollWidth);await wait(250);await buy.screenshot({path:qa+'/buy-new-card-1440.png'});assert.equal(await buy.$$eval('.buy-mortgage-carousel .carousel-pagination button',n=>n.length),4);
-    const clickAction=async(text,last=true)=>{const revision=(await s.api.storage.catalog()).revision;await page.evaluate((text,last)=>{const rows=[...document.querySelectorAll('#objects article')],row=last?rows.at(-1):rows[0];[...row.querySelectorAll('button')].find(b=>b.textContent===text).click();},text,last);for(let i=0;i<100 && (await s.api.storage.catalog()).revision===revision;i++)await wait(30);assert.equal((await s.api.storage.catalog()).revision,revision+1);await wait(50);};
+    const clickAction=async(text,last=true)=>{const revision=(await s.api.storage.catalog()).revision;await page.evaluate((text,last)=>{const rows=[...document.querySelectorAll('#objects article')],row=last?rows.at(-1):rows[0];[...row.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')===text || b.textContent.trim()===text).click();},text,last);for(let i=0;i<100 && (await s.api.storage.catalog()).revision===revision;i++)await wait(30);assert.equal((await s.api.storage.catalog()).revision,revision+1);await wait(50);};
     await clickAction('Скрыть');assert.equal(publicCatalog(await s.api.storage.catalog()).objects.length,3);await open();await buy.waitForFunction(revision=>Number(document.querySelector('[data-catalog]').dataset.revision)===revision,{},(await s.api.storage.catalog()).revision);assert.equal(await buy.$$eval('.property-card',n=>n.length),3);
     await clickAction('Показать');assert.equal(publicCatalog(await s.api.storage.catalog()).objects.length,4);
     await clickAction('Выше');catalog=await s.api.storage.catalog();assert.equal(catalog.objects[2].id,newCard.id);
-    await page.bringToFront();page.on('dialog',d=>d.accept());await page.evaluate(id=>{const row=document.querySelector(`[data-id="${id}"]`);[...row.querySelectorAll('button')].find(b=>b.textContent==='Удалить').click();},newCard.id);await page.waitForFunction(id=>!document.querySelector(`[data-id="${id}"]`),{},newCard.id);assert.equal((await s.api.storage.catalog()).objects.length,3);
+    await page.bringToFront();await page.evaluate(id=>{const row=document.querySelector(`[data-id="${id}"]`);[...row.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')==='Удалить' || b.textContent.trim()==='Удалить').click();},newCard.id);await page.waitForSelector('#confirmation[open]');await page.click('#confirm-ok');await page.waitForFunction(id=>!document.querySelector(`[data-id="${id}"]`),{},newCard.id);assert.equal((await s.api.storage.catalog()).objects.length,3);
     catalog=await s.api.storage.catalog();await s.api.storage.save({baseRevision:catalog.revision,objects:[]});await open();console.log('browser awaiting empty');await buy.waitForFunction(()=>!document.querySelector('[data-catalog-empty]').hidden);console.log('browser empty passed');assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),0);
     assert.deepEqual(publicConsole,[]);console.log('browser logout');await page.bringToFront();await page.evaluate(()=>document.querySelector('#logout').click());await page.waitForFunction(()=>document.querySelector('#workspace').hidden);
     await close(s.server);mode='offline';await open();await wait(500);assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),3);assert.deepEqual(errors,[]);

@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import LeadForm from "./LeadForm.astro";
 import "../styles/lead-section.css";
 
@@ -24,9 +25,9 @@ interface Props {
 }
 const {
   id = "lead",
-  title = "Остались вопросы?\nЗадайте их здесь",
-  subject = "Вопрос с сайта",
-  buttonLabel = "Задать вопрос",
+  title = siteText("lead-form.title.1"),
+  subject = "Вопрос с сайта",
+  buttonLabel = siteText("lead-form.buttonlabel.2"),
   node = "1380:5753",
   anchor,
   endpoint,
@@ -42,8 +43,8 @@ const {
   <div class="lead-section-bricks" aria-hidden="true">
     <img
       class="lead-brick lead-brick-left"
-      src="/assets/95626.webp"
-      srcset="/assets/95626-m.webp 800w, /assets/95626.webp 1600w"
+      src="/assets/background-brick-wall.webp"
+      srcset="/assets/background-brick-wall-mobile.webp 800w, /assets/background-brick-wall.webp 1600w"
       sizes="(max-width: 767px) 400px, 1600px"
       alt=""
       width="855"
@@ -53,8 +54,8 @@ const {
     />
     <img
       class="lead-brick lead-brick-right"
-      src="/assets/95626.webp"
-      srcset="/assets/95626-m.webp 800w, /assets/95626.webp 1600w"
+      src="/assets/background-brick-wall.webp"
+      srcset="/assets/background-brick-wall-mobile.webp 800w, /assets/background-brick-wall.webp 1600w"
       sizes="(max-width: 767px) 400px, 1600px"
       alt=""
       width="855"

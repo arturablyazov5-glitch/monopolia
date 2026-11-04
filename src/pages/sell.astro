@@ -1,4 +1,5 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import InnerHero from "../components/InnerHero.astro";
 import SellGossip from "../components/SellGossip.astro";
@@ -13,36 +14,21 @@ import FaqSection from "../components/FaqSection.astro";
 import LeadSection from "../components/LeadSection.astro";
 import { sellFaq } from "../data/faq";
 import "../styles/inner-faq.css";
+import "../styles/sell-mobile.css";
 ---
 
 <SiteLayout title="Продажа недвижимости — Монополия" header>
   <main class="inner-desktop sell-desktop">
     <InnerHero
       node="1380:5758"
-      title={["Продадим вашу", "недвижимость", "по рыночной цене или выше"]}
-      accent="за 2 недели"
+      title={[
+        siteText("sell.title.1"),
+        siteText("sell.title.2"),
+        siteText("sell.title.3"),
+      ]}
+      accent={siteText("sell.accent.4")}
       accentLine={1}
-      description="В нашей базе 1 500+ покупателей с одобренной ипотекой или наличкой — готовы купить прямо сейчас"
-      formText="Ответьте на 5 вопросов и мы добавим ваш объект в закрытую базу на 1 500 покупателей"
-      image={{
-        src: "/assets/4574c.webp",
-        ratio: "2055 / 1531",
-        width: 1024,
-        height: 248.454,
-        alt: "Пример отчёта Монополии с оценкой объекта",
-        mobile: "/assets/4574c-r2-640.webp",
-      }}
-      shadow={{
-        src: "26011.svg",
-        left: 30.5,
-        top: 15.5,
-        width: 300,
-        height: 191,
-        bleed: "-35.4% -15.91% -35.38% -32.33%",
-      }}
-      buttonLabel="Найти покупателя"
-      buttonIcon="access"
-      subject="Продать объект"
+      description={siteText("sell.description.5")}
     />
     {/* Блок 1380:5759: сцена 1380:5760 и бумажный блок 1380:5771 (5777 + 5814). */}
     <SellGossip />
@@ -54,12 +40,7 @@ import "../styles/inner-faq.css";
     <SellProcess />
     <SellCommissionNote />
     <OfficeConsultation variant="sell" />
-    <FaqSection
-      id="sell-faq"
-      items={sellFaq}
-      node="1380:6327"
-      class="inner-faq"
-    />
+    <FaqSection id="faq" items={sellFaq} node="1380:6327" class="inner-faq" />
     <LeadSection
       id="sell-question"
       node="1380:6342"

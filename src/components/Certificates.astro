@@ -1,16 +1,19 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import "../styles/certificates.css";
+import "../styles/decorative-stroke.css";
 ---
 
 <section
+  data-surface="dark"
   class="certificates"
   aria-labelledby="certificates-title"
   data-node-id="1380:5104"
 >
   <img
     class="certificates-background"
-    src="/assets/96185.webp"
+    src="/assets/certificates-background.webp"
     alt=""
     width="1440"
     height="620"
@@ -18,51 +21,31 @@ import "../styles/certificates.css";
     decoding="async"
   />
   <div class="certificates-scene">
-    <div class="certificates-ribbon" aria-hidden="true">
-      <div>
-        <img
-          src="/assets/40519.webp"
-          alt=""
-          width="718"
-          height="386"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-    </div>
-    <div class="certificate-sheet first" aria-hidden="true">
-      <img
-        src="/assets/89c61.webp"
-        alt=""
-        width="377"
-        height="376"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
-    <div class="certificate-sheet second" aria-hidden="true">
-      <img
-        src="/assets/89c61.webp"
-        alt=""
-        width="377"
-        height="376"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    <img
+      class="certificates-art"
+      src="/assets/certificates-composition.webp"
+      srcset="/assets/certificates-composition-mobile.webp 1440w, /assets/certificates-composition.webp 2880w"
+      sizes="(max-width: 767px) 720px, 1440px"
+      alt=""
+      aria-hidden="true"
+      width="2880"
+      height="1001"
+      loading="lazy"
+      decoding="async"
+    />
     <div class="certificates-content">
-      <h2 id="certificates-title">Маткапитал, СВО‑выплаты и сертификаты</h2>
-      <p class="certificates-handwriting">работаем со всем</p>
+      <h2 id="certificates-title">{siteText("certificates.text.1")}</h2>
+      <p class="certificates-handwriting">{siteText("certificates.text.2")}</p>
       <div class="certificates-actions">
-        <Button
-          label="Получить консультацию"
-          subject="Маткапитал, СВО-выплаты и сертификаты"
+        <Button popup="office"
+          label={siteText("certificates.label.3")}
+          subject="Консультация"
         />
         <p>
-          Знаем все законные лазейки — запишитесь на бесплатную консультацию
+          {siteText("certificates.text.4")}
         </p>
       </div>
     </div>
-    <span class="certificates-divider" aria-hidden="true"></span>
+    <span class="decorative-stroke decorative-stroke--light certificates-divider" aria-hidden="true"></span>
   </div>
 </section>

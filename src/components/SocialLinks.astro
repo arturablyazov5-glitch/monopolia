@@ -1,23 +1,28 @@
 ---
+import { socialUrls } from "../data/social-links";
 import { imageSize } from "../lib/image-size";
 interface Props {
   loading?: "eager" | "lazy";
   dark?: boolean;
+  purpose?: "contact" | "channel";
   size?: 32 | 40;
   links?: { label: string; href?: string; icon: string }[];
 }
-const { dark = false, size = 32, links } = Astro.props;
+const { dark = false, size = 32, links, purpose = "contact" } = Astro.props;
 const defaults: { label: string; icon: string; href?: string }[] = [
-  { label: "Telegram", icon: dark ? "84d6e.svg" : "2dc32.svg" },
-  { label: "MAX", icon: dark ? "5e5f6.svg" : "0a072.svg" },
-  { label: "WhatsApp", icon: dark ? "db97a.svg" : "2585a.svg" },
+  { label: "Telegram", icon: dark ? "social-telegram-dark.svg" : "social-telegram-color.svg" },
+  { label: "Макс", icon: dark ? "social-max-dark.svg" : "social-max-color.svg" },
+  { label: "WhatsApp", icon: dark ? "social-whatsapp-dark.svg" : "social-whatsapp-color.svg" },
 ];
 ---
 
 <div class="socials" style={`--social-size:${size}px`}>
-  {(links ?? defaults).map((item) =>
+  {(links ?? defaults).map((item) => ({
+    ...item,
+    href: item.href ?? (item.label === "Telegram" && purpose === "contact" ? socialUrls.TelegramContact : socialUrls[item.label]),
+  })).map((item) =>
     item.href ? (
-      <a href={item.href} aria-label={item.label}>
+      <a href={item.href} aria-label={item.label} target="_blank" rel="noopener noreferrer">
         <img
           src={"/assets/" + item.icon}
           alt=""

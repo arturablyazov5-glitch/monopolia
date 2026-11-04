@@ -3,7 +3,30 @@
 .inner-faq .faq-answer-text {
   line-height: 19px;
 }
-/* У LeadSection свой отступ 120 px снизу; рекомендация на /sell/ идёт сразу после него. */
-.sell-desktop > .lead-section + .referral-bonus {
-  padding-top: 0;
+/* На планшете и desktop LeadSection сам задает отступ перед рекомендацией.
+   На телефоне сохраняем верхний padding реферального блока (56 px). */
+@media (min-width: 768px) {
+  .sell-desktop > .lead-section + .referral-bonus {
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .faq-section.inner-faq {
+    max-width: none;
+    width: calc(100% - 64px);
+  }
+  .inner-faq > h2 {
+    text-align: center;
+  }
+}
+@media (max-width: 767px) {
+  .faq-section.inner-faq {
+    width: calc(100% - 40px);
+  }
+}
+@media (max-width: 389px) {
+  .faq-section.inner-faq {
+    width: calc(100% - 32px);
+  }
 }

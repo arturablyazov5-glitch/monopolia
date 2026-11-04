@@ -1,0 +1,366 @@
+/* TASK-020c: Paper owns the paint, masks and shadow; dialog only scrolls. */
+dialog#lead-dialog:is(.lead-popup-dialog, .quiz-dialog) {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: calc(100% - 16px);
+  max-height: calc(100dvh - 16px);
+  padding: 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  isolation: isolate;
+}
+dialog#lead-dialog.lead-popup-dialog {
+  width: calc(var(--container-width) + 16px);
+}
+dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
+  width: 760px;
+}
+#lead-dialog .dialog-sheet {
+  padding: 60px;
+  min-width: 0;
+}
+#lead-dialog .dialog-sheet > .dialog-close {
+  position: absolute;
+  top: 16px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  margin: 0;
+  right: 16px;
+  transform: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-ink);
+  box-shadow: none;
+}
+#lead-dialog #lead-purpose.sr-only {
+  margin: -1px;
+  padding: 0;
+  min-height: 0;
+}
+#lead-dialog::backdrop {
+  background: var(--color-backdrop);
+  backdrop-filter: blur(3px);
+}
+#lead-dialog.is-opening {
+  animation: lead-dialog-enter 240ms ease-out both;
+}
+#lead-dialog.is-opening::backdrop {
+  animation: lead-backdrop-enter 240ms ease-out both;
+}
+#lead-dialog.is-closing {
+  animation: lead-dialog-exit 180ms ease-in both;
+}
+#lead-dialog.is-closing::backdrop {
+  animation: lead-backdrop-exit 180ms ease-in both;
+}
+@keyframes lead-dialog-enter {
+  from {
+    opacity: var(--dialog-from-opacity, 0);
+    transform: var(--dialog-from-transform, translateY(12px) scale(0.98));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lead-dialog-exit {
+  from {
+    opacity: var(--dialog-from-opacity, 1);
+    transform: var(--dialog-from-transform, none);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+@keyframes lead-backdrop-enter {
+  from {
+    opacity: var(--backdrop-from-opacity, 0);
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lead-backdrop-exit {
+  from {
+    opacity: var(--backdrop-from-opacity, 1);
+  }
+  to {
+    opacity: 0;
+  }
+}
+@media (max-width: 767px) {
+  dialog#lead-dialog:is(.lead-popup-dialog, .quiz-dialog) {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lead-dialog.is-opening,
+  #lead-dialog.is-closing,
+  #lead-dialog.is-opening::backdrop,
+  #lead-dialog.is-closing::backdrop {
+    animation: none;
+  }
+}
+#lead-dialog .popup-panel.lead-panel.compact {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+}
+#lead-dialog .popup-form {
+  display: block;
+  min-width: 0;
+}
+#lead-dialog .popup [hidden] {
+  display: none !important;
+}
+#lead-dialog .popup-form .popup-title {
+  margin: 0 0 20px;
+  max-width: none;
+  font: var(--weight-heading)
+    var(--h2, var(--text-heading))/var(--leading-heading) var(--font-heading);
+  color: var(--color-ink);
+}
+#lead-dialog .popup-analysis .popup-title {
+  max-width: 760px;
+}
+#lead-dialog .popup-context {
+  width: fit-content;
+  max-width: 100%;
+  margin: -20px 0 40px;
+  padding: 6px 12px;
+  font: 400 var(--text-small)/1.4 var(--font-body);
+  overflow-wrap: anywhere;
+}
+#lead-dialog .popup-body {
+  display: grid;
+  grid-template-columns: minmax(0, 520px) minmax(0, 480px);
+  grid-template-areas: "description media" "fields media";
+  grid-template-rows: auto 1fr;
+  gap: 24px 40px;
+}
+#lead-dialog .popup-without-media .popup-body {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "description" "fields";
+}
+#lead-dialog .popup-fields {
+  grid-area: fields;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+#lead-dialog .popup-description {
+  grid-area: description;
+  color: var(--color-muted);
+  font: var(--text-body)/1.4 var(--font-body);
+}
+#lead-dialog .popup-channel > p {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: var(--color-muted);
+}
+#lead-dialog .popup-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+#lead-dialog .popup-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+#lead-dialog .popup-actions .button {
+  white-space: normal;
+}
+#lead-dialog .popup-actions-divider {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-divider) 5%,
+    transparent 100%
+  );
+}
+#lead-dialog .popup-actions > .form-social {
+  grid-column: 1 / -1;
+}
+#lead-dialog .popup-action-note {
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+#lead-dialog .popup-media {
+  grid-area: media;
+  position: relative;
+  display: grid;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+}
+#lead-dialog .popup-media-window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+#lead-dialog .popup-media-window > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#lead-dialog .popup-media-neutral .popup-media-window {
+  background-color: var(--color-paper-warm);
+}
+#lead-dialog .popup-media-document .popup-media-window > img {
+  object-fit: contain;
+  padding: 12px;
+}
+#lead-dialog .popup-team .popup-media-window > img {
+  object-position: left center;
+}
+#lead-dialog .popup-media-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  left: 20px;
+  width: fit-content;
+  margin-left: auto;
+  max-width: calc(100% - 40px);
+  font-size: var(--text-small);
+  line-height: 1.4;
+}
+#lead-dialog .popup-media-badge .taped-note-paper > p {
+  white-space: normal;
+  font-size: var(--text-small);
+}
+#lead-dialog .popup-form .form-result {
+  position: static;
+  font-size: 16px;
+  line-height: 1.4;
+}
+html:has(#lead-dialog[open]) {
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  #lead-dialog .popup-submit {
+    gap: 12px;
+  }
+  #lead-dialog .popup-form:has(.popup-media) {
+    display: grid;
+    grid-template-columns: minmax(0, 520px) minmax(0, 480px);
+    grid-template-areas:
+      "title media"
+      "context media"
+      "description media"
+      "fields media";
+    row-gap: 0;
+    column-gap: 40px;
+  }
+  #lead-dialog .popup-form:has(.popup-media) .popup-body {
+    display: contents;
+  }
+  #lead-dialog .popup-form:has(.popup-media) .popup-title {
+    grid-area: title;
+  }
+  #lead-dialog .popup-form:has(.popup-media) .popup-context {
+    grid-area: context;
+  }
+  #lead-dialog .popup-form:has(.popup-media) .popup-description {
+    margin-bottom: 24px;
+  }
+}
+@media (max-width: 1199px) {
+  #lead-dialog.lead-popup-dialog .dialog-sheet {
+    padding: 32px;
+  }
+  #lead-dialog .popup-body {
+    gap: 28px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  }
+  #lead-dialog .popup-actions .button {
+    width: 100%;
+    padding-inline: 20px;
+  }
+}
+@media (max-width: 767px) {
+  #lead-dialog.lead-popup-dialog .dialog-sheet {
+    padding: 24px 20px;
+  }
+  #lead-dialog .popup-form .popup-title {
+    line-height: var(--leading-heading);
+    padding-right: 32px;
+  }
+  #lead-dialog .popup-context {
+    margin-top: -8px;
+    margin-bottom: 24px;
+  }
+  #lead-dialog .popup-body,
+  #lead-dialog .popup-without-media .popup-body {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "description" "media" "fields";
+    grid-template-rows: auto;
+    gap: 24px;
+  }
+  #lead-dialog .popup-without-media .popup-body,
+  #lead-dialog .popup-closed-base .popup-body {
+    grid-template-areas: "description" "fields";
+  }
+  #lead-dialog .popup-actions {
+    margin-top: 4px;
+  }
+  #lead-dialog .popup-media {
+    min-height: 0;
+    margin-inline: -20px;
+    align-self: start;
+  }
+  #lead-dialog .popup-media-window {
+    position: relative;
+  }
+  #lead-dialog .popup-media-window > img {
+    display: block;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+  }
+  #lead-dialog .popup-media-badge {
+    top: 36px;
+  }
+  #lead-dialog .popup-media-neutral,
+  #lead-dialog .popup-closed-base .popup-media {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  #lead-dialog .popup-actions {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
+  #lead-dialog .popup-actions-divider {
+    display: none;
+  }
+  #lead-dialog .popup-actions > .form-social {
+    grid-column: auto;
+    align-self: start;
+    min-height: var(--button-height);
+  }
+}

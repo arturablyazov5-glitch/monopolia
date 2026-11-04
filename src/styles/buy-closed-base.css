@@ -1,6 +1,6 @@
 /* Figma 1380:6462 — «Покупка»: закрытая база и окно Safari */
 .buy-closed-base {
-  padding-top: 120px;
+  padding-top: var(--section-space);
   /* окно Safari в макете выходит за правый край 1440 — обрезаем по ширине */
   overflow-x: clip;
 }
@@ -43,7 +43,11 @@
   filter: drop-shadow(0 5px 3.5px #0000000f);
 }
 .buy-closed-base-card {
-  --paper-texture: url("/assets/0ba2a.webp");
+  /* Глубина края только карточки проверки; скотч и контент вне маски. */
+  --paper-mask-sizes:
+    10px 10px, calc(100% - 18px) 10px, 10px 10px, 10px calc(100% - 18px),
+    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px),
+    10px 10px, calc(100% - 18px) 10px, 10px 10px;
   box-shadow: none;
   padding: 20px 24px;
   display: flex;
@@ -57,32 +61,6 @@
 .buy-closed-base-card strong {
   font-weight: 700;
 }
-.buy-closed-base-checks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  filter: drop-shadow(0 4px 2.5px #00000005);
-}
-.buy-closed-base-checks .badge {
-  line-height: 1.2;
-  white-space: nowrap;
-  transform: rotate(-1deg);
-}
-.buy-closed-base-checks .badge:nth-child(2) {
-  transform: rotate(1deg);
-}
-.buy-closed-base-checks .badge:nth-child(4) {
-  transform: rotate(-2deg);
-}
-.buy-closed-base-checks .badge:nth-child(5),
-.buy-closed-base-checks .badge:nth-child(6),
-.buy-closed-base-checks .badge:nth-child(9) {
-  transform: rotate(2deg);
-}
-.buy-closed-base-checks .badge:nth-child(7) {
-  transform: rotate(-0.5deg);
-}
-
 /* 1380:6482 — тень окна, исходный SVG без масштабирования */
 .buy-closed-base-shadow {
   position: absolute;
@@ -115,10 +93,10 @@
   font-weight: 500;
 }
 .buy-safari-toolbar {
-  height: 22px;
+  height: 23px;
   padding: 4px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-shrink: 0;
 }
 .buy-safari-left,
@@ -126,95 +104,27 @@
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 3.5px;
 }
 .buy-safari-right {
   justify-content: flex-end;
 }
-.buy-safari-lights {
-  display: flex;
-  gap: 3.5px;
-  padding: 3.5px;
-}
-.buy-safari-lights i {
-  width: 5.444px;
-  height: 5.444px;
-  border-radius: 50%;
-  border: 0.194px solid #0000001a;
-}
-.buy-safari-lights .close {
-  background: #ff736a;
-}
-.buy-safari-lights .minimize {
-  background: #febc2e;
-}
-.buy-safari-lights .zoom {
-  background: #19c332;
-}
-.buy-safari-controls {
-  display: flex;
-  align-items: center;
-  gap: 5.444px;
-}
-/* Заливка «Liquid Glass» (#F7F7F7); размытие подложки на белом фоне не видно */
-.buy-safari-pill {
-  display: flex;
-  align-items: center;
-  border-radius: 115px;
-  background: #f7f7f7;
-  color: #4c4c4c;
-  font-size: 5.056px;
-  line-height: 1;
-}
-.buy-safari-pill .faded {
-  color: #c6c6c6;
-}
-.buy-safari-pulldown {
-  height: 14px;
-  padding: 0 3.111px;
-  gap: 0.778px;
-}
-.buy-safari-segment,
-.buy-safari-actions {
-  padding: 1.556px;
-  gap: 1.556px;
-}
-.buy-safari-segment b,
-.buy-safari-actions b {
-  min-width: 10.889px;
-  height: 10.889px;
-  display: grid;
-  place-items: center;
-}
-.buy-safari-segment i {
-  width: 0.389px;
-  height: 7.778px;
-  margin: 0 0.389px;
-  background: #e6e6e6;
+.buy-safari-toolbar img {
+  flex-shrink: 0;
+  max-width: none;
 }
 .buy-safari-search {
+  display: flex;
+  align-items: center;
   width: 221.278px;
   height: 14px;
   padding: 0 3.889px;
   gap: 2.333px;
   flex-shrink: 0;
-}
-.buy-safari-search .faded {
-  color: #808080;
-  width: 6.222px;
-  text-align: center;
-}
-.buy-safari-search-icon {
-  position: relative;
-  width: 6.222px;
-  height: 6.222px;
-  flex-shrink: 0;
-}
-.buy-safari-search-icon img {
-  position: absolute;
-  left: 0.72px;
-  top: 1px;
-  max-width: none;
+  border-radius: 115px;
+  background: #f7f7f7;
+  color: #4c4c4c;
+  font-size: 5.056px;
+  line-height: 1;
 }
 .buy-safari-url {
   flex: 1;
@@ -257,8 +167,6 @@
   inset: 0;
   z-index: -1;
   border-radius: 2px;
-  background: var(--paper-texture) center / cover;
-  opacity: 0.5;
 }
 .buy-safari-brand {
   display: flex;
@@ -349,12 +257,12 @@
   background: radial-gradient(#2bb741 0 1.33px, #4caf502e 1.4px);
 }
 
-/* kv 1380:6542–6550 — карточки 189.6 × 148.52 (выходят за трек ряда, как в макете) */
+/* Карточки помещаются в строку сетки, оставляя междурядный отступ. */
 .buy-safari-listing {
-  height: 148.521px;
+  height: 135.621px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
   background: #fff;
 }
 .buy-safari-photo {
@@ -403,8 +311,6 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: var(--paper-texture) center / cover;
-  opacity: 0.5;
 }
 /* Перечёркивание 1299:5137 — исходный вектор, центр по линии цены */
 .buy-safari-old-price img {
@@ -447,6 +353,9 @@
   text-decoration: underline;
 }
 /* Высота рядов как у повёрнутых плашек в Figma (≈33.4 px вместо 29) */
+.badge-group.buy-closed-base-checks {
+  justify-content: flex-start;
+}
 .buy-closed-base-checks .badge {
   margin: 2.2px 0;
 }
@@ -455,7 +364,7 @@
 
 @media (max-width: 1199px) {
   .buy-closed-base {
-    padding: 80px var(--buy-gutter) 0;
+    padding: var(--section-space) var(--buy-gutter) 0;
   }
   .buy-closed-base-container {
     width: 100%;
@@ -505,21 +414,36 @@
   }
 }
 @media (max-width: 767px) {
+  .buy-closed-base-copy {
+    display: contents;
+  }
+  .buy-closed-base-title {
+    order: 1;
+  }
+  .buy-closed-base-card-wrap {
+    order: 2;
+  }
+  .buy-closed-base .buy-safari {
+    order: 3;
+  }
+  .buy-closed-base-copy > .button {
+    order: 4;
+  }
   .buy-closed-base {
-    padding-top: 56px;
+    padding-top: var(--section-space);
   }
   .buy-closed-base-container {
     gap: 32px;
   }
   .buy-closed-base-title {
-    font-size: 30px;
+    font-size: var(--h2);
     line-height: 1.1;
   }
   .buy-closed-base-title-row {
     display: block;
   }
   .buy-closed-base-hand {
-    font-size: 44px;
+    font-size: var(--heading-hand);
     line-height: 0.9;
     position: relative;
     top: 8px;
@@ -548,20 +472,17 @@
     z-index: 3;
   }
   .buy-safari-toolbar {
-    height: 32px;
-    align-items: center;
+    gap: 6px;
+  }
+  .buy-safari-left,
+  .buy-safari-right {
+    flex: 0 0 auto;
   }
   .buy-safari-search {
-    width: 60%;
-    height: 22px;
-    font-size: 12px;
-  }
-  .buy-safari-url {
-    line-height: 1.2;
-  }
-  .buy-safari-controls,
-  .buy-safari-actions {
-    display: none;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    font-size: 7px;
   }
   .buy-safari-page {
     padding: 8px 12px;
@@ -602,7 +523,7 @@
 }
 @media (max-width: 539px) {
   .buy-closed-base-title {
-    font-size: 28px;
+    font-size: var(--h2-compact);
   }
 }
 

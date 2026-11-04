@@ -1,15 +1,42 @@
 ---
-const { direction = "next", disabled = false } = Astro.props;
+const { direction = "next", disabled = false, ariaLabel } = Astro.props;
 ---
 
 <button
   type="button"
   class="arrow"
   aria-label={
-    direction === "next" ? "Следующая карточка" : "Предыдущая карточка"
+    ariaLabel ??
+    (direction === "next" ? "Следующая карточка" : "Предыдущая карточка")
   }
   disabled={disabled}
   data-direction={direction}
 >
-  {direction === "next" ? "→" : "←"}
+  <svg class="arrow-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+    <path
+      d="M4 12h16m-7-7 7 7-7 7"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
 </button>
+
+<style>
+  .arrow {
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+
+  .arrow-icon {
+    display: block;
+    width: 20px;
+    height: 20px;
+  }
+
+  .arrow[data-direction="prev"] .arrow-icon {
+    transform: scaleX(-1);
+  }
+</style>

@@ -1,32 +1,21 @@
 ---
+import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
 import SpeechBubble from "./SpeechBubble.astro";
 import "../styles/blockbuster-case.css";
 ---
 
 <section
+  data-surface="dark"
   class="blockbuster-case"
   aria-labelledby="blockbuster-title"
   data-node-id="1380:5599"
 >
   <div class="blockbuster-scene" aria-hidden="true">
     <img
-      src="/assets/47c7d.webp"
-      srcset="/assets/47c7d-m.webp 1480w, /assets/47c7d.webp 3235w"
-      sizes="(max-width: 767px) 740px, 3235px"
+      src="/assets/blockbuster-case-winter-sale.webp"
       width="1480"
-      height="866.965"
-      alt=""
-      loading="lazy"
-      decoding="async"
-    />
-    <div class="blockbuster-fade"></div>
-    <img
-      src="/assets/02199.webp"
-      srcset="/assets/02199-m.webp 1480w, /assets/02199.webp 3235w"
-      sizes="(max-width: 767px) 740px, 3235px"
-      width="1480"
-      height="866.965"
+      height="867"
       alt=""
       loading="lazy"
       decoding="async"
@@ -34,7 +23,7 @@ import "../styles/blockbuster-case.css";
   </div>
   <img
     class="blockbuster-edge"
-    src="/assets/aad8d.svg"
+    src="/assets/blockbuster-paper-edge.svg"
     alt=""
     width="1493.19"
     height="129.56"
@@ -43,26 +32,26 @@ import "../styles/blockbuster-case.css";
   />
   <div class="blockbuster-content">
     <Paper class="blockbuster-label" tapeNode="I1380:5602;569:1388">
-      <p>Случай‑блокбастер</p>
+      <p>{siteText("blockbuster-case.text.1")}</p>
     </Paper>
     <h2 id="blockbuster-title">
-      Как чуть не сорвалась дистанционная продажа <br />
-      дома, пока владельца не было в городе
+      {siteText("blockbuster-case.text.2")} <br />
+      {siteText("blockbuster-case.text.3")}
     </h2>
     <p class="blockbuster-description">
-      Наша беременная Саша сама перенесла забор, чтобы ускорить регистрацию и не ждать владельца. После подобных случаев нас часто называют дружочками‑пирожочками
+      {siteText("blockbuster-case.text.4")}
     </p>
     <SpeechBubble
       class="blockbuster-warning"
       side="right"
-      tail="6e397.svg"
-      text="У вас забор на 2 метра вышел за границы. Сделки НЕ БУДЕТ!!!!!"
+      tail="blockbuster-warning-icon.svg"
+      text={siteText("blockbuster-case.text.5")}
     />
     <SpeechBubble
       class="blockbuster-reply"
       side="left"
-      tail="ea997.svg"
-      text="Спокойно, я прямо сейчас все перенесу"
+      tail="speech-tail-white-right.svg"
+      text={siteText("blockbuster-case.text.6")}
     />
   </div>
 </section>
