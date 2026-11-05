@@ -109,12 +109,13 @@
   position: relative;
   z-index: 1;
   width: 499px;
-  height: 551px;
+  min-height: 551px;
   flex-shrink: 0;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 24px;
 }
 .inner-hero-card.paper::before {
   inset: 1px 0 3px;
@@ -238,11 +239,6 @@
 .inner-hero-types {
   position: relative;
   filter: drop-shadow(0 4px 2.5px #00000005);
-}
-.inner-hero-card:has([data-hero-other]:not([hidden])) {
-  height: auto;
-  min-height: 551px;
-  gap: 20px;
 }
 .inner-hero-other {
   display: block;
@@ -377,8 +373,7 @@
     order: 1;
     width: 400px;
     max-width: 100%;
-    height: auto;
-    gap: 24px;
+    min-height: 0;
   }
   .inner-hero-city {
     min-height: 48px;

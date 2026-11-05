@@ -12,7 +12,7 @@
 @media (hover: hover) {
   .buy-quiz-options .chip:hover { background: var(--color-accent); color: #fff; }
 }
-.buy-quiz-input { display: block; width: 100%; box-sizing: border-box; border: 0; padding: 16px 20px; background: #f4f4f4; font: inherit; }
+.buy-quiz-input { display: block; width: 100%; box-sizing: border-box; border: 0; padding: 16px 20px; background: #fff; font: inherit; }
 textarea.buy-quiz-input { min-height: 90px; resize: vertical; }
 .buy-quiz-channel-label { margin: 20px 0 10px; color: var(--color-muted); }
 .buy-quiz-channels { margin-bottom: 20px; }
