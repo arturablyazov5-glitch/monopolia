@@ -12,7 +12,7 @@ const pageSeo: Record<string, { title: string; description: string }> = {
   "/": {
     title: "Монополия — агентство недвижимости в Белогорске с 2006 года",
     description:
-      "Поможем выгодно купить или срочно продать квартиру, дом или коммерческую недвижимость. Монополия — агентство недвижимости в Белогорске с 2006 года.",
+      "Поможем выгодно купить или продать квартиру, дом и коммерческую недвижимость. Подбор объектов, ипотека и сопровождение сделки.",
   },
   "/sell/": {
     title: "Продажа недвижимости в Белогорске — Монополия",
@@ -46,9 +46,10 @@ const description = seo?.description.replaceAll("\u00a0", " ");
 const preventIndexing = noindex || pathname === "/ui-kit/";
 const canonical =
   Astro.site && !preventIndexing ? siteUrl(pathname, Astro.site) : undefined;
-const imagePath = "/seo/team-1200x630.jpg";
+const socialTitle = pathname === "/" ? "Монополия — недвижимость в Белогорске" : pageTitle;
+const imagePath = "/seo/monopolia-social-v2.jpg";
 const socialImage = Astro.site ? siteUrl(imagePath, Astro.site) : imagePath;
-const imageAlt = "Специалисты агентства недвижимости Монополия";
+const imageAlt = "Первый экран агентства недвижимости Монополия: команда, Белогорск, работаем с 2006 года.";
 // Контакты и часы сверены с SiteFooter; неподтверждённых рейтингов,
 // геокоординат, внешних профилей и будущего офиса здесь нет.
 const business = {
@@ -125,7 +126,7 @@ const business = {
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="ru_RU" />
         <meta property="og:site_name" content="Монополия" />
-        <meta property="og:title" content={pageTitle} />
+        <meta property="og:title" content={socialTitle} />
         <meta property="og:description" content={description} />
         {canonical && <meta property="og:url" content={canonical} />}
         <meta property="og:image" content={socialImage} />
@@ -134,7 +135,7 @@ const business = {
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content={imageAlt} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:title" content={socialTitle} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={socialImage} />
         <meta name="twitter:image:alt" content={imageAlt} />
