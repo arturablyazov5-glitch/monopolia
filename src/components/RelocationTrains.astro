@@ -13,8 +13,8 @@ interface Props {
   mobile?: boolean;
 }
 const { routes, mobile = false } = Astro.props;
-const trainWidth = 32.6049 * (mobile ? 1.5 : 1);
-const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
+const trainWidth = 32.6049 * (mobile ? 3 : 1);
+const trainHeight = 26.2172 * (mobile ? 3 : 1);
 ---
 
 <svg
@@ -41,27 +41,35 @@ const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
       const distanceToPin = ([x, y]: number[]) =>
         Math.hypot(x + route.left - pinX, y + route.top - pinY);
       const last = coordinates.length - 1;
-      const startsNearPin = distanceToPin(coordinates[0]) < distanceToPin(coordinates[last]);
-      const [x, y] = coordinates[startsNearPin ? 0 : last];
-      const dx = x + route.left - pinX;
-      const dy = y + route.top - pinY;
-      const [tipX, tipY] = Math.abs(dx) > Math.abs(dy)
-        ? [pinX + Math.sign(dx) * 33, pinY]
-        : [pinX, dy < 0 ? 294 : 374];
-      const offsetX = tipX - route.left - x;
-      const offsetY = tipY - route.top - y;
-      // Выравниваем зазор у пина, сохраняя остальной маршрут.
-      for (let i = 0; i < 6; i++) {
-        const point = coordinates[startsNearPin ? i : last - i];
-        const weight = ((6 - i) / 6) ** 2;
-        point[0] += offsetX * weight;
-        point[1] += offsetY * weight;
+      const startsNearPin =
+        distanceToPin(coordinates[0]) < distanceToPin(coordinates[last]);
+      // Обрезаем исходную кривую у пина вместо изгиба первых точек.
+      if (!startsNearPin) coordinates.reverse();
+      while (coordinates.length > 2 && distanceToPin(coordinates[1]) < 70) {
+        coordinates.shift();
       }
+      const inside = coordinates[0];
+      const outside = coordinates[1];
+      let low = 0;
+      let high = 1;
+      for (let step = 0; step < 24; step++) {
+        const t = (low + high) / 2;
+        const point = inside.map(
+          (value, axis) => value + (outside[axis] - value) * t,
+        );
+        if (distanceToPin(point) < 70) low = t;
+        else high = t;
+      }
+      coordinates[0] = inside.map(
+        (value, axis) => value + (outside[axis] - value) * high,
+      );
+      if (!startsNearPin) coordinates.reverse();
     }
+
     if (backwards) coordinates.reverse();
     const [endX, endY] = coordinates[coordinates.length - 1];
     const [prevX, prevY] = coordinates[coordinates.length - 2];
-    const angle = Math.atan2(endY - prevY, endX - prevX) * 180 / Math.PI;
+    const angle = (Math.atan2(endY - prevY, endX - prevX) * 180) / Math.PI;
     const arrowTransform = `translate(${endX} ${endY}) rotate(${angle})`;
     const path = `M${coordinates.map((point) => point.join(" ")).join(" L")}`;
     const lengths = [0];
@@ -94,7 +102,11 @@ const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
           />
         )}
         {mobile && (
-          <path d="M-8 -4 L0 0 L-8 4 Z" fill="#777" transform={arrowTransform} />
+          <path
+            d="M-8 -4 L0 0 L-8 4 Z"
+            fill="#777"
+            transform={arrowTransform}
+          />
         )}
         <g class="relocation-train" data-route={route.src}>
           <animate

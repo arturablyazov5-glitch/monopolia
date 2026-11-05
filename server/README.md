@@ -150,9 +150,13 @@ TASK-074, отдельный поддомен Serveo + обрыв SSH + Chrome: 
   текст — 422, превышение общего размера 256 КиБ — 413.
 - `GET /api/content`: публичные `{ok, revision, overrides}`, ETag с обязательной
   перепроверкой при следующем открытии страницы.
+- Расписание редактируется в прежних полях `site-footer.text.8` и
+  `site-footer.text.9`: например, `Пн-Пт с 09:00 до 18:00` или `Сб — выходной`.
+  Статус офиса и JSON-LD используют те же строки; некорректные дни и часы
+  отклоняются при сохранении с кодом 422.
 - Типографика выполняется только при сохранении, существующим
-  `scripts/typograf/rules.cjs`. При размещении API этот файл и каталог
-  `src/data/site-texts.mjs` должны присутствовать вместе с серверным кодом.
+  `scripts/typograf/rules.cjs`. При размещении API нужны также
+  `src/data/site-texts.mjs`, `src/data/people.mjs` и `src/lib/office-hours.mjs`.
 - По умолчанию запрос идёт на `/api/content`. При внешнем
   `PUBLIC_CATALOG_ENDPOINT` используется `/api/content` на том же origin.
   Отдельный адрес можно задать через `PUBLIC_CONTENT_ENDPOINT`.

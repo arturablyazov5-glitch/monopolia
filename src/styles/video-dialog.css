@@ -28,6 +28,10 @@
   background: rgb(0 0 0 / 85%);
 }
 .video-dialog-frame {
+  position: relative;
+  width: min(92vw, calc(var(--video-height) * 0.5625));
+  height: min(calc(92vw * 16 / 9), var(--video-height));
+  background: #000;
   border-radius: calc(var(--radius-badge) * 2);
   overflow: hidden;
 }
@@ -40,11 +44,11 @@
   outline: none;
 }
 #video-dialog video {
+  position: absolute;
+  inset: 0;
   display: block;
-  width: min(92vw, calc(var(--video-height) * 0.5625));
-  height: auto;
-  max-height: var(--video-height);
-  aspect-ratio: 9 / 16;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   background: #000;
   border-radius: calc(var(--radius-badge) * 2);
@@ -81,29 +85,9 @@
   color: white;
   box-shadow: 0 0 0 2px white;
 }
-#video-dialog[open] {
-  animation: video-dialog-enter 240ms ease-out both;
-}
-#video-dialog[open]::backdrop {
-  animation: video-dialog-enter 240ms ease-out both;
-}
-#video-dialog[open] .video-dialog-frame {
-  animation: video-frame-enter 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
 #video-dialog.is-closing,
 #video-dialog.is-closing::backdrop {
   animation: video-dialog-exit 180ms ease-in both;
-}
-#video-dialog.is-closing .video-dialog-frame {
-  animation: video-frame-exit 180ms ease-in both;
-}
-@keyframes video-dialog-enter {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 @keyframes video-dialog-exit {
   from {
@@ -113,30 +97,26 @@
     opacity: 0;
   }
 }
-@keyframes video-frame-enter {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.975);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-@keyframes video-frame-exit {
-  from {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(6px) scale(0.985);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  #video-dialog[open],
-  #video-dialog[open]::backdrop,
-  #video-dialog[open] .video-dialog-frame {
+  #video-dialog.is-closing,
+  #video-dialog.is-closing::backdrop {
     animation: none;
   }
+}
+
+.video-dialog-loading {
+  z-index: 1;
+  background: #000;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 24px;
+  color: #fff;
+  font: 16px/1.4 var(--font-body);
+  text-align: center;
+}
+.video-dialog-loading[hidden] {
+  display: none;
 }

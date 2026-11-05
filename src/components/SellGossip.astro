@@ -19,13 +19,6 @@ import "../styles/sell-gossip.css";
     loading="lazy"
     decoding="async"
   />
-  <picture style="display:contents">
-    {/* ≤ 767 px: левая часть кадра (соседки) в высоте исходника — 2× показа. */}
-    <source
-      media="(max-width: 767px)"
-      srcset="/assets/sell-gossip-neighbors-and-team-mobile.webp"
-      style="display:none"
-    />
     <img
       class="sell-gossip-photo person-photo"
       src="/assets/sell-gossip-neighbors-and-team.webp"
@@ -35,52 +28,20 @@ import "../styles/sell-gossip.css";
       loading="lazy"
       decoding="async"
     />
-  </picture>
+
   <div class="sell-gossip-content">
-    <div class="gossip-message">
-      <div class="gossip-avatars" aria-label="Две соседки">
-        <span
-          class="gossip-avatar"
-          style="--face-x: 146px; --face-y: 128px"
-          role="img"
-          aria-label="Соседка в цветном платке"
-        ></span>
-        <span
-          class="gossip-avatar"
-          style="--face-x: 182px; --face-y: 142px"
-          role="img"
-          aria-label="Соседка в светлом платке"
-        ></span>
-      </div>
-      <SpeechBubble
-        class="sell-gossip-rumor"
-        loading="lazy"
-        side="left"
-        tail="speech-tail-white-left.svg"
-        text={siteText("speech-bubble.text.1")}
-      />
-    </div>
-    <div class="gossip-message gossip-message-reply">
-      <SpeechBubble
-        class="sell-gossip-reply"
-        side="right"
-        tail="speech-tail-blue-right.svg"
-        text={siteText("sell-gossip.text.1")}
-      />
-      <div class="gossip-avatars" aria-label="Два специалиста Монополии">
-        <span
-          class="gossip-avatar"
-          style="--face-x: 590px; --face-y: 90px"
-          role="img"
-          aria-label="Специалист в светлой рубашке"
-        ></span>
-        <span
-          class="gossip-avatar"
-          style="--face-x: 704px; --face-y: 90px"
-          role="img"
-          aria-label="Специалист в тёмной рубашке"
-        ></span>
-      </div>
-    </div>
+    <SpeechBubble
+      class="sell-gossip-rumor"
+      loading="lazy"
+      side="left"
+      tail="speech-tail-white-left.svg"
+      text={siteText("speech-bubble.text.1")}
+    />
+    <SpeechBubble
+      class="sell-gossip-reply"
+      side="right"
+      tail="speech-tail-blue-right.svg"
+      text={siteText("sell-gossip.text.1")}
+    />
   </div>
 </section>

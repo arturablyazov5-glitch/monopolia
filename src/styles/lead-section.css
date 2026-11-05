@@ -80,7 +80,7 @@
 }
 /* Поля используют общую текстуру без полупрозрачных слоёв. */
 .lead-section .lead-form textarea,
-.lead-section .lead-form :is(input[name="phone"], input[name="name"]) {
+.lead-section .lead-form input[name="name"] {
   padding: 16px 28px;
   border-radius: 0;
   background-color: #fff;
@@ -91,11 +91,11 @@
   height: 108.8px;
   resize: none;
 }
-.lead-section .lead-form :is(input[name="phone"], input[name="name"]) {
+.lead-section .lead-form input[name="name"] {
   height: 51.2px;
 }
 .lead-section .lead-form textarea::placeholder,
-.lead-section .lead-form :is(input[name="phone"], input[name="name"])::placeholder {
+.lead-section .lead-form input[name="name"]::placeholder {
   color: var(--color-field-text);
   opacity: 1;
 }
@@ -214,7 +214,7 @@
     margin-bottom: 0;
     font-size: var(--h2);
   }
-  .lead-section .lead-form :is(input[name="phone"], input[name="name"]) {
+  .lead-section .lead-form input[name="name"] {
     height: 52px;
   }
   .lead-section .form-bottom {

@@ -1,20 +1,25 @@
 ---
 import PlayIcon from "./PlayIcon.astro";
+import reviewVideoIcon from "../assets/review-video-play.svg?raw";
 interface Props {
   label?: string;
   video?: string;
-
+  reviewIcon?: boolean;
 }
-const { label = "Воспроизвести видео", video } = Astro.props;
+const {
+  label = "Воспроизвести видео",
+  video,
+  reviewIcon = false,
+} = Astro.props;
 ---
 
 <button
   type="button"
-  class="play"
+  class:list={["play", { "play-review-video": reviewIcon }]}
   aria-label={label}
   data-video={video ?? ""}
   aria-haspopup={video ? "dialog" : undefined}
   aria-controls={video ? "video-dialog" : undefined}
 >
-  <PlayIcon />
+  {reviewIcon ? <Fragment set:html={reviewVideoIcon} /> : <PlayIcon />}
 </button>

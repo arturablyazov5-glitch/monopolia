@@ -18,7 +18,6 @@
   }
   .mobile-scroll-hint img {
     display: block;
-    transform: translateY(-2px);
   }
 }
 @keyframes mobile-scroll-arrow {

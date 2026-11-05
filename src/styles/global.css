@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./phone-action.css";
 @import "./bullets.css";
 @import "./brush-stroke.css";
 @import "./paper-label.css";
@@ -308,7 +309,7 @@ button.header-callback {
 /* TASK-044: одна непрозрачная текстура; маски, скотч и тени остаются отдельно.
    Белые листы без текстуры и тёмная подпись сохраняют свои заливки. */
 .paper:not(.paper-white, .blockbuster-label, .paper-frame, .guild-card, .staff-certificate, .sell-week-story-card, .taped-note-plain)::before,
-.lead-form :is(input[name="phone"], input[name="name"]),
+.lead-form input[name="name"],
 .lead-form textarea,
 #lead-dialog .popup-media-neutral .popup-media-window,
 .cases-tabs .channels,
@@ -733,7 +734,7 @@ s {
   margin-bottom: var(--space-5);
 }
 .lead-form textarea,
-.lead-form :is(input[name="phone"], input[name="name"]) {
+.lead-form input[name="name"] {
   width: 100%;
   border: 0;
   border-radius: var(--radius-control);
@@ -767,7 +768,7 @@ s {
   background: #969696;
   background-clip: padding-box;
 }
-.lead-form :is(input[name="phone"], input[name="name"]) {
+.lead-form input[name="name"] {
   height: var(--field-height);
 }
 .form-bottom {
@@ -1540,23 +1541,9 @@ dialog::backdrop {
   font-size: var(--text-small);
   padding: 6px 10px 6px 8px;
 }
-.channels .chip {
+:where(.channels) .chip {
   font-size: var(--text-body);
   padding: var(--space-2) var(--space-3);
-}
-.channels.choice-channels-icons .chip {
-  gap: 8px;
-  padding-top: calc(var(--space-2) + 2px);
-  padding-bottom: calc(var(--space-2) - 2px);
-  cursor: pointer;
-  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
-}
-.channels.choice-channels-icons .choice-icon {
-  transform: translateY(-2px);
-}
-.channels.choice-channels-icons .chip:not(.selected):hover,
-.channels.choice-channels-icons .chip:not(.selected):focus-visible {
-  background: #e6e6e3;
 }
 
 @media (max-width: 800px) {
@@ -1573,72 +1560,6 @@ dialog::backdrop {
 .nav-marker {
   margin-top: 0;
   flex-shrink: 0;
-}
-.office-status {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-}
-/* Пульсация (3 шага) */
-.time {
-  position: relative;
-  top: 0;
-  padding-left: 14px;
-}
-.time::before,
-.time::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 4px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-}
-.time::before {
-  width: 6px;
-  height: 6px;
-  background-color: #14ae5c;
-  z-index: 2;
-}
-.time::after {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(20, 174, 92, 0.5);
-  z-index: 1;
-  animation: pulse3 1.5s infinite;
-  will-change: transform, opacity;
-}
-.site-header.desktop .office-status .time::before,
-.site-header.desktop .office-status .time::after {
-  top: calc(50% - 1.5px);
-}
-@media (max-width: 767px) {
-  .site-header.desktop .office-status .time::before,
-  .site-header.desktop .office-status .time::after {
-    top: calc(50% - 1.1px);
-  }
-}
-.office-status.closed .time::before {
-  background-color: var(--color-caption);
-}
-.office-status.closed .time::after {
-  display: none;
-}
-@keyframes pulse3 {
-  0% {
-    animation-timing-function: ease-in;
-    transform: translate(-50%, -50%) scale(0.6667);
-    opacity: 0.5;
-  }
-  55% {
-    animation-timing-function: ease-out;
-    transform: translate(-50%, -50%) scale(1.2);
-    opacity: 0.45;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.8);
-    opacity: 0;
-  }
 }
 
 .site-header.desktop .brand-text {
@@ -1841,7 +1762,6 @@ dialog::backdrop {
     border-top: 1px solid var(--color-divider);
   }
   .site-header.desktop .header-phone > :is(a, .header-callback) {
-    display: flex;
     align-items: center;
     min-height: 32px;
   }
@@ -1975,6 +1895,9 @@ button.city:hover {
   border-radius: 2px;
   outline: none;
 }
+.city-picker .city-menu li + li {
+  background: linear-gradient(to right, transparent 0%, var(--color-divider) 5%, transparent 100%) top / 100% 1px no-repeat;
+}
 .city-menu li::before {
   content: "";
   position: absolute;
@@ -2088,18 +2011,7 @@ button.city:hover {
   }
 }
 
-.site-header.desktop .header-phone > .header-mobile-phone {
-  display: none;
-}
-
-/* Полный номер вместо отдельной кнопки с трубкой на телефонах. */
 @media (max-width: 767px) {
-  .site-header.desktop .header-phone > .header-callback {
-    display: none;
-  }
-  .site-header.desktop .header-phone > .header-mobile-phone {
-    display: inline;
-  }
   .site-header.desktop {
     flex-wrap: nowrap;
     gap: 10px;

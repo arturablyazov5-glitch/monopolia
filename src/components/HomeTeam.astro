@@ -49,20 +49,19 @@ import "../styles/home-team.css";
       <strong>{siteText("home-team.text.5")}</strong>
     </p>
     <Carousel swipeHint label="Команда Монополии">
-      {
-        staff.map((person) => (
-          <StaffCard
-            name={person.name}
-            role={person.role}
-            badge={person.badge}
-            facts={person.facts}
-            certificate={person.certificate}
-            image={person.image}
-            variant={person.variant}
-            photo={Boolean(person.image)}
-          />
-        ))
-      }
+      {staff.map((person) => (
+        <StaffCard
+          name={person.name}
+          role={person.role}
+          badge={person.badge}
+          badgeTextWidth={person.badgeTextWidth}
+          facts={person.facts}
+          certificate={person.certificate}
+          image={person.image}
+          variant={person.variant}
+          photo={Boolean(person.image)}
+        />
+      ))}
     </Carousel>
   </div>
 </section>
@@ -73,11 +72,15 @@ import "../styles/home-team.css";
   if (heading && strike) {
     const mobile = matchMedia("(max-width: 767px)");
     const drawLines = () => {
-      heading.querySelectorAll(".team-heading-line").forEach((line) => line.remove());
+      heading
+        .querySelectorAll(".team-heading-line")
+        .forEach((line) => line.remove());
       heading.classList.remove("has-team-heading-lines");
       if (!mobile.matches) return;
 
-      const text = [...strike.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim());
+      const text = [...strike.childNodes].find(
+        (node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim(),
+      );
       if (!text) return;
       const range = document.createRange();
       range.selectNodeContents(text);
@@ -92,10 +95,17 @@ import "../styles/home-team.css";
         line.style.width = `${rect.width}px`;
         heading.append(line);
       }
-      heading.classList.toggle("has-team-heading-lines", !!heading.querySelector(".team-heading-line"));
+      heading.classList.toggle(
+        "has-team-heading-lines",
+        !!heading.querySelector(".team-heading-line"),
+      );
     };
     new ResizeObserver(drawLines).observe(heading);
-    new MutationObserver(drawLines).observe(strike, { childList: true, characterData: true, subtree: true });
+    new MutationObserver(drawLines).observe(strike, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
     mobile.addEventListener("change", drawLines);
     void document.fonts.ready.then(drawLines);
   }

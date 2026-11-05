@@ -1,0 +1,31 @@
+/* Поведение номера: шапка переключается на 768 px, футер — на 1200 px. */
+.site-header.desktop .header-phone > .header-mobile-phone {
+  display: none;
+}
+
+/* Полный номер вместо отдельной кнопки с трубкой на телефонах. */
+@media (max-width: 767px) {
+  .site-header.desktop .header-phone > .header-callback {
+    display: none;
+  }
+  .site-header.desktop .header-phone > .header-mobile-phone {
+    display: inline;
+  }
+}
+
+/* На десктопе номер открывает форму, на узких экранах звонит напрямую. */
+.site-footer .footer-callback {
+  display: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+@media (min-width: 1200px) {
+  .site-footer .footer-phone-link {
+    display: none;
+  }
+  .site-footer .footer-callback {
+    display: inline-block;
+  }
+}

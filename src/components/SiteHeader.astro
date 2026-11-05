@@ -1,6 +1,10 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import SocialLinks from "./SocialLinks.astro";
+import OfficeStatus from "./OfficeStatus.astro";
+import OfficeHours from "./OfficeHours.astro";
+import CityPicker from "./CityPicker.astro";
+import PhoneAction from "./PhoneAction.astro";
 import { cities as defaultCities } from "../data/cities";
 import Button from "./Button.astro";
 import AdminIcon from "./AdminIcon.astro";
@@ -94,55 +98,7 @@ const isCurrentMenuPage = (href: string) =>
     </>
   ) : (
     <>
-      <div class="city-picker" data-city-picker>
-        <button
-          type="button"
-          class="city"
-          data-city-toggle
-          aria-haspopup="listbox"
-          aria-expanded="false"
-        >
-          <img
-            src="/assets/icon-city-location-pin.svg"
-            width="10"
-            height="13"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          <span class="header-city-label">
-            <span data-city-label>{city}</span>
-            {cities.map((name) => (
-              <span class="header-city-sizer" aria-hidden="true">
-                {name}
-              </span>
-            ))}
-          </span>
-          <img
-            class="city-chevron"
-            src="/assets/icon-chevron-down.svg"
-            width="5"
-            height="3"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-        <div class="city-menu-shadow" data-city-menu hidden>
-          <ul class="city-menu brush-stroke" role="listbox" aria-label="Город">
-            {cities.map((c) => (
-              <li
-                role="option"
-                aria-selected={c === city}
-                tabindex="-1"
-                data-city-option={c}
-              >
-                {c}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <CityPicker cities={cities} city={city} />
       <nav aria-label="Разделы сайта">
         {nav.map((item) => (
           <a
@@ -171,39 +127,19 @@ const isCurrentMenuPage = (href: string) =>
             <SocialLinks loading="lazy" links={socialLinks} />
           </div>
           <div class="header-phone">
-            <button
-              type="button"
-              class="header-callback"
-              data-lead="Заказать обратный звонок"
-              data-callback
-              aria-label="Заказать обратный звонок: +7 (924) 580-45-55"
-              aria-haspopup="dialog"
-            >
-              +7 (924) 580-45-55
-            </button>
-            <a class="header-mobile-phone" href="tel:+79245804555">
-              +7 (924) 580-45-55
-            </a>
-            <small class="office-status">
-              <span class="time" data-office-status>
-                {siteText("site-header.text.5")}
-              </span>
-            </small>
+            <PhoneAction variant="header" />
+            <OfficeStatus />
           </div>
         </div>
         <!-- Адаптив: звонок одним касанием на телефоне; на десктопе скрыто -->
-        <a
-          class="header-call"
-          href="tel:+79245804555"
-          aria-label="Позвонить: +7 (924) 580-45-55"
-        >
+        <PhoneAction class="header-call" icon>
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path
               fill="currentColor"
               d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"
             ></path>
           </svg>
-        </a>
+        </PhoneAction>
         <button
           type="button"
           class="menu-button"
@@ -321,21 +257,13 @@ const isCurrentMenuPage = (href: string) =>
           <div class="menu-panel-bottom">
             <div class="menu-mobile menu-panel-contact">
               <div class="menu-panel-contact-row">
-                <a class="menu-panel-phone" href="tel:+79245804555">
-                  +7 (924) 580-45-55
-                </a>
+                <div class="menu-panel-phone-status">
+                  <PhoneAction class="menu-panel-phone" />
+                  <OfficeStatus />
+                </div>
                 <SocialLinks loading="eager" />
               </div>
-              <small class="office-status">
-                <span class="time" data-office-status>
-                  {siteText("site-header.text.5")}
-                </span>
-              </small>
-              <p class="menu-panel-hours">
-                {siteText("site-footer.text.8")}
-                <br />
-                {siteText("site-footer.text.9")}
-              </p>
+              <OfficeHours class="menu-panel-hours" />
             </div>
             <div class="menu-panel-actions">
               <Button
@@ -354,30 +282,6 @@ const isCurrentMenuPage = (href: string) =>
   import { initCityPickers } from "../lib/city-picker";
   initCityPickers();
   document.querySelectorAll<HTMLElement>(".site-header").forEach((header) => {
-    const officeStatuses = header.querySelectorAll<HTMLElement>(
-      "[data-office-status]",
-    );
-    if (officeStatuses.length) {
-      const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Yakutsk",
-        weekday: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-        hourCycle: "h23",
-      }).formatToParts(new Date());
-      const part = (key: string) =>
-        parts.find((p) => p.type === key)?.value ?? "";
-      const day = part("weekday");
-      const minutes = Number(part("hour")) * 60 + Number(part("minute"));
-      const open =
-        day === "Sat"
-          ? minutes >= 600 && minutes < 900
-          : day !== "Sun" && minutes >= 540 && minutes < 1080;
-      officeStatuses.forEach((status) => {
-        status.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
-        status.closest(".office-status")?.classList.toggle("closed", !open);
-      });
-    }
     if (header.classList.contains("admin-site-header")) return;
     const menu = header.querySelector<HTMLButtonElement>(".menu-button")!;
     const panel = header.querySelector<HTMLElement>(".menu-panel")!;

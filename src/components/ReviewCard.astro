@@ -8,6 +8,7 @@ const {
   duration = "0:47",
   video,
   placeholder = false,
+  reviewIcon = false,
 } = Astro.props;
 ---
 
@@ -34,7 +35,11 @@ const {
         decoding="async"
       />
     )}
-    <PlayButton label={`Отзыв: ${name}`} video={video} />
+    <PlayButton
+      label={`Отзыв: ${name}`}
+      video={video}
+      reviewIcon={reviewIcon}
+    />
     <VideoDuration time={duration} />
   </div>
   <h3>{name}</h3>

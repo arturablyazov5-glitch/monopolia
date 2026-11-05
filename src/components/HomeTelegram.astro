@@ -1,4 +1,5 @@
 ---
+import { people } from "../data/people.mjs";
 import { siteText } from "../data/site-texts.mjs";
 import { socialUrls } from "../data/social-links";
 import Paper from "./Paper.astro";
@@ -53,7 +54,7 @@ import "../styles/home-telegram.css";
         <img
           class="telegram-person person-photo"
           src="/assets/staff-ekaterina-korneeva-telegram.webp"
-          alt="Екатерина Корнеева показывает Telegram на телефоне"
+          alt={`${people["ekaterina-korneeva"].name} показывает Telegram на телефоне`}
           loading="lazy"
           width="1630"
           height="3490"
@@ -62,8 +63,7 @@ import "../styles/home-telegram.css";
       </div>
       <PersonLabel
         class="telegram-signature"
-        name="Екатерина Корнеева"
-        role="Специалист по недвижимости"
+        {...people["ekaterina-korneeva"]}
       />
     </div>
     <div class="telegram-copy">

@@ -1,3 +1,5 @@
+import { phone } from "./contacts";
+
 export const socialUrls: Record<string, string> = {
   TelegramContact: "https://t.me/anmonopoly",
   TelegramJobs: "https://t.me/proMonopoliya",
@@ -5,5 +7,5 @@ export const socialUrls: Record<string, string> = {
   Instagram:
     "https://www.instagram.com/monopoliya.belogorsk?igsh=MXZ6bDF0dDB3ODF2YQ==",
   Макс: "https://max.ru/u/f9LHodD0cOIyUZ44dSIfUcB5r8FjOixCgzmNR41QD6WAOZiP73aS6embv9I",
-  WhatsApp: "https://wa.me/79245804555",
+  WhatsApp: `https://wa.me/${phone.whatsapp}`,
 };

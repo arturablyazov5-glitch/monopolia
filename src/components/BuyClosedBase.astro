@@ -1,5 +1,6 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
+import { phone } from "../data/contacts";
 // Figma 1380:6462: 800+ эксклюзивных объектов, карточка проверки,
 // кнопка доступа и окно Safari 1380:6483 с превью закрытой базы.
 import { currentMonth } from "../scripts/calendar.mjs";
@@ -186,7 +187,7 @@ const listings = selectPreview();
                 </span>
               </span>
               <span class="buy-safari-phone">
-                <b>+7 (924) 580-45-55</b>
+                <b>{phone.display}</b>
                 <span class="buy-safari-status">
                   <i></i>
                   {siteText("buy-closed-base.text.6")}

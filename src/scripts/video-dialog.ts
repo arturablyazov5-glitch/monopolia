@@ -8,6 +8,16 @@ if (dialog) {
   )!;
   const title = dialog.querySelector<HTMLElement>("#video-dialog-title")!;
   let trigger: HTMLButtonElement | null = null;
+  let firstFrameRequest: number | null = null;
+  const loading = dialog.querySelector<HTMLElement>("[data-video-loading]")!;
+  const revealVideo = () => {
+    if (!dialog.open || dialog.classList.contains("is-closing")) return;
+    dialog.classList.add("is-video-ready");
+    loading.hidden = true;
+  };
+  video.addEventListener("error", () => {
+    loading.textContent = "Не удалось загрузить видео. Попробуйте открыть его снова.";
+  });
   let scrollY = 0;
   let bodyStyle: string | null = null;
   let rootStyle: string | null = null;
@@ -19,6 +29,11 @@ if (dialog) {
   let cancelPendingRestore: (() => void) | null = null;
 
   const unload = () => {
+    if (firstFrameRequest !== null) video.cancelVideoFrameCallback(firstFrameRequest);
+    firstFrameRequest = null;
+    dialog.classList.remove("is-video-ready");
+    loading.hidden = false;
+    loading.textContent = "Загрузка видео…";
     cancelPendingRestore?.();
     cancelPendingRestore = null;
     pendingAutoResume = false;
@@ -77,7 +92,7 @@ if (dialog) {
   window.addEventListener("pageshow", restore);
   const close = () => {
     if (!dialog.open || dialog.classList.contains("is-closing")) return;
-    unload();
+    video.pause();
     dialog.classList.add("is-closing");
     closeTimer = setTimeout(
       () => dialog.close(),
@@ -137,12 +152,8 @@ if (dialog) {
       return;
     }
     trigger = button;
-    const poster = card?.querySelector<HTMLImageElement>(
-      ".review-photo > img, .sell-week-video-frame",
-    );
     title.textContent = button.getAttribute("aria-label") || "Видеоотзыв";
-    if (poster) video.poster = poster.currentSrc || poster.src;
-    video.src = source;
+    unload();
     scrollY = window.scrollY;
     bodyStyle = document.body.getAttribute("style");
     rootStyle = document.documentElement.getAttribute("style");
@@ -155,6 +166,17 @@ if (dialog) {
     document.documentElement.style.overflow = "hidden";
     dialog.showModal();
     closeButton.focus({ preventScroll: true });
+    // Publish the video layer only after its first decoded frame is presented.
+    // The card thumbnail has different cropping and must not flash as a poster.
+    video.src = source;
+    if (typeof video.requestVideoFrameCallback === "function") {
+      firstFrameRequest = video.requestVideoFrameCallback(() => {
+        firstFrameRequest = null;
+        revealVideo();
+      });
+    } else {
+      video.addEventListener("loadeddata", revealVideo, { once: true });
+    }
     // This call stays in the user's click handler for iOS gesture permission.
     void video.play().catch(() => {
       /* Native controls remain available. */

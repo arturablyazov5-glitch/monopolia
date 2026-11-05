@@ -1,3 +1,5 @@
+import { people } from "./people.mjs";
+
 // TASK-081: stable IDs; defaults are the existing copy. Do not regenerate IDs.
 export const siteTexts = [
   {
@@ -1672,7 +1674,7 @@ export const siteTexts = [
     "page": "Общие блоки",
     "block": "staff-card",
     "label": "Юрист по сопровождению сделок",
-    "defaultValue": "Юрист по сопровождению сделок",
+    "defaultValue": people["evgeniya-matukhnova"].role,
     "maxLength": 200,
     "multiline": false
   },

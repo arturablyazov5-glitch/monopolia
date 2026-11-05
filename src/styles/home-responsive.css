@@ -87,7 +87,7 @@
     --x: calc(50% - 360px * var(--k));
     height: auto;
     padding-top: var(--sec);
-    background: #fdfdfd;
+    background: linear-gradient(#fff, #fdfdfd 120px);
     /* Перекрытие 1 px убирает шов с первым экраном. */
     margin-top: -1px;
   }
@@ -397,19 +397,6 @@
     position: relative;
     z-index: 2;
   }
-  .home-desktop .trust-rating-mobile {
-    padding: 12px 14px 10px;
-    border-radius: 4px;
-  }
-  .home-desktop .trust-rating-mobile p {
-    position: relative;
-    margin: 6px 0 0;
-    color: var(--color-muted);
-    font: 14px/1.4 var(--font-body);
-  }
-  .home-desktop .trust-team .trust-rating {
-    display: none;
-  }
   /* Композиция команды масштабируется целиком (только картинки) */
   .home-desktop .trust-team {
     position: relative;
@@ -453,12 +440,9 @@
     height: auto;
     padding: var(--cases-pad) 0 calc(var(--sec) + 40px);
     /* бумага сверху, тёмный блок компании — в вырезах рваного низа */
-    background: linear-gradient(#fdfdfd 50%, #1c1c1a 50%);
+    background: transparent;
   }
-  .home-desktop .cases-background {
-    top: auto;
-    bottom: 0;
-  }
+
   .home-desktop .cases-container {
     width: auto;
     margin: 0 var(--rg);
@@ -697,8 +681,7 @@
     background: #fdfdfd;
   }
   .home-desktop .telegram-background {
-    top: auto;
-    bottom: 0;
+    display: none;
   }
   .home-desktop .telegram-news-wrap {
     width: calc(100% - 2 * var(--rg));
@@ -1239,12 +1222,7 @@
   .home-desktop .private-catalog-assurance-detail {
     text-wrap: balance;
   }
-  .home-desktop .private-catalog-assurance-detail::after {
-    right: 50%;
-    width: min(11em, 87%);
-    bottom: -9px;
-    transform: translateX(50%) rotate(1deg);
-  }
+
   .home-desktop .private-catalog-card {
     padding: 28px 20px;
   }
@@ -1334,15 +1312,26 @@
   .home-desktop .trust-team .trust-edge-person {
     display: none;
   }
-  /* На телефоне команда заканчивается у пояса; карточки закрывают низ портретов. */
+  /* Рваный нижний контур закрывает портреты и тени перед карточками. */
   .home-desktop .trust-team {
     zoom: calc(var(--k) * 1.32);
     height: 600px;
     overflow: hidden;
-    clip-path: none;
+
+  }
+  .home-desktop .trust-team::after {
+    content: "";
+    position: absolute;
+    inset: 440px 0 0;
+    background: var(--color-paper);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-size: 100% 80px, 100% calc(100% - 78px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    pointer-events: none;
   }
   .home-desktop .trust-team-edge {
-    top: 440px;
+    display: none;
   }
   .home-desktop .trust-reviews {
     /* Подсказка теперь над карточками: компенсируем ее высоту и отступ,
@@ -1364,38 +1353,6 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
-  }
-  .home-desktop .trust-rating-mobile {
-    min-width: 0;
-    padding: 10px 6px 8px;
-  }
-  .home-desktop .trust-rating-mobile .trust-rating-line {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    align-items: center;
-    gap: 6px 0.35em;
-  }
-  .home-desktop .trust-rating-mobile .trust-rating-line > a {
-    grid-column: 1 / -1;
-    min-width: 0;
-  }
-  .home-desktop .trust-rating-mobile .trust-rating-line > a > img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 20px;
-  }
-  .home-desktop .trust-rating-mobile .trust-rating-divider {
-    display: none;
-  }
-  .home-desktop .trust-rating-mobile .trust-rating-line > img {
-    width: 13.1982px;
-    max-width: none;
-    margin: 0;
-  }
-  .home-desktop .trust-rating-mobile p {
-    font-size: 12px;
-    white-space: nowrap;
   }
   .home-desktop .trust-reviews .review-card {
     flex: 0 0 min(301.333px, 78vw);
@@ -1805,7 +1762,7 @@
 
 @media (max-width: 767px) {
   .home-desktop .home-hero {
-    --team-width: 158vw;
+    --team-width: 156vw;
   }
   /* «3 часа» — чуть крупнее рукописной надписи в соседнем блоке. */
   .home-desktop .fast-sale-time {
@@ -1925,24 +1882,15 @@
   }
 }
 
+@media (max-width: 413px) {
+  .home-desktop .cases-tabs .cases-tab-label {
+    max-inline-size: min-content;
+  }
+}
+
 /* ======================= УЗКИЙ ТЕЛЕФОН ≤ 389 ======================= */
 @media (max-width: 389px) {
   .home-desktop {
     --rg: 16px;
-  }
-}
-
-@media (width < 500px) {
-  .home-desktop .home-hero {
-    --team-width: 174vw;
-  }
-  .home-desktop .hero-team {
-    translate: 15px 0;
-  }
-  .hero-team .team-tablet-up {
-    display: none;
-  }
-  .hero-team [data-person="04-left-front"] {
-    translate: -18px 0;
   }
 }

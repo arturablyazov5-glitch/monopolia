@@ -165,6 +165,8 @@
   width: 100%;
   max-width: none;
   height: 1325px;
+  background: var(--color-paper);
+  mask: url("/assets/edges/buyer-paper-edge.svg") center / 100% 100% no-repeat;
 }
 .hero-container .site-header {
   margin-top: 0;
@@ -187,11 +189,7 @@
   .home-desktop .home-hero .hero-team {
     margin-top: calc(28px - var(--hero-gap-buttons-photo) * 0.35);
   }
-  .hero-paper-edge img {
-    /* Векторная кромка, обведённая по background-paper-buyer-section.webp с субпиксельной точностью
-     (без «лесенки» старой грубой маски): public/assets/edges/. */
-    mask: url("/assets/edges/buyer-paper-edge.svg") center / 100% 100% no-repeat;
-  }
+
 }
 
 @media (max-width: 751px) {

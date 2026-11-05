@@ -1,7 +1,9 @@
 ---
+import { people } from "../data/people.mjs";
 import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import Paper from "./Paper.astro";
+import TapedNote from "./TapedNote.astro";
 import PersonLabel from "./PersonLabel.astro";
 import ExpertProfile from "./ExpertProfile.astro";
 import { traceLogo } from "../data/trace-logos";
@@ -35,8 +37,7 @@ const ratingParts = ratingText.split("Домклик");
           {siteText("director-invitation.text.3")}
         </h2>
         <ExpertProfile
-          name="Елена Сиделина"
-          role="Генеральный директор Монополии"
+          {...people["elena-sidelina"]}
           src="/assets/staff-elena-sidelina-mobile.webp"
         />
         <div class="director-bio">
@@ -76,20 +77,16 @@ const ratingParts = ratingText.split("Домклик");
           </div>
           <p>{siteText("director-invitation.text.6")}</p>
         </div>
-        <Paper class="director-coffee-note" tapeNode="I1380:5590;569:1388">
-          <img
-            src="/assets/director-coffee-note-icon.svg"
-            width="36"
-            height="36"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          <p>
-            {siteText("director-invitation.text.7")}{" "}
-            <strong>{siteText("director-invitation.text.8")}</strong>
-          </p>
-        </Paper>
+        <TapedNote
+          class="director-coffee-note"
+          variant="card"
+          textured
+          tapeNode="I1380:5590;569:1388"
+          icon={{ src: "/assets/director-coffee-note-icon.svg", width: 36, height: 36 }}
+        >
+          {siteText("director-invitation.text.7")}{" "}
+          <strong>{siteText("director-invitation.text.8")}</strong>
+        </TapedNote>
         <div class="director-cta">
           <Button
             popup="office"
@@ -114,7 +111,7 @@ const ratingParts = ratingText.split("Домклик");
           src="/assets/staff-elena-sidelina.webp"
           srcset="/assets/staff-elena-sidelina-mobile.webp 1450w, /assets/staff-elena-sidelina.webp 2336w"
           sizes="(max-width: 767px) 723px, 2336px"
-          alt="Елена Сиделина"
+          alt={people["elena-sidelina"].name}
           loading="lazy"
           width="2336"
           height="3504"
@@ -122,8 +119,7 @@ const ratingParts = ratingText.split("Домклик");
         />
         <PersonLabel
           class="director-signature"
-          name="Елена Сиделина"
-          role="Генеральный директор Монополии"
+          {...people["elena-sidelina"]}
         />
       </div>
     </Paper>

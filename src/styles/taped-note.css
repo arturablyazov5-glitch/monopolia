@@ -4,7 +4,8 @@
   transform: rotate(var(--note-rotate, 0deg));
   filter: drop-shadow(0 5px 3.5px #0000000f);
 }
-.taped-note-paper {
+.taped-note-paper,
+.taped-note-card-paper {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -21,6 +22,17 @@
 }
 .taped-note-icon {
   flex-shrink: 0;
+}
+.taped-note-card-paper {
+  padding: 20px 24px;
+}
+.taped-note-card-paper > .taped-note-icon {
+  align-self: flex-start;
+}
+.taped-note-card-paper > p {
+  margin: 0;
+  font: 16px/1.2 var(--font-body);
+  color: var(--color-ink);
 }
 
 /* Адаптив K: desktop ≥1200 сохраняется. */

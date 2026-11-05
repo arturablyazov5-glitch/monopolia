@@ -2,6 +2,8 @@
 import { imageSize } from "../lib/image-size";
 interface Props {
   class?: string;
+  /** Отдельный класс подписи, когда её переносом управляет конкретный блок. */
+  labelClass?: string;
   loading?: "eager" | "lazy";
   name: string;
   options: string[];
@@ -49,7 +51,7 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
           decoding="async"
         />
       )}
-      {option}
+      {Astro.props.labelClass ? <span class={Astro.props.labelClass}>{option}</span> : option}
     </button>
   ))}
   <slot />

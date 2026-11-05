@@ -13,11 +13,10 @@
   .buy-quiz-options .chip:hover { background: var(--color-accent); color: #fff; }
 }
 .buy-quiz-input { display: block; width: 100%; box-sizing: border-box; border: 0; padding: 16px 20px; background: #f4f4f4; font: inherit; }
-.buy-quiz input.buy-quiz-input[type="tel"] { background: #fff; }
 textarea.buy-quiz-input { min-height: 90px; resize: vertical; }
-.buy-quiz-channel-label { margin: 20px 0 10px; }
+.buy-quiz-channel-label { margin: 20px 0 10px; color: var(--color-muted); }
 .buy-quiz-channels { margin-bottom: 20px; }
-.buy-quiz-controls { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+.buy-quiz-controls { display: flex; align-items: center; gap: var(--space-4); margin-top: auto; }
 .buy-quiz-controls .button { min-height: 54px; }
 .buy-quiz-controls .buy-quiz-back { width: 54px; height: 54px; min-width: 54px; padding: 0; cursor: pointer; }
 .buy-quiz-step { order: -1; margin: 0 auto 0 0; text-align: left; color: #777; font-size: 14px; white-space: nowrap; }

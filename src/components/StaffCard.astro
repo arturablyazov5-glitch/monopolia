@@ -1,12 +1,14 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
+import { people } from "../data/people.mjs";
 import Badge from "./Badge.astro";
 interface Props {
   name?: string;
   role?: string;
   image?: string;
   badge?: string;
+  badgeTextWidth?: number;
   facts?: string[];
   variant?: string;
   certificate?: string;
@@ -16,8 +18,9 @@ interface Props {
 const {
   variant = "",
   certificate,
+  badgeTextWidth,
   photo = true,
-  name = "Евгения Матухнова",
+  name = people["evgeniya-matukhnova"].name,
   role = siteText("staff-card.role.1"),
   image = "/assets/staff-evgeniya-matukhnova.webp",
   badge = siteText("staff-card.badge.2"),
@@ -29,7 +32,7 @@ const {
 } = Astro.props;
 ---
 
-<Paper class={`staff-card ${variant}`} node="1380:5639">
+<Paper class={`staff-card paper-torn-bottom ${variant}`} node="1380:5639">
   <div class="staff-photo brush-stroke">
     {photo && (
       <img
@@ -42,7 +45,7 @@ const {
         decoding="async"
       />
     )}
-    <Badge text={badge} />
+    <Badge text={badge.replace(/\u00a0/g, " ")} textWidth={badgeTextWidth} />
   </div>
   <div>
     <h3>{name}</h3>

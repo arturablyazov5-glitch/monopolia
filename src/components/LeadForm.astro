@@ -1,4 +1,5 @@
 ---
+import { people } from "../data/people.mjs";
 import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
 import FormSocial from "./FormSocial.astro";
@@ -11,6 +12,7 @@ import ExpertProfile from "./ExpertProfile.astro";
 interface Props {
   id?: string;
   compact?: boolean;
+  phoneVariant?: "default" | "large";
   variant?: "question" | "contact" | "popup";
   title?: string;
   buttonLabel?: string;
@@ -25,6 +27,7 @@ interface Props {
 const {
   id = "question",
   compact = false,
+  phoneVariant = "default",
   variant = "question",
   title = siteText("lead-form.title.1"),
   buttonLabel = variant === "question"
@@ -76,21 +79,11 @@ const {
             <label class="sr-only" for={id + "-phone"}>
               Телефон
             </label>
-            <PhoneField id={id + "-phone"} />
+            <PhoneField id={id + "-phone"} variant={phoneVariant} />
             {resume && <ResumeField id={id + "-resume"} />}
             <div class="popup-channel">
               <p>Выберите удобный способ связи:</p>
               <ContactMethods />
-              <input
-                class="sr-only"
-                type="text"
-                name="channel"
-                value=""
-                tabindex="-1"
-                autocomplete="off"
-                required
-                aria-label="Способ связи"
-              />
             </div>
             <ConsentCheckbox />
             <div class="popup-actions">
@@ -119,8 +112,7 @@ const {
         </h2>
         {!compact && variant === "question" && (
           <ExpertProfile
-            name="Елена Горбанева"
-            role="Специалист по недвижимости"
+            {...people["elena-gorbaneva"]}
             src="/assets/staff-elena-gorbaneva-consultation.webp"
           />
         )}
@@ -151,25 +143,13 @@ const {
               placeholder="Ваше имя"
               required
             />
-            <>
-              <ContactMethods />
-              <input
-                class="sr-only"
-                type="text"
-                name="channel"
-                value=""
-                tabindex="-1"
-                autocomplete="off"
-                required
-                aria-label="Способ связи"
-              />
-            </>
+            <ContactMethods />
           </>
         )}
         <label class="sr-only" for={id + "-phone"}>
           {siteText("lead-form.text.6")}
         </label>
-        <PhoneField id={id + "-phone"} />
+        <PhoneField id={id + "-phone"} variant={phoneVariant} />
         <ConsentCheckbox />
         <div class="form-bottom">
           <Button label={buttonLabel} type="submit" />
@@ -193,7 +173,7 @@ const {
       <img
         class="person person-photo"
         src="/assets/staff-elena-gorbaneva-consultation.webp"
-        alt="Елена Горбанева"
+        alt={people["elena-gorbaneva"].name}
         loading="lazy"
         width="1280"
         height="1600"
@@ -201,8 +181,7 @@ const {
       />
       <PersonLabel
         class="name-tag"
-        name="Елена Горбанева"
-        role="Специалист по недвижимости"
+        {...people["elena-gorbaneva"]}
       />
     </div>
   )}
@@ -247,13 +226,17 @@ const {
         error.hidden = true;
         error.id = `${field.id}-error`;
         const anchor = field.closest("label") ?? field;
-        if (field.name !== "channel") {
-          const group = document.createElement("div");
-          group.className = "lead-field-group";
+        const group = document.createElement("div");
+        group.className = "lead-field-group";
+        const choices = field.name === "channel"
+          ? field.previousElementSibling
+          : null;
+        if (choices?.matches(".contact-method-options")) {
+          choices.before(group);
+          group.append(choices, anchor, error);
+        } else {
           anchor.before(group);
           group.append(anchor, error);
-        } else {
-          anchor.after(error);
         }
         const sync = () => {
           if (field.name === "phone") validate();
@@ -304,7 +287,7 @@ const {
       });
       const status = form.querySelector<HTMLElement>(".form-result")!;
       const initialChoices = [
-        ...form.querySelectorAll<HTMLElement>("[data-choice-group]"),
+        ...form.querySelectorAll<HTMLElement>("[data-choice-group]:not(.contact-method-options)"),
       ].map((group) => ({
         group,
         selected: group.querySelector("[aria-pressed=true]"),
@@ -331,13 +314,6 @@ const {
         status.hidden = true;
         status.textContent = "";
       });
-      form.addEventListener("choice-change", ((e: CustomEvent) => {
-        const field = form.querySelector<HTMLInputElement>("[name=channel]");
-        if (field) {
-          field.value = e.detail.value;
-          field.dispatchEvent(new Event("input", { bubbles: true }));
-        }
-      }) as EventListener);
       let sending = false;
       const loadSubmit = () => import("../scripts/lead-submit");
       form.addEventListener(

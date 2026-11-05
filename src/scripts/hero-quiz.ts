@@ -36,6 +36,13 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   const typeError = card.querySelector<HTMLElement>('[data-hero-type-error]')!;
   const otherType = card.querySelector<HTMLElement>('[data-hero-other]')!;
   const otherTypeInput = card.querySelector<HTMLInputElement>('[data-hero-other-input]')!;
+  const fullPlaceholder = otherTypeInput.placeholder;
+  const mobile = matchMedia('(max-width: 767px)');
+  const updateOtherPlaceholder = () => {
+    otherTypeInput.placeholder = mobile.matches ? fullPlaceholder.split(',')[0] : fullPlaceholder;
+  };
+  updateOtherPlaceholder();
+  mobile.addEventListener('change', updateOtherPlaceholder);
   otherTypeInput.addEventListener('input', () => {
     typeError.hidden = true;
     otherTypeInput.removeAttribute('aria-invalid');
@@ -81,7 +88,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     otherType.hidden = true; otherTypeInput.value = '';
     Object.keys(fieldErrors).forEach(clearError);
     phone.setCustomValidity('');
-    card.querySelectorAll<HTMLElement>('[data-choice-group] [aria-pressed]').forEach(button => {
+    card.querySelectorAll<HTMLElement>('[data-choice-group]:not(.contact-method-options) [aria-pressed]').forEach(button => {
       button.classList.remove('selected'); button.setAttribute('aria-pressed', 'false');
     });
     card.querySelectorAll<HTMLElement>('[data-city-menu]').forEach(menu => menu.hidden = true);
@@ -169,7 +176,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (step !== 5 || next.disabled) return;
-    const channel = form.querySelector<HTMLElement>('.channels [aria-pressed=true]')?.dataset.value;
+    const channel = form.querySelector<HTMLInputElement>('[name=channel]')?.value;
     const validPhone = /^\+?[\d()\s-]+$/.test(phone.value) && (phone.value.startsWith('+') ? /^7\d{10}$/ : /^(?:[78]\d{10}|\d{10})$/).test(phone.value.replace(/\D/g, ''));
     phone.setAttribute('aria-invalid', String(!validPhone));
     consent.setAttribute('aria-invalid', String(!consent.checked));

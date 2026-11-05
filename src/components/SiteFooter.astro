@@ -1,6 +1,8 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import SocialLinks from "./SocialLinks.astro";
+import PhoneAction from "./PhoneAction.astro";
+import OfficeHours from "./OfficeHours.astro";
 import "../styles/site-footer.css";
 import { legal } from "../data/legal";
 import { siteSections } from "../data/site-nav";
@@ -105,24 +107,8 @@ const { nav = siteSections, home = "/", node = "1380:5754" } = Astro.props;
       <div class="footer-contact">
         <div class="footer-contact-main">
           <div class="footer-phone-block">
-            <a class="footer-phone footer-phone-link" href="tel:+79245804555">
-              +7 (924) 580-45-55
-            </a>
-            <button
-              type="button"
-              class="footer-phone footer-callback"
-              data-lead="Заказать обратный звонок"
-              data-callback
-              aria-label="Заказать обратный звонок: +7 (924) 580-45-55"
-              aria-haspopup="dialog"
-            >
-              +7 (924) 580-45-55
-            </button>
-            <p>
-              {siteText("site-footer.text.8")}
-              <br />
-              {siteText("site-footer.text.9")}
-            </p>
+            <PhoneAction variant="footer" />
+            <OfficeHours />
           </div>
           <button
             class="email-chip"

@@ -1,0 +1,18 @@
+---
+import { officeHourLines } from "../data/office-hours.mjs";
+interface Props {
+  class?: string;
+}
+---
+
+<p class={Astro.props.class} data-office-hours>
+  {officeHourLines().map((line, index) => (
+    <>
+      {index > 0 && <br />}
+      {line}
+    </>
+  ))}
+</p>
+<script>
+  import "../scripts/office-hours";
+</script>

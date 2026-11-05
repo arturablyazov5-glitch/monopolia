@@ -3,13 +3,28 @@ import "../styles/contact-fields.css";
 interface Props {
   id: string;
   class?: string;
+  variant?: "default" | "large" | "quiz" | "quiz-dialog";
   "aria-describedby"?: string;
 }
-const { id, class: className, "aria-describedby": describedBy } = Astro.props;
+const {
+  id,
+  class: className,
+  variant = "default",
+  "aria-describedby": describedBy,
+} = Astro.props;
 ---
 
 <input
-  class:list={["phone-field", "brush-stroke", className]}
+  class:list={[
+    "phone-field",
+    "brush-stroke",
+    className,
+    {
+      "phone-field--large": variant === "large",
+      "phone-field--quiz": variant === "quiz",
+      "phone-field--quiz-dialog": variant === "quiz-dialog",
+    },
+  ]}
   id={id}
   name="phone"
   type="tel"

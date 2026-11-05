@@ -86,14 +86,15 @@
   filter: drop-shadow(0 2px 3px #0000000d);
   position: absolute;
   left: auto;
-  right: 12px;
+  right: 0;
   bottom: 12px;
-  width: max-content;
-  max-width: calc(100% - 24px);
+  width: calc(var(--badge-text-width, 13em) + 40px);
+  max-width: 100%;
   text-align: left;
   padding: 10px 20px;
   font: 14px/1.2 var(--font-body);
-  /* Более широкий fallback переносится внутри max-width, сохраняя правый отступ. */
+  /* Ширина текста задана для каждой карточки, поля общие. */
+  text-wrap: balance;
   white-space: normal;
 }
 .home-team .staff-card h3 {
@@ -129,6 +130,7 @@
   content: none;
 }
 .staff-certificate p:first-child {
+  color: var(--color-muted);
   font: 14px/1.2 var(--font-body);
   margin-bottom: 6px;
 }
@@ -230,7 +232,8 @@
     z-index: 1;
     height: 0.38em;
     transform: translateY(-50%);
-    background: url("/assets/team-heading-underline.svg") center / 100% 100% no-repeat;
+    background: url("/assets/team-heading-underline.svg") center / 100% 100%
+      no-repeat;
     pointer-events: none;
   }
 }

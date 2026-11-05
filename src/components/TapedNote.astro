@@ -15,6 +15,8 @@ interface Props {
   node?: string;
   tapeNode?: string;
   tape?: boolean;
+  /** card — многострочная заметка с иконкой у верхнего края текста. */
+  variant?: "label" | "card";
 }
 
 const {
@@ -25,16 +27,23 @@ const {
   node = "",
   tapeNode = "I1380:6985;569:1388",
   tape = true,
+  variant = "label",
 } = Astro.props;
 ---
 
 <div
-  class:list={["taped-note", className]}
+  class:list={[
+    variant === "card" ? "taped-note-card" : "taped-note",
+    className,
+  ]}
   style={rotate ? `--note-rotate:${rotate}deg` : undefined}
   data-node-id={node || undefined}
 >
   <Paper
-    class:list={["taped-note-paper", { "taped-note-plain": !textured }]}
+    class:list={[
+      variant === "card" ? "taped-note-card-paper" : "taped-note-paper",
+      { "taped-note-plain": !textured },
+    ]}
     tapeNode={tape ? tapeNode : ""}
   >
     {icon && (

@@ -55,7 +55,7 @@
 }
 .realtor-comparison-cta p {
   font-size: var(--text-small);
-  color: #000;
+  color: var(--color-muted);
 }
 
 /* Адаптив K: desktop ≥1200 сохраняется. */

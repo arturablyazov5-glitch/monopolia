@@ -1,0 +1,76 @@
+---
+import { cities as defaultCities } from "../data/cities";
+
+interface Props {
+  variant?: "header" | "quiz";
+  cities?: string[];
+  city?: string;
+}
+const {
+  variant = "header",
+  cities = defaultCities,
+  city = cities[0],
+} = Astro.props;
+const quiz = variant === "quiz";
+---
+
+<div
+  class:list={["city-picker", { "inner-hero-city-picker": quiz }]}
+  data-city-picker
+>
+  <button
+    type="button"
+    class={quiz ? "inner-hero-city" : "city"}
+    data-city-toggle
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    aria-label={quiz ? "Город" : undefined}
+  >
+    {!quiz && (
+      <img
+        src="/assets/icon-city-location-pin.svg"
+        width="10"
+        height="13"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    )}
+    {quiz ? (
+      <span data-city-label>{city}</span>
+    ) : (
+      <span class="header-city-label">
+        <span data-city-label>{city}</span>
+        {cities.map((name) => (
+          <span class="header-city-sizer" aria-hidden="true">
+            {name}
+          </span>
+        ))}
+      </span>
+    )}
+    <img
+      class="city-chevron"
+      src="/assets/icon-chevron-down.svg"
+      width={quiz ? "6" : "5"}
+      height={quiz ? "3.5" : "3"}
+      alt=""
+      loading={quiz ? "eager" : "lazy"}
+      decoding="async"
+    />
+  </button>
+  {quiz && <input type="hidden" name="city" value={city} />}
+  <div class="city-menu-shadow" data-city-menu hidden>
+    <ul class="city-menu brush-stroke" role="listbox" aria-label="Город">
+      {cities.map((name) => (
+        <li
+          role="option"
+          aria-selected={name === city}
+          tabindex="-1"
+          data-city-option={name}
+        >
+          {name}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

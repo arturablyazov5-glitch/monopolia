@@ -33,16 +33,13 @@
 .arrow,
 .city,
 .header-call,
-.lead-form :is(input[name="phone"], input[name="name"]),
+.lead-form input[name="name"],
 .lead-form textarea,
 .inner-hero-city,
 .inner-hero-other input,
-.buy-quiz input.buy-quiz-input[type="tel"],
 .inner-hero-types .chip,
 .chip,
 .channels button,
-.sell-week-form .chip,
-.sell-week-form input[type="tel"],
 .cases-tabs .channels,
 .cases-tabs .chip.selected,
 .private-catalog-checks .badge,
@@ -213,7 +210,7 @@ button.button {
 .sell-answers-topics span {
   --brush-ring: 0px 1px;
 }
-.lead-form :is(input[name="phone"], input[name="name"]),
+.lead-form input[name="name"],
 .lead-form textarea {
   --brush-ring-inline-end: 2px;
   --brush-ring: 0px var(--brush-ring-inline-end) 0px 0px;
@@ -370,7 +367,6 @@ button.button {
 .lead-section-card::before,
 .inner-hero-city,
 .inner-hero-other input,
-.buy-quiz input.buy-quiz-input[type="tel"],
 .office-label,
 .office-label span,
 .lead-form input,
@@ -399,7 +395,6 @@ button.button {
 .lead-section-card::before,
 .inner-hero-city,
 .inner-hero-other input,
-.buy-quiz input.buy-quiz-input[type="tel"],
 .office-label,
 .office-label span,
 .lead-form input,
@@ -491,4 +486,29 @@ button.button {
 .paper.paper-unframed::before,
 .paper.paper-unframed::after {
   display: none;
+}
+
+/* A visible torn bottom for tall paper cards; content and tape stay uncut. */
+.paper.paper-torn-bottom::before,
+.paper.paper-torn-bottom::after {
+  clip-path: polygon(
+    0 0, 100% 0,
+    100% calc(100% - 3.75px), 97% calc(100% - 2.25px),
+    95% calc(100% - 5.25px), 92% calc(100% - 3.75px),
+    89% calc(100% - 4.5px), 87% calc(100% - 1.5px),
+    83% calc(100% - 3px), 81% calc(100% - 6px),
+    78% calc(100% - 4.5px), 75% calc(100% - 5.25px),
+    72% calc(100% - 2.25px), 69% calc(100% - 3.75px),
+    65% calc(100% - 1.5px), 62% calc(100% - 4.5px),
+    59% calc(100% - 3px), 57% calc(100% - 6px),
+    54% calc(100% - 3.75px), 50% calc(100% - 4.5px),
+    47% calc(100% - 1.5px), 44% calc(100% - 3px),
+    41% calc(100% - 5.25px), 38% calc(100% - 3.75px),
+    34% calc(100% - 4.5px), 31% calc(100% - 1.5px),
+    28% calc(100% - 3px), 25% calc(100% - 2.25px),
+    22% calc(100% - 5.25px), 19% calc(100% - 3.75px),
+    16% calc(100% - 6px), 13% calc(100% - 3px),
+    9% calc(100% - 4.5px), 6% calc(100% - 1.5px),
+    3% calc(100% - 3.75px), 0 calc(100% - 2.25px)
+  );
 }

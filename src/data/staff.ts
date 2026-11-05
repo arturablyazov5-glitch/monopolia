@@ -1,7 +1,11 @@
+import { people, type PersonId } from "./people.mjs";
+
 export interface Staff {
+  id: PersonId;
   name: string;
   role: string;
   badge: string;
+  badgeTextWidth: number;
   facts: string[];
   certificate?: string;
   image?: string;
@@ -10,19 +14,22 @@ export interface Staff {
 
 export const staff: Staff[] = [
   {
-    name: "Александра Барковская",
-    role: "Руководитель отдела продаж",
+    id: "aleksandra-barkovskaya",
+    ...people["aleksandra-barkovskaya"],
+    badgeTextWidth: 9.08,
     badge: "Доведет любую сделку по результата",
     image: "/assets/staff-aleksandra-barkovskaya.webp",
     certificate: "Nº POCC RU РГР TOC 27.01AH Nº01043",
     facts: [
+      "5 лет опыта работы",
       "Закрыла первую сделку через 4 дня после начала работы",
       "Сама освоила профессиональную съёмку, чтобы ваш объект выглядел как конфетка",
     ],
   },
   {
-    name: "Евгения Матухнова",
-    role: "Юрист по сопровождению сделок",
+    id: "evgeniya-matukhnova",
+    ...people["evgeniya-matukhnova"],
+    badgeTextWidth: 7.08,
     badge: "Самый душный юрист в области",
     image: "/assets/staff-evgeniya-matukhnova.webp",
     variant: "team-lawyer",
@@ -33,8 +40,9 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Дарья Шпорт",
-    role: "Бизнес‑тренер и амбассадор по продаже новостроек",
+    id: "darya-shport",
+    ...people["darya-shport"],
+    badgeTextWidth: 9.85,
     badge: "Учила школьников — теперь учит риелторов",
     certificate: "Nº POCC RU РГР TOC 27.01AH Nº01045",
     image: "/assets/staff-darya-shport.webp",
@@ -45,9 +53,11 @@ export const staff: Staff[] = [
       "Лично помогает агентам разруливать сложные сделки",
     ],
   },
+
   {
-    name: "Елена Мурашкина",
-    role: "Старший эксперт по недвижимости",
+    id: "elena-murashkina",
+    ...people["elena-murashkina"],
+    badgeTextWidth: 9.68,
     badge: "Проверяет объект так, будто покупает себе",
     image: "/assets/staff-elena-murashkina.webp",
     facts: [
@@ -57,18 +67,33 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Татьяна Савченко",
-    role: "Старший эксперт по недвижимости",
+    id: "tatyana-savchenko",
+    ...people["tatyana-savchenko"],
+    badgeTextWidth: 9.64,
     badge: "150+ закрытых сделок",
     image: "/assets/staff-tatyana-savchenko.webp",
     facts: [
       "4 года опыта работы",
       "Продаёт даже сложную недвижимость на 15‑20% дороже рыночной стоимости",
+      "Замечает скрытые риски объекта в первые 10 минут просмотра",
     ],
   },
   {
-    name: "Екатерина Корнеева",
-    role: "Специалист по недвижимости",
+    id: "pavel-barkovsky",
+    ...people["pavel-barkovsky"],
+    badgeTextWidth: 11.25,
+    badge: "Знает, как купить выгодно и продать дорого",
+    image: "/assets/staff-pavel-barkovsky.webp",
+    facts: [
+      "4 года опыта работы",
+      "Досконально анализирует ситуацию, чтобы понять, что человеку нужно на самом деле",
+      "Превращает сложный процесс покупки жилья в понятный и безопасный алгоритм",
+    ],
+  },
+  {
+    id: "ekaterina-korneeva",
+    ...people["ekaterina-korneeva"],
+    badgeTextWidth: 10.74,
     badge: "Найдёт ваше место силы",
     image: "/assets/staff-ekaterina-korneeva.webp",
     facts: [
@@ -78,8 +103,9 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Татьяна Цмоканич",
-    role: "Специалист по недвижимости",
+    id: "tatyana-tsmokanich",
+    ...people["tatyana-tsmokanich"],
+    badgeTextWidth: 11.25,
     badge: "Договорится с кем‑угодно и о чем угодно",
     certificate: "Nº POCC RU РГР TOC 27.01AH Nº01046",
     image: "/assets/staff-tatyana-tsmokanich.webp",
@@ -90,19 +116,22 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Анна Стеценко",
-    role: "Старший специалист по недвижимости",
+    id: "anna-stetsenko",
+    ...people["anna-stetsenko"],
+    badgeTextWidth: 7.15,
     badge: "Посчитает вашу выгоду до рубля",
     certificate: "Nº POCC RU РГР TOC 27.01AH Nº01044",
     image: "/assets/staff-anna-stetsenko.webp",
     facts: [
       "1,5 года опыта работы",
       "До сделки посчитает все расходы и покажет, сколько вы реально сэкономите",
+      "Сложная сделка её точно не испугает — справляется с тремя детьми",
     ],
   },
   {
-    name: "Виктория Кузнецова",
-    role: "Специалист по недвижимости",
+    id: "viktoriya-kuznetsova",
+    ...people["viktoriya-kuznetsova"],
+    badgeTextWidth: 8.27,
     badge: "Работала в банке и знает все лазейки",
     image: "/assets/staff-viktoriya-kuznetsova.webp",
     facts: [
@@ -112,8 +141,9 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Карина Басова",
-    role: "Специалист по недвижимости",
+    id: "karina-basova",
+    ...people["karina-basova"],
+    badgeTextWidth: 12.08,
     badge: "Разбирается в юридических рисках объекта",
     image: "/assets/staff-karina-basova.webp",
     facts: [
@@ -123,8 +153,9 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Нина Каракулина",
-    role: "Специалист по недвижимости",
+    id: "nina-karakulina",
+    ...people["nina-karakulina"],
+    badgeTextWidth: 12.7,
     badge: "Знает, что нужно именно вам",
     image: "/assets/staff-nina-karakulina.webp",
     facts: [
@@ -134,18 +165,21 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Анастасия Медведева",
-    role: "Специалист по недвижимости",
+    id: "anastasiya-medvedeva",
+    ...people["anastasiya-medvedeva"],
+    badgeTextWidth: 5.97,
     badge: "На связи 24/7",
     image: "/assets/staff-anastasiya-medvedeva.webp",
     facts: [
       "8 месяцев опыта работы",
       "Помогает выгодно продавать и безопасно покупать недвижимость",
+      "Ценит ваше время — все вопросы с документами и ипотекой берет на себя",
     ],
   },
   {
-    name: "Елена Горбанева",
-    role: "Специалист по недвижимости",
+    id: "elena-gorbaneva",
+    ...people["elena-gorbaneva"],
+    badgeTextWidth: 8.99,
     badge: "Обращает внимание на любые мелочи",
     image: "/assets/staff-elena-gorbaneva.webp",
     facts: [
@@ -155,21 +189,25 @@ export const staff: Staff[] = [
     ],
   },
   {
-    name: "Екатерина Михайленко",
-    role: "Специалист по недвижимости",
+    id: "ekaterina-mikhaylenko",
+    ...people["ekaterina-mikhaylenko"],
+    badgeTextWidth: 10.84,
     badge: "Знает, о чем вы мечтаете",
     image: "/assets/staff-ekaterina-mikhaylenko.webp",
     facts: [
       "4 месяца опыта работы",
+      "Экономит ваше время — берет на себя поиск, проверки и показы",
       "Остается на связи даже после сделки, если вопросы возникнут уже после переезда",
     ],
   },
   {
-    name: "Дана Гурова",
-    role: "Офис‑менеджер и HR-специалист",
+    id: "dana-gurova",
+    ...people["dana-gurova"],
+    badgeTextWidth: 10.18,
     badge: "Решает все оргвопросы",
     image: "/assets/staff-dana-gurova.webp",
     facts: [
+      "1,5 месяца опыта работы",
       "Отвечает за закупки, встречи и все организационные вопросы агентства",
       "Помогает подбирать новых специалистов вместе с руководителем",
     ],

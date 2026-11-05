@@ -1,7 +1,8 @@
 .proven-trust {
   position: relative;
   isolation: isolate;
-  min-height: 1129px;
+  --trust-scene-height: 1061px;
+  min-height: calc(var(--trust-scene-height) + var(--section-space));
   padding-top: var(--section-space);
   overflow: hidden;
 }
@@ -9,7 +10,7 @@
   width: 1440px;
   margin: 0 auto;
   position: relative;
-  height: 1009px;
+  height: var(--trust-scene-height);
 }
 .proven-trust h2 {
   position: relative;
@@ -78,55 +79,6 @@
     width: calc(100vw * 1507 / 1440);
     transform: translateX(-50%) rotate(180deg);
   }
-}
-.trust-rating {
-  position: absolute;
-  padding: 16px 16px 12px;
-  border-radius: 4px;
-  box-shadow: var(--shadow-paper);
-}
-.trust-rating:nth-last-child(3) {
-  left: 1031.46px;
-  top: 45.23px;
-  transform: rotate(4.27deg);
-}
-.trust-rating:nth-last-child(2) {
-  left: 1115.76px;
-  top: 167.57px;
-}
-.trust-rating:last-child {
-  left: 1110.9px;
-  top: -61.51px;
-  transform: rotate(-1deg);
-}
-.trust-rating-line {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  position: relative;
-}
-.trust-rating-line > a {
-  display: block;
-  flex-shrink: 0;
-}
-.trust-rating-line > a > img,
-.trust-rating-line > img:first-child {
-  display: block;
-  object-fit: contain;
-}
-.trust-rating-line > img:nth-last-of-type(1) {
-  margin-right: calc(0.35em - 12px);
-}
-.trust-rating-divider {
-  width: 1px;
-  height: 24px;
-  background: #0000001a;
-}
-.trust-rating p {
-  position: relative;
-  margin: 6px 0 0;
-  color: var(--color-muted);
-  font: 14px/1.4 var(--font-body);
 }
 .trust-reviews {
   position: absolute;
@@ -205,19 +157,6 @@
 .proven-trust {
   background: none;
 }
-.trust-paper-background {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  /* Бока исходника ступенчатые (несколько листов): на 1440 они уходят за окно на ~7 px.
-     Шире макета сохраняем тот же пропорциональный вылет, иначе у краёв окна
-     просвечивает тёмный фон соседней секции. До 1440 включительно — прежние 1453.82 px. */
-  width: max(calc(100% * 1453.82 / 1440), 1453.82px);
-  height: 2143.403px;
-  max-width: none;
-  z-index: -1;
-}
 
 /* TASK-039: тот же способ, что у FastSale: масштаб всей сцены, а не
    отдельных рейтингов. cqw берётся от секции; margin компенсирует transform.
@@ -232,7 +171,7 @@
   }
   .proven-trust-scene {
     margin: calc(100cqw * 120 / 1440) 0
-      calc((1009px + var(--scene-footer)) * var(--scene-scale) - 1009px);
+      calc((var(--trust-scene-height) + var(--scene-footer)) * var(--scene-scale) - var(--trust-scene-height));
     transform: scale(var(--scene-scale));
     transform-origin: top left;
   }
@@ -241,10 +180,7 @@
        рейтингов и декоративной кромки остаются исходными. */
     width: 1440px;
   }
-  .trust-paper-background {
-    width: calc(100cqw * 1453.82 / 1440);
-    height: calc(100cqw * 2143.403 / 1440);
-  }
+
 }
 @media (min-width: 1200px) and (max-width: 1295px) {
   .proven-trust {
@@ -267,49 +203,37 @@
   }
 }
 
-@media (max-width: 767px) {
-  /* Логотип сверху, звезда, оценка и отзывы — одной компактной строкой. */
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line {
-    display: grid;
-    grid-template-columns: 11px max-content 1px minmax(0, 1fr);
-    gap: 5px 4px;
+/* Animated lettering belongs only to the homepage video-review buttons. */
+.home-desktop .trust-reviews .review-photo .play-review-video {
+  width: 75px;
+  height: 78px;
+  scale: 1;
+}
+.play-review-video .review-video-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.play-review-video .review-video-text {
+  transform-origin: 37.1797px 39.8047px;
+  animation: review-video-text-turn 32s linear infinite;
+}
+.play-review-video .review-video-play-fill {
+  transition: fill var(--duration-fast) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .play-review-video:hover .review-video-text {
+    animation-play-state: paused;
   }
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > .trust-rating-divider {
-    display: block;
-    width: 1px;
-    height: 14px;
-    align-self: center;
-    background: linear-gradient(to bottom, #0000 0%, #000 50%, #0000 100%);
-  }
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > img {
-    width: 11px;
-    height: auto;
-  }
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > strong {
-    font-size: 12px;
-    line-height: 1.2;
-  }
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line > p {
-    margin: 0;
-    font-size: clamp(9px, 2.5vw, 11px);
-    line-height: 1.2;
-    white-space: nowrap;
+  .play-review-video:hover .review-video-play-fill {
+    fill: #000;
   }
 }
-
-/* На 320px сохраняем все три рейтинга в строке без обрезки счетчиков. */
-@media (max-width: 359px) {
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile {
-    padding-inline: 3px;
-  }
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-line {
-    column-gap: 3px;
-  }
+@keyframes review-video-text-turn {
+  to { transform: rotate(-360deg); }
 }
-
-/* На планшетах сохраняем плавное затухание того же разделителя. */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .home-desktop .trust-ratings-mobile .trust-rating-mobile .trust-rating-divider {
-    background: linear-gradient(to bottom, #0000 0%, #000 50%, #0000 100%);
-  }
+@media (prefers-reduced-motion: reduce) {
+  .play-review-video .review-video-text { animation: none; }
 }

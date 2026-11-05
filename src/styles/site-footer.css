@@ -304,7 +304,7 @@
   .site-footer .email-chip {
     min-height: 44px;
   }
-  .site-footer .footer-phone {
+  .site-footer .footer-phone-link {
     display: inline-flex;
     align-items: center;
   }
@@ -396,22 +396,6 @@
   }
 }
 
-/* На десктопе номер открывает форму, на узких экранах звонит напрямую. */
-.site-footer .footer-callback {
-  display: none;
-  padding: 0;
-  border: 0;
-  background: none;
-  text-align: left;
-}
-@media (min-width: 1200px) {
-  .site-footer .footer-phone-link {
-    display: none;
-  }
-  .site-footer .footer-callback {
-    display: inline-block;
-  }
-}
 
 @media (max-width: 767px) {
   .site-footer .footer-brand {

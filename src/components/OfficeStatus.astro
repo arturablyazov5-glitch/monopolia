@@ -1,0 +1,12 @@
+---
+import { siteText } from "../data/site-texts.mjs";
+import "../styles/office-status.css";
+---
+
+<small class="office-status">
+  <span class="office-status-dot" aria-hidden="true"></span>
+  <span data-office-status>{siteText("site-header.text.5")}</span>
+</small>
+<script>
+  import "../scripts/office-hours";
+</script>

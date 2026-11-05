@@ -1,7 +1,72 @@
 ---
 import ChoiceGroup from "./ChoiceGroup.astro";
 import "../styles/contact-fields.css";
-interface Props { selected?: number; }
-const { selected = -1 } = Astro.props;
+interface Props {
+  selected?: number;
+  /** Квиз показывает собственные ошибки на последнем шаге. */
+  required?: boolean;
+  touch?: "mobile" | "tablet";
+}
+const { selected = -1, required = true, touch = "mobile" } = Astro.props;
+const options = ["Телефон", "Макс", "WhatsApp", "Telegram"];
 ---
-<ChoiceGroup class="contact-method-options" name="Способ связи" options={["Телефон", "Макс", "WhatsApp", "Telegram"]} icons={["icon-contact-phone.svg", "icon-contact-max.svg", "icon-contact-whatsapp.svg", "icon-contact-telegram.svg"]} selected={selected} channels />
+
+<ChoiceGroup
+  class={`contact-method-options${touch === "tablet" ? " contact-method-options--tablet" : ""}`}
+  name="Способ связи"
+  options={options}
+  icons={[
+    "icon-contact-phone.svg",
+    "icon-contact-max.svg",
+    "icon-contact-whatsapp.svg",
+    "icon-contact-telegram.svg",
+  ]}
+  selected={selected}
+  channels
+/>
+<input
+  class="sr-only"
+  type={required ? "text" : "hidden"}
+  name="channel"
+  value={options[selected] ?? ""}
+  tabindex="-1"
+  autocomplete="off"
+  required={required}
+  aria-label="Способ связи"
+  data-contact-method-value
+/>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>(".contact-method-options")
+    .forEach((group) => {
+      const field = group.nextElementSibling;
+      if (
+        !(field instanceof HTMLInputElement) ||
+        !field.hasAttribute("data-contact-method-value")
+      )
+        return;
+      const buttons = [...group.querySelectorAll<HTMLButtonElement>("button")];
+      const initial = buttons.find(
+        (button) => button.getAttribute("aria-pressed") === "true",
+      );
+      const initialValue = field.value;
+      group.addEventListener("choice-change", () => {
+        field.value =
+          buttons.find(
+            (button) => button.getAttribute("aria-pressed") === "true",
+          )?.dataset.value ?? "";
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+      field.form?.addEventListener("reset", () => {
+        // Hidden inputs update defaultValue when value changes. Restore it too
+        // so the browser's native reset agrees with the initial button state.
+        field.defaultValue = initialValue;
+        field.value = initialValue;
+        buttons.forEach((button) => {
+          button.classList.toggle("selected", button === initial);
+          button.setAttribute("aria-pressed", String(button === initial));
+        });
+      });
+    });
+</script>

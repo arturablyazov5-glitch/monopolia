@@ -20,13 +20,13 @@ const layers = [
     shadow: { x: 10.71, y: 51.76, width: 374, height: 505 },
   },
   {
-    name: "07-right", mobile: false, tablet: true,
+    name: "07-right", mobile: true,
     portrait: { x: 798, y: 105.51, width: 268, height: 436 },
     original: { width: 779, height: 1268 },
     shadow: { x: 752.84, y: 41.8, width: 359, height: 530 },
   },
   {
-    name: "03-left-inner", mobile: false, tablet: true,
+    name: "03-left-inner", mobile: true,
     portrait: { x: 222.8, y: 88.81, width: 271.5, height: 413.49 },
     original: { width: 2000, height: 3046 },
     shadow: { x: 124.06, y: 23.41, width: 387, height: 542 },
@@ -67,7 +67,7 @@ function layerStyle(box: { x: number; y: number; width: number; height: number }
     <>
       <img
         data-person={layer.name}
-        class:list={["team-stroke", "team-portrait", { "team-desktop-only": !layer.mobile && !layer.tablet, "team-tablet-up": layer.tablet }]}
+        class:list={["team-stroke", "team-portrait", { "team-desktop-only": !layer.mobile }]}
         src={`${assetDir}/${layer.name}-shadow.svg`}
         alt=""
         style={layerStyle(layer.shadow)}
@@ -77,7 +77,7 @@ function layerStyle(box: { x: number; y: number; width: number; height: number }
       />
       <img
         data-person={layer.name}
-        class:list={["team-portrait", "person-photo", { mirrored: layer.flip, "team-desktop-only": !layer.mobile && !layer.tablet, "team-tablet-up": layer.tablet }]}
+        class:list={["team-portrait", "person-photo", { mirrored: layer.flip, "team-desktop-only": !layer.mobile }]}
         src={`${assetDir}/${layer.name}.webp`}
         alt=""
         style={layerStyle(layer.portrait)}

@@ -9,7 +9,7 @@
 .badge-group > .badge {
   padding: 6px 14px;
   font: var(--text-small)/1.2 var(--font-body);
-  color: #1a1a1a;
+  color: var(--color-muted);
   background: white;
   border-radius: 0;
   transform: rotate(var(--badge-angle, -1deg));

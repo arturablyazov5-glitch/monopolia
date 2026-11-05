@@ -11,10 +11,7 @@ export async function sendLead(form: HTMLFormElement): Promise<void> {
     form: form.dataset.form || "lead",
     source: leadSource(form),
     section: form.dataset.leadSection || leadSection(form),
-    contactMethod:
-      form
-        .querySelector(".channels[data-choice-group] [aria-pressed=true]")
-        ?.getAttribute("data-value") || "",
+    contactMethod: data.channel || "",
     name: data.name || "",
     comment: data.question || data.comment || context.comment || "",
     consent:

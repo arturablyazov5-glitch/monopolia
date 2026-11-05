@@ -1,0 +1,46 @@
+---
+import { phone } from "../data/contacts";
+
+interface Props {
+  /** header: звонок до 768 px; footer: до 1200 px; call: всегда звонок. */
+  variant?: "header" | "footer" | "call";
+  class?: string;
+  icon?: boolean;
+}
+const { variant = "call", class: className, icon = false } = Astro.props;
+const header = variant === "header";
+const actions = header
+  ? ["callback", "call"]
+  : variant === "footer"
+    ? ["call", "callback"]
+    : ["call"];
+---
+
+{actions.map((action) =>
+  action === "callback" ? (
+    <button
+      type="button"
+      class={header ? "header-callback" : "footer-phone footer-callback"}
+      data-lead="Заказать обратный звонок"
+      data-callback
+      aria-label={`Заказать обратный звонок: ${phone.display}`}
+      aria-haspopup="dialog"
+    >
+      {phone.display}
+    </button>
+  ) : (
+    <a
+      class={
+        header
+          ? "header-mobile-phone"
+          : variant === "footer"
+            ? "footer-phone footer-phone-link"
+            : className
+      }
+      href={`tel:${phone.number}`}
+      aria-label={icon ? `Позвонить: ${phone.display}` : undefined}
+    >
+      {icon ? <slot /> : phone.display}
+    </a>
+  ),
+)}

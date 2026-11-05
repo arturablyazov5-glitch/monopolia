@@ -4,6 +4,7 @@ import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 import {createRequire} from 'node:module';
 import {siteTexts} from '../src/data/site-texts.mjs';
+import {officeHourTextIds,parseOfficeHoursLine} from '../src/lib/office-hours.mjs';
 import {atomic,AdminError} from './admin-storage.mjs';
 const require=createRequire(import.meta.url);
 const {typografizeProtected}=require('../scripts/typograf/rules.cjs');
@@ -29,6 +30,9 @@ export class ContentStorage {
    if(/[<>]/.test(clean))throw new AdminError(422,'html','HTML запрещён. Введите простой текст.');
    // Typography only here, once, with the site's existing rules.
    const value=typografizeProtected(clean, {}, []);if(typeof value!=='string'||value.length>item.maxLength)throw new AdminError(422,'length','Превышен лимит текста');
+   if(officeHourTextIds.includes(id)){
+    try{parseOfficeHoursLine(value);}catch(error){throw new AdminError(422,'hours',error.message);}
+   }
    if(clean===item.defaultValue||value===item.defaultValue)delete overrides[id];else overrides[id]=value;
   }
   const next={revision:current.revision+1,overrides};

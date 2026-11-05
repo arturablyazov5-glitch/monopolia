@@ -5,6 +5,8 @@
   inset: calc(-1 * var(--tape-border, 0px));
   overflow: visible;
   z-index: 3;
+  /* Keep the shadow on the untransformed layer to avoid SVG clipping in WebKit. */
+  filter: drop-shadow(var(--tape-shadow, 0 0 0 transparent));
   pointer-events: none;
 }
 .paper-tape {
@@ -17,7 +19,6 @@
   top: var(--tape-y);
   transform: var(--tape-transform);
   transform-origin: 0 0;
-  filter: drop-shadow(var(--tape-shadow));
   opacity: var(--tape-opacity);
   object-fit: cover;
   pointer-events: none;
@@ -54,3 +55,17 @@
 }
 
 .paper.paper-has-tape { overflow: visible; }
+
+@media (max-width: 767px) {
+  .telegram-news-wrap > .tape-layer .paper-tape[data-tape-edge="top"] {
+    translate: 0 -6px;
+  }
+  .telegram-news-wrap > .tape-layer .paper-tape[data-tape-edge="bottom"] {
+    translate: -3px 7px;
+  }
+  .staff-certificate .paper-tape[data-tape-edge="top"],
+  .director-coffee-note .paper-tape[data-tape-edge="top"],
+  .company-recommendations .paper-tape[data-tape-edge="top"] {
+    translate: 0 4px;
+  }
+}

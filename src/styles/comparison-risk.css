@@ -52,9 +52,6 @@
     var(--font-heading);
   color: #1e1e1e;
 }
-.comparison-risk-column-label img {
-  display: none;
-}
 .comparison-risk-label {
   display: block;
   font:
@@ -116,7 +113,6 @@
   .comparison-risk thead {
     display: block;
     margin-bottom: 24px;
-    border-bottom: 1px solid var(--color-divider);
     background: #fdfdfd;
   }
   .comparison-risk thead tr {
@@ -144,13 +140,6 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-  }
-  .comparison-risk-column-label > span {
-    margin-top: 2px;
-  }
-  .comparison-risk-column-label img {
-    display: block;
-    flex: none;
   }
   .comparison-risk .comparison-risk-ours {
     mask-image: var(--brush-square-images);

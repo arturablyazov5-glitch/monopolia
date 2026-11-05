@@ -52,7 +52,7 @@
 }
 .deal-insurance-actions > p {
   font-size: 14px;
-  color: #000;
+  color: var(--color-muted);
 }
 .deal-insurance-visual {
   flex: 1;
@@ -100,7 +100,7 @@
 .deal-insurance-client > p,
 .deal-insurance-elena > p {
   margin: 0 32px 4px;
-  color: #000;
+  color: var(--color-muted);
 }
 .deal-insurance-client > p {
   text-align: right;
@@ -321,4 +321,12 @@
   line-height: 0.7;
   white-space: nowrap;
   vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  .deal-insurance-heading .deal-insurance-hand {
+    margin-inline-start: 0.2em;
+    position: relative;
+    top: -1px;
+  }
 }

@@ -173,24 +173,34 @@ const staticLayers = layers.filter(
   </div>
   <div class="relocation-map-inner">
     <div class="relocation-map-heading" data-node-id="1380:6824">
-      <h2 id={`${id}-title`}>
-        {titleParts.length > 1 ? (
-          <>
-            {titleParts[0]}
-            <CityText case={selling ? "from" : "to"} />
-            {titleParts[1]}
-          </>
-        ) : (
-          title
+      <h2 id={`${id}-title`} class="relocation-map-title">
+        <span class="relocation-map-question">
+          {titleParts.length > 1 ? (
+            <>
+              {titleParts[0]}
+              <CityText case={selling ? "from" : "to"} />
+              {titleParts[1]}
+            </>
+          ) : (
+            title
+          )}
+        </span>
+        {annotation && (
+          <span class="relocation-map-hand">
+            {" "}
+            {annotationEnd ? (
+              <span>
+                {annotationStart}
+                <span class="relocation-map-hand-dash">—</span>{" "}
+                <br class="relocation-map-hand-break" />
+                {annotationEnd}
+              </span>
+            ) : (
+              annotation
+            )}
+          </span>
         )}
       </h2>
-      {annotation && (
-        <p class="relocation-map-hand">
-          {annotationEnd ? (
-            <span>{annotationStart}<span class="relocation-map-hand-dash">—</span>{" "}<br class="relocation-map-hand-break" />{annotationEnd}</span>
-          ) : annotation}
-        </p>
-      )}
       <p class="relocation-map-text">{description}</p>
       <Button
         popup="callback"

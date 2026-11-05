@@ -48,3 +48,25 @@
     bottom: -222px;
   }
 }
+
+/* Reviews and cases form one continuous sheet, without a raster seam. */
+.reviews-cases-paper {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+}
+.reviews-cases-background {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  transform: translateX(-50%);
+  width: max(calc(100% * 1453.82 / 1440), 1453.82px);
+  height: 100%;
+  max-width: none;
+  z-index: -1;
+  pointer-events: none;
+}
+@media (max-width: 1199px) {
+  .reviews-cases-background {
+    width: max(100%, 1453.82px);
+  }
+}

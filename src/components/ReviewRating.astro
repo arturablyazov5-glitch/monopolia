@@ -1,0 +1,71 @@
+---
+import Paper from "./Paper.astro";
+import { traceLogo } from "../data/trace-logos";
+import "../styles/review-ratings.css";
+
+interface Props {
+  logo: string;
+  width: number;
+  reviews: string;
+  rating?: string;
+  variant?: "scene" | "row";
+  x?: number;
+  y?: number;
+  angle?: number;
+}
+const {
+  logo,
+  width,
+  reviews,
+  rating = "5.0",
+  variant = "scene",
+  x = 0,
+  y = 0,
+  angle = 0,
+} = Astro.props;
+const compact = variant === "row";
+const brand = traceLogo(logo);
+---
+
+<Paper
+  class={compact ? "trust-rating-mobile paper-torn-card" : "trust-rating"}
+  style={
+    !compact
+      ? `left:${x}px;top:${y}px;${angle ? `transform:rotate(${angle}deg)` : ""}`
+      : undefined
+  }
+>
+  <div class="trust-rating-line">
+    <a href={brand.href}>
+      <img
+        src={brand.src}
+        alt={brand.alt}
+        width={width}
+        height="24"
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+    {!compact && <span class="trust-rating-divider" aria-hidden="true"></span>}
+    <div class="trust-rating-metrics">
+      <div class="trust-rating-score">
+        <img
+          src="/assets/trust-rating-star.svg"
+          alt=""
+          width="13.1982"
+          height="12.7189"
+          loading="lazy"
+          decoding="async"
+        />
+        <strong>{rating}</strong>
+      </div>
+      {compact && (
+        <>
+          <span class="trust-rating-divider" aria-hidden="true"></span>
+          <p>{reviews.replace(/\u00a0/g, " ")}</p>
+        </>
+      )}
+    </div>
+  </div>
+  {!compact && <p>{reviews}</p>}
+</Paper>

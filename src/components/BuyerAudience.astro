@@ -1,4 +1,5 @@
 ---
+import { people } from "../data/people.mjs";
 import "../styles/handwritten-number.css";
 import { siteText } from "../data/site-texts.mjs";
 import Button from "./Button.astro";
@@ -39,7 +40,7 @@ const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
     <img
       class="buyer-portrait person-photo"
       src="/assets/staff-elena-sidelina-at-desk.webp"
-      alt="Елена Сиделина за рабочим столом"
+      alt={`${people["elena-sidelina"].name} за рабочим столом`}
       width="844"
       height="633"
       loading="lazy"
@@ -48,8 +49,7 @@ const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
     <PersonLabel
       class="buyer-name"
       node="1380:4974"
-      name="Елена Сиделина"
-      role="Генеральный директор Монополии"
+      {...people["elena-sidelina"]}
     />
     <div class="buyer-audience-content">
       <img

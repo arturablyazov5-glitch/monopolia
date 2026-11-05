@@ -1,13 +1,21 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import SocialLinks from "./SocialLinks.astro";
+interface Props {
+  lines?: string[];
+}
+const { lines = [siteText("lead-form.text.7"), siteText("lead-form.text.8")] } =
+  Astro.props;
 ---
 
 <div class="form-social">
   <span>
-    {siteText("lead-form.text.7")}
-    <br />
-    {siteText("lead-form.text.8")}
+    {lines.map((line, index) => (
+      <>
+        {index > 0 && <br />}
+        {line}
+      </>
+    ))}
   </span>
   <SocialLinks />
 </div>

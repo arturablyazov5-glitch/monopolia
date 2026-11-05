@@ -4,17 +4,12 @@
   --phone-field-fill: var(--color-paper-warm);
   --phone-field-texture: var(--texture-paper-beige);
 }
-.contact-field.contact-field.contact-field,
-.phone-field.phone-field.phone-field,
-.channels.contact-method-options.contact-method-options .chip {
+.contact-field,
+.phone-field.brush-stroke {
   --brush-sizes:
     8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
     calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px), 8px 8px,
     calc(100% - 14px) 8px, 8px 8px;
-}
-.contact-field.contact-field.contact-field,
-.phone-field.phone-field.phone-field,
-#lead-dialog .phone-field.phone-field.phone-field {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -29,20 +24,49 @@
   font: 14px/1.2 var(--font-body);
   color: var(--color-field-text);
   --brush-images: var(--brush-square-images);
+}
+/* Обычные поля обрезают заливку по краю. Квиз сохраняет внешний контур
+   brush-stroke для фокуса, без обрезки области вокруг поля. */
+.contact-field,
+.phone-field.brush-stroke:where(:not(.phone-field--quiz)) {
   mask-image: var(--brush-images);
   mask-size: var(--brush-sizes);
   mask-position: var(--brush-positions);
   mask-repeat: no-repeat;
   mask-clip: border-box;
 }
-.phone-field.phone-field::placeholder {
+.phone-field {
+  height: var(--field-height);
+}
+.phone-field::placeholder {
   color: var(--color-muted);
 }
-.channels.contact-method-options.contact-method-options {
+.phone-field.phone-field--large {
+  height: 51.2px;
+  padding: 16px 28px;
+  font-size: 16px;
+  background-color: #fff;
+}
+.phone-field--large::placeholder {
+  color: var(--color-field-text);
+  opacity: 1;
+}
+.phone-field.phone-field--quiz,
+.phone-field.phone-field--quiz-dialog {
+  height: auto;
+}
+.phone-field.phone-field--quiz {
+  background: #fff;
+}
+.contact-method-options {
   gap: 10px;
 }
-.channels.contact-method-options.contact-method-options .chip {
+.contact-method-options .chip {
   appearance: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
   --brush-sizes:
     6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
     calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
@@ -62,9 +86,13 @@
   mask-repeat: no-repeat;
   mask-clip: border-box;
 }
-.channels.contact-method-options.contact-method-options .chip.selected {
+.contact-method-options .chip.selected {
   background: var(--color-ink);
   color: #fff;
+}
+.contact-method-options .chip:not(.selected):hover,
+.contact-method-options .chip:not(.selected):focus-visible {
+  background: #e6e6e3;
 }
 .contact-method-options .choice-icon {
   position: relative;
@@ -80,14 +108,21 @@
   top: -6.7%;
   max-width: none;
 }
+@media (max-width: 1199px) {
+  .contact-method-options--tablet .chip {
+    min-height: 44px;
+  }
+}
 @media (max-width: 767px) {
-  .contact-field.contact-field.contact-field,
-  .phone-field.phone-field.phone-field,
-  #lead-dialog .phone-field.phone-field.phone-field {
+  .contact-field,
+  .phone-field.brush-stroke {
     min-height: 48px;
     font-size: 16px;
   }
-  .channels.contact-method-options.contact-method-options .chip {
+  .phone-field.phone-field--large {
+    height: 52px;
+  }
+  .contact-method-options .chip {
     min-height: 44px;
   }
 }

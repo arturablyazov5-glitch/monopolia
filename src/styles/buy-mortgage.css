@@ -126,7 +126,7 @@
 }
 .buy-mortgage-banks > p {
   font: var(--text-small) / 1.2 var(--font-body);
-  color: var(--color-ink);
+  color: var(--color-muted);
 }
 .buy-mortgage-banks .home-partner-logos {
   width: 100%;

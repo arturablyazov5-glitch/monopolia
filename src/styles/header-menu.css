@@ -191,10 +191,13 @@
     gap: var(--space-1);
     flex-wrap: wrap;
   }
-  .menu-panel-phone {
+  .menu-panel-phone-status {
     display: flex;
-    align-items: center;
-    min-height: 44px;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .menu-panel-phone {
+    display: block;
     font: bold 16px/1.2 var(--font-body);
     white-space: nowrap;
   }
@@ -214,26 +217,12 @@
     width: 32px;
     height: 32px;
   }
-  .menu-drawer .office-status,
   .menu-panel-hours {
     font: var(--text-small)/1.2 var(--font-body);
     color: var(--color-muted);
   }
-  .menu-drawer .time {
-    padding-left: 0;
-  }
-  .menu-drawer .time::before {
-    position: static;
-    display: inline-block;
-    margin-right: 6px;
-    vertical-align: middle;
-    transform: none;
-  }
-  .menu-drawer .time::after {
-    display: none;
-  }
   .menu-panel-hours {
-    margin: 4px 0 0;
+    margin: 20px 0 0;
   }
   .menu-drawer .menu-panel-actions {
     margin-top: var(--space-3);
@@ -292,17 +281,14 @@
   }
 }
 
-@media (max-width: 1199px) {
-  /* HOME-327: flex alignment removes the baseline offset in the drawer. */
-  .menu-drawer .time {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+@media (max-width: 767px) and (hover: none) {
+  .menu-drawer .city-picker {
+    -webkit-tap-highlight-color: transparent;
   }
-  .menu-drawer .time::before {
-    flex: 0 0 6px;
-    width: 6px;
-    height: 6px;
-    margin-right: 0;
+  .site-header .menu-drawer .menu-panel-city .city {
+    transition: none;
+  }
+  .menu-drawer .city-menu li:hover::before {
+    background: transparent;
   }
 }

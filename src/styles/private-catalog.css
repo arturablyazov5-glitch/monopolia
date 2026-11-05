@@ -84,3 +84,18 @@
 .private-catalog-checks {
   width: 100%;
 }
+
+@media (max-width: 767px) {
+  .home-desktop .private-catalog-assurance-detail::after {
+    right: 50%;
+    width: min(11em, 87%);
+    bottom: -9px;
+    transform: translateX(50%) rotate(1deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .home-desktop .private-catalog-assurance-detail::after {
+    transform: translateX(50%) rotate(1deg) scaleY(2);
+  }
+}

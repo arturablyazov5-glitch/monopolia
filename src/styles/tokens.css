@@ -20,6 +20,7 @@
   --color-caption: #9e9e9e;
   --color-field-text: #3b3b3b;
   --color-status: #2bb741;
+  --office-status-gap: 7px;
   --color-disabled: #bcbcbc;
   --color-divider: #0000001a;
   /* Меню: расстояние красной точки до текста, зазор между иконками

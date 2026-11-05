@@ -609,6 +609,7 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 1480,
     height: 288,
   },
+  "/assets/staff-pavel-barkovsky.webp": { width: 2000, height: 2000 },
   "/assets/staff-pavel-barkovsky-fast-sale.webp": {
     width: 1024,
     height: 683,

@@ -3,6 +3,7 @@ import TapeLayer from "./TapeLayer.astro";
 import { type TapePlacement } from "../lib/tape";
 interface Props {
   class?: string;
+  style?: string;
   surface?: "paper" | "none";
   tape?: boolean;
   node?: string;
@@ -30,6 +31,7 @@ const placementNode = tapeNode || (tape ? "I1380:4972;569:1388" : "");
     },
   ]}
   data-node-id={node}
+  style={Astro.props.style}
 >
   <slot />
   {(placementNode || tapes?.length) && (

@@ -206,6 +206,11 @@
     overflow-y: visible;
   }
   .office-consultation-photo.mobile-photo-scene {
+    display: block;
+    position: relative;
+    flex-shrink: 0;
+    align-self: center;
+    overflow: hidden;
     width: 144vw;
     aspect-ratio: 2880 / 1498;
     margin-top: -52px;
@@ -230,6 +235,11 @@
     );
   }
   .office-consultation-photo > .office-consultation-background {
+    position: absolute;
+    inset: auto 0 0;
+    transform: none;
+    width: 100%;
+    z-index: 0;
     aspect-ratio: auto;
     height: 100%;
     object-fit: cover;

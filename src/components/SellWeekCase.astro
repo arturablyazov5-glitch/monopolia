@@ -7,7 +7,7 @@ import ContactMethods from "./ContactMethods.astro";
 import PhoneField from "./PhoneField.astro";
 import Paper from "./Paper.astro";
 import PlayButton from "./PlayButton.astro";
-import SocialLinks from "./SocialLinks.astro";
+import FormSocial from "./FormSocial.astro";
 import VideoDuration from "./VideoDuration.astro";
 const storyVideo = { src: "/videos/client-review-1.mp4", duration: "2:06" };
 ---
@@ -120,35 +120,12 @@ const storyVideo = { src: "/videos/client-review-1.mp4", duration: "2:06" };
           </label>
           <PhoneField id="sell-week-phone" />
           <p class="sell-week-contact-label">Выберите удобный способ связи:</p>
-          <ContactMethods />
-          <input
-            class="sr-only"
-            type="text"
-            name="channel"
-            value=""
-            tabindex="-1"
-            autocomplete="off"
-            required
-            aria-label="Способ связи"
-          />
+          <ContactMethods touch="tablet" />
           <ConsentCheckbox />
         </div>
         <div class="sell-week-form-bottom">
           <Button label={siteText("sell-week-case.label.13")} type="submit" />
-          <div class="sell-week-messengers">
-            <span>
-              {siteText("sell-week-case.text.14")}
-              <br />
-              {siteText("sell-week-case.text.15")}
-            </span>
-            <SocialLinks
-              links={[
-                { label: "Telegram", icon: "social-telegram-color.svg" },
-                { label: "Макс", icon: "social-max-color.svg" },
-                { label: "WhatsApp", icon: "social-whatsapp-color.svg" },
-              ]}
-            />
-          </div>
+          <FormSocial lines={[siteText("sell-week-case.text.14"), siteText("sell-week-case.text.15")]} />
           <p class="form-result" role="status" aria-live="polite" hidden></p>
         </div>
       </form>

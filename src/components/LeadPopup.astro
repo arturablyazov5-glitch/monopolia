@@ -1,4 +1,5 @@
 ---
+import { people } from "../data/people.mjs";
 import LeadForm from "./LeadForm.astro";
 import { imageSize } from "../lib/image-size";
 import ExpertProfile from "./ExpertProfile.astro";
@@ -19,7 +20,7 @@ const popups = {
     node: "1966:10873",
     note: "Консультация ни к чему не обязывает",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
-    alt: "Елена Горбанева, специалист по недвижимости",
+    alt: `${people["elena-gorbaneva"].name}, ${people["elena-gorbaneva"].role.toLocaleLowerCase("ru-RU")}`,
     badge: "На этой неделе осталось 4 свободных места",
   },
   analysis: {
@@ -49,7 +50,7 @@ const popups = {
     button: "Получить консультацию",
     node: "2047:3990",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
-    alt: "Елена Горбанева, специалист по недвижимости",
+    alt: `${people["elena-gorbaneva"].name}, ${people["elena-gorbaneva"].role.toLocaleLowerCase("ru-RU")}`,
   },
   team: {
     title: "Приглашаем в команду Монополии",
@@ -58,7 +59,7 @@ const popups = {
     button: "Откликнуться",
     node: "2049:4179",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
-    alt: "Елена Горбанева, специалист по недвижимости",
+    alt: `${people["elena-gorbaneva"].name}, ${people["elena-gorbaneva"].role.toLocaleLowerCase("ru-RU")}`,
   },
   mortgage: {
     title: "Подберем ипотеку",
@@ -68,7 +69,7 @@ const popups = {
     node: "2049:4257",
     note: "Подбор бесплатный и ни к чему не обязывает",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
-    alt: "Специалист по недвижимости Елена Горбанева",
+    alt: `${people["elena-gorbaneva"].role} ${people["elena-gorbaneva"].name}`,
   },
   viewing: {
     title: "Запишем на просмотр",
@@ -138,8 +139,7 @@ const hasExpertProfile = ["service", "office", "mortgage", "team"].includes(
       <Fragment slot="expert">
         <ExpertProfile
           alwaysVisible
-          name="Елена Горбанева"
-          role="Специалист по недвижимости"
+          {...people["elena-gorbaneva"]}
           src={data.image!}
         />
         {data.badge && <p class="popup-action-note">{data.badge}</p>}
