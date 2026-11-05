@@ -1,0 +1,106 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Paper from "../components/Paper.astro";
+import Button from "../components/Button.astro";
+const home = import.meta.env.BASE_URL;
+---
+
+<SiteLayout title="Страница не найдена — Монополия" noindex>
+  <main class="not-found">
+    <a class="not-found-brand" href={home} aria-label="Монополия — главная">
+      <img src="/assets/logo-monopoly-mark-header.svg" width="48" height="48" alt="" />
+      <img src="/assets/logo-monopoly-wordmark-header.svg" width="226" height="22.4275" alt="Монополия" />
+    </a>
+    <svg class="not-found-filters" aria-hidden="true" width="0" height="0">
+      <defs>
+        <filter id="not-found-torn-digits" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.08 0.18" numOctaves="2" seed="14" result="grain" />
+          <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+    </svg>
+    <Paper class="not-found-card" tape>
+      <p class="not-found-code" aria-hidden="true">404</p>
+      <h1>Страница<br />не нашлась</h1>
+      <p class="not-found-description">Возможно, ссылка устарела или в адресе опечатка.<br />Начнём с главной?</p>
+      <Button label="На главную" href={home} />
+    </Paper>
+  </main>
+</SiteLayout>
+
+<style>
+  .not-found {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 48px 24px 72px;
+    background: var(--color-canvas) url("/assets/home-background-no-plane.webp") center / cover;
+  }
+  .not-found-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .not-found-brand img {
+    flex-shrink: 0;
+  }
+  .not-found-brand img:last-child {
+    height: auto;
+    aspect-ratio: 131 / 13;
+  }
+  .not-found-filters {
+    position: absolute;
+    pointer-events: none;
+  }
+  .not-found :global(.not-found-card) {
+    width: min(100%, 640px);
+    padding: 36px 32px 44px;
+    text-align: center;
+    transform: rotate(-1deg);
+  }
+  .not-found-code {
+    filter: url("#not-found-torn-digits");
+    font: 500 clamp(100px, 18vw, 150px)/1 var(--font-heading);
+    color: var(--color-accent);
+    letter-spacing: -0.06em;
+    margin: 0 0 12px;
+  }
+  .not-found h1 {
+    font: 500 clamp(32px, 6vw, 48px)/1.05 var(--font-heading);
+    margin: 0;
+  }
+  .not-found-description {
+    margin: 20px 0 28px;
+    color: var(--color-muted);
+    font: 18px/1.4 var(--font-body);
+  }
+  .not-found :global(.button) {
+    min-width: 200px;
+  }
+  @media (max-width: 767px) {
+    .not-found {
+      gap: 32px;
+      padding: 32px 24px 48px;
+    }
+    .not-found-brand img:first-child {
+      width: 38px;
+      height: 38px;
+    }
+    .not-found-brand img:last-child {
+      width: 195px;
+      height: auto;
+    }
+    .not-found :global(.not-found-card) {
+      padding: 28px 20px 36px;
+    }
+    .not-found-description {
+      font-size: 16px;
+    }
+    .not-found-description br {
+      display: none;
+    }
+  }
+</style>
