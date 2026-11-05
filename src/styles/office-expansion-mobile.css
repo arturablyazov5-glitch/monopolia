@@ -1,16 +1,3 @@
-/* NOV02-28: надпись поверх прежнего изображения, без обещания даты. */
-.office-coming-soon {
-  position: absolute;
-  inset: 4px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: #1c1c1c50;
-  border-radius: 28px;
-  font: 500 20px/1 var(--font-heading);
-  letter-spacing: 0.12em;
-  text-shadow: 0 1px 4px #0008;
-}
 .office-mobile-leaders {
   display: none;
 }
@@ -47,7 +34,8 @@
     --office-photo-border: #fff;
     --office-photo-width: 44cqi;
     --office-photo-height: calc(var(--office-photo-width) * 128 / 208);
-    --office-future-photo-top: 18cqi;
+    --office-future-photo-top: 27cqi;
+    --office-current-photo-top: 11cqi;
     --office-label-gap: 6cqi;
     aspect-ratio: 360 / 400;
     isolation: isolate;
@@ -69,19 +57,27 @@
     width: 44%;
   }
   .home-desktop .expansion-locations .future-photo {
-    left: 0;
+    left: 7%;
     top: var(--office-future-photo-top);
   }
   .home-desktop .expansion-locations .current-photo {
     left: 56%;
-    top: 0;
+    top: var(--office-current-photo-top);
   }
   .home-desktop .expansion-locations .office-photo-frame {
     background: var(--office-photo-border);
     border-radius: 9cqi;
   }
-  .home-desktop .expansion-locations .future-photo .office-photo-frame::after {
-    border-color: var(--office-photo-border);
+  .home-desktop .expansion-locations .office-photo-underlay {
+    display: none;
+  }
+  .home-desktop .expansion-locations .office-photo-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 4px solid var(--office-photo-border);
+    border-radius: inherit;
+    pointer-events: none;
   }
   .home-desktop .expansion-locations .office-bubble-tail {
     display: none;
@@ -101,10 +97,6 @@
   .home-desktop .expansion-locations .office-photo-frame > img {
     border-radius: 8cqi;
   }
-  .home-desktop .expansion-locations .office-coming-soon {
-    border-radius: 8cqi;
-    font-size: 20px;
-  }
   .home-desktop .expansion-locations .office-marker {
     width: 0;
     height: 0;
@@ -114,14 +106,14 @@
   .home-desktop .expansion-locations .future-office {
     --office-pin-x: 47.30035cqi;
     --office-pin-y: 83.07725cqi;
-    --office-photo-center: 22cqi;
+    --office-photo-center: 29cqi;
     --office-photo-top: var(--office-future-photo-top);
   }
   .home-desktop .expansion-locations .current-office {
     --office-pin-x: 70cqi;
     --office-pin-y: 72.90795cqi;
     --office-photo-center: 78cqi;
-    --office-photo-top: 0cqi;
+    --office-photo-top: var(--office-current-photo-top);
   }
   .home-desktop .expansion-locations .office-marker > img {
     position: absolute;

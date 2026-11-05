@@ -30,10 +30,40 @@ const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
     const backwards = animation.reverse;
     const trainDuration = `${animation.durationSeconds}s`;
     const trainBegin = `${animation.beginSeconds}s`;
-    const points = relocationRoutes[route.src].slice(1).split(" L");
-    if (backwards) points.reverse();
-    const path = `M${points.join(" L")}`;
-    const coordinates = points.map((point) => point.split(" ").map(Number));
+    const coordinates = relocationRoutes[route.src]
+      .slice(1)
+      .split(" L")
+      .map((point) => point.split(" ").map(Number));
+    if (mobile) {
+      // Координаты пина и ближайших к нему концов маршрутов на карте 1160 × 570.
+      const pinX = 711.5;
+      const pinY = 335;
+      const distanceToPin = ([x, y]: number[]) =>
+        Math.hypot(x + route.left - pinX, y + route.top - pinY);
+      const last = coordinates.length - 1;
+      const startsNearPin = distanceToPin(coordinates[0]) < distanceToPin(coordinates[last]);
+      const [x, y] = coordinates[startsNearPin ? 0 : last];
+      const dx = x + route.left - pinX;
+      const dy = y + route.top - pinY;
+      const [tipX, tipY] = Math.abs(dx) > Math.abs(dy)
+        ? [pinX + Math.sign(dx) * 33, pinY]
+        : [pinX, dy < 0 ? 294 : 374];
+      const offsetX = tipX - route.left - x;
+      const offsetY = tipY - route.top - y;
+      // Выравниваем зазор у пина, сохраняя остальной маршрут.
+      for (let i = 0; i < 6; i++) {
+        const point = coordinates[startsNearPin ? i : last - i];
+        const weight = ((6 - i) / 6) ** 2;
+        point[0] += offsetX * weight;
+        point[1] += offsetY * weight;
+      }
+    }
+    if (backwards) coordinates.reverse();
+    const [endX, endY] = coordinates[coordinates.length - 1];
+    const [prevX, prevY] = coordinates[coordinates.length - 2];
+    const angle = Math.atan2(endY - prevY, endX - prevX) * 180 / Math.PI;
+    const arrowTransform = `translate(${endX} ${endY}) rotate(${angle})`;
+    const path = `M${coordinates.map((point) => point.join(" ")).join(" L")}`;
     const lengths = [0];
     for (let i = 1; i < coordinates.length; i++) {
       lengths.push(
@@ -62,6 +92,9 @@ const trainHeight = 26.2172 * (mobile ? 1.5 : 1);
             stroke-dasharray="4 4"
             stroke-linecap="round"
           />
+        )}
+        {mobile && (
+          <path d="M-8 -4 L0 0 L-8 4 Z" fill="#777" transform={arrowTransform} />
         )}
         <g class="relocation-train" data-route={route.src}>
           <animate

@@ -101,7 +101,7 @@ export function initCityPickers() {
       o.addEventListener("click", () => {
         choose(o.dataset.cityOption!);
         setOpen(false);
-        toggle.focus();
+        toggle.focus({ preventScroll: true });
       }),
     );
     picker.addEventListener("keydown", (e) => {

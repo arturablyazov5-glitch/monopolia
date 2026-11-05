@@ -79,11 +79,6 @@
   color: white;
   font-size: 14px;
 }
-.prepared-viewing-actions > p > span,
-.prepared-viewing-actions > p > strong {
-  display: block;
-  white-space: nowrap;
-}
 .prepared-viewing-lists {
   display: flex;
   gap: 49px;
@@ -421,13 +416,14 @@
   }
   .viewing-comparison-arrow {
     position: absolute;
-    top: 76px;
+    top: 82px;
     left: 56px;
     width: calc(100% - 112px);
     height: 36px;
     pointer-events: none;
   }
   .viewing-comparison-before .viewing-comparison-arrow {
+    top: 92px;
     clip-path: inset(0 50% 0 0);
   }
   .viewing-comparison-after .viewing-comparison-arrow {
@@ -435,16 +431,14 @@
   }
   .viewing-comparison-rating {
     position: absolute;
-    top: 112px;
+    top: 124px;
     width: 112px;
     height: auto;
     pointer-events: none;
   }
   .viewing-comparison-before .viewing-comparison-rating {
     left: 12px;
-  }
-  .prepared-viewing-sell .viewing-comparison-before .viewing-comparison-rating {
-    top: 118px;
+    top: 140px;
   }
   .viewing-comparison-after .viewing-comparison-rating {
     right: 12px;

@@ -16,3 +16,35 @@
     background: linear-gradient(#fdfdfd 2px, var(--color-dark) 2px);
   }
 }
+
+@media (min-width: 2000px) {
+  .home-desktop .home-surface-run:not(.home-surface-run--reviews) {
+    display: flow-root;
+    background: var(--color-dark);
+  }
+
+  /* Let the paper cover the join even when it lands between device pixels. */
+  .home-desktop .home-hero {
+    height: calc(var(--paper-top) + 122px);
+    margin-bottom: -2px;
+    z-index: 1;
+  }
+
+  .home-desktop .hero-paper-edge img {
+    display: block;
+  }
+
+  .home-desktop .home-telegram::after {
+    bottom: -2px;
+    height: 82px;
+  }
+
+  /* Carry the solid part of the torn edges through the section boundary. */
+  .home-desktop .recruiting-edge-top {
+    top: -222px;
+  }
+
+  .home-desktop .recruiting-edge-bottom {
+    bottom: -222px;
+  }
+}

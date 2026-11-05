@@ -125,9 +125,8 @@
 }
 /* Deliberately indistinct preview, not a photograph of the future office. */
 .future-photo .office-photo-frame > img {
-  filter: blur(14px) grayscale(0.9);
-  transform: scale(1.16);
-  opacity: 0.75;
+  filter: blur(1px);
+  transform: scale(1.03);
 }
 .future-photo .office-photo-frame:after {
   content: "";

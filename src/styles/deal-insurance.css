@@ -178,7 +178,7 @@
     width: 820px;
     height: 680px;
     margin-top: calc(-56px * var(--stage-k));
-    margin-left: calc(50% - 407px * var(--stage-k));
+    margin-left: calc(50% - 407.5px * var(--stage-k));
     margin-bottom: calc(680px * var(--stage-k) - 680px);
     transform: scale(var(--stage-k));
     transform-origin: 0 0;
@@ -222,7 +222,9 @@
     margin: 0 20px;
     gap: 24px;
     padding-bottom: var(--section-space);
-    --stage-k: 0.6;
+    container-type: inline-size;
+    /* Фото чуть шире колонки CTA, а тень свободно выходит в поля. */
+    --stage-k: min(0.6, tan(atan2(calc(100cqw + 28px), 732.233px)));
     --bubbles: 56px;
   }
   .deal-insurance-heading h2 {
@@ -270,28 +272,26 @@
     position: relative;
     display: block;
     flex: none;
-    margin-inline: -20px;
     height: calc(650px * var(--stage-k) + var(--bubbles));
-    overflow: clip;
   }
   .deal-insurance-stage {
     position: absolute;
     top: var(--bubbles);
-    left: calc(50% - 407px * var(--stage-k));
+    left: calc(50% - 407.5px * var(--stage-k));
     margin: 0;
   }
   .deal-insurance-elena {
     position: absolute;
     left: auto;
-    right: 20px;
-    top: 30px;
+    right: 0;
+    top: 14px;
     align-self: auto;
   }
   .deal-insurance-client {
     position: absolute;
     left: calc(50% - 49px);
     right: auto;
-    top: calc(var(--bubbles) + 240px * var(--stage-k));
+    top: calc(var(--bubbles) + 130px * var(--stage-k) + 22px);
     align-self: auto;
   }
   .deal-insurance-actions {
@@ -306,13 +306,6 @@
 @media (max-width: 389px) {
   .deal-insurance {
     margin: 0 16px;
-    --stage-k: 0.56;
-  }
-  .deal-insurance-visual {
-    margin-inline: -16px;
-  }
-  .deal-insurance-elena {
-    right: 16px;
   }
   .deal-insurance-heading h2 {
     font-size: var(--h2-compact);
@@ -324,16 +317,8 @@
 }
 .deal-insurance-heading .deal-insurance-hand {
   display: inline-block;
-  margin: 0 0 0 12px;
+  margin: 0;
   line-height: 0.7;
   white-space: nowrap;
   vertical-align: middle;
-}
-@media (max-width: 767px) {
-  .deal-insurance-elena {
-    top: 24px;
-  }
-  .deal-insurance-client {
-    top: calc(var(--bubbles) + 130px * var(--stage-k));
-  }
 }

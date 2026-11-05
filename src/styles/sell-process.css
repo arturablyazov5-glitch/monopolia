@@ -21,6 +21,8 @@
 }
 
 /* Шапка 72 px и отдельный разделитель 1 px в Figma. */
-.sell-realtor .comparison-risk thead th {
-  height: 73px;
+@media (min-width: 768px) {
+  .sell-realtor .comparison-risk thead th {
+    height: 73px;
+  }
 }

@@ -137,6 +137,8 @@ const {
 const titleParts = title.split(/Белогорск(?:а|е)?/);
 const routes = getRelocationTrainLayers(layers);
 const selling = id === "sell-relocation";
+const [annotationStart, ...annotationTail] = annotation.split("—");
+const annotationEnd = annotationTail.join("—").trimStart();
 // Train markers are rendered by the animated SVG, not as static Figma exports.
 const staticLayers = layers.filter(
   (layer) =>
@@ -182,7 +184,13 @@ const staticLayers = layers.filter(
           title
         )}
       </h2>
-      {annotation && <p class="relocation-map-hand">{annotation}</p>}
+      {annotation && (
+        <p class="relocation-map-hand">
+          {annotationEnd ? (
+            <span>{annotationStart}<span class="relocation-map-hand-dash">—</span>{" "}<br class="relocation-map-hand-break" />{annotationEnd}</span>
+          ) : annotation}
+        </p>
+      )}
       <p class="relocation-map-text">{description}</p>
       <Button
         popup="callback"

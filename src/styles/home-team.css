@@ -28,7 +28,7 @@
   text-align: center;
   font: 500 var(--text-heading)/1 var(--font-heading);
 }
-.home-team h2 span {
+.home-team h2 .team-heading-strike {
   position: relative;
   display: inline-block;
 }
@@ -215,5 +215,22 @@
 @media (max-width: 1199px) {
   .home-team {
     min-height: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  #team-title {
+    position: relative;
+  }
+  #team-title.has-team-heading-lines .team-heading-strike {
+    text-decoration: none;
+  }
+  #team-title .team-heading-line {
+    position: absolute;
+    z-index: 1;
+    height: 0.38em;
+    transform: translateY(-50%);
+    background: url("/assets/team-heading-underline.svg") center / 100% 100% no-repeat;
+    pointer-events: none;
   }
 }

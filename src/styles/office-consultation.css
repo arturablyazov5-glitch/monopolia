@@ -68,10 +68,6 @@
   justify-content: center;
   gap: 12px;
 }
-.office-consultation-actions > p > span,
-.office-consultation-actions > p > strong {
-  display: block;
-}
 .office-consultation-actions > p {
   color: #e2e2e2;
   font-size: 14px;

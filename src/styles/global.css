@@ -2263,6 +2263,11 @@ a[href^="https://trace-logos.ru/"] {
 }
 
 /* Портреты сотрудников пропускают жесты и клики к контейнеру. */
+.expert-avatar-surface {
+  overflow: hidden;
+  background: var(--color-canvas);
+}
+
 .person-photo {
   pointer-events: none;
   -webkit-user-drag: none;
@@ -2319,3 +2324,17 @@ a[href^="https://trace-logos.ru/"] {
 
 /* Validation errors share a fixed semantic color even on dark surfaces. */
 .form-error { color: #d71920; }
+
+.cta-caption-mobile-inline > :is(span, strong) {
+  display: block;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .cta-caption-mobile-inline {
+    white-space: nowrap;
+  }
+  .cta-caption-mobile-inline > :is(span, strong) {
+    display: inline;
+  }
+}

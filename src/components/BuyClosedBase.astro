@@ -219,19 +219,21 @@ const listings = selectPreview();
                 decoding="async"
               />
               <span class="buy-safari-prices">
-                <span class="buy-safari-old-price" title="Условная старая цена для иллюстрации">
-                  <span>
-                    {listing.illustrativeOldPrice}
-                    <img
-                      src="/assets/catalog-old-price-strikethrough.svg"
-                      alt=""
-                      width="69.6587"
-                      height="42.9098"
-                      loading="lazy"
-                      decoding="async"
-                    />
+                {listing.illustrativeOldPrice && (
+                  <span class="buy-safari-old-price" title="Условная старая цена для иллюстрации">
+                    <span>
+                      {listing.illustrativeOldPrice}
+                      <img
+                        src="/assets/catalog-old-price-strikethrough.svg"
+                        alt=""
+                        width="69.6587"
+                        height="42.9098"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
                   </span>
-                </span>
+                )}
                 <span class="buy-safari-price">{listing.price}</span>
               </span>
             </div>

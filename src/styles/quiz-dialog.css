@@ -2,6 +2,10 @@
 dialog#lead-dialog.quiz-dialog {
   width: 555px;
 }
+/* City changes update the page beneath the quiz. Keep its backdrop static. */
+#lead-dialog.quiz-dialog::backdrop {
+  backdrop-filter: none;
+}
 #lead-dialog.quiz-dialog .dialog-sheet {
   padding: 56px 20px 20px;
 }

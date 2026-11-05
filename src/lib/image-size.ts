@@ -857,6 +857,10 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 324.57,
     height: 528.202,
   },
+  "/assets/trust-team-telescope-shadow.svg": {
+    width: 323.67,
+    height: 516.501,
+  },
   "/assets/hero-team-right-center-shadow.svg": {
     width: 360.524,
     height: 560.882,

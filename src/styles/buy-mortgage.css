@@ -267,13 +267,17 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: #dfdede;
-  display: grid;
-  place-items: center;
-  font:
-    14px/1.45 "Inter Tight",
-    sans-serif;
-  color: #808080;
+  position: relative;
+}
+.buy-mortgage-photo img {
+  position: absolute;
+  top: -9%;
+  left: 50%;
+  width: 180%;
+  max-width: none;
+  height: auto;
+  transform: translateX(-50%);
+  mix-blend-mode: multiply;
 }
 .buy-mortgage-review-text {
   display: flex;
@@ -696,7 +700,6 @@
     flex-shrink: 0;
     width: 64px;
     height: 64px;
-    font-size: 12px;
   }
   .buy-mortgage-calc-review .buy-mortgage-review-text {
     gap: 6px;

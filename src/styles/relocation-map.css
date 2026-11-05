@@ -72,6 +72,9 @@
   color: var(--color-diamond);
   white-space: nowrap;
 }
+.relocation-map-hand-break {
+  display: none;
+}
 .relocation-map-text {
   width: 562px;
   margin-top: 32px;
@@ -236,6 +239,13 @@
     max-width: 100%;
     justify-content: center;
     text-align: center;
+  }
+  .relocation-map-hand-break {
+    display: initial;
+  }
+  .relocation-map-hand-dash {
+    position: relative;
+    top: -2px;
   }
   .relocation-map-text {
     text-align: center;

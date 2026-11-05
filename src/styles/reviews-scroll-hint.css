@@ -1,6 +1,6 @@
 /* Only the mobile video-review hint needs a backing over the portraits. */
 @media (max-width: 767px) {
-  .trust-reviews .mobile-scroll-hint {
+  .trust-reviews .carousel > .mobile-scroll-hint {
     position: relative;
     isolation: isolate;
     align-self: flex-start;
@@ -8,7 +8,7 @@
     max-width: calc(100% - 2 * var(--rg));
   }
 
-  .trust-reviews .mobile-scroll-hint::before {
+  .trust-reviews .carousel > .mobile-scroll-hint::before {
     content: "";
     position: absolute;
     z-index: -1;

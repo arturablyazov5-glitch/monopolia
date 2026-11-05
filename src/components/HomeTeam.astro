@@ -66,3 +66,37 @@ import "../styles/home-team.css";
     </Carousel>
   </div>
 </section>
+
+<script>
+  const heading = document.querySelector<HTMLElement>("#team-title");
+  const strike = heading?.querySelector<HTMLElement>(".team-heading-strike");
+  if (heading && strike) {
+    const mobile = matchMedia("(max-width: 767px)");
+    const drawLines = () => {
+      heading.querySelectorAll(".team-heading-line").forEach((line) => line.remove());
+      heading.classList.remove("has-team-heading-lines");
+      if (!mobile.matches) return;
+
+      const text = [...strike.childNodes].find((node) => node.nodeType === Node.TEXT_NODE && node.textContent?.trim());
+      if (!text) return;
+      const range = document.createRange();
+      range.selectNodeContents(text);
+      const origin = heading.getBoundingClientRect();
+      for (const rect of range.getClientRects()) {
+        if (!rect.width) continue;
+        const line = document.createElement("i");
+        line.className = "team-heading-line";
+        line.setAttribute("aria-hidden", "true");
+        line.style.left = `${rect.left - origin.left}px`;
+        line.style.top = `${rect.top + rect.height * 0.55 - origin.top}px`;
+        line.style.width = `${rect.width}px`;
+        heading.append(line);
+      }
+      heading.classList.toggle("has-team-heading-lines", !!heading.querySelector(".team-heading-line"));
+    };
+    new ResizeObserver(drawLines).observe(heading);
+    new MutationObserver(drawLines).observe(strike, { childList: true, characterData: true, subtree: true });
+    mobile.addEventListener("change", drawLines);
+    void document.fonts.ready.then(drawLines);
+  }
+</script>

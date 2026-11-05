@@ -1631,7 +1631,7 @@
   .home-desktop .home-team {
     padding-top: calc(32px + var(--section-space));
   }
-  .home-desktop .home-team h2 span {
+  .home-desktop .home-team h2 .team-heading-strike {
     display: inline;
     text-decoration: line-through;
     text-decoration-color: var(--color-diamond);

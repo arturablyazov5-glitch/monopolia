@@ -109,7 +109,7 @@
   position: relative;
   z-index: 1;
   width: 499px;
-  height: 526px;
+  height: 551px;
   flex-shrink: 0;
   padding: 20px;
   display: flex;
@@ -242,7 +242,7 @@
 }
 .inner-hero-card:has([data-hero-other]:not([hidden])) {
   height: auto;
-  min-height: 526px;
+  min-height: 551px;
   gap: 20px;
 }
 .inner-hero-other {
@@ -297,7 +297,10 @@
   max-width: none;
 }
 .inner-hero-step {
-  display: none;
+  margin: 8px 0 0;
+  text-align: center;
+  color: #777;
+  font: 14px/1.2 var(--font-body);
 }
 .inner-hero-submit .button {
   width: 100%;
@@ -634,14 +637,6 @@
   }
   .inner-hero-submit .button {
     min-height: 52px;
-  }
-  /* Счётчик первого шага под кнопкой. */
-  .inner-hero-step {
-    display: block;
-    margin: 8px 0 0;
-    text-align: center;
-    color: #777;
-    font: 14px/1.2 var(--font-body);
   }
 }
 
