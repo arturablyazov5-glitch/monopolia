@@ -3,7 +3,7 @@ import { phone } from "../data/contacts";
 
 interface Props {
   /** header: звонок до 768 px; footer: до 1200 px; call: всегда звонок. */
-  variant?: "header" | "footer" | "call";
+  variant?: "header" | "footer" | "call" | "responsive";
   class?: string;
   icon?: boolean;
 }
@@ -11,7 +11,7 @@ const { variant = "call", class: className, icon = false } = Astro.props;
 const header = variant === "header";
 const actions = header
   ? ["callback", "call"]
-  : variant === "footer"
+  : (variant === "footer" || variant === "responsive")
     ? ["call", "callback"]
     : ["call"];
 ---
@@ -20,7 +20,7 @@ const actions = header
   action === "callback" ? (
     <button
       type="button"
-      class={header ? "header-callback" : "footer-phone footer-callback"}
+      class={header ? "header-callback" : variant === "responsive" ? `phone-action-responsive phone-action-callback ${className ?? ""}` : "footer-phone footer-callback"}
       data-lead="Заказать обратный звонок"
       data-callback
       aria-label={`Заказать обратный звонок: ${phone.display}`}
@@ -35,7 +35,9 @@ const actions = header
           ? "header-mobile-phone"
           : variant === "footer"
             ? "footer-phone footer-phone-link"
-            : className
+            : variant === "responsive"
+              ? `phone-action-responsive phone-action-call ${className ?? ""}`
+              : className
       }
       href={`tel:${phone.number}`}
       aria-label={icon ? `Позвонить: ${phone.display}` : undefined}

@@ -1,25 +1,32 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import Paper from "../components/Paper.astro";
 import Button from "../components/Button.astro";
 import SocialLinks from "../components/SocialLinks.astro";
 import PhoneAction from "../components/PhoneAction.astro";
 import "../styles/spasibo.css";
+import "../styles/standalone-page.css";
 ---
 
 <SiteLayout title="Спасибо за заявку — Монополия" noindex>
-  <main class="spasibo" data-node-id="2049:4507">
-    <div class="spasibo-check" aria-hidden="true">
-      ✓
-    </div>
-    <h1>Спасибо! Мы получили вашу заявку, будьте на связи</h1>
+  <main class="spasibo standalone-page" data-node-id="2049:4507">
+    <Paper class="spasibo-card">
+    <span class="spasibo-check" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 5C0 2.23858 2.23858 0 5 0H17C19.7614 0 22 2.23858 22 5V17C22 19.7614 19.7614 22 17 22H5C2.23858 22 0 19.7614 0 17V5Z" fill="#04B03F" />
+        <path d="M6.625 10.6875L9.75 13.8125L15.6875 7.875" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+      </svg>
+    </span>
+    <h1>Спасибо! Мы получили<br class="spasibo-title-break" /> вашу заявку, будьте на связи</h1>
     <p class="spasibo-description">
       Свяжемся с вами в течение 10 минут в рабочее время
     </p>
-    <Button label="На главную" href={import.meta.env.BASE_URL} tone="black" />
+    <Button label="На главную" href={import.meta.env.BASE_URL} />
     <div class="spasibo-contacts">
       <p>Или свяжитесь с нами удобным способом</p>
-      <PhoneAction class="spasibo-phone" />
+      <PhoneAction variant="responsive" class="spasibo-phone" />
       <SocialLinks size={40} />
     </div>
+    </Paper>
   </main>
 </SiteLayout>

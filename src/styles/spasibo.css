@@ -1,81 +1,75 @@
 .spasibo {
-  min-height: max(720px, 100dvh);
-  padding: 163px 32px 52px;
-  text-align: center;
-  background: var(--color-paper);
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--section-space) 24px;
   color: var(--color-ink);
+}
+.spasibo-card {
+  width: min(100%, 880px);
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+.spasibo h1 {
+  max-width: 720px;
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
 }
 .spasibo-check {
   display: grid;
   place-items: center;
-  width: 65px;
-  height: 65px;
-  margin: 0 auto 40px;
-  color: var(--color-status);
-  border: 2px solid currentColor;
-  border-radius: 50%;
-  font: 44px/1 var(--font-body);
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
 }
-.spasibo h1 {
-  max-width: 1240px;
-  margin: 0 auto 20px;
-  font: 700 44px/1.2 var(--font-heading);
+.spasibo-check > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .spasibo-description {
-  font: 500 24px/1.3 var(--font-heading);
+  font: var(--text-body)/1.4 var(--font-body);
+  color: var(--color-muted);
 }
-.spasibo > .button {
-  min-width: 183px;
-  min-height: 57px;
-  margin-top: 88px;
-  text-transform: uppercase;
+.spasibo-card > .button {
+  margin-top: 8px;
 }
 .spasibo-contacts {
-  margin-top: 40px;
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font: var(--text-small)/1.4 var(--font-body);
+  color: var(--color-muted);
 }
 .spasibo-phone {
-  display: block;
-  width: fit-content;
-  margin: 8px auto 12px;
-  font: 500 20px/1.2 var(--font-heading);
-}
-.spasibo .socials {
-  justify-content: center;
-  gap: 10px;
-}
-.spasibo .socials > a {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.spasibo :focus-visible {
-  box-shadow: 0 0 0 3px var(--color-accent);
-}
-@media (max-width: 1199px) {
-  .spasibo {
-    padding-top: 100px;
-  }
-  .spasibo h1 {
-    max-width: 900px;
-  }
+  color: var(--color-ink);
+  font: var(--weight-heading) 24px/1.2 var(--font-heading);
 }
 @media (max-width: 767px) {
-  .spasibo {
-    min-height: 100dvh;
-    padding: var(--section-space) 20px;
-  }
-  .spasibo-check {
-    margin-bottom: 28px;
-  }
-  .spasibo h1 {
-    font-size: 30px;
-  }
-  .spasibo-description {
+  .spasibo-phone {
     font-size: 20px;
   }
-  .spasibo > .button {
-    margin-top: 40px;
+  .spasibo-check {
+    width: 28px;
+    height: 28px;
+  }
+  .spasibo-title-break {
+    display: none;
+  }
+  .spasibo {
+    padding: var(--section-space) 16px;
+  }
+  .spasibo-card {
+    padding: 32px 20px;
+    gap: 20px;
+  }
+  .spasibo h1 {
+    font-size: var(--h1);
   }
 }

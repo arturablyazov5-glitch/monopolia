@@ -1,4 +1,25 @@
 /* Поведение номера: шапка переключается на 768 px, футер — на 1200 px. */
+.phone-action-responsive {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+.phone-action-responsive:hover:not(:focus) {
+  color: var(--color-accent);
+}
+.phone-action-callback {
+  display: none;
+}
+@media (min-width: 768px) {
+  .phone-action-call {
+    display: none;
+  }
+  .phone-action-callback {
+    display: inline-block;
+  }
+}
 .site-header.desktop .header-phone > .header-mobile-phone {
   display: none;
 }
