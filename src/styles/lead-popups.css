@@ -247,7 +247,7 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
 }
 #lead-dialog .popup-media-badge {
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   left: 20px;
   width: fit-content;
@@ -265,6 +265,9 @@ html:has(#lead-dialog[open]) {
   overflow: hidden;
 }
 @media (min-width: 768px) {
+  #lead-dialog .popup-media-badge {
+    bottom: 16%;
+  }
   #lead-dialog .popup-context {
     margin-top: -8px;
   }
