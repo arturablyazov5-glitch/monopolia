@@ -1,7 +1,7 @@
 import { applyPhoneMask } from '../lib/phone-mask';
 import { sendLead } from './lead-submit';
 import { formErrors } from '../lib/form-errors';
-import { sellQuizStep, sellQuizSuccess } from '../data/sell-quiz';
+import { sellQuizStep } from '../data/sell-quiz';
 
 type Step = { question: string; options?: string[]; multiple?: boolean; other?: boolean };
 const budgets: Record<string, string[]> = {
@@ -77,6 +77,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   consent.addEventListener('change', () => clearError('consent'));
   form.addEventListener('choice-change', () => clearError('channel'));
   phone.addEventListener('input', () => phone.setCustomValidity(''));
+  const success = form.querySelector<HTMLElement>("[data-quiz-success]")!;
   let step = 2, type = '', city = '';
   const answers: Record<number, string[]> = {};
   // Opening a dialog starts this instance again without touching other cards.
@@ -85,6 +86,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     extraAnswer = ''; step = 2; type = ''; city = '';
     delete form.dataset.context;
     form.hidden = true; intro.forEach(el => el.hidden = false);
+    success.hidden = true;
     controls.hidden = false; result.hidden = true; typeError.hidden = true;
     otherType.hidden = true; otherTypeInput.value = '';
     Object.keys(fieldErrors).forEach(clearError);
@@ -202,9 +204,8 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     try {
       await sendLead(form);
       questions.hidden = true; contact.hidden = true; controls.hidden = true;
-      form.append(result);
-      result.classList.add("is-success");
-      result.textContent = selling ? sellQuizSuccess : 'Ваша заявка получена. Будьте на связи — отправим подборку в течение 10 минут и свяжемся для обсуждения вариантов.'; result.hidden = false;
+      result.hidden = true;
+      success.hidden = false;
     } catch (error) { result.textContent = error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте еще раз.'; result.hidden = false; }
     finally { next.disabled = false; back.disabled = false; form.removeAttribute('aria-busy'); }
   });

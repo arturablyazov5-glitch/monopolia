@@ -20,13 +20,10 @@ textarea.buy-quiz-input { min-height: 90px; resize: vertical; }
 .buy-quiz [data-quiz-result] { white-space: pre-line; }
 .buy-quiz [data-quiz-extra] > .buy-quiz-question { margin-bottom: 16px; }
 
-@media (max-width: 767px) {
-  .buy-quiz-question {
-    font-size: 16px;
-  }
   .inner-hero-card.paper:has(.buy-quiz:not([hidden])) {
     height: auto;
     min-height: 0;
+    align-self: start;
   }
   .inner-hero-card .buy-quiz,
   .inner-hero-card .buy-quiz [data-quiz-questions],
@@ -35,5 +32,9 @@ textarea.buy-quiz-input { min-height: 90px; resize: vertical; }
   }
   .inner-hero-card .buy-quiz-controls {
     margin-top: 0;
+  }
+@media (max-width: 767px) {
+  .buy-quiz-question {
+    font-size: 16px;
   }
 }

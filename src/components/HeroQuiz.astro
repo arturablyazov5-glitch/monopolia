@@ -1,4 +1,5 @@
 ---
+import ThankYouContent from "./ThankYouContent.astro";
 import ConsentCheckbox from "./ConsentCheckbox.astro";
 import ContactMethods from "./ContactMethods.astro";
 import PhoneField from "./PhoneField.astro";
@@ -131,6 +132,9 @@ const endpoint =
     aria-live="polite"
     hidden
   ></p>
+  <div data-quiz-success hidden role="status" aria-live="polite">
+    <ThankYouContent variant={variant} />
+  </div>
 </form>
 <script>
   import "../scripts/hero-quiz";

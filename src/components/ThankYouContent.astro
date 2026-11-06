@@ -1,0 +1,33 @@
+---
+import Button from "./Button.astro";
+import PhoneAction from "./PhoneAction.astro";
+import SocialLinks from "./SocialLinks.astro";
+import "../styles/thank-you.css";
+interface Props { variant?: "page" | "buy" | "sell"; }
+const { variant = "page" } = Astro.props;
+const page = variant === "page";
+const Heading = page ? "h1" : "h2";
+const description = page
+  ? "Свяжемся с вами в течение 10 минут в рабочее время"
+  : variant === "sell"
+    ? "В течение 10 минут свяжемся с вами, чтобы обсудить план продажи. А также добавим ваш объект в закрытую базу на 1 500 покупателей"
+    : "Отправим подборку в течение 10 минут и свяжемся с вами для обсуждения вариантов";
+---
+<div class:list={["thank-you-content", { "thank-you-content--page": page }]}>
+  <span class="thank-you-check" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 5C0 2.23858 2.23858 0 5 0H17C19.7614 0 22 2.23858 22 5V17C22 19.7614 19.7614 22 17 22H5C2.23858 22 0 19.7614 0 17V5Z" fill="#04B03F" />
+      <path d="M6.625 10.6875L9.75 13.8125L15.6875 7.875" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" stroke="white" />
+    </svg>
+  </span>
+  <Heading class="thank-you-title">
+    {page ? <>Спасибо! Мы получили<br class="spasibo-title-break" /> вашу заявку, будьте на связи</> : <>Ваша заявка получена. Будьте на связи</>}
+  </Heading>
+  <p class="thank-you-description">{description}</p>
+  {page && <Button label="На главную" href={import.meta.env.BASE_URL} />}
+  <div class="thank-you-contacts">
+    <p>Или свяжитесь с нами удобным способом</p>
+    <PhoneAction variant="responsive" class="thank-you-phone" />
+    <SocialLinks size={40} />
+  </div>
+</div>
