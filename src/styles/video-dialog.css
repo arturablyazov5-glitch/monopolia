@@ -27,11 +27,15 @@
 #video-dialog::backdrop {
   background: rgb(0 0 0 / 85%);
 }
+#video-dialog[open],
+#video-dialog[open]::backdrop {
+  animation: video-dialog-enter 240ms ease-out both;
+}
 .video-dialog-frame {
   position: relative;
   width: min(92vw, calc(var(--video-height) * 0.5625));
   height: min(calc(92vw * 16 / 9), var(--video-height));
-  background: #000;
+  background: transparent;
   border-radius: calc(var(--radius-badge) * 2);
   overflow: hidden;
 }
@@ -50,8 +54,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: #000;
+  background: transparent;
   border-radius: calc(var(--radius-badge) * 2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 240ms ease-out;
+}
+#video-dialog.is-video-ready video {
+  opacity: 1;
+  visibility: visible;
 }
 .video-dialog-close {
   position: absolute;
@@ -85,9 +96,17 @@
   color: white;
   box-shadow: 0 0 0 2px white;
 }
-#video-dialog.is-closing,
-#video-dialog.is-closing::backdrop {
+#video-dialog[open].is-closing,
+#video-dialog[open].is-closing::backdrop {
   animation: video-dialog-exit 180ms ease-in both;
+}
+@keyframes video-dialog-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes video-dialog-exit {
   from {
@@ -98,15 +117,21 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  #video-dialog.is-closing,
-  #video-dialog.is-closing::backdrop {
+  #video-dialog[open],
+  #video-dialog[open]::backdrop,
+  #video-dialog[open].is-closing,
+  #video-dialog[open].is-closing::backdrop,
+  #video-dialog .video-dialog-loading {
     animation: none;
+  }
+  #video-dialog video {
+    transition: none;
   }
 }
 
 .video-dialog-loading {
   z-index: 1;
-  background: #000;
+  background: transparent;
   position: absolute;
   inset: 0;
   display: grid;
@@ -116,6 +141,7 @@
   color: #fff;
   font: 16px/1.4 var(--font-body);
   text-align: center;
+  animation: video-dialog-enter 240ms 160ms ease-out both;
 }
 .video-dialog-loading[hidden] {
   display: none;

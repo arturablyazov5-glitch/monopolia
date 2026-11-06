@@ -211,16 +211,13 @@ const modes: PopupMode[] = [
             image.alt = "";
           }
         }
-        context.comment = [detail, price].filter(Boolean).join(" · ");
+        if (price) context.comment = `Стоимость: ${price}`;
       }
       if (details) {
         details.textContent = detail;
         details.hidden = !detail;
       }
-      form.dataset.leadSource = [title, detail, leadSource(button)]
-        .filter(Boolean)
-        .join(" · ");
-      if (mode !== "viewing") context.comment = detail || subject;
+      form.dataset.leadSource = leadSource(button);
       if (calc)
         context.priceMillion =
           calc.querySelector<HTMLInputElement>("input[type=range]")?.value ??
@@ -237,7 +234,7 @@ const modes: PopupMode[] = [
       else dialog.removeAttribute("aria-describedby");
       const input = form.querySelector<HTMLInputElement>("[name=subject]");
       if (input)
-        input.value = [title, detail || subject].filter(Boolean).join(" · ");
+        input.value = calc ? "Подбор ипотеки" : detail || button.dataset.subject || title;
       // Панель меню закрывается при открытии формы: её скрытая кнопка
       // не может принять фокус после Escape. Возвращаем его на бургер.
       opener = button.closest(".menu-panel")

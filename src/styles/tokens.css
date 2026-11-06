@@ -27,7 +27,7 @@
      мессенджеров и градиентная линия-разделитель (слева 100 % → справа 0 %). */
   --menu-dot-gap: 2px;
   --menu-social-gap: 6px;
-  --line-fade: linear-gradient(to right, var(--color-divider), #0000);
+  --line-fade: linear-gradient(to right, transparent 0%, var(--color-divider) 5%, transparent 100%);
   --color-backdrop: #00000099;
   --font-heading: Ruble, Forma, Arial, sans-serif;
   --font-body: Ruble, Calibri, Arial, sans-serif;
@@ -37,7 +37,6 @@
   --text-card: 20px;
   --text-body: 16px;
   --text-small: 14px;
-  --text-button: 16px;
   --leading-heading: 1;
   --leading-body: 1.2;
   --weight-heading: 500;
@@ -54,8 +53,6 @@
   --space-16: 64px;
   --space-20: 80px;
   --container-width: 1160px;
-  --gutter-desktop: 24px;
-  --gutter-mobile: 16px;
   --grid-gap: 28px;
   --radius-control: 4px;
   --radius-badge: 8px;
@@ -66,7 +63,6 @@
   --header-height: 56px;
   --field-height: 52px;
   --shadow-paper: 0 5px 7px #0000000f;
-  --shadow-play: 0 3px 15px #0000001a;
   --duration-fast: 150ms;
   --focus-width: 3px;
   /* Как заменить текстуру бежевых плашек:
@@ -109,7 +105,6 @@
   --ink: var(--color-ink);
   --muted: var(--color-muted);
   --canvas: var(--color-canvas);
-  --paper: var(--color-paper);
   --shadow: var(--shadow-paper);
 }
 @media (max-width: 800px) {
@@ -147,7 +142,7 @@
 
 /* Межсекционный отступ: 120 / 80 / 56 px. Двойной интервал производный;
    глубину рваного края и вынос рамки резервирует сам компонент. */
-:root { --section-space: 120px; --section-space-double: calc(2 * var(--section-space)); --section-space-compact: 80px; --section-space-mobile: 56px; --carousel-gap: 32px; }
+:root { --section-space: 120px; --section-space-double: calc(2 * var(--section-space)); --section-space-compact: 80px; --carousel-gap: 32px; }
 @media (max-width: 1199px) { :root { --section-space: 80px; } }
 @media (max-width: 767px) { :root { --section-space: 56px; --radius-speech: 20px; } }
 

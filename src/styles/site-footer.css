@@ -142,10 +142,6 @@
 .site-footer .footer-doc:focus-visible .footer-doc-link {
   text-decoration-color: var(--color-accent);
 }
-.site-footer .footer-doc-status {
-  grid-column: 1 / -1;
-  color: #fff;
-}
 .site-footer .footer-contact {
   display: flex;
   flex-direction: column;

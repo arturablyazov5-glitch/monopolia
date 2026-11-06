@@ -1,8 +1,28 @@
 // Источник: Figma aM7nwXmxjBBW0YcfWe310k, секция 1952:5354.
 // Кейс 1944:4677 помечен «ОТМЕНА». Неизвестные характеристики и отзывы не публикуются.
-export const clientCases = [
+export interface ClientCase {
+  id: string;
+  category: "sell" | "buy";
+  person: string;
+  object: string;
+  result: string | null;
+  situation: string[];
+  actions: string[];
+  photo: string | null;
+  personPhoto: string;
+  personPhotoZoom?: number;
+  personPhotoFocus?: string;
+  personPhotoPosition?: string;
+  personPhotoStock?: boolean;
+  naturalPhoto?: boolean;
+}
+
+export const clientCases: ClientCase[] = [
   {
     id: "1799:5356",
+    personPhoto: "/assets/cases/sell-aleksandr-person.webp",
+    personPhotoZoom: 3,
+    personPhotoFocus: "33% 30%",
     category: "sell",
     person: "Александр П.",
     object: "Дом с земельным участком в сельской местности, 154,8 м²",
@@ -23,9 +43,13 @@ export const clientCases = [
   },
   {
     id: "1947:4762",
+    personPhoto: "/assets/cases/stock-irina.webp",
+    personPhotoZoom: 2.25,
+    personPhotoFocus: "50% 59%",
+    personPhotoStock: true,
     category: "sell",
     person: "Ирина В.",
-    object: "Дом с земельным участком",
+    object: "Дом с земельным участком, 67,1 м²",
     result:
       "Быстро совершили сделку по продаже дома и покупке квартиры. Мне ничего не пришлось делать, пришла и подписала документы",
     situation: [
@@ -43,6 +67,10 @@ export const clientCases = [
   },
   {
     id: "1947:4844",
+    personPhoto: "/assets/cases/sell-sergey-person.webp",
+    personPhotoZoom: 6,
+    personPhotoFocus: "26.4% 27.2%",
+    naturalPhoto: true,
     category: "sell",
     person: "Сергей Ш.",
     object: "2‑комнатная квартира, 62 м², 5/5 этажей",
@@ -63,6 +91,11 @@ export const clientCases = [
   },
   {
     id: "1951:4920",
+    personPhoto: "/assets/cases/illustrative-karen-casual.webp",
+    personPhotoPosition: "90% 50%",
+    personPhotoZoom: 1.2,
+    personPhotoFocus: "50% 10%",
+    personPhotoStock: true,
     category: "sell",
     person: "Карен Е.",
     object: "2‑комнатная квартира, 52,9 м², 2/5 этажей",
@@ -81,12 +114,16 @@ export const clientCases = [
   },
   {
     id: "1951:4997",
+    personPhoto: "/assets/cases/sell-olga-person.webp",
+    personPhotoZoom: 2,
+    personPhotoFocus: "47% 16%",
     category: "sell",
     person: "Ольга В.",
-    object: "2‑комнатная квартира, 5/5 этажей",
-    result: null,
+    object: "2‑комнатная квартира, 51,9 м², 5/5 этажей",
+    result:
+      "Уже через 3 дня покупатель был найден, хотя до этого квартира рекламировалась другими агентствами в течение 2 месяцев",
     situation: [
-      "Другое агентство не могло продать квартиру 3 месяца",
+      "Другое агентство не могло продать квартиру 2 месяца",
       "Цена была выше, чем у похожих квартир",
       "В документах на квартиру не хватало части бумаг, а восстанавливать их нужно было в другом регионе",
     ],
@@ -94,16 +131,22 @@ export const clientCases = [
       "Квартиру начали смотреть: сравнили с похожими в продаже и снизили цену до уровня похожих квартир",
       "Нехватку документов нашли заранее, а не в день сделки: юрист проверил бумаги сразу",
       "Поездка в другой регион не затянула продажу: документы восстанавливали параллельно с продвижением объявления",
-      "Покупатель нашёлся через 7 дней после запуска рекламы",
+      "Покупатель нашёлся через 3 дня после запуска рекламы",
     ],
     photo: "/assets/cases/sell-olga-v-apartment-regenerated.webp",
   },
   {
     id: "1951:5075",
+    personPhoto: "/assets/cases/illustrative-polina-casual.webp",
+    personPhotoPosition: "90% 50%",
+    personPhotoZoom: 1.4,
+    personPhotoFocus: "50% 0%",
+    personPhotoStock: true,
     category: "buy",
     person: "Полина Б.",
-    object: "2 студии, 23,3 м² и 24,2 м², 17/20 этажей",
-    result: null,
+    object: "2 студии, 23,3 м² и 24,2 м², 17/25 этажей",
+    result:
+      "Пришла продавать квартиру с мамой, в итоге сама ушла с новой недвижимостью перед Новым годом",
     situation: [
       "Семья пришла продавать квартиру мамы, покупать ничего не собиралась",
       "На консультации выяснилось, что семья подходит под семейную и дальневосточную ипотеку",
@@ -120,6 +163,8 @@ export const clientCases = [
   },
   {
     id: "1952:5176",
+    personPhoto: "/assets/cases/stock-nadezhda.webp",
+    personPhotoStock: true,
     category: "buy",
     person: "Надежда Ч.",
     object: "4‑комнатная квартира в сельской местности",
@@ -138,6 +183,11 @@ export const clientCases = [
   },
   {
     id: "1952:5252",
+    personPhoto: "/assets/cases/illustrative-oksana-casual.webp",
+    personPhotoPosition: "50% 0%",
+    personPhotoZoom: 2.5,
+    personPhotoFocus: "30.5% 25%",
+    personPhotoStock: true,
     category: "buy",
     person: "Оксана К.",
     object: "Квартира",
@@ -153,5 +203,47 @@ export const clientCases = [
       "Купили квартиру для сдачи в аренду в центре Свободного по выгодной цене — успели до её повышения",
     ],
     photo: null,
+  },
+  {
+    id: "1997:3616",
+    category: "buy",
+    person: "Варвара Т.",
+    personPhoto: "/assets/cases/stock-varvara.webp",
+    personPhotoStock: true,
+    object: "1‑комнатная квартира, 33 м², 2/3 этажей",
+    result: null,
+    situation: [
+      "Молодая семья искала квартиру в хорошем районе до 3,2 млн ₽, но из‑за бюджета выбор был сильно ограничен",
+      "Из‑за небольшого первоначального взноса покупка зависела от маткапитала, а покупательница была на 8‑м месяце беременности — получить его можно было только после родов",
+    ],
+    actions: [
+      "Подобрали идеальный вариант, который подошёл по бюджету, району и характеристикам",
+      "Банк одобрил ипотеку на 700 000 ₽ меньше стоимости — эту разницу решили закрыть материнским капиталом",
+      "Так как квартира была в цепочке (от сделки зависели ещё 3 продавца), провели переговоры со всеми участниками: объяснили ситуацию и согласовали паузу на 1,5 месяца",
+      "Договорённости удалось сохранить: никто не передумал, и семья успешно купила квартиру",
+    ],
+    photo: "/assets/cases/buy-varvara-t-apartment.webp",
+  },
+  {
+    id: "1998:3684",
+    category: "buy",
+    person: "Виктор Т.",
+    personPhoto: "/assets/cases/buy-viktor-people.webp",
+    personPhotoZoom: 4.3,
+    personPhotoFocus: "81.5% 17%",
+    object: "1‑комнатная квартира, 35,5 м², 1/4 этажей",
+    result:
+      "За 3 дня риелтор подобрала подходящий вариант, и я успел переехать в новую квартиру",
+    situation: [
+      "Покупатель искал квартиру в конкретном районе при ограниченном бюджете",
+      "Нужно было выйти на сделку за неделю, чтобы клиент мог быстро переехать",
+    ],
+    actions: [
+      "Проанализировали рынок в нужном районе и организовали просмотры, но подходящих вариантов в рамках бюджета не оказалось",
+      "Предложили рассмотреть соседний район: за те же деньги там можно было найти жильё лучше",
+      "За 3 дня подобрали и показали варианты в новом районе — клиенту новый район понравился больше первоначального, и он выбрал квартиру",
+      "Помогли быстро выйти на сделку — покупатель переехал в новое жильё уже через неделю",
+    ],
+    photo: "/assets/cases/buy-viktor-t-apartment.webp",
   },
 ];

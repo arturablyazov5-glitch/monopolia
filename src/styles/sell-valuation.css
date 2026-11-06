@@ -198,9 +198,6 @@
   background: #00000080;
   z-index: -1;
 }
-.sell-week-video > .inline-video {
-  z-index: 2;
-}
 .sell-week-play {
   position: absolute;
   left: 401px;

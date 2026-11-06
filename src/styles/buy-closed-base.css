@@ -315,10 +315,13 @@
 /* Перечёркивание 1299:5137 — исходный вектор, центр по линии цены */
 .buy-safari-old-price img {
   position: absolute;
-  left: -15.05px;
-  top: -4.71px;
+  /* Видимый штрих SVG подгоняем под сумму без полей бумажной плашки. */
+  width: calc((100% - 10.544px) * 69.6587 / 29.13);
+  height: 42.9098px;
+  left: 50%;
+  top: calc(50% - 10.35px);
   max-width: none;
-  transform: rotate(1.37deg);
+  transform: translateX(-50%);
 }
 .buy-safari-price {
   height: 21px;

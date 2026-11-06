@@ -124,6 +124,12 @@ const shorten = (value, max = 300) => {
     ? chars.slice(0, max - 1).join("") + "…"
     : chars.join("");
 };
+const shortenComment = (value) => {
+  const normalized = String(value).replace(/\r\n?/g, "\n").split("\n")
+    .map((line) => line.replace(/[^\S\n]+/g, " ").trim()).join("\n").trim();
+  const chars = Array.from(normalized);
+  return chars.length > 1000 ? chars.slice(0, 999).join("") + "…" : normalized;
+};
 const display = (value, max) => escapeHTML(shorten(value, max));
 
 /** Только представление уже вычисленного источника: не меняет его контракт. */
@@ -176,7 +182,7 @@ export function formatLeadMessage(data, env = {}) {
       : []),
     ...(data.comment
       ? [
-          `<blockquote>${display(data.comment, 1000)}</blockquote>${
+          `<blockquote>${escapeHTML(shortenComment(data.comment))}</blockquote>${
             params.length ? `\n\n${params.join("\n")}` : ""
           }`,
         ]

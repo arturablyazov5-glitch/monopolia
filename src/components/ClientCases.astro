@@ -73,6 +73,7 @@ const cases = clientCases;
               "case-photo",
               {
                 "case-photo-plan": caseItem.id === "1951:5075",
+                "case-photo-natural": caseItem.naturalPhoto,
               },
             ]}
           >
@@ -87,14 +88,48 @@ const cases = clientCases;
               />
             ) : (
               <div class="case-photo-placeholder">
-                <svg aria-hidden="true" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <path d="M6 15h8l3-5h14l3 5h8v23H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
-                  <circle cx="24" cy="26" r="7" stroke="currentColor" stroke-width="2" />
+                <svg
+                  aria-hidden="true"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 48 48"
+                  fill="none"
+                >
+                  <path
+                    d="M6 15h8l3-5h14l3 5h8v23H6z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <circle
+                    cx="24"
+                    cy="26"
+                    r="7"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
                 </svg>
-                <span>Фото клиента</span>
+                <span>Фото объекта</span>
               </div>
             )}
             <Paper class="case-person">
+              <span
+                class="case-person-photo"
+                style={`--portrait-zoom: ${caseItem.personPhotoZoom ?? 1}; --portrait-focus: ${caseItem.personPhotoFocus ?? "50% 50%"}; --portrait-position: ${caseItem.personPhotoPosition ?? "50% 50%"}`}
+              >
+                <img
+                  src={caseItem.personPhoto}
+                  width="50"
+                  height="50"
+                  alt={
+                    caseItem.personPhotoStock
+                      ? "Иллюстративное фото"
+                      : `Фото клиента: ${caseItem.person}`
+                  }
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
               <strong>{caseItem.person}</strong>
             </Paper>
           </div>
@@ -128,7 +163,12 @@ const cases = clientCases;
                   items: caseItem.actions,
                 },
               ].map((col, index) => (
-                <div class:list={["case-column", { "case-column--actions": index === 1 }]}>
+                <div
+                  class:list={[
+                    "case-column",
+                    { "case-column--actions": index === 1 },
+                  ]}
+                >
                   <h4>{col.title}</h4>
                   <ul class="bullet-list">
                     {col.items.map((item) => (

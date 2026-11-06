@@ -54,6 +54,7 @@
   position: relative;
   isolation: isolate;
   overflow-x: clip;
+  background: linear-gradient(to bottom, transparent calc(100% - 120px), #1c1c1a calc(100% - 120px));
 }
 .reviews-cases-background {
   position: absolute;

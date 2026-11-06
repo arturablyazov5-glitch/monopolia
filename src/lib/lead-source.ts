@@ -13,7 +13,10 @@ function heading(element: Element): string {
       .querySelectorAll('[aria-hidden="true"], .inner-hero-accent-space')
       .forEach((e) => e.remove());
     copy.querySelectorAll("br").forEach((e) => e.replaceWith(" "));
-    return clean(copy.textContent);
+    const walker = document.createTreeWalker(copy, NodeFilter.SHOW_TEXT);
+    const parts: string[] = [];
+    while (walker.nextNode()) parts.push(walker.currentNode.textContent || "");
+    return clean(parts.join(" "));
   }
   return clean(
     element.id || element.className || element.tagName.toLowerCase(),
@@ -21,7 +24,7 @@ function heading(element: Element): string {
 }
 
 export function leadSection(element: HTMLElement): string {
-  const section = element.closest(".sell-week, section");
+  const section = element.closest(".buy-mortgage-deals, .sell-week, section");
   if (section) return heading(section);
   if (element.closest("header"))
     return element.closest(".menu-panel") ? "Шапка · Меню" : "Шапка";
@@ -42,7 +45,7 @@ export function leadSource(element: HTMLElement): string {
     "article, .service-card, .property-card, .range-demo, .buy-mortgage-calc, .inner-hero-card",
   );
   const title = clean(card?.querySelector("h3")?.textContent);
-  return `${leadSection(element)} · ${title ? title + " · " : ""}${label || "Форма заявки"}`;
+  return `${leadSection(element)} · ${title ? title + " · " : ""}Кнопка «${label || "Форма заявки"}»`;
 }
 
 /** Button уже выводит явный атрибут; добавляем секцию, недоступную Astro.props.
@@ -52,7 +55,7 @@ export function initializeLeadSources(): void {
     if (element.dataset.leadSourceReady) return;
     const block = leadSection(element);
     const detail = clean(element.dataset.leadSource) || leadSource(element);
-    element.dataset.leadSource = `${block} · ${detail}`;
+    element.dataset.leadSource = [...new Set([block, ...detail.split(/\s*·\s*/)])].join(" · ");
     element.dataset.leadSourceReady = "1";
     element.dataset.leadSection = block;
   });

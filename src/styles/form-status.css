@@ -1,0 +1,17 @@
+.form-status,
+.form-status.is-success {
+  color: var(--color-ink);
+  font-size: 20px;
+  line-height: 1.4;
+}
+.form-status.is-error,
+.form-status.form-error:not(.is-success) {
+  color: var(--color-diamond);
+  font-size: var(--text-small);
+}
+@media (max-width: 767px) {
+  .form-status,
+  .form-status.is-success {
+    font-size: 18px;
+  }
+}

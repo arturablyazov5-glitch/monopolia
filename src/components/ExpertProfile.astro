@@ -16,7 +16,7 @@ if (!portrait) throw new Error(`Не задан кадр портрета экс
   class:list={["expert-profile", { "expert-profile-always": alwaysVisible }]}
   style={`--profile-image-width:${portrait.width}px;--profile-image-left:${portrait.left}px;--profile-image-top:${portrait.top}px;--profile-image-rotation:${portrait.rotation}deg`}
 >
-  <span class="expert-profile-avatar expert-avatar-surface">
+  <span class="expert-profile-avatar expert-avatar-surface expert-avatar-torn">
     <img
       class="person-photo"
       src={src}
@@ -50,16 +50,6 @@ if (!portrait) throw new Error(`Не задан кадр портрета экс
     flex: 0 0 76px;
     width: 76px;
     height: 76px;
-    border-radius: 0;
-    --brush-images: var(--brush-square-images);
-    --brush-sizes:
-      6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
-      calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
-      calc(100% - 10px) 6px, 6px 6px;
-    mask-image: var(--brush-images);
-    mask-size: var(--brush-sizes);
-    mask-position: var(--brush-positions);
-    mask-repeat: no-repeat;
   }
   .expert-profile-avatar img {
     position: absolute;

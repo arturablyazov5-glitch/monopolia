@@ -137,7 +137,10 @@ const {
 const titleParts = title.split(/Белогорск(?:а|е)?/);
 const routes = getRelocationTrainLayers(layers);
 const selling = id === "sell-relocation";
-const [annotationStart, ...annotationTail] = annotation.split("—");
+const flowingAnnotation = annotation
+  .replace(/[\u00a0\u202f]/g, " ")
+  .replace(/(?<!\S)([Вв]|[Нн]е) /g, "$1\u00a0");
+const [annotationStart, ...annotationTail] = flowingAnnotation.split("—");
 const annotationEnd = annotationTail.join("—").trimStart();
 // Train markers are rendered by the animated SVG, not as static Figma exports.
 const staticLayers = layers.filter(
@@ -196,7 +199,7 @@ const staticLayers = layers.filter(
                 {annotationEnd}
               </span>
             ) : (
-              annotation
+              flowingAnnotation
             )}
           </span>
         )}

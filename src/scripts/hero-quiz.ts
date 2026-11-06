@@ -56,6 +56,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   const other = form.querySelector<HTMLTextAreaElement>('[data-quiz-other]')!;
   const contact = form.querySelector<HTMLElement>('[data-quiz-contact]')!;
   const questions = form.querySelector<HTMLElement>('[data-quiz-questions]')!;
+  const answer = form.querySelector<HTMLElement>('[data-quiz-answer]')!;
   const controls = form.querySelector<HTMLElement>('[data-quiz-controls]')!;
   const next = form.querySelector<HTMLButtonElement>('[data-quiz-next]')!;
   const back = form.querySelector<HTMLButtonElement>('[data-quiz-back]')!;
@@ -101,8 +102,9 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     return { question: 'Как планируете покупать?', options: payments[type === 'Дом' ? 'Квартира' : type] || payments['Участок'] };
   }
   function render() {
+    result.classList.remove("is-success");
     Object.values(fieldErrors).forEach(el => el.hidden = true);
-    (step === 5 ? contact : questions).append(result);
+    (step === 5 ? contact : answer).append(result);
     result.hidden = true;
     questions.hidden = step === 5;
     contact.hidden = step !== 5;
@@ -119,7 +121,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     extra.replaceChildren();
     if (!extra.hidden) {
       const title = document.createElement('p'); title.className = 'buy-quiz-question'; title.textContent = 'Какая площадь участка?';
-      const group = document.createElement('div'); group.className = 'buy-quiz-options';
+      const group = document.createElement('div'); group.className = 'buy-quiz-options choice-hover';
       for (const label of ['До 6 соток', '6‑10 соток', '10‑15 соток', 'Больше 15 соток']) {
         const button = document.createElement('button'); button.type = 'button'; button.className = 'chip'; button.textContent = label;
         button.classList.toggle('selected', extraAnswer === label); button.setAttribute('aria-pressed', String(extraAnswer === label));
@@ -187,10 +189,10 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     result.hidden = true;
     if (!validPhone || !channel || !consent.checked) return;
     city = card.querySelector<HTMLInputElement>('[name=city]')?.value || city;
-    form.dataset.context = JSON.stringify({ city, propertyType: type, subject: selling ? 'Продать объект' : 'Подборка объектов', channel, comment: selling ? `Характеристики: ${answers[2].join(', ')}${extraAnswer ? '; участок: ' + extraAnswer : ''}. Состояние: ${answers[3].join(', ')}. Срок продажи: ${answers[4].join(', ')}.` : `Бюджет: ${answers[2].join(', ')}. Пожелания: ${answers[3].join(', ')}. Способ покупки: ${answers[4].join(', ')}.` });
+    form.dataset.context = JSON.stringify({ city, propertyType: type, subject: selling ? 'Продать объект' : 'Подборка объектов', channel, comment: selling ? `Характеристики: ${answers[2].join(', ')}${extraAnswer ? '; участок: ' + extraAnswer : ''}.\nСостояние: ${answers[3].join(', ')}.\nСрок продажи: ${answers[4].join(', ')}.` : `Бюджет: ${answers[2].join(', ')}.\nПожелания: ${answers[3].join(', ')}.\nСпособ покупки: ${answers[4].join(', ')}.` });
     if (type === 'Другое' && otherTypeInput.value.trim()) {
       const context = JSON.parse(form.dataset.context);
-      context.comment = `Тип объекта: ${otherTypeInput.value.trim()}. ${context.comment}`;
+      context.comment = `Тип объекта: ${otherTypeInput.value.trim()}.\n${context.comment}`;
       form.dataset.context = JSON.stringify(context);
     }
     next.disabled = true; back.disabled = true; result.hidden = true;
@@ -199,6 +201,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
       await sendLead(form);
       questions.hidden = true; contact.hidden = true; controls.hidden = true;
       form.append(result);
+      result.classList.add("is-success");
       result.textContent = selling ? sellQuizSuccess : 'Ваша заявка получена. Будьте на связи — отправим подборку в течение 10 минут и свяжемся для обсуждения вариантов.'; result.hidden = false;
     } catch (error) { result.textContent = error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.'; result.hidden = false; }
     finally { next.disabled = false; back.disabled = false; form.removeAttribute('aria-busy'); }

@@ -376,16 +376,13 @@ button.button {
 .staff-card .staff-photo,
 .company-partners,
 .review-card .review-photo,
-.review-photo .duration,
 .cases-tabs .channels,
 .cases-tabs .chip,
-.case-person > span,
 .staff-photo .badge,
 .deal-step-image .badge,
 .private-catalog-checks .badge,
 .inner-hero-types .chip,
 .email-chip,
-.sell-week-duration,
 .sell-answers-topics span,
 .sell-answers-topics span::before {
   border-radius: 0;
@@ -404,25 +401,22 @@ button.button {
 .staff-card .staff-photo,
 .company-partners,
 .review-card .review-photo,
-.review-photo .duration,
 .cases-tabs .channels,
 .cases-tabs .chip,
-.case-person > span,
 .staff-photo .badge,
 .deal-step-image .badge,
 .private-catalog-checks .badge,
 .inner-hero-types .chip,
 .email-chip,
-.sell-week-duration,
 .sell-answers-topics span,
 .sell-answers-topics span::before {
   --brush-images: var(--brush-square-images);
 }
 
-/* Варианты квиза используют тот же контур, что и кнопки перехода. */
+/* Варианты всех шагов квиза: прямые углы с рваными краями. */
 .inner-hero-card .inner-hero-types .chip,
 .inner-hero-card .buy-quiz-options .chip {
-  --brush-images: var(--brush-rounded-images);
+  --brush-images: var(--brush-square-images);
   --brush-sizes:
     6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
     calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
@@ -434,7 +428,7 @@ button.button {
   appearance: none;
   border: 0;
   box-shadow: none;
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 /* TG-D P4: retain the shared torn edges with square corners. */

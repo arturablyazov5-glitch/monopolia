@@ -103,6 +103,8 @@
 .relocation-trains {
   position: absolute;
   inset: 0 auto auto 0;
+  width: 100%;
+  height: auto;
   max-width: none;
   overflow: visible;
 }
@@ -110,7 +112,8 @@
   display: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .relocation-trains {
+  .relocation-trains:not(.relocation-trains--mobile),
+  .relocation-train {
     display: none;
   }
 }
@@ -205,10 +208,6 @@
     width: var(--route-width);
     height: auto;
   }
-  .relocation-trains {
-    width: 100%;
-    height: auto;
-  }
 }
 /* Shared mobile composition for buying and selling. The full map continues
    behind adjacent sections; map, routes and marker share one projection. */
@@ -235,6 +234,8 @@
   }
   .relocation-map-title {
     display: block;
+    width: 100%;
+    max-width: none;
     white-space: normal;
   }
   .relocation-map-question {
@@ -291,20 +292,16 @@
   }
   .relocation-map-routes > .relocation-pin {
     display: block;
-    width: 22px;
-    height: 30.344828px;
-    left: calc(61.3362069% - 11px) !important;
-    top: calc(58.7719298% - 11px) !important;
+    width: calc(var(--relocation-composition-width) * 72 / 1160);
+    height: auto;
+    left: calc(61.3362069% - var(--relocation-composition-width) * 36 / 1160) !important;
+    top: calc(58.7719298% - var(--relocation-composition-width) * 36 / 1160) !important;
   }
   .relocation-trains:not(.relocation-trains--mobile) {
     display: none;
   }
   .relocation-trains--mobile {
     display: block;
-    width: 100%;
-    height: auto;
-    left: 0;
-    top: 0;
   }
 }
 @media (max-width: 539px) {
@@ -315,10 +312,5 @@
   }
   .relocation-map-heading h2 {
     font-size: var(--h2-compact);
-  }
-}
-@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .relocation-trains--mobile .relocation-train {
-    display: none;
   }
 }

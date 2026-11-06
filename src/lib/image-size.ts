@@ -21,18 +21,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 12,
     height: 12,
   },
-  "/assets/icon-speech-bubble-white.svg": {
-    width: 18,
-    height: 13.649,
-  },
-  "/assets/logo-yandex-maps-full-export.svg": {
-    width: 91.221,
-    height: 24,
-  },
-  "/assets/blockbuster-case-background.webp": {
-    width: 4096,
-    height: 2196,
-  },
   "/assets/logo-monopoly-wordmark-header.svg": {
     width: 131,
     height: 13,
@@ -53,10 +41,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 2,
     height: 219.538,
   },
-  "/assets/decor-yellow-price-tag.svg": {
-    width: 18,
-    height: 5.906,
-  },
   "/assets/social-max-color.svg": {
     width: 33.6881,
     height: 34.766,
@@ -69,17 +53,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 2880,
     height: 1598,
   },
-  "/assets/texture-paper-beige-export.webp": {
-    width: 1024,
-    height: 683,
-  },
   "/assets/buyer-director-shadow.svg": {
     width: 282.415,
     height: 384.063,
-  },
-  "/assets/decor-light-panel.svg": {
-    width: 32,
-    height: 32,
   },
   "/assets/home-hero-team/04-left-front.webp": { width: 958, height: 1496 },
   "/assets/home-hero-team/04-left-front-shadow.svg": { width: 394, height: 579 },
@@ -97,14 +73,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 32,
     height: 32,
   },
-  "/assets/review-client-woman-gray.webp": {
-    width: 1856,
-    height: 2304,
-  },
-  "/assets/hero-team-right-inner-portrait.webp": {
-    width: 969,
-    height: 1600,
-  },
   "/assets/sell-steps-plan-connector.svg": {
     width: 2,
     height: 603.805,
@@ -120,10 +88,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/recruiting-note-icon.svg": {
     width: 36,
     height: 36,
-  },
-  "/assets/hero-team-right-inner-shadow.svg": {
-    width: 351.909,
-    height: 526.222,
   },
   "/assets/sell-realtor-comparison-background.webp": {
     width: 2880,
@@ -149,21 +113,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 58.1002,
     height: 5.75175,
   },
-  "/assets/decor-transparent-export.svg": {
-    width: 32,
-    height: 32,
-  },
-  "/assets/icon-house-arrow-white.svg": {
-    width: 12.0132,
-    height: 12.9375,
-  },
   "/assets/icon-external-link.svg": {
     width: 18.3777,
     height: 18.4458,
-  },
-  "/assets/partner-domclick-green-export.svg": {
-    width: 110.249,
-    height: 23.8154,
   },
   "/assets/sell-week-story-quote.svg": {
     width: 26.0607,
@@ -180,10 +132,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/icon-city-location-pin.svg": {
     width: 10.08,
     height: 12.6,
-  },
-  "/assets/relocation-airplane-photo.webp": {
-    width: 134,
-    height: 56,
   },
   "/assets/relocation-plane-arrow.svg": {
     width: 32.6049,
@@ -249,10 +197,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 20,
     height: 20,
   },
-  "/assets/decor-transparent-export-alternate.svg": {
-    width: 32,
-    height: 32,
-  },
   "/assets/partner-lsr.svg": {
     width: 125.607,
     height: 73.4912,
@@ -289,10 +233,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 856,
     height: 515,
   },
-  "/assets/texture-paper-warm-export.webp": {
-    width: 1024,
-    height: 683,
-  },
   "/assets/fast-sale-note-icon.svg": {
     width: 36,
     height: 36,
@@ -312,10 +252,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/prepared-viewing-rating-after.svg": {
     width: 121.686,
     height: 35.9662,
-  },
-  "/assets/partner-domclick-green-alternate.svg": {
-    width: 111.104,
-    height: 24,
   },
   "/assets/mortgage-documents-stack.webp": {
     width: 856,
@@ -361,10 +297,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 856,
     height: 605,
   },
-  "/assets/decor-saint-george-ribbon.webp": {
-    width: 1024,
-    height: 550,
-  },
   "/assets/transaction-preliminary-contract.webp": {
     width: 856,
     height: 701,
@@ -389,17 +321,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 306.567,
     height: 151.698,
   },
-  "/assets/review-client-woman-table.webp": {
-    width: 1536,
-    height: 2752,
-  },
   "/assets/transaction-registration-documents.webp": {
     width: 569,
     height: 740,
-  },
-  "/assets/blockbuster-case-person-shadow.webp": {
-    width: 4096,
-    height: 2196,
   },
   "/assets/company-about-decor.svg": {
     width: 12,
@@ -408,10 +332,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/insurance-bottom-paper-edge.svg": {
     width: 1440,
     height: 51.5,
-  },
-  "/assets/catalog-building-photo.webp": {
-    width: 845,
-    height: 14,
   },
   "/assets/icon-contact-telegram.svg": {
     width: 18.3777,
@@ -436,10 +356,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/consultation-person-shadow.svg": {
     width: 498.909,
     height: 656.2,
-  },
-  "/assets/bank-ozon-logo.svg": {
-    width: 40,
-    height: 40,
   },
   "/assets/company-office-interior.webp": {
     width: 2880,
@@ -481,10 +397,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 42.1101,
     height: 43.4575,
   },
-  "/assets/building-apartment-tower.webp": {
-    width: 1280,
-    height: 720,
-  },
   "/assets/transaction-step-connector.svg": {
     width: 2,
     height: 528.318,
@@ -513,10 +425,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 18.6667,
     height: 18.6667,
   },
-  "/assets/decor-green-panel.svg": {
-    width: 18,
-    height: 18,
-  },
   "/assets/property-advertising-channels.webp": {
     width: 856,
     height: 547,
@@ -529,10 +437,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 861,
     height: 260,
   },
-  "/assets/trust-team-right-center-portrait.webp": {
-    width: 1376,
-    height: 2064,
-  },
   "/assets/blockbuster-warning-icon.svg": {
     width: 42.1834,
     height: 24.8581,
@@ -544,10 +448,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/deal-mission-emoji.webp": {
     width: 160,
     height: 160,
-  },
-  "/assets/risk-meter-inactive.svg": {
-    width: 92,
-    height: 8,
   },
   "/assets/cases-quote-mark.svg": {
     width: 26.0607,
@@ -584,10 +484,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/relocation-route-east.svg": {
     width: 401,
     height: 192.321,
-  },
-  "/assets/marketplace-wildberries-logo.svg": {
-    width: 40,
-    height: 40,
   },
   "/assets/gossip-paper-edge.svg": {
     width: 1440,
@@ -642,10 +538,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 1480,
     height: 288,
   },
-  "/assets/staff-evgeniya-matukhnova-shadow.svg": {
-    width: 380.796,
-    height: 409.934,
-  },
   "/assets/deal-steps-paper-edge.svg": {
     width: 1447,
     height: 95.713,
@@ -653,10 +545,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/social-telegram-dark.svg": {
     width: 44.9875,
     height: 44.3498,
-  },
-  "/assets/bank-sovcombank-logo.svg": {
-    width: 40,
-    height: 40,
   },
   "/assets/partner-brusnika.svg": {
     width: 189.33,
@@ -670,29 +558,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 447.463,
     height: 580.875,
   },
-  "/assets/bank-tbank-logo.svg": {
-    width: 40,
-    height: 40,
-  },
-  "/assets/risk-meter-one.svg": {
-    width: 66,
-    height: 10,
-  },
-  "/assets/trust-team-paper-edge.webp": {
-    width: 3014,
-    height: 468,
-  },
-  "/assets/mortgage-document-photo.webp": {
-    width: 1024,
-    height: 967,
-  },
   "/assets/faq-toggle-background.svg": {
     width: 38.5917,
     height: 37.8297,
-  },
-  "/assets/risk-meter-four.svg": {
-    width: 66,
-    height: 10,
   },
   "/assets/footer-background.svg": {
     width: 1440,
@@ -705,10 +573,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/sell-steps-viewing-connector.svg": {
     width: 2,
     height: 335,
-  },
-  "/assets/decor-cross-mark.svg": {
-    width: 26.0607,
-    height: 20.4199,
   },
   "/assets/prepared-viewing-apartment-after.webp": {
     width: 2880,
@@ -730,10 +594,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 2880,
     height: 1241,
   },
-  "/assets/decor-red-dot.svg": {
-    width: 16,
-    height: 16,
-  },
   "/assets/relocation-route-central.svg": {
     width: 686,
     height: 186.419,
@@ -741,10 +601,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/icon-chevron-down.svg": {
     width: 6,
     height: 3.5,
-  },
-  "/assets/decor-lime-price-tag.svg": {
-    width: 18,
-    height: 4.782,
   },
   "/assets/relocation-route-west-sell.svg": {
     width: 374.464,
@@ -786,22 +642,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 352.682,
     height: 574.035,
   },
-  "/assets/bank-alfa-logo.svg": {
-    width: 40,
-    height: 40,
-  },
-  "/assets/catalog-browser-ui-icon.webp": {
-    width: 400,
-    height: 277,
-  },
-  "/assets/decor-green-panel-alternate.svg": {
-    width: 18,
-    height: 18,
-  },
-  "/assets/hero-team-right-shadow.svg": {
-    width: 334.354,
-    height: 492.006,
-  },
   "/assets/buy-realtor-comparison-background.webp": {
     width: 2880,
     height: 3474,
@@ -809,14 +649,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/blockbuster-paper-edge.svg": {
     width: 1493.19,
     height: 129.56,
-  },
-  "/assets/logo-2gis-full-export.svg": {
-    width: 84.9558,
-    height: 24,
-  },
-  "/assets/building-apartment-complex.webp": {
-    width: 1280,
-    height: 720,
   },
   "/assets/transaction-key-handover.webp": {
     width: 856,
@@ -834,17 +666,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 5386.13,
     height: 3035.38,
   },
-  "/assets/staff-card-default-shadow.svg": {
-    width: 961.183,
-    height: 1102.93,
-  },
   "/assets/trust-team-right-portrait.webp": {
     width: 1376,
     height: 2064,
-  },
-  "/assets/relocation-landscape.webp": {
-    width: 1024,
-    height: 591,
   },
   "/assets/icon-button-sell.svg": {
     width: 16,
@@ -854,17 +678,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 32.6049,
     height: 26.2172,
   },
-  "/assets/trust-team-shadow-right-center.svg": {
-    width: 324.57,
-    height: 528.202,
-  },
   "/assets/trust-team-telescope-shadow.svg": {
     width: 323.67,
     height: 516.501,
-  },
-  "/assets/hero-team-right-center-shadow.svg": {
-    width: 360.524,
-    height: 560.882,
   },
   "/assets/sell-steps-house-viewing-connector.svg": {
     width: 2,
@@ -874,10 +690,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 44,
     height: 44,
   },
-  "/assets/icon-play-triangle-white.svg": {
-    width: 13.5201,
-    height: 11.9038,
-  },
   "/assets/partner-glorax-home.svg": {
     width: 185.025,
     height: 82.3724,
@@ -885,10 +697,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/buy-steps-checks-connector.svg": {
     width: 2,
     height: 326.224,
-  },
-  "/assets/hero-team-right-center-portrait.webp": {
-    width: 873,
-    height: 1600,
   },
   "/assets/partner-pik-home.svg": {
     width: 137.623,
@@ -918,10 +726,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 110.043,
     height: 18.8212,
   },
-  "/assets/staff-darya-shport-shadow.svg": {
-    width: 369.514,
-    height: 410.947,
-  },
   "/assets/marketplace-avito-icon.svg": {
     width: 36.7731,
     height: 36.3498,
@@ -942,10 +746,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 36,
     height: 36,
   },
-  "/assets/relocation-birds.webp": {
-    width: 229,
-    height: 110,
-  },
   "/assets/partner-sodruzhestvo-home.svg": {
     width: 289.429,
     height: 82.3724,
@@ -962,21 +762,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 447.229,
     height: 319.687,
   },
-  "/assets/hero-team-left-portrait.webp": {
-    width: 1089,
-    height: 1600,
-  },
-  "/assets/hero-team-left-inner-shadow.svg": {
-    width: 386.229,
-    height: 541.326,
-  },
   "/assets/relocation-route-west.svg": {
     width: 558.85,
     height: 159.319,
-  },
-  "/assets/icon-check-green-square.svg": {
-    width: 14,
-    height: 14,
   },
   "/assets/rating-five-stars.svg": {
     width: 101.647,
@@ -986,10 +774,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 2880,
     height: 1486,
   },
-  "/assets/catalog-browser-search-icon.svg": {
-    width: 4.78649,
-    height: 4.53716,
-  },
   "/assets/icon-comparison-check.svg": {
     width: 20,
     height: 20,
@@ -997,10 +781,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/buy-steps-selection-connector.svg": {
     width: 2,
     height: 876.43,
-  },
-  "/assets/hero-team-left-center-portrait.webp": {
-    width: 996,
-    height: 1600,
   },
   "/assets/office-future-arrow.svg": {
     width: 27.7755,
@@ -1018,10 +798,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 42.1101,
     height: 43.4575,
   },
-  "/assets/marketplace-avito-badge.svg": {
-    width: 36.7731,
-    height: 36.3498,
-  },
   "/assets/catalog-browser-nav-dot.svg": {
     width: 2.21756,
     height: 2.21756,
@@ -1037,10 +813,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/deal-steps-vertical-dash.svg": {
     width: 2,
     height: 26,
-  },
-  "/assets/bank-sber-logo.svg": {
-    width: 40,
-    height: 40,
   },
   "/assets/background-paper-buyer-section.webp": {
     width: 1600,
@@ -1058,25 +830,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 1024,
     height: 682,
   },
-  "/assets/risk-meter-five.svg": {
-    width: 66,
-    height: 10,
-  },
   "/assets/staff-elena-sidelina-shadow.svg": {
     width: 615.109,
     height: 675.277,
-  },
-  "/assets/hero-team-left-center-shadow.svg": {
-    width: 373.038,
-    height: 504.376,
-  },
-  "/assets/hero-team-center-shadow.svg": {
-    width: 375.997,
-    height: 592.688,
-  },
-  "/assets/staff-elena-murashkina-shadow.svg": {
-    width: 368.417,
-    height: 410.992,
   },
   "/assets/relocation-route-west-sell-alternate.svg": {
     width: 556,
@@ -1106,14 +862,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 16,
     height: 16,
   },
-  "/assets/hero-team-left-shadow.svg": {
-    width: 377.473,
-    height: 483.149,
-  },
-  "/assets/marketplace-domclick-badge.svg": {
-    width: 36.7731,
-    height: 36.3498,
-  },
   "/assets/background-paper-team-section.webp": {
     width: 2880,
     height: 4375,
@@ -1126,25 +874,9 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 856,
     height: 724,
   },
-  "/assets/inner-hero-team-shadow-right.svg": {
-    width: 391.196,
-    height: 616.992,
-  },
-  "/assets/icon-play-button.svg": {
-    width: 46.9002,
-    height: 47.09,
-  },
-  "/assets/icon-clock-dark.svg": {
-    width: 12,
-    height: 12,
-  },
   "/assets/icon-cases-cursor.svg": {
     width: 17.6346,
     height: 19.3498,
-  },
-  "/assets/hero-team-right-portrait.webp": {
-    width: 1067,
-    height: 1600,
   },
   "/assets/buy-steps-route-connector.svg": {
     width: 2,
@@ -1162,10 +894,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 2,
     height: 563.381,
   },
-  "/assets/speech-bubble-blue.svg": {
-    width: 8.437,
-    height: 10.665,
-  },
   "/assets/catalog-browser-menu-icon.svg": {
     width: 15.6898,
     height: 16.6459,
@@ -1182,10 +910,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
     width: 18.3777,
     height: 18.4458,
   },
-  "/assets/risk-meter-three.svg": {
-    width: 66,
-    height: 10,
-  },
   "/assets/icon-nav-red-dot.svg": {
     width: 5,
     height: 5,
@@ -1193,10 +917,6 @@ const dimensions: Record<string, { width: number; height: number }> = {
   "/assets/buy-steps-budget-connector.svg": {
     width: 2,
     height: 546.879,
-  },
-  "/assets/home-background.webp": {
-    width: 1440,
-    height: 840,
   },
   "/assets/inner-hero-background.webp": {
     width: 1440,

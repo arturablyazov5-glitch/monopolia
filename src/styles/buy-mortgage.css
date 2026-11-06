@@ -428,9 +428,6 @@
     height: auto;
     gap: 20px;
   }
-  .buy-mortgage-banks .partner-logos {
-    gap: 12px 20px;
-  }
   .buy-mortgage-cards {
     height: auto;
     align-items: stretch;
@@ -533,12 +530,6 @@
   }
 }
 @media (max-width: 767px) {
-  .buy-mortgage-banks .partner-logos {
-    zoom: 0.65;
-    width: calc(100% / 0.65);
-    max-width: none;
-    gap: 10px;
-  }
   .buy-mortgage {
     /* 32 px занимает рваная кромка; дальше — общий отступ секции. */
     padding-top: calc(32px + var(--section-space));
@@ -663,19 +654,6 @@
   .buy-mortgage-steps .numbered-benefit > span { font-size: 48px; }
   .buy-mortgage-steps .numbered-benefit p { font-size: clamp(14px, 4.2vw, 18px); }
   .buy-mortgage-steps br { display: none; }
-  .buy-mortgage-banks .partner-logos {
-    zoom: 1; width: 100%; max-width: 100%; display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
-  }
-  .buy-mortgage-banks .partner-logo,
-  .buy-mortgage-banks .partner-etalon {
-    max-width: 100%; height: 40px; position: relative;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .buy-mortgage-banks .partner-logo img,
-  .buy-mortgage-banks .partner-etalon img {
-    position: static; width: 100%; height: 100%; object-fit: contain;
-  }
   .buy-mortgage-review { display: none; }
   .buy-mortgage-carousel .carousel-controls,
   .buy-mortgage-carousel .carousel-pagination { display: none; }
@@ -698,8 +676,8 @@
   }
   .buy-mortgage-calc-review .buy-mortgage-photo {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
   }
   .buy-mortgage-calc-review .buy-mortgage-review-text {
     gap: 6px;

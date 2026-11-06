@@ -258,8 +258,6 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
 }
 #lead-dialog .popup-form .form-result {
   position: static;
-  font-size: 16px;
-  line-height: 1.4;
 }
 html:has(#lead-dialog[open]) {
   overflow: hidden;

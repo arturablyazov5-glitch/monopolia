@@ -24,7 +24,7 @@
 }
 .property-card .location img {
   flex: 0 0 10px;
-  margin-top: 3px;
+  margin-top: 1px;
 }
 .property-card .location span {
   min-width: 0;

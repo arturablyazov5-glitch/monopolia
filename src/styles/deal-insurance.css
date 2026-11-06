@@ -1,3 +1,11 @@
+/* Resolve container units to a length before trigonometry. WebKit 18.2
+   miscalculates tan(atan2()) when its argument still contains cqw. */
+@property --insurance-scene-width {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 .trust-and-viewing {
   padding-top: var(--section-space);
   /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
@@ -224,7 +232,6 @@
     padding-bottom: var(--section-space);
     container-type: inline-size;
     /* Фото чуть шире колонки CTA, а тень свободно выходит в поля. */
-    --stage-k: min(0.6, tan(atan2(calc(100cqw + 28px), 732.233px)));
     --bubbles: 56px;
   }
   .deal-insurance-heading h2 {
@@ -269,6 +276,8 @@
   }
   /* Реплики над своими героями; фото заканчивается перед кнопкой. */
   .deal-insurance-visual {
+    --insurance-scene-width: calc(100cqw + 28px);
+    --stage-k: min(0.6, tan(atan2(var(--insurance-scene-width), 732.233px)));
     position: relative;
     display: block;
     flex: none;

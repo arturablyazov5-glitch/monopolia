@@ -61,6 +61,7 @@ const options = [1, 2, 3, 4, 5, 6].map(index => siteText(`inner-hero.options.${i
             <CityPicker variant="quiz" />
             <div class="inner-hero-types">
               <ChoiceGroup
+                class="choice-hover"
                 loading="eager"
                 name="Тип недвижимости"
                 options={options}
@@ -81,7 +82,7 @@ const options = [1, 2, 3, 4, 5, 6].map(index => siteText(`inner-hero.options.${i
                 <span class="sr-only">Уточните тип объекта, обязательно при выборе «Другое»</span>
                 <input type="text" data-hero-other-input maxlength="200" placeholder="Например: апартаменты, склад, доля в квартире, таунхаус" />
               </label>
-              <p class="buy-quiz-result form-error" data-hero-type-error role="status" hidden>{formErrors.answer}</p>
+              <p class="lead-field-error form-error" data-hero-type-error role="status" hidden>{formErrors.answer}</p>
 
             </div>
           </div>

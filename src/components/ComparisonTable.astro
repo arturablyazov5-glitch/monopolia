@@ -73,7 +73,13 @@ const {
                   alt={index === 1 ? "Плюс" : "Минус"}
                   decoding="async"
                 />
-                {value}
+                <span class="comparison-risk-text">
+                  {typeof value === "string" && value.includes("∼")
+                    ? value.split("∼").map((part, partIndex) => (
+                        <>{partIndex > 0 && <span class="comparison-approx">∼</span>}{part}</>
+                      ))
+                    : value}
+                </span>
               </span>
             </td>
           ))}

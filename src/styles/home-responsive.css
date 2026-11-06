@@ -1247,7 +1247,6 @@
 
   /* --- 6. EqualInterests: заголовок → фото (все трое в кадре) → кнопки --- */
   .home-desktop .equal-interests {
-    --w: calc((100vw - 16px) * 1.1745);
     height: auto;
     padding: var(--sec) 0;
     background: linear-gradient(#190d08, #151515);
@@ -1645,10 +1644,6 @@
     width: 240px;
     height: auto;
     margin: 4px -12px -4px 0;
-  }
-  .home-desktop .news-tape-bottom {
-    top: auto;
-    bottom: 6px;
   }
   .home-desktop .telegram-content {
     grid-template-columns: minmax(0, 1fr);

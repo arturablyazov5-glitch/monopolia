@@ -189,3 +189,7 @@
     line-height: 1.35;
   }
 }
+.comparison-approx {
+  position: relative;
+  top: -1px;
+}

@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./form-status.css";
 @import "./phone-action.css";
 @import "./bullets.css";
 @import "./brush-stroke.css";
@@ -27,7 +28,6 @@
 /* Декоративная бумага и её края не должны перехватывать наведение на картинки. */
 :is(
   .cases-background,
-  .trust-paper-background,
   .team-paper-background,
   .buyer-paper-background,
   .fast-sale-background,
@@ -183,19 +183,9 @@ img {
 hr {
   border: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    #0002 5%,
-    #0002 95%,
-    transparent
-  );
+  background: var(--line-fade);
   margin: 0;
   width: 100%;
-}
-/* Карточки объектов: линия слева видна полностью, к правому краю исчезает */
-.property-card hr {
-  background: var(--line-fade);
 }
 .container {
   max-width: var(--container-width);
@@ -480,23 +470,6 @@ button.header-callback {
   max-width: 430px;
   transform: rotate(-2deg);
 }
-.taped {
-  overflow: visible;
-}
-.taped {
-  background-image: linear-gradient(#fff, #fff);
-}
-.taped > :first-child:before {
-  content: "";
-  position: absolute;
-  width: 40px;
-  height: 12px;
-  top: -4px;
-  left: -8px;
-  background: #d8cdbb99;
-  transform: rotate(-30deg);
-  z-index: 3;
-}
 .property-card,
 .staff-card {
   padding: 18px var(--space-4);
@@ -621,10 +594,6 @@ s {
   padding: var(--space-6);
   display: grid;
   gap: var(--space-4);
-}
-.step-number {
-  font: 40px/1 Denistina;
-  color: var(--red);
 }
 .progress {
   height: 4px;
@@ -778,10 +747,6 @@ s {
   gap: var(--space-4);
   margin-top: var(--space-5);
 }
-.demo-note {
-  font-size: var(--text-small);
-  color: var(--muted);
-}
 .form-person {
   position: relative;
   min-height: 453px;
@@ -802,10 +767,6 @@ s {
   right: 0;
   padding: var(--space-5) var(--space-6);
   transform: rotate(-2deg);
-}
-.form-result {
-  font-size: var(--text-small);
-  color: var(--red);
 }
 .site-footer {
   background: var(--color-dark);
@@ -1015,9 +976,6 @@ dialog::backdrop {
 .quote p {
   font-size: var(--text-body);
 }
-.taped > :first-child:before {
-  background: var(--tape-texture) center/cover;
-}
 .brand-text {
   display: grid;
   gap: 6px;
@@ -1108,23 +1066,6 @@ dialog::backdrop {
   position: absolute;
   inset: 0;
 }
-.rating-map .gis-top {
-  height: 32.81%;
-  bottom: auto;
-}
-.rating-map .gis-bottom {
-  top: 73.43%;
-  height: 26.57%;
-}
-.rating-map .gis-center {
-  top: 15.21%;
-  height: 75.83%;
-}
-.rating-map .gis-mark {
-  inset: 20.31% 26.57% 20.44% 26.56%;
-  width: 46.87%;
-  height: 59.25%;
-}
 .rating-map.yandex {
   background: #f43;
 }
@@ -1137,11 +1078,6 @@ dialog::backdrop {
   inset: 33.25% 40.09% 47.09% 40.25%;
   width: 19.66%;
   height: 19.66%;
-}
-.rating-map .rating-third {
-  inset: 12.5% 15.07% 15.63% 18.19%;
-  width: 66.74%;
-  height: 71.87%;
 }
 .rating b {
   display: flex;
@@ -1295,14 +1231,6 @@ dialog::backdrop {
   display: grid;
   place-items: center;
   box-shadow: var(--shadow-paper);
-}
-.inline-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: black;
 }
 .form-person-stroke {
   position: absolute;
@@ -2178,6 +2106,18 @@ a[href^="https://trace-logos.ru/"] {
 .expert-avatar-surface {
   overflow: hidden;
   background: var(--color-canvas);
+  --expert-avatar-mask: none;
+  mask-image: var(--expert-avatar-mask);
+  mask-size:
+    6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
+    calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
+    calc(100% - 10px) 6px, 6px 6px;
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+}
+.expert-avatar-surface.expert-avatar-torn {
+  border-radius: 0;
+  --expert-avatar-mask: var(--brush-square-images);
 }
 
 .person-photo {

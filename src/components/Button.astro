@@ -47,7 +47,7 @@ const Tag = href ? "a" : "button";
     !href && type === "button" && !disabled
       ? (
           source ||
-          `${subject ? (/^Подбор ипотеки:/.test(subject) ? "Подбор ипотеки" : subject) + " · " : ""}Кнопка «${label}»`
+          `Кнопка «${label}»`
         ).replaceAll("\u00a0", " ")
       : undefined
   }

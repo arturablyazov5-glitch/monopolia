@@ -103,7 +103,7 @@
     display: none;
   }
   .buy-new-build {
-    padding-top: calc(var(--section-space) + var(--new-build-note-overhang));
+    padding-top: calc(var(--section-space-double) + var(--new-build-note-overhang));
     padding-bottom: var(--section-space);
     gap: var(--section-space);
   }

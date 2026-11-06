@@ -29,6 +29,7 @@ if (dialog) {
   let cancelPendingRestore: (() => void) | null = null;
 
   const unload = () => {
+    video.removeEventListener("loadeddata", revealVideo);
     if (firstFrameRequest !== null) video.cancelVideoFrameCallback(firstFrameRequest);
     firstFrameRequest = null;
     dialog.classList.remove("is-video-ready");
@@ -179,7 +180,11 @@ if (dialog) {
     }
     // This call stays in the user's click handler for iOS gesture permission.
     void video.play().catch(() => {
-      /* Native controls remain available. */
+      if (!dialog.open || dialog.classList.contains("is-closing")) return;
+      // A paused player has no presented-frame callback. Show its decoded
+      // frame and native controls so playback can start with another gesture.
+      if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) revealVideo();
+      else video.addEventListener("loadeddata", revealVideo, { once: true });
     });
   });
 }

@@ -335,6 +335,7 @@
 }
 /* бокс повёрнутой метки 157.482 × 31.736 */
 .deal-funnel-result {
+  --brush-images: var(--brush-square-images);
   margin: 1.47px 0;
   padding: 6px 14px;
   background: var(--color-ink);

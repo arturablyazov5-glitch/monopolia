@@ -94,7 +94,7 @@ const {
               {note && <hr class="popup-actions-divider" />}
               <FormSocial lines={["Или напишите нам", "в мессенджерах"]} />
             </div>
-            <p class="form-result" role="status" aria-live="polite" hidden></p>
+            <p class="form-result form-status" role="status" aria-live="polite" hidden></p>
           </div>
         </div>
         <input name="subject" type="hidden" value={subject} />
@@ -155,7 +155,7 @@ const {
           <Button label={buttonLabel} type="submit" />
           <FormSocial />
         </div>
-        <p class="form-result" role="status" aria-live="polite" hidden></p>
+        <p class="form-result form-status" role="status" aria-live="polite" hidden></p>
       </>
     )}
   </form>
@@ -293,6 +293,7 @@ const {
         selected: group.querySelector("[aria-pressed=true]"),
       }));
       form.addEventListener("reset", () => {
+        status.classList.remove("is-error");
         status.hidden = true;
         status.textContent = "";
         alertBox.textContent = "";
@@ -311,6 +312,7 @@ const {
         });
       });
       form.addEventListener("input", () => {
+        status.classList.remove("is-error");
         status.hidden = true;
         status.textContent = "";
       });
@@ -339,6 +341,7 @@ const {
         submit.disabled = true;
         form.setAttribute("aria-busy", "true");
         status.hidden = false;
+        status.classList.remove("is-error");
         status.textContent = "Отправляем заявку…";
         try {
           const { sendLead } = await loadSubmit();
@@ -346,6 +349,7 @@ const {
           form.reset();
           window.location.assign(`${import.meta.env.BASE_URL.replace(/\/$/, "")}/spasibo/`);
         } catch (error) {
+          status.classList.add("is-error");
           status.hidden = false;
           status.textContent =
             error instanceof Error

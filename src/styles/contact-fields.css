@@ -64,9 +64,6 @@
 .contact-method-options .chip {
   appearance: none;
   cursor: pointer;
-  transition:
-    background-color var(--duration-fast) ease,
-    color var(--duration-fast) ease;
   --brush-sizes:
     6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
     calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
@@ -90,8 +87,13 @@
   background: var(--color-ink);
   color: #fff;
 }
-.contact-method-options .chip:not(.selected):hover,
-.contact-method-options .chip:not(.selected):focus-visible {
+.choice-hover .chip {
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+}
+.choice-hover .chip:not(.selected):hover,
+.choice-hover .chip:not(.selected):focus-visible {
   background: #e6e6e3;
 }
 .contact-method-options .choice-icon {

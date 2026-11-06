@@ -31,6 +31,8 @@
   /* Строки колонки в Figma считаются по габаритам повернутой карточки */
   padding: var(--faq-overhang) 0;
   transform: rotate(var(--faq-tilt));
+  /* Верх карточки остаётся на месте, когда ответ меняет её высоту. */
+  transform-origin: center top;
 }
 
 /* Карточка — FaqCard variant="accordion", Figma 1380:5740 */
