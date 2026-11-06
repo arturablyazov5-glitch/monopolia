@@ -31,7 +31,9 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   form.dataset.quizInitialized = 'true';
   const selling = form.dataset.quizVariant === 'sell';
   const extra = form.querySelector<HTMLElement>('[data-quiz-extra]')!;
+  const mainError = form.querySelector<HTMLElement>('[data-quiz-main-error]')!;
   let extraAnswer = '';
+  let showAreaErrors = false;
   const intro = [...card.querySelectorAll<HTMLElement>('[data-quiz-intro]')];
   const typeError = card.querySelector<HTMLElement>('[data-hero-type-error]')!;
   const otherType = card.querySelector<HTMLElement>('[data-hero-other]')!;
@@ -83,7 +85,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   // Opening a dialog starts this instance again without touching other cards.
   form.addEventListener('reset', () => {
     for (const key of [2, 3, 4]) delete answers[key];
-    extraAnswer = ''; step = 2; type = ''; city = '';
+    extraAnswer = ''; showAreaErrors = false; step = 2; type = ''; city = '';
     delete form.dataset.context;
     form.hidden = true; intro.forEach(el => el.hidden = false);
     success.hidden = true;
@@ -116,10 +118,12 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     if (step === 5) return;
     const def = definition();
     question.textContent = def.question;
+    const hasAreaQuestions = selling && type === 'Дом' && step === 2;
+    mainError.hidden = !hasAreaQuestions || !showAreaErrors || !!answers[step]?.length;
     options.hidden = !def.options?.length;
     other.hidden = !def.other;
     other.placeholder = selling ? 'Например: доля 1/2 в двухкомнатной квартире в центре, новый ремонт' : 'Например: школа рядом, отапливаемое помещение, ворота под фуру';
-    extra.hidden = !(selling && type === 'Дом' && step === 2);
+    extra.hidden = !hasAreaQuestions;
     extra.replaceChildren();
     if (!extra.hidden) {
       const title = document.createElement('p'); title.className = 'buy-quiz-question'; title.textContent = 'Какая площадь участка?';
@@ -129,7 +133,12 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
         button.classList.toggle('selected', extraAnswer === label); button.setAttribute('aria-pressed', String(extraAnswer === label));
         button.addEventListener('click', () => { extraAnswer = label; render(); }); group.append(button);
       }
-      extra.append(title, group);
+      const extraError = document.createElement('p');
+      extraError.className = 'lead-field-error form-error';
+      extraError.textContent = formErrors.answer;
+      extraError.setAttribute('role', 'status');
+      extraError.hidden = !showAreaErrors || !!extraAnswer;
+      extra.append(title, group, extraError);
     }
     other.value = def.other ? (answers[step]?.[0] || '') : '';
     options.replaceChildren();
@@ -164,7 +173,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
       return;
     }
     for (const key of [2, 3, 4]) delete answers[key];
-    extraAnswer = '';
+    extraAnswer = ''; showAreaErrors = false;
     step = 2; intro.forEach(el => el.hidden = true); form.hidden = false; render();
     scrollToQuiz();
   });
@@ -175,7 +184,10 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
   next.addEventListener('click', () => {
     if (step === 5) { form.requestSubmit(); return; }
     if (definition().other) answers[step] = other.value.trim() ? [other.value.trim()] : [];
-    if (!answers[step]?.length || (selling && type === 'Дом' && step === 2 && !extraAnswer)) { result.textContent = formErrors.answer; result.hidden = false; return; }
+    if (selling && type === 'Дом' && step === 2) {
+      showAreaErrors = true;
+      if (!answers[step]?.length || !extraAnswer) { render(); return; }
+    } else if (!answers[step]?.length) { result.textContent = formErrors.answer; result.hidden = false; return; }
     step++; render(); scrollToQuiz();
   });
   form.addEventListener('submit', async event => {

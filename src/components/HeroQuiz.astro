@@ -34,6 +34,9 @@ const endpoint =
     <p class="buy-quiz-question" data-quiz-question></p>
     <div class="lead-field-group" data-quiz-answer>
       <div class="buy-quiz-options choice-hover" data-quiz-options></div>
+      <p class="lead-field-error form-error" data-quiz-main-error role="status" hidden>
+        {formErrors.answer}
+      </p>
       <div data-quiz-extra hidden></div>
       <textarea
         class="buy-quiz-input brush-stroke"

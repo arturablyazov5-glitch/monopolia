@@ -19,3 +19,6 @@ design-reference/
 
 # Локальные настройки SSH-туннеля
 .share.env
+
+# Локальные логи мониторинга
+agent-context/**/monitor/*.log
