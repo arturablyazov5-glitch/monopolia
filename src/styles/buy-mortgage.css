@@ -728,7 +728,7 @@
 }
 
 @media (max-width: 767px) {
-  .buy-mortgage-programs { width: calc(100% - 48px); margin-inline: auto; gap: 12px 8px; }
+  .buy-mortgage-programs { margin-inline: auto; gap: 12px 8px; }
   .buy-mortgage-programs .chip { justify-content: center; padding-left: 9px; padding-right: 16px; gap: 6px; text-align: center; }
   .buy-mortgage-program-label { transform: translateY(1px); }
 }

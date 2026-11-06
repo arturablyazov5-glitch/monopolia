@@ -29,6 +29,13 @@
 .office-status.closed .office-status-dot::after {
   display: none;
 }
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .office-status-dot {
+      transform: none;
+    }
+  }
+}
 @keyframes office-status-pulse {
   0% {
     transform: scale(0.6667);
