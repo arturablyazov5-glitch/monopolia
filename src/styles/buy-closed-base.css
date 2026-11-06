@@ -40,7 +40,7 @@
 }
 .buy-closed-base-card-wrap {
   width: 517px;
-  filter: drop-shadow(0 5px 3.5px #0000000f);
+  filter: drop-shadow(0 5px 3.5px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .buy-closed-base-card {
   /* Глубина края только карточки проверки; скотч и контент вне маски. */
@@ -81,7 +81,7 @@
   height: 538.837px;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--color-paper);
   border-radius: 12px;
   overflow: hidden;
   isolation: isolate;
@@ -121,8 +121,8 @@
   gap: 2.333px;
   flex-shrink: 0;
   border-radius: 115px;
-  background: #f7f7f7;
-  color: #4c4c4c;
+  background: var(--color-paper);
+  color: var(--color-muted);
   font-size: 5.056px;
   line-height: 1;
 }
@@ -152,13 +152,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
+  background: var(--color-paper);
   border-radius: 2px;
-  filter: drop-shadow(0 2.218px 1.552px #0000000f);
+  filter: drop-shadow(0 2.218px 1.552px rgb(from var(--color-ink) r g b / 5.9%));
   font-family: var(--font-body);
   font-size: 6.21px;
   line-height: 1.2;
-  color: #000;
+  color: var(--color-ink);
   white-space: nowrap;
 }
 .buy-safari-header:before {
@@ -178,7 +178,7 @@
   flex-direction: column;
   gap: 1.331px;
   padding: 3.105px 0 1.331px;
-  color: #676767;
+  color: color-mix(in srgb, var(--color-muted) 70%, var(--color-caption));
   line-height: 1;
 }
 .buy-safari-brand-text img {
@@ -190,7 +190,7 @@
   gap: 7.096px;
 }
 .buy-safari-nav > span:first-child {
-  color: #030303;
+  color: var(--color-ink);
 }
 .buy-safari-nav-base {
   display: flex;
@@ -240,13 +240,13 @@
 }
 .buy-safari-phone b {
   font: 700 7.98px/1 var(--font-heading);
-  color: #1d2930;
+  color: var(--color-dark);
 }
 .buy-safari-status {
   display: flex;
   align-items: center;
   gap: 1.774px;
-  color: #46565d;
+  color: var(--color-muted);
   line-height: 1;
   letter-spacing: -0.1242px;
 }
@@ -254,7 +254,7 @@
   width: 4.435px;
   height: 4.435px;
   border-radius: 50%;
-  background: radial-gradient(#2bb741 0 1.33px, #4caf502e 1.4px);
+  background: radial-gradient(var(--color-status) 0 1.33px, rgb(from var(--color-status) r g b / 18.0%) 1.4px);
 }
 
 /* Карточки помещаются в строку сетки, оставляя междурядный отступ. */
@@ -263,7 +263,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background: #fff;
+  background: var(--color-paper);
 }
 .buy-safari-photo {
   position: relative;
@@ -299,10 +299,10 @@
   position: relative;
   display: block;
   padding: 2.26px 5.272px;
-  background: #fff;
+  background: var(--color-paper);
   isolation: isolate;
   font: 400 6.026px/1.2 var(--font-heading);
-  color: #1c0d25;
+  color: var(--color-dark);
   white-space: nowrap;
   transform: rotate(2deg);
 }
@@ -328,9 +328,9 @@
   padding: 0 7.7px;
   display: flex;
   align-items: center;
-  background: #fff;
+  background: var(--color-paper);
   clip-path: var(--edge-button);
-  filter: drop-shadow(0 -1px 1.5px #00000026);
+  filter: drop-shadow(0 -1px 1.5px rgb(from var(--color-ink) r g b / 14.9%));
   font: 500 11px/1 var(--font-heading);
   color: var(--color-diamond);
   white-space: nowrap;
@@ -340,7 +340,7 @@
   display: flex;
   justify-content: space-between;
   font: 500 10px/1.2 var(--font-heading);
-  color: #000;
+  color: var(--color-ink);
   white-space: nowrap;
 }
 .buy-safari-caption span {
@@ -413,7 +413,7 @@
     width: min(100%, 700px);
     height: 539px;
     transform: none;
-    box-shadow: 0 12px 32px #0001;
+    box-shadow: 0 12px 32px rgb(from var(--color-ink) r g b / 6.7%);
   }
 }
 @media (max-width: 767px) {
@@ -470,7 +470,7 @@
     position: absolute;
     inset: auto 0 0;
     height: 80px;
-    background: linear-gradient(#fff0, #fff);
+    background: linear-gradient(rgb(from var(--color-paper) r g b / 0%), var(--color-paper));
     pointer-events: none;
     z-index: 3;
   }

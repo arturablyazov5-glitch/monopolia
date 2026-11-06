@@ -244,7 +244,11 @@ const cases = clientCases;
     const scrollHint = root.querySelector<HTMLElement>(".mobile-scroll-hint")!;
     const mobileCta = root.querySelector<HTMLElement>(".cases-mobile-cta")!;
     const mobileButton = mobileCta.querySelector<HTMLElement>(".button")!;
+    let scrolling = false;
+    let scrollSettleTimer: ReturnType<typeof setTimeout> | undefined;
     const fitActiveCase = () => {
+      // Do not move the CTA while the user is swiping between cards.
+      if (scrolling) return;
       const active = categorySlides[current];
       if (!mobile.matches || !active) {
         content.style.removeProperty("height");
@@ -317,35 +321,44 @@ const cases = clientCases;
     );
     updateCase(0);
     mobile.addEventListener("change", () => {
+      scrolling = false;
+      clearTimeout(scrollSettleTimer);
       updateCase(current);
       content.scrollLeft = 0;
     });
-    content.addEventListener(
-      "scroll",
-      () => {
-        if (!mobile.matches || !categorySlides.length) return;
-        const nearest = categorySlides.reduce(
-          (best, slide, index) =>
-            Math.abs(
-              slide.offsetLeft - content.offsetLeft - content.scrollLeft,
-            ) <
-            Math.abs(
-              categorySlides[best].offsetLeft -
-                content.offsetLeft -
-                content.scrollLeft,
-            )
-              ? index
-              : best,
-          0,
-        );
-        current = nearest;
-        fitActiveCase();
-        status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
-      },
-      { passive: true },
-    );
+    const syncScrolledCase = () => {
+      if (!mobile.matches || !categorySlides.length) return;
+      const nearest = categorySlides.reduce(
+        (best, slide, index) =>
+          Math.abs(slide.offsetLeft - content.offsetLeft - content.scrollLeft) <
+          Math.abs(categorySlides[best].offsetLeft - content.offsetLeft - content.scrollLeft)
+            ? index
+            : best,
+        0,
+      );
+      current = nearest;
+      status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
+    };
+    const finishScroll = () => {
+      if (!scrolling) return;
+      clearTimeout(scrollSettleTimer);
+      scrolling = false;
+      syncScrolledCase();
+      fitActiveCase();
+    };
+    content.addEventListener("scroll", () => {
+      if (!mobile.matches || !categorySlides.length) return;
+      scrolling = true;
+      syncScrolledCase();
+      // Safari versions without scrollend still settle after scrolling stops.
+      clearTimeout(scrollSettleTimer);
+      scrollSettleTimer = setTimeout(finishScroll, 200);
+    }, { passive: true });
+    content.addEventListener("scrollend", finishScroll);
 
     root.addEventListener("choice-change", (event) => {
+      scrolling = false;
+      clearTimeout(scrollSettleTimer);
       const value = (event as CustomEvent<{ value: string }>).detail.value;
       const tabs = [
         ...root.querySelectorAll<HTMLElement>(

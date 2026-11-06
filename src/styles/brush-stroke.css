@@ -6,14 +6,14 @@
   --brush-rounded-images:
     url("/assets/brush-mask-tl.svg"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-mask-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
     url("/assets/brush-mask-bl.svg"), url("/assets/brush-mask-b.svg"),
     url("/assets/brush-mask-br.svg");
   --brush-images: var(--brush-rounded-images);
   --brush-square-images:
     url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
     url("/assets/brush-square-bl.svg"), url("/assets/brush-mask-b.svg"),
     url("/assets/brush-square-br.svg");
   /* Стыки соседних SVG дают дробное покрытие alpha. Перекрытие 2px
@@ -108,7 +108,7 @@ button.button {
   display: block;
   position: absolute;
   inset: calc(-1 * var(--brush-border)) !important;
-  background: var(--paper-fill, #fff);
+  background: var(--paper-fill, var(--color-paper));
   z-index: -2;
   pointer-events: none;
   mask-image: var(--brush-images);
@@ -194,7 +194,7 @@ button.button {
   --brush-images:
     url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/brush-mask-r.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
     url("/assets/brush-mirror-bl.svg"), url("/assets/brush-mirror-b.svg"),
     url("/assets/brush-mirror-br.svg");
 }
@@ -329,14 +329,14 @@ button.button {
    (он применяется до маски) — там тень делает обертка (см. .menu-panel-shadow). */
 .paper {
   box-shadow: none !important;
-  filter: drop-shadow(0 5px 7px #0000000f);
+  filter: drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .paper.faq-card-accordion,
 .paper.service-card-coupon {
-  filter: drop-shadow(0 14px 14px #3d0b0b08) drop-shadow(0 5px 7px #0000000f);
+  filter: drop-shadow(0 14px 14px rgb(from var(--color-accent) r g b / 3.1%)) drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .paper.sell-answers-card {
-  filter: drop-shadow(0 14px 14px #3d0b0b08);
+  filter: drop-shadow(0 14px 14px rgb(from var(--color-accent) r g b / 3.1%));
 }
 .paper.taped-note-paper {
   filter: none;
@@ -438,7 +438,7 @@ button.button {
 .button.button:is(.black, .red, .white):is(:hover, :focus-visible):not(
     :disabled
   ) {
-  color: #fff;
+  color: var(--color-paper);
   filter: none;
 }
 /* Красная кнопка на светлом фоне при наведении становится черной
@@ -447,7 +447,7 @@ button.button {
   background: var(--color-dark);
 }
 .button.button.white:is(:hover, :focus-visible):not(:disabled)::before {
-  background: #dedede;
+  background: color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
 }
 .button.button.white:is(:hover, :focus-visible):not(:disabled) {
   color: var(--color-dark);
@@ -477,7 +477,7 @@ button.button {
 
 /* Белая кромка 2 px сверху и снизу готового рваного силуэта. */
 .paper.staff-card {
-  filter: drop-shadow(0 -2px 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 5px 7px #0000000f);
+  filter: drop-shadow(0 -2px 0 var(--color-paper)) drop-shadow(0 2px 0 var(--color-paper)) drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
 }
 
 /* A visible torn bottom for tall paper cards; content and tape stay uncut. */

@@ -4,13 +4,13 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  filter: drop-shadow(0 4px 2.5px #00000005);
+  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2.0%));
 }
 .badge-group > .badge {
   padding: 6px 14px;
   font: var(--text-small)/1.2 var(--font-body);
   color: var(--color-muted);
-  background: white;
+  background: var(--color-paper);
   border-radius: 0;
   transform: rotate(var(--badge-angle, -1deg));
 }

@@ -76,7 +76,7 @@
 .lead-section .lead-form input[name="name"] {
   padding: 16px 28px;
   border-radius: 0;
-  background-color: #fff;
+  background-color: var(--color-paper);
   font: 16px/1.2 var(--font-body);
   color: var(--color-field-text);
 }

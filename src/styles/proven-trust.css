@@ -49,8 +49,8 @@
   mask-image: linear-gradient(
     to bottom,
     transparent,
-    #000 2px,
-    #000 calc(100% - 2px),
+    var(--color-ink) 2px,
+    var(--color-ink) calc(100% - 2px),
     transparent
   );
   position: absolute;
@@ -228,7 +228,7 @@
     animation-play-state: paused;
   }
   .play-review-video:hover .review-video-play-fill {
-    fill: #000;
+    fill: var(--color-ink);
   }
 }
 @keyframes review-video-text-turn {

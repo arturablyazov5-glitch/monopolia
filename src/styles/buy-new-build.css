@@ -44,12 +44,12 @@
 .buy-new-build-card h2 {
   width: 714px;
   max-width: none;
-  color: #000;
+  color: var(--color-ink);
 }
 .buy-new-build-card > p {
   width: 592px;
   margin-top: -24px;
-  color: #777;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
 }
 /* 1380:6559 — бумажная заметка «Комиссия — 0%», −1°, по центру над листом */
 .buy-new-build-note-wrap {
@@ -57,7 +57,7 @@
   left: 50%;
   top: calc(-1 * var(--new-build-note-overhang));
   transform: translateX(-50%) rotate(-1deg);
-  filter: drop-shadow(0 5px 3.5px #0000000f);
+  filter: drop-shadow(0 5px 3.5px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .buy-new-build-note {
   box-shadow: none;

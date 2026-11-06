@@ -71,7 +71,7 @@
     width: 100%;
     height: 100%;
     background: var(--color-paper);
-    mask-image: url("/assets/brush-mask-l.svg"), linear-gradient(#fff, #fff);
+    mask-image: url("/assets/brush-mask-l.svg"), linear-gradient(var(--color-paper), var(--color-paper));
     mask-size:
       8px 100%,
       calc(100% - 6px) 100%;

@@ -177,7 +177,7 @@ main[tabindex="-1"]:focus-visible {
   z-index: 1000;
   padding: 12px 16px;
   background: var(--color-dark);
-  color: #fff;
+  color: var(--color-paper);
   font: 16px/1.2 var(--font-body);
   border-radius: 8px;
   transform: translateY(-200%);
@@ -214,17 +214,17 @@ hr {
 }
 /* Легкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout) */
 .fixed-site-header {
-  filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+  filter: drop-shadow(0 0 0 rgb(from var(--color-ink) r g b / 0.0%));
   transition: filter 0.3s ease;
 }
 .fixed-site-header.is-scrolled {
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 6px 10px rgb(from var(--color-ink) r g b / 10.0%));
 }
 .site-header {
   display: flex;
   align-items: center;
   gap: var(--space-5);
-  background: #fff;
+  background: var(--color-paper);
   padding: var(--space-3) var(--space-2);
   margin-top: var(--space-6);
   min-height: var(--header-height);
@@ -244,7 +244,7 @@ hr {
   font-size: var(--text-small);
   font-weight: bold;
   padding: var(--space-2);
-  background: #f1f1f1;
+  background: color-mix(in srgb, var(--color-paper) 30%, var(--color-canvas));
 }
 .site-header nav {
   display: flex;
@@ -282,7 +282,7 @@ button.header-callback {
 }
 .menu-button {
   background: var(--red);
-  color: white;
+  color: var(--color-paper);
   border: 0;
   width: 32px;
   height: 32px;
@@ -295,7 +295,7 @@ button.header-callback {
 }
 .paper {
   position: relative;
-  background: #fff;
+  background: var(--color-paper);
   box-shadow: var(--shadow);
   isolation: isolate;
 }
@@ -382,7 +382,7 @@ button.header-callback {
   font-size: var(--text-body);
   border: 0;
   border-radius: 8px;
-  color: white;
+  color: var(--color-paper);
   position: relative;
   --button-base-color: ButtonFace;
   --button-hover-color: var(--color-dark);
@@ -415,7 +415,7 @@ button.header-callback {
   width: var(--arrow-size);
   height: var(--arrow-size);
   background: var(--color-dark);
-  color: #fff;
+  color: var(--color-paper);
   border: 0;
   font-size: var(--text-card);
   transition: background-color var(--duration-fast) ease;
@@ -438,7 +438,7 @@ button.header-callback {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  background: white;
+  background: var(--color-paper);
   padding: var(--space-2);
   border-radius: var(--radius-badge);
   width: fit-content;
@@ -457,7 +457,7 @@ button.header-callback {
 .chip,
 .channels button {
   border: 0;
-  background: #fff;
+  background: var(--color-paper);
   padding: var(--space-2) var(--space-3);
   display: flex;
   gap: var(--space-1);
@@ -466,7 +466,7 @@ button.header-callback {
 .chip.selected,
 .channels button.selected {
   background: var(--color-dark);
-  color: white;
+  color: var(--color-paper);
 }
 .socials {
   display: flex;
@@ -500,7 +500,7 @@ button.header-callback {
 }
 .badge {
   display: block;
-  background: #fff;
+  background: var(--color-paper);
   padding: 6px 14px;
   font-size: var(--text-small);
   color: var(--muted);
@@ -514,7 +514,7 @@ button.header-callback {
   display: flex;
   gap: var(--space-2);
   align-items: center;
-  color: #777;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
   margin-top: var(--space-2);
 }
 .price {
@@ -532,7 +532,7 @@ s {
 }
 .mortgage {
   padding: var(--space-3) var(--space-4);
-  background: white;
+  background: var(--color-paper);
 }
 .property-card > .button {
   align-self: flex-start;
@@ -577,7 +577,7 @@ s {
 }
 .coupon {
   padding: var(--space-6);
-  border-top: 2px dashed #ccc;
+  border-top: 2px dashed color-mix(in srgb, var(--color-disabled) 60%, var(--color-canvas));
   position: relative;
 }
 .coupon:before,
@@ -607,7 +607,7 @@ s {
 }
 .progress {
   height: 4px;
-  background: #ddd;
+  background: color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
 }
 .progress span {
   display: block;
@@ -663,7 +663,7 @@ s {
   flex-shrink: 0;
 }
 .faq-card > p {
-  color: #484848;
+  color: var(--color-muted);
 }
 .faq-card > .button {
   justify-self: start;
@@ -676,7 +676,7 @@ s {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  background: white;
+  background: var(--color-paper);
 }
 .comparison caption {
   text-align: left;
@@ -686,7 +686,7 @@ s {
 .comparison th,
 .comparison td {
   padding: var(--space-6);
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
 }
 .comparison td img {
   margin: auto;
@@ -695,7 +695,7 @@ s {
   text-align: center;
 }
 .lead-panel {
-  background: white;
+  background: var(--color-paper);
   padding: var(--space-13);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 440px;
@@ -717,7 +717,7 @@ s {
   width: 100%;
   border: 0;
   border-radius: var(--radius-control);
-  background-color: #f5f5f5;
+  background-color: color-mix(in srgb, var(--color-paper) 60%, var(--color-canvas));
   padding: var(--space-4) var(--space-7);
   color: var(--color-field-text);
 }
@@ -728,7 +728,7 @@ s {
   overflow-y: auto;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
-  scrollbar-color: #bdbdbd transparent;
+  scrollbar-color: var(--color-disabled) transparent;
 }
 .lead-form textarea::-webkit-scrollbar {
   width: 8px;
@@ -740,11 +740,11 @@ s {
   min-height: 32px;
   border: 2px solid transparent;
   border-radius: 999px;
-  background: #bdbdbd;
+  background: var(--color-disabled);
   background-clip: padding-box;
 }
 .lead-form textarea::-webkit-scrollbar-thumb:hover {
-  background: #969696;
+  background: var(--color-caption);
   background-clip: padding-box;
 }
 .lead-form input[name="name"] {
@@ -780,7 +780,7 @@ s {
 }
 .site-footer {
   background: var(--color-dark);
-  color: white;
+  color: var(--color-paper);
   padding: 44px 0;
 }
 .site-footer .container {
@@ -791,11 +791,11 @@ s {
 }
 .site-footer p {
   font-size: var(--text-small);
-  color: #aaa;
+  color: var(--color-caption);
   margin-top: var(--space-3);
 }
 .site-footer small {
-  color: #aaa;
+  color: var(--color-caption);
 }
 .sr-only {
   position: absolute;
@@ -810,7 +810,7 @@ dialog {
   width: 600px;
   max-width: calc(100% - 32px);
   max-height: 90vh;
-  background: #fff;
+  background: var(--color-paper);
 }
 dialog::backdrop {
   background: var(--color-backdrop);
@@ -966,7 +966,7 @@ dialog::backdrop {
 }
 .staff-photo {
   overflow: hidden;
-  background: #fff;
+  background: var(--color-paper);
 }
 .numbered-benefit {
   display: flex;
@@ -975,7 +975,7 @@ dialog::backdrop {
 }
 .numbered-benefit > span {
   font: 64px/0.4 Denistina;
-  color: red;
+  color: var(--color-accent);
 }
 .numbered-benefit p {
   font-size: var(--text-body);
@@ -1047,7 +1047,7 @@ dialog::backdrop {
 .socials > a:focus-visible,
 .socials > span:hover {
   transform: translateY(-2px);
-  filter: brightness(1.08) drop-shadow(0 3px 3px #00000018);
+  filter: brightness(1.08) drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
 }
 .rating {
   gap: var(--space-2);
@@ -1077,7 +1077,7 @@ dialog::backdrop {
   inset: 0;
 }
 .rating-map.yandex {
-  background: #f43;
+  background: var(--color-accent);
 }
 .rating-map .yandex-pin {
   inset: 15% 22%;
@@ -1105,7 +1105,7 @@ dialog::backdrop {
   width: 1px;
   height: 18px;
   transform: translateY(-50%);
-  background: linear-gradient(to bottom, transparent, #0000001a 50%, transparent);
+  background: linear-gradient(to bottom, transparent, rgb(from var(--color-ink) r g b / 10.2%) 50%, transparent);
 }
 .rating b > img {
   display: block;
@@ -1343,7 +1343,7 @@ dialog::backdrop {
   margin: 0;
 }
 .footer-contact > div:first-child p {
-  color: #747474;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
   font-size: var(--text-small);
   margin-top: 4px;
 }
@@ -1351,7 +1351,7 @@ dialog::backdrop {
   display: flex;
   gap: 10px;
   align-items: center;
-  background: #272727;
+  background: color-mix(in srgb, var(--color-dark) 80%, var(--color-field-text));
   padding: var(--space-2) var(--space-4);
 }
 .footer-social {
@@ -1585,7 +1585,7 @@ dialog::backdrop {
 .site-header .menu-button:hover,
 .site-header .menu-button:focus-visible {
   transform: translateY(-2px);
-  filter: brightness(1.08) drop-shadow(0 3px 3px #00000018);
+  filter: brightness(1.08) drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
 }
 
 /* ===== Адаптив (R1): шапка и модалка. Планшет ≤ 1199, телефон ≤ 767.
@@ -1718,7 +1718,7 @@ dialog::backdrop {
     margin: -6px 0 -6px auto;
     border-radius: var(--radius-control);
     background: var(--color-accent);
-    color: #fff;
+    color: var(--color-paper);
   }
   .site-header.desktop .menu-button {
     order: 3;
@@ -1743,7 +1743,7 @@ dialog::backdrop {
     width: 44px;
     height: 44px;
     margin: 4px -12px 0 auto;
-    background: #fff;
+    background: var(--color-paper);
     border-radius: 50%;
   }
   #lead-dialog #lead-purpose {
@@ -1800,7 +1800,7 @@ button.city {
   transition: background-color 0.2s ease;
 }
 button.city:hover {
-  background: #e8e8e8;
+  background: var(--color-canvas);
 }
 .city-chevron {
   transition: transform 0.2s ease;
@@ -1814,7 +1814,7 @@ button.city:hover {
   left: 0;
   z-index: 50;
   min-width: 100%;
-  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.14));
+  filter: drop-shadow(0 8px 12px rgb(from var(--color-ink) r g b / 14.0%));
 }
 .city-menu-shadow[hidden] {
   display: none;
@@ -1823,7 +1823,7 @@ button.city:hover {
   margin: 0;
   padding: 4px;
   list-style: none;
-  background: #fff;
+  background: var(--color-paper);
   border-radius: 2px;
 }
 .city-menu li {
@@ -1853,7 +1853,7 @@ button.city:hover {
 }
 .city-menu li:hover::before,
 .city-menu li:focus-visible::before {
-  background: #f1f1f1;
+  background: color-mix(in srgb, var(--color-paper) 30%, var(--color-canvas));
 }
 .city-menu li[aria-selected="true"] {
   color: var(--red);
@@ -1872,7 +1872,7 @@ button.city:hover {
   z-index: 60;
   width: 320px;
   max-width: calc(100vw - 24px);
-  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.16));
+  filter: drop-shadow(0 10px 12px rgb(from var(--color-ink) r g b / 16.0%));
 }
 .menu-panel {
   position: relative;
@@ -1881,7 +1881,7 @@ button.city:hover {
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 10px 24px 16px;
-  background: #fff;
+  background: var(--color-paper);
   font-family: Ruble, Forma, var(--font-body, sans-serif);
 }
 .menu-panel[hidden] {
@@ -2105,7 +2105,7 @@ a[href^="https://trace-logos.ru/"] {
    state globally unless the user is navigating with keyboard focus-visible. */
 @media (hover: none) {
   .button.button.button.button:hover:not(:focus-visible):not(:disabled) {
-    color: #fff;
+    color: var(--color-paper);
     filter: none;
   }
   .button.button.button.button.white:hover:not(:focus-visible):not(:disabled) {
@@ -2189,7 +2189,7 @@ a[href^="https://trace-logos.ru/"] {
 }
 
 /* Validation errors share a fixed semantic color even on dark surfaces. */
-.form-error { color: #d71920; }
+.form-error { color: var(--color-accent); }
 
 .cta-caption-mobile-inline > :is(span, strong) {
   display: block;

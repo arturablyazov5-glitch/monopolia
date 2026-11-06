@@ -1,8 +1,8 @@
 .column-divider {
-  --column-divider-color: #000;
+  --column-divider-color: var(--color-ink);
 }
 .column-divider--light {
-  --column-divider-color: #fff;
+  --column-divider-color: var(--color-paper);
 }
 .column-divider:not(.column-divider--overlay),
 .column-divider--overlay::before {

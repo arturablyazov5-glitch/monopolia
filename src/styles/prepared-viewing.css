@@ -26,7 +26,7 @@
   .prepared-viewing-background {
     width: 1440px;
     object-fit: contain;
-    mask-image: linear-gradient(to right, transparent, #000 100px, #000 calc(100% - 240px), transparent);
+    mask-image: linear-gradient(to right, transparent, var(--color-ink) 100px, var(--color-ink) calc(100% - 240px), transparent);
   }
   .prepared-viewing::before {
     content: "";
@@ -34,15 +34,15 @@
     inset: 0;
     z-index: -2;
     background:
-      linear-gradient(to right, #151515 20%, transparent 70%),
-      var(--viewing-edge-colors, linear-gradient(to bottom, #bdafa4 15%, #c6bfbc 40%, #676360 65%, #91857d 85%));
+      linear-gradient(to right, var(--color-dark) 20%, transparent 70%),
+      var(--viewing-edge-colors, linear-gradient(to bottom, color-mix(in srgb, var(--color-paper-warm) 60%, var(--color-muted)) 15%, color-mix(in srgb, var(--color-paper-warm) 50%, var(--color-disabled)) 40%, color-mix(in srgb, var(--color-muted) 70%, var(--color-caption)) 65%, color-mix(in srgb, var(--color-muted) 25%, var(--color-caption)) 85%));
     mask-image: var(--viewing-photo-mask);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     pointer-events: none;
   }
   .prepared-viewing-sell {
-    --viewing-edge-colors: linear-gradient(to bottom, #bbb8b2 15%, #5c5047 40%, #736b65 65%, #7c6959 85%);
+    --viewing-edge-colors: linear-gradient(to bottom, var(--color-disabled) 15%, var(--color-muted) 40%, color-mix(in srgb, var(--color-muted) 55%, var(--color-caption)) 65%, color-mix(in srgb, var(--color-muted) 60%, var(--color-caption)) 85%);
   }
 }
 .prepared-viewing-inner {
@@ -60,11 +60,11 @@
   width: 429px;
 }
 .prepared-viewing h2 {
-  color: white;
+  color: var(--color-paper);
 }
 .prepared-viewing-description {
   line-height: 19px;
-  color: #e2e2e2;
+  color: color-mix(in srgb, var(--color-canvas) 80%, var(--color-disabled));
   margin-top: 16px;
 }
 .prepared-viewing-note {
@@ -93,7 +93,7 @@
   flex-shrink: 0;
 }
 .prepared-viewing-actions > p {
-  color: white;
+  color: var(--color-paper);
   font-size: 14px;
 }
 .prepared-viewing-lists {
@@ -113,7 +113,7 @@
   line-height: 19px;
   width: 190px;
   gap: 24px;
-  color: #e2e2e2;
+  color: color-mix(in srgb, var(--color-canvas) 80%, var(--color-disabled));
 }
 .prepared-viewing-probability {
   position: absolute;
@@ -194,10 +194,10 @@
     z-index: -1;
     background: linear-gradient(
       to bottom,
-      #0000 0,
-      #00000080 96px,
-      #00000080 calc(100% - 96px),
-      #0000 100%
+      rgb(from var(--color-ink) r g b / 0%) 0,
+      rgb(from var(--color-ink) r g b / 50.2%) 96px,
+      rgb(from var(--color-ink) r g b / 50.2%) calc(100% - 96px),
+      rgb(from var(--color-ink) r g b / 0%) 100%
     );
     pointer-events: none;
   }
@@ -312,7 +312,7 @@
     background: var(--color-dark);
     --viewing-edge-height: 56px;
     padding-block: calc(var(--viewing-edge-height) + var(--section-space));
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000), url("/assets/gossip-paper-edge.svg");
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
     mask-size: 100% var(--viewing-edge-height), 100% calc(100% - 2 * var(--viewing-edge-height) + 2px), 100% var(--viewing-edge-height);
     mask-position: top, center, bottom;
     mask-repeat: no-repeat;
@@ -399,7 +399,7 @@
     bottom: 0;
     left: var(--comparison-split);
     width: 3px;
-    background: #fff;
+    background: var(--color-paper);
     transform: translateX(-50%);
     display: grid;
     place-items: center;
@@ -414,9 +414,9 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color-paper);
     color: var(--color-ink);
-    box-shadow: 0 2px 12px #0003;
+    box-shadow: 0 2px 12px rgb(from var(--color-ink) r g b / 20%);
   }
   .viewing-comparison-range {
     position: absolute;

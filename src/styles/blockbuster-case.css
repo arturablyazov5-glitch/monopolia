@@ -43,7 +43,7 @@
   padding: 8px 20px;
   transform: rotate(-1deg);
 
-  color: white;
+  color: var(--color-paper);
 }
 .blockbuster-label:before {
   background: url("/assets/blockbuster-decoration.webp") center/cover;
@@ -61,7 +61,7 @@
   margin: 0 auto 12px;
   text-align: center;
   font: 500 var(--text-heading)/1 var(--font-heading);
-  color: black;
+  color: var(--color-ink);
 }
 .blockbuster-description {
   width: 714px;
@@ -72,7 +72,7 @@
 }
 .blockbuster-content .speech-bubble {
   position: absolute;
-  filter: drop-shadow(0 25px 13.5px #00000029);
+  filter: drop-shadow(0 25px 13.5px rgb(from var(--color-ink) r g b / 16.1%));
 }
 .blockbuster-warning {
   left: 240px;
@@ -81,7 +81,7 @@
 }
 .blockbuster-warning p {
   background: var(--color-accent);
-  color: white;
+  color: var(--color-paper);
 }
 .blockbuster-reply {
   left: 940px;
@@ -131,17 +131,17 @@
   .blockbuster-case {
     /* TASK-058: фон за маской взят из усредненных крайних колонок
        скомпонованного кадра 1440 (небо → горизонт → снег):
-       #e2ebf1, #c7d3dc, #9eb5c5, #97979f, #a4a9b7.
+       var(--color-canvas), color-mix(in srgb, var(--color-canvas) 50%, var(--color-disabled)), var(--color-disabled), var(--color-caption), var(--color-disabled).
        Так исходный кадр мягко растворяется в продолжение пейзажа,
        а не в чужую темную заливку. */
     background: linear-gradient(
       to bottom,
-      #e2ebf1 0 15.7%,
-      #c7d3dc 33.7%,
-      #9eb5c5 42.7%,
-      #97979f 47.2%,
-      #abb0bb 56.2%,
-      #a4a9b7 100%
+      var(--color-canvas) 0 15.7%,
+      color-mix(in srgb, var(--color-canvas) 50%, var(--color-disabled)) 33.7%,
+      var(--color-disabled) 42.7%,
+      var(--color-caption) 47.2%,
+      var(--color-disabled) 56.2%,
+      var(--color-disabled) 100%
     );
   }
   .blockbuster-scene {
@@ -151,8 +151,8 @@
     mask-image: linear-gradient(
       to right,
       transparent,
-      #000 180px,
-      #000 calc(100% - 180px),
+      var(--color-ink) 180px,
+      var(--color-ink) calc(100% - 180px),
       transparent
     );
   }
@@ -167,7 +167,7 @@
 @media (max-width: 767px) {
   .home-desktop .blockbuster-case {
     --blockbuster-edge-height: 32px;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
     mask-size: 100% var(--blockbuster-edge-height), 100% calc(100% - var(--blockbuster-edge-height) + 1px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;

@@ -83,7 +83,7 @@
   flex-shrink: 0;
 }
 .home-team .staff-photo .badge {
-  filter: drop-shadow(0 2px 3px #0000000d);
+  filter: drop-shadow(0 2px 3px rgb(from var(--color-ink) r g b / 5.1%));
   position: absolute;
   --staff-badge-inset: 12px;
   left: auto;
@@ -111,7 +111,7 @@
   height: 1px;
   flex-shrink: 0;
   border: 0;
-  background: linear-gradient(to right, transparent, #0000001a 5%, transparent);
+  background: linear-gradient(to right, transparent, rgb(from var(--color-ink) r g b / 10.2%) 5%, transparent);
 }
 .home-team .diamond-list {
   padding: 0;
@@ -176,11 +176,11 @@
     position: absolute;
     inset: 0 0 -32px;
     z-index: -2;
-    background: #fdfdfd;
+    background: var(--color-paper);
     pointer-events: none;
     mask-image:
       url("/assets/background-paper-edge-white.svg"),
-      linear-gradient(#000, #000);
+      linear-gradient(var(--color-ink), var(--color-ink));
     mask-size:
       100% 32px,
       100% calc(100% - 30px);
@@ -196,7 +196,7 @@
     object-fit: cover;
     object-position: center top;
     clip-path: inset(112px 0 0);
-    mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to bottom, var(--color-ink) calc(100% - 48px), transparent);
   }
 }
 

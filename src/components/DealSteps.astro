@@ -1,7 +1,7 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 // Figma 1380:6839 («Покупка»): темная секция «Наша миссия — комиссия»
-// и 10 шагов сделки. Рваный верх deal-steps-paper-edge.svg (повернут на 180°), фон #1C1C1C
+// и 10 шагов сделки. Рваный верх deal-steps-paper-edge.svg (повернут на 180°), фон var(--color-dark)
 // с текстурой transaction-registration-documents (10%) и градиентом. Левая колонка закреплена при
 // прокрутке, полоса прогресса показывает, какая часть шагов пройдена.
 // Шаги — данные (src/data/deal-steps.ts), для «Продажи» передать свои.
@@ -221,7 +221,7 @@ const {
                   <h3>
                     {step.textParts
                       ? step.textParts.map((part) => (
-                          <span style={part.muted ? "color:#0006" : undefined}>
+                          <span style={part.muted ? "color:rgb(from var(--color-ink) r g b / 40%)" : undefined}>
                             {part.text}
                           </span>
                         ))

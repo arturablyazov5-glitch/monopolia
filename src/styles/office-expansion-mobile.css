@@ -31,7 +31,7 @@
     display: none;
   }
   .home-desktop .expansion-locations {
-    --office-photo-border: #fff;
+    --office-photo-border: var(--color-paper);
     --office-photo-width: 44cqi;
     --office-photo-height: calc(var(--office-photo-width) * 128 / 208);
     --office-future-photo-top: 27cqi;
@@ -154,7 +154,7 @@
     overflow: visible;
     pointer-events: none;
     fill: none;
-    stroke: #fff;
+    stroke: var(--color-paper);
     stroke-width: 1.5;
     stroke-dasharray: 4 5;
     stroke-linecap: round;

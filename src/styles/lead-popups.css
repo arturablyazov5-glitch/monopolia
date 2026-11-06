@@ -240,7 +240,7 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
   height: 100%;
   zoom: 0.65;
   transform: none;
-  box-shadow: 0 8px 24px #0000001a;
+  box-shadow: 0 8px 24px rgb(from var(--color-ink) r g b / 10.2%);
 }
 #lead-dialog .popup-catalog-preview .buy-safari-page {
   grid-template-rows: 24.613px repeat(4, minmax(0, 1fr)) auto;
@@ -273,7 +273,7 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
 #lead-dialog .popup-media-document .popup-media-window > img {
   object-fit: contain;
   padding: 12px;
-  filter: drop-shadow(0 5px 8px #0000001a);
+  filter: drop-shadow(0 5px 8px rgb(from var(--color-ink) r g b / 10.2%));
 }
 #lead-dialog .popup-media-document .popup-media-window {
   overflow: visible;

@@ -2,19 +2,19 @@
 .admin-page {
   --admin-container: 1360px;
   --admin-gutter: 32px;
-  --admin-bg: #eeeeef;
-  --admin-raised: #f4f4f5;
-  --admin-border: #e4e4e7;
+  --admin-bg: var(--color-canvas);
+  --admin-raised: color-mix(in srgb, var(--color-paper) 60%, var(--color-canvas));
+  --admin-border: color-mix(in srgb, var(--color-canvas) 80%, var(--color-disabled));
   --admin-radius: 12px;
   --admin-control-radius: 8px;
-  --admin-text-secondary: #525252;
-  --admin-surface: #fff;
+  --admin-text-secondary: var(--color-muted);
+  --admin-surface: var(--color-paper);
 
-  --admin-muted: #71717a;
-  --admin-ink: #18181b;
-  --admin-accent: #c91e25;
-  --admin-tint: #fff0ee;
-  --admin-green: #24734a;
+  --admin-muted: color-mix(in srgb, var(--color-muted) 60%, var(--color-caption));
+  --admin-ink: var(--color-ink);
+  --admin-accent: var(--color-accent);
+  --admin-tint: color-mix(in srgb, var(--color-paper) 95%, var(--color-accent));
+  --admin-green: color-mix(in srgb, var(--color-status) 50%, var(--color-dark));
 
   min-height: 100svh;
   background: var(--admin-bg);
@@ -130,12 +130,12 @@
 .admin-primary,
 .admin-danger {
   background: var(--admin-accent);
-  color: #fff;
+  color: var(--color-paper);
   box-shadow: none;
 }
 .admin-primary:hover:not(:disabled),
 .admin-danger:hover:not(:disabled) {
-  background: #a81920;
+  background: color-mix(in srgb, var(--color-accent) 80%, var(--color-dark));
 }
 .admin-secondary {
   background: var(--admin-raised);
@@ -186,7 +186,7 @@
   opacity: 1;
 }
 .admin-page :is(input, textarea)[aria-invalid="true"] {
-  background: #fff0ee;
+  background: color-mix(in srgb, var(--color-paper) 95%, var(--color-accent));
   outline: 2px solid var(--admin-accent);
   outline-offset: 0;
 
@@ -206,8 +206,8 @@
 }
 .admin-banner {
   padding: 14px 16px;
-  background: #edf5ee;
-  color: #28563c;
+  background: color-mix(in srgb, var(--color-paper) 94%, var(--color-status));
+  color: color-mix(in srgb, var(--color-status) 35%, var(--color-dark));
   border: 0;
   border-radius: var(--admin-control-radius);
   overflow-wrap: anywhere;
@@ -215,8 +215,8 @@
   margin-bottom: 20px;
 }
 .admin-banner.error {
-  background: #fff2f0;
-  color: #9b1e22;
+  background: color-mix(in srgb, var(--color-paper) 96%, var(--color-accent));
+  color: color-mix(in srgb, var(--color-accent) 75%, var(--color-dark));
 }
 .admin-login {
   max-width: 560px;
@@ -495,7 +495,7 @@
   white-space: nowrap;
 }
 .admin-filter-group button[aria-pressed="true"] {
-  background: #fff;
+  background: var(--color-paper);
   color: var(--admin-ink);
   box-shadow: none;
 }
@@ -587,7 +587,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #edf6ef;
+  background: color-mix(in srgb, var(--color-paper) 94%, var(--color-status));
   color: var(--admin-green);
   font-size: 12px;
   border-radius: 5px;
@@ -744,7 +744,7 @@
   cursor: pointer;
 }
 .admin-content-results {
-  background: #fff;
+  background: var(--color-paper);
   border: 0;
   border-radius: 10px;
   max-height: 300px;
@@ -787,7 +787,7 @@
 }
 .admin-content-status.error {
   color: var(--admin-accent);
-  background: #fff2f0;
+  background: color-mix(in srgb, var(--color-paper) 96%, var(--color-accent));
   border: 0;
   border-radius: var(--admin-control-radius);
   padding: 12px;
@@ -810,7 +810,7 @@
 }
 .admin-block-picker {
   position: relative;
-  background: #fff;
+  background: var(--color-paper);
   border: 0;
   border-radius: 10px;
   margin-bottom: 12px;
@@ -887,7 +887,7 @@
 .admin-content-group {
   border: 0;
   border-radius: 10px;
-  background: #fff;
+  background: var(--color-paper);
   margin-bottom: 12px;
   min-width: 0;
 }
@@ -940,7 +940,7 @@
   color: var(--admin-accent);
 }
 .admin-content-field[data-dirty="true"] textarea {
-  background: #fffdf8;
+  background: var(--color-paper);
 }
 .admin-content-field > small {
   display: block;
@@ -961,7 +961,7 @@
   margin-right: auto;
 }
 .admin-content-meta > span[data-state="draft"] {
-  color: #8a5b19;
+  color: color-mix(in srgb, var(--color-paper-warm) 40%, var(--color-dark));
 }
 .admin-content-meta .admin-text-button {
   font-size: 11px;
@@ -986,7 +986,7 @@
   padding: 16px;
   border: 0;
   border-radius: 12px;
-  background: #fff;
+  background: var(--color-paper);
 }
 .admin-preview-heading {
   display: flex;
@@ -1041,7 +1041,7 @@
   min-height: 360px;
   max-height: 760px;
   overflow: hidden;
-  background: #eee;
+  background: var(--color-canvas);
   border: 0;
   border-radius: 5px;
 }
@@ -1050,7 +1050,7 @@
   border: 0;
   max-width: none;
   transform-origin: 0 0;
-  background: #eee;
+  background: var(--color-canvas);
 }
 .admin-preview-help {
   display: flex;
@@ -1077,7 +1077,7 @@
   margin-top: 20px;
   border: 0;
   border-radius: 12px;
-  background: #fff;
+  background: var(--color-paper);
   box-shadow: none;
 }
 .admin-content-savebar:not(.is-dirty) {
@@ -1133,7 +1133,7 @@
   color: var(--admin-muted);
 }
 .admin-review-item .after {
-  background: #edf6ef;
+  background: color-mix(in srgb, var(--color-paper) 94%, var(--color-status));
   margin-top: 6px;
 }
 #texts-panel[data-view="fields"] .admin-content-preview,
@@ -1148,14 +1148,14 @@
   padding: 0;
   overflow: auto;
   overscroll-behavior: contain;
-  background: #fff;
+  background: var(--color-paper);
   border: 0;
   border-radius: 16px;
   color: var(--admin-ink);
   box-shadow: none;
 }
 .admin-dialog::backdrop {
-  background: rgb(25 24 21 / 0.5);
+  background: rgb(from var(--color-dark) r g b / 50%);
   backdrop-filter: blur(3px);
 }
 .admin-dialog-heading {
@@ -1242,7 +1242,7 @@
 }
 .field-error {
   display: block;
-  color: #a81920;
+  color: color-mix(in srgb, var(--color-accent) 80%, var(--color-dark));
   font-size: 12px;
   margin-top: 6px;
 }
@@ -1253,7 +1253,7 @@
   padding: 16px;
   margin: 20px 28px 0;
   border: 0;
-  background: #fff4f1;
+  background: color-mix(in srgb, var(--color-paper) 97%, var(--color-accent));
   border-radius: var(--admin-control-radius);
 }
 .admin-error-summary h3 {
@@ -1263,7 +1263,7 @@
 .admin-error-summary a {
   display: block;
   font-size: 13px;
-  color: #a81920;
+  color: color-mix(in srgb, var(--color-accent) 80%, var(--color-dark));
   text-decoration: underline;
   padding: 4px 0;
 }
@@ -1278,7 +1278,7 @@
   padding: 18px;
   border: 0;
   border-radius: 10px;
-  background: #faf9f6;
+  background: var(--color-paper);
   cursor: pointer;
 }
 @media (hover: hover) {
@@ -1286,7 +1286,7 @@
     background: var(--admin-tint);
   }
   .admin-upload input:not(:disabled)::file-selector-button:hover {
-    background: #fff;
+    background: var(--color-paper);
 
     color: var(--admin-accent);
   }
@@ -1325,7 +1325,7 @@
   border: 0;
   border-radius: 6px;
   margin-right: 12px;
-  background: #fff;
+  background: var(--color-paper);
   font: inherit;
   cursor: pointer;
   color: var(--admin-ink);
@@ -1350,7 +1350,7 @@
   padding: 3px;
   border: 0;
   border-radius: 999px;
-  background: #a7aaa8;
+  background: var(--color-caption);
   flex-shrink: 0;
   transition: background 0.2s ease;
 }
@@ -1364,23 +1364,23 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-paper);
   box-shadow: none;
   transform: translateX(0);
   transition: transform 0.2s ease;
 }
 .admin-switch[aria-checked="true"] {
-  background: #34c759;
+  background: var(--color-status);
 }
 .admin-switch[aria-checked="true"] > span {
   transform: translateX(16px);
 }
 @media (hover: hover) {
   .admin-switch:hover:not(:disabled) {
-    background: #929795;
+    background: var(--color-caption);
   }
   .admin-switch[aria-checked="true"]:hover:not(:disabled) {
-    background: #2db34e;
+    background: var(--color-status);
   }
 }
 .admin-object-preview {
@@ -1389,7 +1389,7 @@
   min-width: 0;
   padding: 18px;
   border-radius: 12px;
-  background: #f6f4ef;
+  background: color-mix(in srgb, var(--color-paper) 75%, var(--color-paper-warm));
 }
 .admin-object-preview > .admin-eyebrow {
   font-size: 10px;
@@ -1400,14 +1400,14 @@
 }
 .admin-property-preview {
   overflow: hidden;
-  background: #fff;
+  background: var(--color-paper);
   border-radius: 10px;
   border: 0;
 }
 .admin-property-photo {
   position: relative;
   aspect-ratio: 4/3;
-  background: #e9e6df;
+  background: color-mix(in srgb, var(--color-canvas) 60%, var(--color-paper-warm));
   display: grid;
   place-items: center;
 }
@@ -1433,7 +1433,7 @@
   padding: 4px 7px;
   border-radius: 4px;
   font-size: 12px;
-  color: #fff;
+  color: var(--color-paper);
   background: var(--admin-accent);
 }
 .admin-property-copy {
@@ -1475,7 +1475,7 @@
   gap: 10px;
   padding: 18px 28px;
   border: 0;
-  background: #fff;
+  background: var(--color-paper);
 }
 #object-save-status {
   margin-right: auto;
@@ -1510,7 +1510,7 @@
   padding: 16px 20px;
   border: 0;
   border-radius: 10px;
-  background: #fff;
+  background: var(--color-paper);
   color: var(--admin-ink);
   box-shadow: none;
   font-size: 14px;

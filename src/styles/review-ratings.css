@@ -47,7 +47,7 @@
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 50%,
+    var(--color-ink) 50%,
     transparent 100%
   );
   opacity: 0.1;

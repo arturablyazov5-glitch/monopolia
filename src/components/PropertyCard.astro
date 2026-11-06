@@ -30,7 +30,7 @@ const {
 
 <Paper class="property-card" node="1380:6451">
   <div class="property-photo">
-    {cardImage && cardImage.large !== "/assets/property-card-default-photo.webp" ? (
+    {cardImage ? (
       <picture style="display: contents">
         <source style="display: none" srcset={`${cardImage.small} 360w, ${cardImage.large} 680w`}
           sizes="(max-width: 767px) min(288px, calc(100vw - 92px)), (max-width: 1199px) calc((100vw - 180px) / 2), 336px" />

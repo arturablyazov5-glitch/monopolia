@@ -87,7 +87,7 @@
     --x: calc(50% - 360px * var(--k));
     height: auto;
     padding-top: var(--sec);
-    background: linear-gradient(#fff, #fdfdfd 120px);
+    background: linear-gradient(var(--color-paper), var(--color-paper) 120px);
     /* Перекрытие 1 px убирает шов с первым экраном. */
     margin-top: -1px;
   }
@@ -133,8 +133,8 @@
   }
   /* Верхний край фото растворяется в бумаге. */
   .home-desktop .fast-sale-portrait {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%);
-    mask-image: linear-gradient(to bottom, transparent, #000 14%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%);
   }
   .home-desktop .buyer-portrait {
     width: calc(844px * var(--k));
@@ -156,7 +156,7 @@
   .home-desktop .fast-sale {
     --k: 0.75;
     height: auto;
-    background: #fdfdfd;
+    background: var(--color-paper);
   }
   .home-desktop .fast-sale-background {
     top: auto;
@@ -244,7 +244,7 @@
   /* --- 5. Certificates --- */
   .home-desktop .certificates {
     height: auto;
-    background: #190d08;
+    background: var(--color-dark);
   }
   .home-desktop .certificates-scene {
     width: 100%;
@@ -329,9 +329,9 @@
   .home-desktop .honest-reviews-background::after {
     background: linear-gradient(
       to bottom,
-      #151515 0%,
-      #151515d9 30%,
-      #15151500 70%
+      var(--color-dark) 0%,
+      rgb(from var(--color-dark) r g b / 85.1%) 30%,
+      rgb(from var(--color-dark) r g b / 0.0%) 70%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -606,15 +606,15 @@
     --scene-h: calc(866.965px * var(--k));
     height: auto;
     /* цвет белой дымки над сценой: текст сверху читается на светлом */
-    background: linear-gradient(var(--color-dark) 0 40px, #f3f3f3 40px);
+    background: linear-gradient(var(--color-dark) 0 40px, color-mix(in srgb, var(--color-paper) 50%, var(--color-canvas)) 40px);
   }
   .home-desktop .blockbuster-scene {
     top: auto;
     bottom: calc(-14px * var(--k));
     width: calc(1480px * var(--k));
     height: var(--scene-h);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 16%);
-    mask-image: linear-gradient(to bottom, transparent, #000 16%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 16%);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 16%);
   }
   .home-desktop .blockbuster-content {
     width: auto;
@@ -678,7 +678,7 @@
     --k: 0.85;
     height: auto;
     padding-bottom: calc(var(--section-space) + var(--telegram-edge-height, 56px));
-    background: #fdfdfd;
+    background: var(--color-paper);
   }
   .home-desktop .telegram-background {
     display: none;
@@ -772,7 +772,7 @@
     transform: translateX(calc(-50% + 390px * var(--k)));
   }
   .home-desktop .recruiting-photo:after {
-    background: linear-gradient(to bottom, #14141400 45%, #141414 96%);
+    background: linear-gradient(to bottom, rgb(from var(--color-dark) r g b / 0.0%) 45%, var(--color-dark) 96%);
   }
   .home-desktop .recruiting-container {
     width: auto;
@@ -833,9 +833,9 @@
   .home-desktop .honest-reviews-background::after {
     background: linear-gradient(
       to right,
-      #151515 0%,
-      #151515b3 30%,
-      #15151500 58%
+      var(--color-dark) 0%,
+      rgb(from var(--color-dark) r g b / 70.2%) 30%,
+      rgb(from var(--color-dark) r g b / 0.0%) 58%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -1003,9 +1003,9 @@
   .home-desktop .honest-reviews-background::after {
     background: linear-gradient(
       to right,
-      #151515 0%,
-      #151515b3 26.059%,
-      #15151500 52.118%
+      var(--color-dark) 0%,
+      rgb(from var(--color-dark) r g b / 70.2%) 26.059%,
+      rgb(from var(--color-dark) r g b / 0.0%) 52.118%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -1078,7 +1078,7 @@
   /* --- 19. HomeRecruiting: фото слева, текст справа (как 1440), без стопки --- */
   .home-desktop .home-recruiting {
     --k: 1;
-    background: #1c1c1c;
+    background: var(--color-dark);
   }
   .home-desktop .recruiting-photo {
     left: 0;
@@ -1093,9 +1093,9 @@
   .home-desktop .recruiting-photo:after {
     background: linear-gradient(
       269.96deg,
-      #1c1c1c 0%,
-      #1c1c1c 30%,
-      rgb(28 28 28 / 0) 60%
+      var(--color-dark) 0%,
+      var(--color-dark) 30%,
+      rgb(from var(--color-dark) r g b / 0.0%) 60%
     );
   }
   .home-desktop .recruiting-container {
@@ -1248,7 +1248,7 @@
   .home-desktop .equal-interests {
     height: auto;
     padding: var(--sec) 0;
-    background: linear-gradient(#190d08, #151515);
+    background: linear-gradient(var(--color-dark), var(--color-dark));
   }
   .home-desktop .equal-interests-content {
     padding-top: 0;
@@ -1289,9 +1289,9 @@
   .home-desktop .honest-reviews-background::after {
     background: linear-gradient(
       to bottom,
-      #151515,
-      #15151580 12%,
-      #15151500 27%
+      var(--color-dark),
+      rgb(from var(--color-dark) r g b / 50.2%) 12%,
+      rgb(from var(--color-dark) r g b / 0.0%) 27%
     );
   }
   .home-desktop .honest-reviews-broken {
@@ -1319,7 +1319,7 @@
     position: absolute;
     inset: 440px 0 0;
     background: var(--color-paper);
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
     mask-size: 100% 80px, 100% calc(100% - 78px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
@@ -1442,8 +1442,8 @@
   /* Единый видимый отступ по обе стороны рваного стыка кейсов и компании. */
   .home-desktop .client-cases {
     padding-bottom: calc(var(--section-space) + 32px);
-    background: #fdfdfd;
-    mask-image: linear-gradient(#000, #000), url("/assets/gossip-paper-edge.svg");
+    background: var(--color-paper);
+    mask-image: linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
     mask-size: 100% calc(100% - 31px), 100% 32px;
     mask-position: top, bottom;
     mask-repeat: no-repeat;
@@ -1573,7 +1573,7 @@
   /* --- 15. BlockbusterCase --- */
   .home-desktop .blockbuster-case {
     --k: 0.54;
-    background: #f3f3f3;
+    background: color-mix(in srgb, var(--color-paper) 50%, var(--color-canvas));
   }
   .home-desktop .blockbuster-content {
     padding: calc(var(--blockbuster-edge-height) + var(--section-space)) var(--rg) calc(var(--scene-h) * 0.55 + 150px);
@@ -1851,8 +1851,8 @@
     order: 3;
   }
   .home-desktop .fast-sale-portrait {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to right, #000 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent, #000 14%), linear-gradient(to right, #000 82%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%), linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%), linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
   }

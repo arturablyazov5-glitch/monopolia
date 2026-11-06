@@ -101,7 +101,7 @@
 .hero-description {
   font: 16px/1.2 var(--font-body);
   text-align: center;
-  color: #777;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
   width: 496px;
   max-width: 100%;
 }
@@ -211,8 +211,8 @@
     height: 320px;
     object-fit: initial;
     z-index: -2;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 140px);
-    mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
   }
   .home-hero::before {
     content: "";
@@ -223,8 +223,8 @@
     width: 170px;
     height: 320px;
     background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 140px);
-    mask-image: linear-gradient(to bottom, transparent, #000 140px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
     pointer-events: none;
   }
   .home-hero::after {
@@ -237,12 +237,12 @@
     z-index: -3;
     background: linear-gradient(
       to right,
-      rgb(225 228 236),
-      rgb(206 217 231) 55%,
-      rgb(184 205 224)
+      var(--color-canvas),
+      color-mix(in srgb, var(--color-canvas) 60%, var(--color-disabled)) 55%,
+      color-mix(in srgb, var(--color-canvas) 30%, var(--color-disabled))
     );
-    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
-    mask-image: linear-gradient(to bottom, #000 45%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
+    mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
     pointer-events: none;
   }
 }

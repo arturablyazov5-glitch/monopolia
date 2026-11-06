@@ -4,7 +4,7 @@
 .site-footer {
   position: relative;
   padding: 0;
-  color: #fff;
+  color: var(--color-paper);
   background: linear-gradient(
     to bottom,
     transparent 98px,
@@ -81,7 +81,7 @@
   display: grid;
   gap: 10px;
   font: 14px/1.2 var(--font-body);
-  color: rgb(255 255 255 / 0.5);
+  color: rgb(from var(--color-paper) r g b / 50.0%);
 }
 .site-footer .footer-navigation {
   display: flex;
@@ -114,7 +114,7 @@
   grid-template-columns: 162px 161px;
   gap: 8px 40px;
   font: 14px/1.2 var(--font-body);
-  color: rgb(255 255 255 / 0.5);
+  color: rgb(from var(--color-paper) r g b / 50.0%);
 }
 .site-footer .footer-doc {
   padding: 0;
@@ -130,7 +130,7 @@
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-decoration-thickness: 1px;
-  text-decoration-color: #a0a0a0;
+  text-decoration-color: var(--color-caption);
   text-underline-offset: 3px;
   font-size: 14px;
   line-height: 1.2;
@@ -161,7 +161,7 @@
 }
 .site-footer .footer-phone {
   font: 500 28px/1.2 var(--font-heading);
-  color: #fff;
+  color: var(--color-paper);
   white-space: nowrap;
 }
 .site-footer .footer-phone {
@@ -174,7 +174,7 @@
 .site-footer .footer-contact .footer-phone-block p {
   margin: 0;
   font: 14px/1.2 var(--font-body);
-  color: #747474;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
   white-space: nowrap;
 }
 .site-footer .email-chip {
@@ -182,9 +182,9 @@
   align-items: center;
   gap: 10px;
   padding: 8px 16px 9px 14px;
-  background: #272727;
+  background: color-mix(in srgb, var(--color-dark) 80%, var(--color-field-text));
   font: 700 16px/1.2 var(--font-body);
-  color: #fff;
+  color: var(--color-paper);
   white-space: nowrap;
 }
 .site-footer .email-chip {
@@ -201,8 +201,8 @@
   background: var(--color-accent);
 }
 .site-footer .email-chip.copied {
-  background: #272727;
-  color: #6ee08a;
+  background: color-mix(in srgb, var(--color-dark) 80%, var(--color-field-text));
+  color: color-mix(in srgb, var(--color-paper) 55%, var(--color-status));
 }
 .site-footer .email-chip img {
   flex-shrink: 0;
@@ -217,7 +217,7 @@
 }
 .site-footer .footer-social p {
   font: 16px/1.2 var(--font-body);
-  color: #fff;
+  color: var(--color-paper);
   white-space: nowrap;
 }
 .site-footer .footer-subscribe {
@@ -227,7 +227,7 @@
 }
 .site-footer .meta-note {
   font: 14px/1.2 var(--font-body);
-  color: #fff;
+  color: var(--color-paper);
   opacity: 0.2;
 }
 /* Иконки 40 px: экспорт SVG с выносом тени, смещение как в Figma */
@@ -250,7 +250,7 @@
 .site-footer .footer-divider {
   height: 1px;
   border-radius: 1000px;
-  background: #fff;
+  background: var(--color-paper);
   opacity: 0.1;
 }
 .site-footer .footer-bottom {
@@ -263,7 +263,7 @@
 }
 .site-footer .footer-bottom small {
   font: 14px/1.2 var(--font-body);
-  color: rgb(255 255 255 / 0.5);
+  color: rgb(from var(--color-paper) r g b / 50.0%);
 }
 
 /* ===== Адаптив (R1). Планшет ≤ 1199: компания + контакты в две колонки,

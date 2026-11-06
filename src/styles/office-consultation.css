@@ -39,7 +39,7 @@
 .office-consultation-copy h2 {
   width: 100%;
   text-align: center;
-  color: white;
+  color: var(--color-paper);
 }
 .office-consultation-label {
   position: absolute;
@@ -48,7 +48,7 @@
   z-index: 1;
 }
 .office-consultation-label .taped-note-paper > p {
-  color: #000;
+  color: var(--color-ink);
   font-weight: 700;
 }
 .office-consultation-points {
@@ -69,7 +69,7 @@
   gap: 12px;
 }
 .office-consultation-actions > p {
-  color: #e2e2e2;
+  color: color-mix(in srgb, var(--color-canvas) 80%, var(--color-disabled));
   font-size: 14px;
 }
 
@@ -82,12 +82,12 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    background: #190f0a;
+    background: var(--color-dark);
     mask: url("/assets/office-consultation-background.webp") center / 100% 100% no-repeat;
   }
   .office-consultation-background {
     top: 48px;
-    mask-image: linear-gradient(to bottom, transparent, #000 120px);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 120px);
   }
 }
 
@@ -121,7 +121,7 @@
     font-size: 40px;
     max-width: 720px;
     margin: 0 auto;
-    text-shadow: 0 0 24px #0000008c;
+    text-shadow: 0 0 24px rgb(from var(--color-ink) r g b / 54.9%);
   }
   .office-consultation-copy h2 br {
     display: none;
@@ -218,7 +218,7 @@
 
 @media (max-width: 767px) {
   .office-consultation {
-    --office-scene-background: #190f0a;
+    --office-scene-background: var(--color-dark);
     background: var(--office-scene-background);
     overflow-x: clip;
     overflow-y: visible;
@@ -236,19 +236,19 @@
     mask-image: linear-gradient(
       to bottom,
       transparent 0%,
-      #0000000a 4%,
-      #00000029 9%,
-      #00000066 15%,
-      #000000ad 22%,
-      #000000e6 29%,
-      #000 36%,
-      #000 65%,
-      #000000f5 70%,
-      #000000d9 76%,
-      #000000a6 82%,
-      #00000066 88%,
-      #00000029 94%,
-      #0000000a 98%,
+      rgb(from var(--color-ink) r g b / 3.9%) 4%,
+      rgb(from var(--color-ink) r g b / 16.1%) 9%,
+      rgb(from var(--color-ink) r g b / 40.0%) 15%,
+      rgb(from var(--color-ink) r g b / 67.8%) 22%,
+      rgb(from var(--color-ink) r g b / 90.2%) 29%,
+      var(--color-ink) 36%,
+      var(--color-ink) 65%,
+      rgb(from var(--color-ink) r g b / 96.1%) 70%,
+      rgb(from var(--color-ink) r g b / 85.1%) 76%,
+      rgb(from var(--color-ink) r g b / 65.1%) 82%,
+      rgb(from var(--color-ink) r g b / 40.0%) 88%,
+      rgb(from var(--color-ink) r g b / 16.1%) 94%,
+      rgb(from var(--color-ink) r g b / 3.9%) 98%,
       transparent 100%
     );
   }

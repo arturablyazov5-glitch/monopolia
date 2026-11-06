@@ -40,11 +40,11 @@
 .service-card-coupon {
   display: flex;
   flex-direction: column;
-  border: 15px solid #fff;
+  border: 15px solid var(--color-paper);
   border-radius: 4px;
   box-shadow:
-    0 14px 14px #3d0b0b08,
-    0 5px 7px #0000000f;
+    0 14px 14px rgb(from var(--color-accent) r g b / 3.1%),
+    0 5px 7px rgb(from var(--color-ink) r g b / 5.9%);
 }
 /* В рендере Figma белая обводка не видна: текстура купона идет до края.
    Текстура и рваный край Paper выведены на внешнюю границу (через border). */
@@ -75,7 +75,7 @@
 }
 .service-card-title {
   font: 500 var(--h3, var(--text-card))/1.2 var(--font-heading);
-  color: #000;
+  color: var(--color-ink);
 }
 .service-card-coupon p {
   width: 298.344px;
@@ -95,7 +95,7 @@
   height: 10px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-paper);
 }
 .service-notch {
   width: 10px;

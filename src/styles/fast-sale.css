@@ -139,15 +139,15 @@
     mask-image: linear-gradient(
       to right,
       transparent,
-      #000 120px,
-      #000 calc(100% - 120px),
+      var(--color-ink) 120px,
+      var(--color-ink) calc(100% - 120px),
       transparent
     );
   }
   .fast-sale-portrait {
     /* Справа заканчивается фото здания, а не вырезанный портрет.
        Плавный переход убирает прямой обрыв за пределами сцены. */
-    mask-image: linear-gradient(to right, #000 calc(100% - 120px), transparent);
+    mask-image: linear-gradient(to right, var(--color-ink) calc(100% - 120px), transparent);
   }
   .fast-sale-edge {
     /* Масштабируется только бумага: высота рваной кромки прежняя. */

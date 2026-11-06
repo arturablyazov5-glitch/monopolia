@@ -1,7 +1,7 @@
 .company-about {
   position: relative;
-  background: #1c1c1a;
-  color: white;
+  background: var(--color-dark);
+  color: var(--color-paper);
   padding: calc(var(--section-space) / 2) 0 var(--section-space);
   height: 757px;
 }
@@ -13,7 +13,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: #1c1c1a;
+  background: var(--color-dark);
   pointer-events: none;
 }
 .company-container {
@@ -39,12 +39,12 @@
   position: absolute;
   inset: -16.3px -9.6px -6.7px -6.1px;
   z-index: -1;
-  background: #fff;
+  background: var(--color-paper);
   pointer-events: none;
   mask-image:
     url("/assets/office-edge-mask-tl.svg"), url("/assets/office-edge-mask-t.svg"),
     url("/assets/office-edge-mask-tr.svg"), url("/assets/office-edge-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/office-edge-mask-r.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/office-edge-mask-r.svg"),
     url("/assets/office-edge-mask-bl.svg"), url("/assets/office-edge-mask-b.svg"),
     url("/assets/office-edge-mask-br.svg");
   mask-size:
@@ -72,7 +72,7 @@
   mask-image:
     url("/assets/office-photo-mask-tl.svg"), url("/assets/office-photo-mask-t.svg"),
     url("/assets/office-photo-mask-tr-clean.svg"), url("/assets/office-photo-mask-l.svg"),
-    linear-gradient(#fff, #fff), url("/assets/office-photo-mask-r.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/office-photo-mask-r.svg"),
     url("/assets/office-photo-mask-bl.svg"), url("/assets/office-photo-mask-b.svg"),
     url("/assets/office-photo-mask-br-clean.svg");
   mask-size:
@@ -114,10 +114,10 @@
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background: white;
-  color: black;
+  background: var(--color-paper);
+  color: var(--color-ink);
   border-radius: 0;
-  box-shadow: 0 5px 27px #0000001a;
+  box-shadow: 0 5px 27px rgb(from var(--color-ink) r g b / 10.2%);
   font: 16px/1.2 var(--font-body);
 }
 .company-superagent {
@@ -128,9 +128,9 @@
   align-items: center;
   gap: 5.333px;
   height: 32px;
-  background: #ebf9e6;
+  background: color-mix(in srgb, var(--color-paper) 92%, var(--color-status));
   border-radius: 16px;
-  color: #34ac0a;
+  color: var(--color-status);
   padding: 0 max(10.667px, calc(10px / var(--company-badge-scale))) 0 6.667px;
   font-family: "Inter Tight", "Company Agent Fallback", sans-serif;
   letter-spacing: -0.16px;
@@ -141,7 +141,7 @@
   width: max-content;
   white-space: nowrap;
   align-items: center;
-  color: white;
+  color: var(--color-paper);
   font:
     16px/1.2 "Inter Tight",
     "Company Partner Fallback",
@@ -164,7 +164,7 @@
   /* Перекрытие шва на 1px остается за пределами 10px видимого запаса
      текста. На телефоне компенсируем масштаб всей композиции. */
   padding-inline-end: calc(10px / var(--company-badge-scale) + 1px);
-  background: #965feb;
+  background: var(--color-accent);
   height: 28px;
   display: flex;
   align-items: center;
@@ -227,7 +227,7 @@
   gap: 16px;
 }
 .company-download .button {
-  --button-hover-color: #fff;
+  --button-hover-color: var(--color-paper);
   transition: color var(--duration-fast) ease;
   width: 300px;
   height: 52px;
@@ -239,14 +239,14 @@
   color: var(--color-dark);
 }
 .company-download .button:focus-visible::before {
-  background: #fff;
+  background: var(--color-paper);
 }
 .company-download > p {
   margin: 0;
   font: 14px/1.2 var(--font-body);
 }
 .company-recommendations {
-  color: #1a1a1a;
+  color: var(--color-ink);
 }
 .company-office {
   /* Фото занимает внутренний контур обводки Figma: x 1,44–544, y 2,91–573
@@ -266,7 +266,7 @@
 @media (max-width: 1199px) {
   .company-office {
     --brush-images: var(--brush-square-images);
-    background: white;
+    background: var(--color-paper);
     padding: 12px;
     mask-image: var(--brush-images);
     mask-size: var(--brush-sizes);

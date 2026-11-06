@@ -14,7 +14,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--label-fill, #fff);
+  background: var(--label-fill, var(--color-paper));
   mask-image: var(--brush-square-images);
   mask-size: var(--paper-mask-sizes);
   mask-position: var(--brush-positions);

@@ -18,7 +18,7 @@ async function visit(dir) {
           entry.name.endsWith(".css")
             ? // A slash after a grid-area string is CSS syntax, not a URL.
               /(url\(\s*["']?)\/(?!\/)([^"'`\s)<>]*)/g
-            : /(["'`]|url\(\s*)\/(?!\/)([^"'`\s)<>]*)/g,
+            : /(["'`]|&quot;|&#(?:34|39);|url\(\s*)\/(?!\/)([^"'`\s)<>]*)/g,
           (match, prefix, rest) => {
             if (rest === base.slice(1) || rest.startsWith(base.slice(1) + "/"))
               return match;

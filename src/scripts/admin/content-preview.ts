@@ -181,7 +181,7 @@ export function createContentPreview(options: PreviewOptions) {
       const style = doc.createElement("style");
       style.id = "admin-text-preview-style";
       style.textContent =
-        "[data-content-id]{cursor:text!important}[data-content-id]:focus-visible{outline:3px solid #dd161d!important;outline-offset:4px}[data-admin-text-hover]{outline:2px dashed #dd161d!important;outline-offset:3px}[data-admin-text-selected]{outline:3px solid #dd161d!important;outline-offset:4px;background-color:rgb(255 236 201 / .35)!important}";
+        "[data-content-id]{cursor:text!important}[data-content-id]:focus-visible{outline:3px solid var(--color-accent)!important;outline-offset:4px}[data-admin-text-hover]{outline:2px dashed var(--color-accent)!important;outline-offset:3px}[data-admin-text-selected]{outline:3px solid var(--color-accent)!important;outline-offset:4px;background-color:rgb(from var(--color-paper-warm) r g b / 35%)!important}";
       doc.head.append(style);
       // Listeners and styles are installed by the parent admin bundle only.
       doc.addEventListener("mousemove", (event) => {

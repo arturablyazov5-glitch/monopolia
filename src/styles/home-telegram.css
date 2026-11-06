@@ -162,7 +162,7 @@
   font: 16px/1.2 var(--font-body);
 }
 .telegram-subscribe {
-  background: #ea1818;
+  background: var(--color-accent);
   min-height: 52px;
   padding: 18px 24px 18px 32px;
   font: 500 16px/1 var(--font-heading);

@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  filter: drop-shadow(0 4px 2.5px #00000005);
+  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2.0%));
 }
 .buy-mortgage-programs .chip {
   /* Слева галочка и так отступает от края, справа рваная маска съедает ~8 px — запас справа больше */
@@ -107,14 +107,14 @@
   white-space: nowrap;
 }
 .buy-mortgage-steps .numbered-benefit p {
-  color: #000;
+  color: var(--color-ink);
   line-height: 1.2;
 }
 .buy-mortgage-divider {
   align-self: stretch;
   width: 1px;
   border-radius: 1000px;
-  background: linear-gradient(transparent, #000 50%, transparent);
+  background: linear-gradient(transparent, var(--color-ink) 50%, transparent);
   opacity: 0.1;
 }
 /* 1380:6390 — банки-партнеры */
@@ -133,7 +133,7 @@
 }
 /* Тень под плашками логотипов — только на этой странице */
 .buy-mortgage-banks .home-partner-logo {
-  filter: drop-shadow(0 2px 10px rgb(0 0 0 / 0.07));
+  filter: drop-shadow(0 2px 10px rgb(from var(--color-ink) r g b / 7.0%));
 }
 /* 1380:6419 — калькулятор и отзыв */
 .buy-mortgage-cards {
@@ -182,7 +182,7 @@
   background: linear-gradient(
       90deg,
       var(--color-ink) calc(var(--range-progress, 0.5) * 100%),
-      #1a1a1a1a calc(var(--range-progress, 0.5) * 100%)
+      rgb(from var(--color-ink) r g b / 10.2%) calc(var(--range-progress, 0.5) * 100%)
     )
     center / 100% 1px no-repeat;
 }
@@ -345,7 +345,7 @@
   padding: 0;
   border: 0;
   border-radius: 99px;
-  background: #bcbcbc;
+  background: var(--color-disabled);
 }
 .buy-mortgage-carousel .carousel-pagination button[aria-current="true"] {
   width: 28px;
@@ -354,7 +354,7 @@
 .buy-mortgage-carousel [hidden] {
   display: none;
 }
-/* Кромка вокруг плашек калькулятора и отзыва — белая (по умолчанию --paper-fill: #fff) */
+/* Кромка вокруг плашек калькулятора и отзыва — белая (по умолчанию --paper-fill: var(--color-paper)) */
 @media (min-width: 1200px) {
   .buy-mortgage-carousel[data-compact] .carousel-controls {
     display: none;
@@ -510,7 +510,7 @@
     width: 8px;
     height: 8px;
     border-radius: 99px;
-    background: #d7d7d7;
+    background: color-mix(in srgb, var(--color-canvas) 60%, var(--color-disabled));
     top: 18px;
     left: 50%;
     transform: translateX(-50%);
@@ -539,8 +539,8 @@
   .buy-mortgage {
     /* 32 px занимает рваная кромка; дальше — общий отступ секции. */
     padding-top: calc(32px + var(--section-space));
-    background: #fff;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000), url("/assets/gossip-paper-edge.svg");
+    background: var(--color-paper);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
     mask-size: 100% 32px, 100% calc(100% - 62px), 100% 32px;
     mask-position: top, center, bottom;
     mask-repeat: no-repeat;
@@ -731,6 +731,12 @@
   .buy-mortgage-programs { width: calc(100% - 48px); margin-inline: auto; gap: 12px 8px; }
   .buy-mortgage-programs .chip { justify-content: center; padding-left: 9px; padding-right: 16px; gap: 6px; text-align: center; }
   .buy-mortgage-program-label { transform: translateY(1px); }
+}
+/* iOS WebKit рисует подписи на 1 px ниже при одинаковых метриках шрифта. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .buy-mortgage-program-label { transform: none; }
+  }
 }
 .buy-mortgage-range input::-webkit-slider-thumb { border-radius: 50%; box-shadow: none; }
 .buy-mortgage-range input::-moz-range-thumb { border-radius: 50%; box-shadow: none; }

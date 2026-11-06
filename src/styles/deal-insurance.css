@@ -33,7 +33,7 @@
 }
 .deal-insurance-description {
   margin-top: 16px;
-  color: #777;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
 }
 .deal-insurance-note {
   margin: 40px auto 80px;
@@ -118,11 +118,11 @@
 }
 .deal-insurance-visual .speech-bubble p {
   white-space: pre;
-  color: #000;
+  color: var(--color-ink);
 }
 .deal-insurance-elena .speech-bubble p {
-  background: #269dfd;
-  color: white;
+  background: var(--color-accent);
+  color: var(--color-paper);
 }
 
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */

@@ -14,7 +14,7 @@ test("Pages preparation preserves CSS grid syntax and scopes asset URLs once", a
     await writeFile(join(dir, "dist/test.css"), css);
     await writeFile(
       join(dir, "dist/test.html"),
-      '<img src="/assets/a.webp" srcset="/assets/a.webp 1x, /assets/b.webp 2x"><a href="/buy/">',
+      '<img src="/assets/a.webp" srcset="/assets/a.webp 1x, /assets/b.webp 2x"><a href="/buy/"><section style="--mask: url(&quot;/assets/a.webp&quot;)">',
     );
     execFileSync(
       process.execPath,
@@ -25,7 +25,7 @@ test("Pages preparation preserves CSS grid syntax and scopes asset URLs once", a
     assert.equal(result, css.replaceAll("/assets/", "/monopolia/assets/"));
     assert.equal(
       await readFile(join(dir, "dist/test.html"), "utf8"),
-      '<img src="/monopolia/assets/a.webp" srcset="/monopolia/assets/a.webp 1x, /monopolia/assets/b.webp 2x"><a href="/monopolia/buy/">',
+      '<img src="/monopolia/assets/a.webp" srcset="/monopolia/assets/a.webp 1x, /monopolia/assets/b.webp 2x"><a href="/monopolia/buy/"><section style="--mask: url(&quot;/monopolia/assets/a.webp&quot;)">',
     );
     execFileSync(
       process.execPath,

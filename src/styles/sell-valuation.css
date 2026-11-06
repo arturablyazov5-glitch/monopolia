@@ -40,7 +40,7 @@
 .sell-valuation::before {
   top: 80px;
   bottom: 80px;
-  background: #fdfdfd;
+  background: var(--color-paper);
   z-index: -2;
 }
 .sell-valuation::after {
@@ -162,7 +162,7 @@
 .sell-week > h2 {
   width: 836px;
   font: 500 44px/1 var(--font-heading);
-  color: #000;
+  color: var(--color-ink);
   text-align: center;
 }
 .sell-week-grid {
@@ -195,7 +195,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #00000080;
+  background: rgb(from var(--color-ink) r g b / 50.2%);
   z-index: -1;
 }
 .sell-week-play {
@@ -218,8 +218,8 @@
   left: -166.65px;
   top: -58.56px;
   font: 14px/1.2 var(--font-body);
-  color: #fff;
-  text-shadow: 0 0 23px #000;
+  color: var(--color-paper);
+  text-shadow: 0 0 23px var(--color-ink);
   white-space: nowrap;
 }
 .sell-week-play-arrow {
@@ -282,7 +282,7 @@
 }
 .sell-week-story-label.paper {
   padding: 8px 20px;
-  filter: drop-shadow(0 3px 4px #0000001a);
+  filter: drop-shadow(0 3px 4px rgb(from var(--color-ink) r g b / 10.2%));
 }
 .sell-week-story-label p {
   font: 16px/1.2 var(--font-body);
@@ -488,7 +488,7 @@
     left: 0;
     width: 100%;
     transform: none;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
     mask-size: 100% var(--valuation-edge-height), 100% calc(100% - var(--valuation-edge-height) + 2px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;

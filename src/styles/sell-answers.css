@@ -22,7 +22,7 @@
   justify-content: center;
   gap: 40px;
   text-align: center;
-  box-shadow: 0 14px 14px #3d0b0b08;
+  box-shadow: 0 14px 14px rgb(from var(--color-accent) r g b / 3.1%);
 }
 /* Текстура доходит до верхней/нижней кромки; кольцо — padding фонового слоя. */
 .sell-answers-card:before {
@@ -32,7 +32,7 @@
 .paper.paper-white.sell-answers-card::before {
   background-color: var(--color-paper);
   background-image:
-    linear-gradient(rgb(255 255 255 / 80%), rgb(255 255 255 / 80%)),
+    linear-gradient(rgb(from var(--color-paper) r g b / 80.0%), rgb(from var(--color-paper) r g b / 80.0%)),
     url("/assets/texture-paper-crumpled.webp");
   background-size: cover;
   background-position: center;
@@ -53,7 +53,7 @@
 .sell-answers-heading p {
   width: 502px;
   font: 16px/19px var(--font-body); /* 2 строки = 38 px, как в Figma */
-  color: #777;
+  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
 }
 
 /* 1380:5919: метки-темы, перенос строк как в Figma за счет габаритов li */

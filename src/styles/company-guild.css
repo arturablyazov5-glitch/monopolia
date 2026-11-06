@@ -1,7 +1,7 @@
 .company-guild {
   height: 455px;
   padding-top: 19px;
-  background: #1c1c1a;
+  background: var(--color-dark);
   overflow: hidden;
 }
 .guild-card {
@@ -43,10 +43,10 @@
   flex-shrink: 0;
 }
 .paper.guild-note {
-  filter: drop-shadow(0 5px 7px #0000001a);
+  filter: drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 10.2%));
 }
 .guild-note::after {
-  background-color: #eee9e3;
+  background-color: var(--color-paper-warm);
 }
 .guild-note p {
   margin: 0;

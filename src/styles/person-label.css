@@ -6,7 +6,7 @@
   position: relative;
   margin: 0 0 4px;
   font: 500 20px/1.2 var(--font-heading);
-  color: #000;
+  color: var(--color-ink);
   white-space: nowrap;
 }
 

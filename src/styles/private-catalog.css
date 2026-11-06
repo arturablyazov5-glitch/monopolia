@@ -76,7 +76,8 @@
   right: 0;
   bottom: -9px;
   width: 87%;
-  height: 14px;
+  height: auto;
+  aspect-ratio: 423 / 14;
   background: url("/assets/catalog-assurance-underline.svg") no-repeat right center / 100% 100%;
   transform: rotate(1deg);
   pointer-events: none;

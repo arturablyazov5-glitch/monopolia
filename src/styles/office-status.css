@@ -11,7 +11,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #14ae5c;
+  background: var(--color-status);
   transform: translateY(-1.5px);
 }
 .office-status-dot::after {
@@ -19,7 +19,7 @@
   position: absolute;
   inset: -3px;
   border-radius: inherit;
-  background: #14ae5c80;
+  background: rgb(from var(--color-status) r g b / 50.2%);
   animation: office-status-pulse 1.5s infinite;
   pointer-events: none;
 }

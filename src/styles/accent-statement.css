@@ -5,13 +5,13 @@
   gap: 40px;
   padding: 0 126px;
 }
-/* Mask group 650:3273: заливка #F00 по маске background-paper-edge-light, 584.154 × 14.681, −0.07° */
+/* Mask group 650:3273: заливка var(--color-diamond) по маске background-paper-edge-light, 584.154 × 14.681, −0.07° */
 .accent-statement-stroke {
   transform: rotate(-0.07deg);
 }
 .accent-statement > p {
   font: var(--weight-heading) var(--text-heading) / 1 var(--font-heading);
-  color: #1a1a1a66;
+  color: rgb(from var(--color-ink) r g b / 40.0%);
   text-align: center;
 }
 .accent-statement strong {

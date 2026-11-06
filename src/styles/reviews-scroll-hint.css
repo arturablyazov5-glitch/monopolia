@@ -14,7 +14,7 @@
     z-index: -1;
     inset: -7px -12px;
     pointer-events: none;
-    background: #f0e7d7 url("/assets/textures/paper-beige.webp") center / 240px;
+    background: var(--color-paper-warm) url("/assets/textures/paper-beige.webp") center / 240px;
     mask-image: var(--brush-square-images);
     mask-size: 6px 6px, calc(100% - 10px) 6px, 6px 6px,
       6px calc(100% - 10px), calc(100% - 10px) calc(100% - 10px),

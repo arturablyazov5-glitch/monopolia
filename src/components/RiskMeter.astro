@@ -5,8 +5,8 @@ const level = Math.max(0, Math.min(5, value));
 <svg class="risk-meter" viewBox="0 0 66 10" width="66" height="10" role="img" aria-label={`${level} из 5`}>
   {Array.from({ length: 5 }, (_, index) => (
     <g>
-      <circle cx={5 + index * 14} cy="5" r="5" fill="#ff0000" opacity="0.1" />
-      {index < level && <circle class="risk-meter-fill" cx={5 + index * 14} cy="5" r="5" fill="#ff0000" style={`--dot-delay:${index * 130}ms`} />}
+      <circle cx={5 + index * 14} cy="5" r="5" fill="var(--color-diamond)" opacity="0.1" />
+      {index < level && <circle class="risk-meter-fill" cx={5 + index * 14} cy="5" r="5" fill="var(--color-diamond)" style={`--dot-delay:${index * 130}ms`} />}
     </g>
   ))}
 </svg>

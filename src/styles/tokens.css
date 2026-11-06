@@ -62,7 +62,7 @@
   --play-size: 72px;
   --header-height: 56px;
   --field-height: 52px;
-  --shadow-paper: 0 5px 7px #0000000f;
+  --shadow-paper: 0 5px 7px rgb(from var(--color-ink) r g b / 6%);
   --duration-fast: 150ms;
   --focus-width: 3px;
   /* Как заменить текстуру бежевых плашек:

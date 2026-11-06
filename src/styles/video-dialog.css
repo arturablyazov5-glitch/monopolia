@@ -25,13 +25,13 @@ html.video-dialog-open body {
   padding: 0;
   border: 0;
   background: transparent;
-  color: white;
+  color: var(--color-paper);
   overflow: visible;
   overscroll-behavior: contain;
   z-index: 10000;
 }
 #video-dialog::backdrop {
-  background: rgb(0 0 0 / 85%);
+  background: rgb(from var(--color-ink) r g b / 85.0%);
 }
 #video-dialog[open],
 #video-dialog[open]::backdrop {
@@ -83,9 +83,9 @@ html.video-dialog-open body {
   padding: 0;
   border: 0;
   border-radius: 100px;
-  background: rgb(0 0 0 / 50%);
+  background: rgb(from var(--color-ink) r g b / 50.0%);
   backdrop-filter: blur(8px);
-  color: white;
+  color: var(--color-paper);
   cursor: pointer;
   transition:
     background-color var(--duration-fast) ease,
@@ -93,14 +93,14 @@ html.video-dialog-open body {
 }
 @media (hover: hover) {
   .video-dialog-close:hover {
-    background: rgb(0 0 0 / 65%);
-    color: white;
+    background: rgb(from var(--color-ink) r g b / 65.0%);
+    color: var(--color-paper);
   }
 }
 .video-dialog-close:focus-visible {
-  background: rgb(0 0 0 / 50%);
-  color: white;
-  box-shadow: 0 0 0 2px white;
+  background: rgb(from var(--color-ink) r g b / 50.0%);
+  color: var(--color-paper);
+  box-shadow: 0 0 0 2px var(--color-paper);
 }
 #video-dialog[open].is-closing,
 #video-dialog[open].is-closing::backdrop {
@@ -144,7 +144,7 @@ html.video-dialog-open body {
   place-items: center;
   margin: 0;
   padding: 24px;
-  color: #fff;
+  color: var(--color-paper);
   font: 16px/1.4 var(--font-body);
   text-align: center;
   animation: video-dialog-enter 240ms 160ms ease-out both;

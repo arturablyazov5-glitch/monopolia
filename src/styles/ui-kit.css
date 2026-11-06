@@ -29,7 +29,7 @@
 }
 .kit-nav a {
   padding: var(--space-3) 18px;
-  background: #fff;
+  background: var(--color-paper);
   font-size: var(--text-small);
 }
 .kit-nav span {
@@ -291,7 +291,7 @@
 }
 .kit-example-details > summary {
   padding: 20px 24px;
-  background: #fff;
+  background: var(--color-paper);
   cursor: pointer;
   font: 500 20px/1.2 var(--font-heading);
 }

@@ -8,7 +8,7 @@
     flex-shrink: 0;
     overflow: hidden;
     align-self: center;
-    mask-image: linear-gradient(to bottom, transparent, #000 24px);
+    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 24px);
   }
   .mobile-photo-scene > img {
     position: absolute;

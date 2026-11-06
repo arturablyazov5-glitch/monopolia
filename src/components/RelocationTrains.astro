@@ -164,7 +164,7 @@ const trainHeight = 26.2172 * (mobile ? 3 : 1);
           <path
             d={linePath}
             fill="none"
-            stroke="#1a1a1a"
+            stroke="var(--color-ink)"
             stroke-opacity="0.5"
             stroke-width="1"
             stroke-dasharray="4 4"
@@ -174,7 +174,7 @@ const trainHeight = 26.2172 * (mobile ? 3 : 1);
         {mobile && (
           <path
             d="M-8 -4 L0 0 L-8 4 Z"
-            fill="#777"
+            fill="color-mix(in srgb, var(--color-muted) 50%, var(--color-caption))"
             transform={arrowTransform}
           />
         )}

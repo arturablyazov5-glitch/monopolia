@@ -8,7 +8,7 @@
   mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 100% 100%;
 }
 .decorative-stroke--light {
-  --stroke-color: #e5e5e5;
+  --stroke-color: var(--color-canvas);
 }
 @media (max-width: 1199px) {
   .decorative-stroke {

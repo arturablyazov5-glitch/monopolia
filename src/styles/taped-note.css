@@ -2,7 +2,7 @@
 .taped-note {
   width: fit-content;
   transform: rotate(var(--note-rotate, 0deg));
-  filter: drop-shadow(0 5px 3.5px #0000000f);
+  filter: drop-shadow(0 5px 3.5px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .taped-note-paper,
 .taped-note-card-paper {

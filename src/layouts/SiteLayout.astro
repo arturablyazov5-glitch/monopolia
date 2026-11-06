@@ -1,5 +1,6 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
+import tokenStyles from "../styles/tokens.css?raw";
 import { phone } from "../data/contacts";
 import { openingHoursSchema } from "../lib/office-hours.mjs";
 import { officeSchedule } from "../data/office-hours.mjs";
@@ -76,6 +77,8 @@ const business = {
     image: socialImage,
   }),
 };
+// The browser needs a resolved CSS color in the theme-color meta tag.
+const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
 ---
 
 <!doctype html>
@@ -84,7 +87,7 @@ const business = {
     <meta charset="UTF-8" />
     <style is:inline>
       /* Paint the document canvas before external styles and images arrive. */
-      html { background: #fff; color-scheme: light; }
+      html { background: var(--color-paper, Canvas); color-scheme: light; }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/* LCP mobile: фотографический фон главной. Бумага загружается из CSS. */}
@@ -112,7 +115,7 @@ const business = {
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <meta name="theme-color" content="#ededed" />
+    {themeColor && <meta name="theme-color" content={themeColor} />}
     {description && <meta name="description" content={description} />}
     {canonical && <link rel="canonical" href={canonical} />}
     {seo && !preventIndexing && (

@@ -111,11 +111,11 @@ const demoNav = [
           </Paper>
           <div class="swatches">
             {[
-              ["#ea1818", "Акцент"],
-              ["#1a1a1a", "Основной текст"],
-              ["#505050", "Вторичный текст"],
-              ["#ededed", "Фон"],
-              ["#ffffff", "Бумага"],
+              ["var(--color-accent)", "Акцент"],
+              ["var(--color-ink)", "Основной текст"],
+              ["var(--color-muted)", "Вторичный текст"],
+              ["var(--color-canvas)", "Фон"],
+              ["var(--color-paper)", "Бумага"],
             ].map(([color, label]) => (
               <div class="swatch">
                 <span style={"background:" + color}></span>

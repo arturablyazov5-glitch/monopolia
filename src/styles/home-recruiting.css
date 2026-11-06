@@ -33,7 +33,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(269.96deg, #1c1c1c 0%, rgb(28 28 28 / 0) 53.055%);
+  background: linear-gradient(269.96deg, var(--color-dark) 0%, rgb(from var(--color-dark) r g b / 0.0%) 53.055%);
 }
 .recruiting-container {
   width: var(--container-width);
@@ -46,7 +46,7 @@
   width: 600px;
   display: grid;
   gap: 52px;
-  color: #fff;
+  color: var(--color-paper);
 }
 .recruiting-intro {
   display: grid;
@@ -55,11 +55,11 @@
 .recruiting-intro h2 {
   max-width: none;
   font: 500 var(--text-heading)/1 var(--font-heading);
-  color: #fff;
+  color: var(--color-paper);
 }
 .recruiting-note-wrap {
   width: 413px;
-  filter: drop-shadow(0 5px 3.5px rgb(0 0 0 / 0.06));
+  filter: drop-shadow(0 5px 3.5px rgb(from var(--color-ink) r g b / 6.0%));
 }
 /* Обводка 15 px в Figma внутренняя: отступы 24/20 от внешнего края */
 .recruiting-note {
@@ -67,7 +67,7 @@
   align-items: center;
   gap: 12px;
   padding: 5px 9px;
-  border: 15px solid #fff;
+  border: 15px solid var(--color-paper);
   box-shadow: none;
 }
 .recruiting-note > img:first-child {
@@ -102,7 +102,7 @@
 }
 .recruiting-list li {
   font: 16px/1.2 var(--font-body);
-  color: #fff;
+  color: var(--color-paper);
 }
 .recruiting-actions {
   display: grid;
@@ -118,11 +118,11 @@
   font-size: 16px;
 }
 .recruiting-buttons .button.red:not(:disabled) {
-  --button-base-color: #ea1818;
+  --button-base-color: var(--color-accent);
 }
 .recruiting-buttons .recruiting-channel {
-  --button-base-color: #fff;
-  color: #000;
+  --button-base-color: var(--color-paper);
+  color: var(--color-ink);
   padding: 18px 24px 18px 32px;
 }
 .recruiting-channel-icon {
@@ -141,9 +141,9 @@
 }
 .recruiting-caption {
   font: var(--text-small) / 1.2 var(--font-body);
-  color: #fff;
+  color: var(--color-paper);
 }
-/* Рваные края: исходные SVG #EDEDED, видимы только 24 px внутри секции */
+/* Рваные края: исходные SVG var(--color-canvas), видимы только 24 px внутри секции */
 .recruiting-edge {
   position: absolute;
   left: 50%;
@@ -176,7 +176,7 @@
   .recruiting-photo {
     /* Кирпич плавно уходит в цвет блока; оба слоя скрыты у левой границы.
        Размер и положение исходного кадра остаются как на 1440 px. */
-    mask-image: linear-gradient(to right, transparent, #000 180px);
+    mask-image: linear-gradient(to right, transparent, var(--color-ink) 180px);
   }
   .recruiting-edge {
     left: 0;
@@ -203,15 +203,15 @@
     position: absolute;
     inset: 0;
     z-index: -3;
-    background: #141414;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    background: var(--color-dark);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
     mask-size: 100% 30px, 100% calc(100% - 29px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
     pointer-events: none;
   }
   .home-desktop .recruiting-photo {
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
     mask-size: 100% 30px, 100% calc(100% - 29px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;

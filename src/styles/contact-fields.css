@@ -45,7 +45,7 @@
   height: 51.2px;
   padding: 16px 28px;
   font-size: 16px;
-  background-color: #fff;
+  background-color: var(--color-paper);
 }
 .phone-field--large::placeholder {
   color: var(--color-field-text);
@@ -56,7 +56,7 @@
   height: auto;
 }
 .phone-field.phone-field--quiz {
-  background: #fff;
+  background: var(--color-paper);
 }
 .contact-method-options {
   gap: 10px;
@@ -85,7 +85,7 @@
 }
 .contact-method-options .chip.selected {
   background: var(--color-ink);
-  color: #fff;
+  color: var(--color-paper);
 }
 .choice-hover .chip {
   transition:
@@ -94,7 +94,7 @@
 }
 .choice-hover .chip:not(.selected):hover,
 .choice-hover .chip:not(.selected):focus-visible {
-  background: #e6e6e3;
+  background: var(--color-canvas);
 }
 .contact-method-options .choice-icon {
   position: relative;

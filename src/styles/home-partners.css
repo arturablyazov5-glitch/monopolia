@@ -2,7 +2,7 @@
   height: 387px;
   position: relative;
   background: var(--color-dark);
-  color: white;
+  color: var(--color-paper);
 }
 .home-partners-container {
   width: var(--container-width);
@@ -36,7 +36,7 @@
   max-width: none;
 }
 .home-partner-etalon {
-  background: white;
+  background: var(--color-paper);
   border-radius: 4px;
   display: grid;
   place-items: center;
