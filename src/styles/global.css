@@ -68,13 +68,6 @@ html {
     scroll-margin-top: -180px;
   }
 }
-/* Мобильная страница заканчивается у подвала, без эластичного выхода
-   за нижнюю границу и показа пустого canvas Safari. */
-@media (max-width: 767px) {
-  html {
-    overscroll-behavior-y: none;
-  }
-}
 body {
   margin: 0;
   /* Отрицательные фоновые слои остаются над заливкой body при белом html. */
@@ -109,8 +102,11 @@ h3 {
   font-size: var(--h3, var(--text-card));
   line-height: var(--leading-body);
 }
+h2,
+h3 {
+  text-wrap: wrap;
+}
 @media (max-width: 767px) {
-  main :is(h2, h3),
   main .accent-statement > p {
     text-wrap: balance;
   }

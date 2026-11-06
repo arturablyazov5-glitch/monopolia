@@ -12,7 +12,6 @@ import Carousel from "./Carousel.astro";
 import PropertyCard from "./PropertyCard.astro";
 import "../styles/buy-mortgage.css";
 import "../styles/property-media.css";
-import { selectDeals, catalog } from "../lib/catalog";
 
 const programs = [
   siteText("buy-mortgage.programs.1"),
@@ -26,10 +25,8 @@ const steps = [
   [siteText("buy-mortgage.steps.8"), siteText("buy-mortgage.steps.9")],
   [siteText("buy-mortgage.steps.10"), siteText("buy-mortgage.steps.11")],
 ];
-const deals = selectDeals();
 const endpoint =
-  import.meta.env.PUBLIC_CATALOG_ENDPOINT ||
-  (import.meta.env.DEV ? "/api/catalog" : "");
+  import.meta.env.PUBLIC_CATALOG_ENDPOINT || "/api/catalog";
 const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
 ---
 
@@ -166,30 +163,27 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
     </div>
     <div
       data-catalog
-      data-revision={catalog.revision}
+      data-revision="-1"
       data-endpoint={endpoint}
       data-media-base={mediaBase}
       style="display: contents"
     >
       <div
         data-catalog-live
-        hidden={deals.length === 0}
+        hidden
         style="display: contents"
       >
         <Carousel
           label={"Объекты с ценой ниже рынка"}
           class="buy-mortgage-carousel"
           swipeHint
-          catalogCount={deals.length}
+          catalogCount={0}
         >
-          {deals.map((deal) => (
-            <PropertyCard {...deal} />
-          ))}
         </Carousel>
       </div>
-      <div data-catalog-empty hidden={deals.length > 0}>
-        <div class="buy-deals-empty" role="status">
-          В выбранном городе пока нет объектов.
+      <div data-catalog-empty>
+        <div class="buy-deals-empty" role="status" data-catalog-status>
+          Загружаем объекты…
         </div>
       </div>
       <template data-card-template>
@@ -200,7 +194,7 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
           oldPrice=""
           pricePerMeter=""
           mortgage=""
-          discount=""
+          discount=" "
           cardImage={{ small: "", large: "" }}
         />
       </template>

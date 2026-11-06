@@ -40,7 +40,7 @@ test('schema, scrypt session, CORS/Host/CSRF, revisions, one backup and public c
     assert.equal((await s.request('/api/admin/catalog','PUT',{baseRevision:0,objects:invalid.objects})).status,422);
     const first=structuredClone(catalog.objects);first[0].visible=false;
     const results=await Promise.all([s.request('/api/admin/catalog','PUT',{baseRevision:0,objects:first}),s.request('/api/admin/catalog','PUT',{baseRevision:0,objects:first})]);assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);
-    const pub=await s.request('/api/catalog');assert.equal(pub.headers.get('cache-control'),'public, max-age=60');assert.equal(pub.headers.get('access-control-allow-origin'),'http://127.0.0.1:4321');const data=await pub.json();assert.equal(data.objects.length,2);assert(!('id' in data.objects[0]));assert(!('visible' in data.objects[0]));
+    const pub=await s.request('/api/catalog');assert.equal(pub.headers.get('cache-control'),'no-cache, must-revalidate');assert.equal(pub.headers.get('access-control-allow-origin'),'http://127.0.0.1:4321');const data=await pub.json();assert.equal(data.objects.length,2);assert(!('id' in data.objects[0]));assert(!('visible' in data.objects[0]));
     assert.equal((await s.request('/api/catalog','GET',undefined,{'If-None-Match':pub.headers.get('etag')})).status,304);
     assert.equal((await s.request('/api/admin/media','POST',Buffer.from('not webp'),{'Content-Type':'application/octet-stream'})).status,422);
     catalog=await s.api.storage.catalog();assert.equal((await s.request('/api/admin/catalog','PUT',{baseRevision:catalog.revision,objects:[]})).status,200);
@@ -53,7 +53,7 @@ test('schema, scrypt session, CORS/Host/CSRF, revisions, one backup and public c
     assert.equal((await s.request('/api/admin/session','POST',{username,password:'bad'})).status,429);
   }finally{await s.cleanup();}
 });
-test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offline, admin desktop/mobile', {skip:process.env.ADMIN_BROWSER_TEST!=='1',timeout:240000},async()=>{
+test('browser: add real Canvas photo, update /buy/ immediately, CRUD/order/empty/offline, admin desktop/mobile', {skip:process.env.ADMIN_BROWSER_TEST!=='1',timeout:240000},async()=>{
   await fs.mkdir(qa,{recursive:true});const s=await setup();let browser;
   const errors=[],trace=[],diagnostics=[];let debugPage;
   try {
@@ -93,18 +93,36 @@ test('browser: add real Canvas photo, update /buy/ lazily, CRUD/order/empty/offl
         try{const response=await fetch('http://127.0.0.1:8788'+u.pathname,{headers:{Origin:'http://127.0.0.1:4321'}});await req.respond({status:response.status,headers:Object.fromEntries(response.headers),body:Buffer.from(await response.arrayBuffer())});}catch{await req.abort('connectionrefused');}
       }else await req.continue();
     });
-    const open=async()=>{await buy.bringToFront();console.log('browser open phase='+mode);publicRequests=0;await buy.goto('http://127.0.0.1:4321/buy/',{waitUntil:'domcontentloaded',timeout:15000});await wait(500);assert.equal(publicRequests,0);assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),3);await buy.$eval('.buy-mortgage-deals',n=>n.scrollIntoView({behavior:'instant',block:'start'}));};
+    const open=async()=>{
+      await buy.bringToFront();
+      publicRequests=0;
+      await buy.goto('http://127.0.0.1:4321/buy/',{waitUntil:'domcontentloaded',timeout:15000});
+      if(mode==='offline') {
+        await buy.waitForFunction(()=>document.querySelector('[data-catalog-status]').textContent.includes('Не удалось'));
+        assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),0);
+      } else {
+        const catalog=await s.api.storage.catalog();
+        await buy.waitForFunction(revision=>Number(document.querySelector('[data-catalog]').dataset.revision)===revision,{},catalog.revision);
+        assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),publicCatalog(catalog).objects.length);
+      }
+      assert.equal(publicRequests,1);
+      await buy.$eval('.buy-mortgage-deals',n=>n.scrollIntoView({behavior:'instant',block:'start'}));
+    };
     const cdp=await buy.createCDPSession();await cdp.send('Tracing.start',{categories:'devtools.timeline,loading',transferMode:'ReturnAsStream'});
     await open();const complete=new Promise(done=>cdp.once('Tracing.tracingComplete',done));await cdp.send('Tracing.end');const {stream}=await complete;let traceJSON='';for(;;){const part=await cdp.send('IO.read',{handle:stream});traceJSON+=part.data;if(part.eof)break;}await cdp.send('IO.close',{handle:stream});await fs.writeFile(qa+'/buy-trace.json',traceJSON);
     await buy.waitForFunction(()=>document.querySelectorAll('.buy-mortgage-carousel .property-card').length===4);assert.equal(publicRequests,1);await buy.$eval('.buy-mortgage-carousel .carousel-track',n=>n.scrollLeft=n.scrollWidth);await wait(250);await buy.screenshot({path:qa+'/buy-new-card-1440.png'});assert.equal(await buy.$$eval('.buy-mortgage-carousel .carousel-pagination button',n=>n.length),4);
     const clickAction=async(text,last=true)=>{const revision=(await s.api.storage.catalog()).revision;await page.evaluate((text,last)=>{const rows=[...document.querySelectorAll('#objects article')],row=last?rows.at(-1):rows[0];[...row.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')===text || b.textContent.trim()===text).click();},text,last);for(let i=0;i<100 && (await s.api.storage.catalog()).revision===revision;i++)await wait(30);assert.equal((await s.api.storage.catalog()).revision,revision+1);await wait(50);};
-    await clickAction('Скрыть');assert.equal(publicCatalog(await s.api.storage.catalog()).objects.length,3);await open();await buy.waitForFunction(revision=>Number(document.querySelector('[data-catalog]').dataset.revision)===revision,{},(await s.api.storage.catalog()).revision);assert.equal(await buy.$$eval('.property-card',n=>n.length),3);
+    await clickAction('Скрыть');assert.equal(publicCatalog(await s.api.storage.catalog()).objects.length,3);
+    await buy.evaluate(()=>window.dispatchEvent(new Event('focus')));
+    await buy.waitForFunction(revision=>Number(document.querySelector('[data-catalog]').dataset.revision)===revision,{},(await s.api.storage.catalog()).revision);
+    assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),3);
+    await open();assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),3);
     await clickAction('Показать');assert.equal(publicCatalog(await s.api.storage.catalog()).objects.length,4);
     await clickAction('Выше');catalog=await s.api.storage.catalog();assert.equal(catalog.objects[2].id,newCard.id);
     await page.bringToFront();await page.evaluate(id=>{const row=document.querySelector(`[data-id="${id}"]`);[...row.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')==='Удалить' || b.textContent.trim()==='Удалить').click();},newCard.id);await page.waitForSelector('#confirmation[open]');await page.click('#confirm-ok');await page.waitForFunction(id=>!document.querySelector(`[data-id="${id}"]`),{},newCard.id);assert.equal((await s.api.storage.catalog()).objects.length,3);
     catalog=await s.api.storage.catalog();await s.api.storage.save({baseRevision:catalog.revision,objects:[]});await open();console.log('browser awaiting empty');await buy.waitForFunction(()=>!document.querySelector('[data-catalog-empty]').hidden);console.log('browser empty passed');assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),0);
     assert.deepEqual(publicConsole,[]);console.log('browser logout');await page.bringToFront();await page.evaluate(()=>document.querySelector('#logout').click());await page.waitForFunction(()=>document.querySelector('#workspace').hidden);
-    await close(s.server);mode='offline';await open();await wait(500);assert.equal(await buy.$$eval('.buy-mortgage-carousel .property-card',n=>n.length),3);assert.deepEqual(errors,[]);
-    await fs.writeFile(qa+'/browser-results.json',JSON.stringify({passed:true,errors,trace,requestsBeforeScroll:0,offlineBrowserDiagnostics:publicConsole},null,2));
+    await close(s.server);mode='offline';await open();assert.equal(await buy.$eval('[data-catalog-status]',n=>n.textContent.trim()),'Не удалось загрузить объекты. Обновите страницу.');assert.deepEqual(errors,[]);
+    await fs.writeFile(qa+'/browser-results.json',JSON.stringify({passed:true,errors,trace,requestsBeforeScroll:1,offlineBrowserDiagnostics:publicConsole},null,2));
   } catch(e){await fs.writeFile(qa+'/browser-failure.json',JSON.stringify({message:await debugPage?.$eval('#message',n=>n.textContent).catch(()=>null),body:await debugPage?.$eval('body',n=>n.dataset.apiBase).catch(()=>null),diagnostics,errors},null,2));throw e;} finally {if(browser)await browser.close();await s.cleanup();}
 });

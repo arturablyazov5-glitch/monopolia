@@ -51,7 +51,7 @@ export async function createAdminAPI({root=project,env=process.env,now=Date.now}
       }
       if(req.method==='GET' && raw==='/api/catalog') {
         const catalog=publicCatalog(await storage.catalog()),tag='"catalog-'+catalog.revision+'"';
-        res.setHeader('Cache-Control','public, max-age=60');res.setHeader('ETag',tag);
+        res.setHeader('Cache-Control','no-cache, must-revalidate');res.setHeader('ETag',tag);
         if(req.headers['if-none-match']===tag){res.writeHead(304);return res.end();}
         return send(res,200,{ok:true,...catalog});
       }
