@@ -35,10 +35,17 @@
   position: relative;
   width: 749.712px;
   height: 285.895px;
-  margin: 0 auto;
+  margin: 16px auto 0;
 }
 .paper.telegram-news-frame {
   --paper-fill: var(--color-paper-warm);
+}
+.paper.telegram-news-frame::after {
+  background-color: var(--color-paper-warm);
+  background-image: var(--texture-paper-beige);
+  background-size: var(--texture-paper-size);
+  background-position: var(--texture-paper-position);
+  background-repeat: var(--texture-paper-repeat);
 }
 .telegram-news-frame {
   position: absolute;

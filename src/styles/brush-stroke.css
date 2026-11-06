@@ -154,8 +154,7 @@ button.button {
 .paper.trust-rating {
   --brush-ring: 0px 1.25px 0px 0px;
 }
-.paper.private-catalog-card,
-.paper.telegram-news {
+.paper.private-catalog-card {
   --brush-ring: 0px 2.25px 0px 0px;
 }
 .paper.director-card {
