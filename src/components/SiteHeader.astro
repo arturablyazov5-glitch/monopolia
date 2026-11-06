@@ -484,10 +484,23 @@ const isCurrentMenuPage = (href: string) =>
         ? (section.querySelector<HTMLElement>("h2") ?? section)
         : section;
     };
+    // Structural paper must be decoded before scrolling exposes it. Lazy
+    // portraits can appear later; the page surface cannot depend on them.
+    const prepareAnchorSurface = async (hash: string) => {
+      const target = anchorTarget(hash);
+      if (!target) return;
+      const paper = target.closest(".reviews-cases-paper");
+      const background = paper?.querySelector<HTMLImageElement>(".reviews-cases-background");
+      if (background) {
+        background.loading = "eager";
+        await background.decode().catch(() => {});
+      }
+      await document.fonts.ready;
+    };
     const alignAnchor = async (hash: string, behavior: ScrollBehavior) => {
       const target = anchorTarget(hash);
       if (!target) return;
-      await document.fonts.ready;
+      await prepareAnchorSurface(hash);
       const top = target.getBoundingClientRect().top + window.scrollY;
       const headerBottom = header.getBoundingClientRect().bottom;
       const contentGap =
@@ -502,7 +515,7 @@ const isCurrentMenuPage = (href: string) =>
         behavior,
       });
     };
-    document.addEventListener("click", (event) => {
+    document.addEventListener("click", async (event) => {
       if (
         event.defaultPrevented ||
         event.button !== 0 ||
@@ -525,11 +538,14 @@ const isCurrentMenuPage = (href: string) =>
       )
         return;
       event.preventDefault();
-      if (menu.getAttribute("aria-expanded") === "true") setOpen(false);
+      if (menu.getAttribute("aria-expanded") === "true") {
+        const completed = await setOpen(false);
+        if (!completed) return;
+      }
       if (location.hash !== url.hash) history.pushState(null, "", url);
       void alignAnchor(
         url.hash,
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        reducedMotion.matches
           ? "instant"
           : "smooth",
       );

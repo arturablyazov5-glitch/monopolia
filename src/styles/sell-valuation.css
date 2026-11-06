@@ -478,6 +478,21 @@
     padding: calc(var(--valuation-edge-height) + var(--section-space)) 20px calc(var(--valuation-edge-height) + var(--section-space));
     gap: var(--section-space-double);
   }
+  /* На телефоне кромку рисует вектор; увеличенный растр остается
+     только текстурой внутри бумаги, без размытого alpha-контура. */
+  .sell-valuation-background {
+    clip-path: inset(var(--valuation-edge-height) 0 0);
+  }
+  .sell-valuation::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-size: 100% var(--valuation-edge-height), 100% calc(100% - var(--valuation-edge-height) + 2px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+  }
   .sell-valuation-main {
     gap: 40px;
   }

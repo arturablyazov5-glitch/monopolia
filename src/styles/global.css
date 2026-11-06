@@ -47,7 +47,12 @@
   html { scrollbar-gutter: stable; }
 }
 html {
-  scroll-behavior: smooth;
+  /* Наследуется всеми элементами: без нативной серой вспышки при тапе.
+     Авторские состояния выбора и :focus-visible остаются. */
+  -webkit-tap-highlight-color: transparent;
+  /* Плавность задает обработчик якорей. Иначе входящий hash запускает
+     еще одну нативную анимацию до загрузки и выравнивания страницы. */
+  scroll-behavior: auto;
   /* Фиксированная шапка: отступ 16 + высота + зазор, чтобы якоря не прятались */
   scroll-padding-top: calc(16px + var(--header-height) + var(--space-6));
 }
@@ -63,8 +68,17 @@ html {
     scroll-margin-top: -180px;
   }
 }
+/* Мобильная страница заканчивается у подвала, без эластичного выхода
+   за нижнюю границу и показа пустого canvas Safari. */
+@media (max-width: 767px) {
+  html {
+    overscroll-behavior-y: none;
+  }
+}
 body {
   margin: 0;
+  /* Отрицательные фоновые слои остаются над заливкой body при белом html. */
+  isolation: isolate;
   background: var(--canvas);
   color: var(--ink);
   font: var(--text-body)/var(--leading-body) var(--font-body);
@@ -1653,9 +1667,14 @@ dialog::backdrop {
     scroll-padding-top: calc(8px + var(--header-height) + 16px);
   }
   .fixed-site-header {
+    /* Sticky следует видимой области при сворачивании панелей Safari.
+       Нулевая высота сохраняет прежнее наложение над первым экраном. */
+    position: sticky;
     top: 8px;
-    left: 12px;
-    right: 12px;
+    left: auto;
+    right: auto;
+    height: 0;
+    margin-inline: 12px;
   }
   .site-header.desktop {
     gap: 8px;
@@ -1752,8 +1771,7 @@ dialog::backdrop {
 }
 @media (max-width: 389px) {
   .fixed-site-header {
-    left: 8px;
-    right: 8px;
+    margin-inline: 8px;
   }
   .site-header.desktop .brand-text img {
     width: 112px;
@@ -2189,4 +2207,12 @@ a[href^="https://trace-logos.ru/"] {
   .cta-caption-mobile-inline > :is(span, strong) {
     display: inline;
   }
+}
+
+/* Подписи элементов управления не запускают выделение текста при долгом тапе.
+   Поля ввода сохраняют обычное выделение и копирование. */
+button,
+.city-menu [data-city-option] {
+  -webkit-user-select: none;
+  user-select: none;
 }

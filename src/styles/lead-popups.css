@@ -383,16 +383,7 @@ html:has(#lead-dialog[open]) {
   #lead-dialog .popup-media-badge {
     top: 36px;
   }
-  #lead-dialog .popup-media-document {
-    margin-inline: 0;
-    padding: 0 16px 20px;
-  }
-  #lead-dialog .popup-media-document .popup-media-window > img {
-    max-height: 220px;
-  }
-  #lead-dialog .popup-media-document .popup-media-badge {
-    inset: auto 0 0 auto;
-  }
+  #lead-dialog .popup-analysis .popup-media,
   #lead-dialog .popup-media-neutral,
   #lead-dialog .popup-viewing .popup-media,
   #lead-dialog .popup-closed-base .popup-media {

@@ -36,7 +36,7 @@ const logos = [
           "home-partner-logo",
           { "home-partner-etalon": name === "Эталон" },
         ]}
-        style={`width:${width}px;--asset-left:${left}px`}
+        style={`--logo-width:${width}px;--asset-left:${left}px;--image-width:${imageSize("/assets/" + file).width}px;--image-height:${imageSize("/assets/" + file).height}px`}
       >
         <img
           src={"/assets/" + file}

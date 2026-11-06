@@ -44,24 +44,17 @@
   position: relative;
   width: var(--container-width);
   margin: 0 auto;
-  /* Более выраженная рваная кромка только у карточки формы. */
-  --brush-sizes:
-    13px 13px, calc(100% - 24px) 13px, 13px 13px,
-    13px calc(100% - 24px), calc(100% - 24px) calc(100% - 24px),
-    13px calc(100% - 24px), 13px 13px,
-    calc(100% - 24px) 18px, 13px 13px;
 }
-/* Белая рамка карточки: рваный край общим скриптом (brush-stroke.css), как у остальных листов.
-   Слой выступает на 5 px за панель, сама панель прозрачная — иначе ее прямые углы закрывают вырезы. */
-.lead-section-card:before {
+/* Одна рамка вместо девяти CSS-масок: контур не пересобирается
+   из отдельных маскируемых слоев при прокрутке в WebKit.
+   Border-image сохраняет глубину края при любой высоте формы. */
+.lead-section-card::before {
   content: "";
   position: absolute;
   inset: -5px;
-  background: #fff;
-  mask-image: var(--brush-images);
-  mask-size: var(--brush-sizes);
-  mask-position: var(--brush-positions);
-  mask-repeat: no-repeat;
+  border: 13px solid transparent;
+  border-image: url("/assets/lead-form-paper-frame.svg") 13 fill / 13px;
+  pointer-events: none;
 }
 .lead-section .lead-panel {
   grid-template-columns: minmax(0, 1fr) 440px;

@@ -762,7 +762,6 @@
   .home-desktop .home-recruiting {
     --k: 0.8;
     height: auto;
-    background: #141414;
   }
   .home-desktop .recruiting-union {
     display: none;
@@ -1544,10 +1543,6 @@
   /* --- 13. Партнеры: логотипы-картинки в масштабе 0,6 --- */
   .home-desktop .home-partners {
     padding-bottom: var(--section-space-double);
-  }
-  .home-desktop .home-partner-logos {
-    zoom: 0.6;
-    gap: 16px;
   }
 
   /* --- 14. DirectorInvitation --- */

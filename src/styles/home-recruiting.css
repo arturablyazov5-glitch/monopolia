@@ -194,6 +194,23 @@
 @media (max-width: 767px) {
   .home-desktop .home-recruiting {
     --recruiting-edge-overlap: 30px;
+    background: transparent;
+  }
+  /* Маскируется только краска, а не секция с текстом и рваным низом.
+     У края секции нет второго alpha-среза поверх SVG-кромки. */
+  .home-desktop .home-recruiting::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background: #141414;
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-size: 100% 30px, 100% calc(100% - 29px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+  }
+  .home-desktop .recruiting-photo {
     mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
     mask-size: 100% 30px, 100% calc(100% - 29px);
     mask-position: top, bottom;
@@ -219,13 +236,5 @@
   }
   .home-desktop .recruiting-caption {
     text-align: center;
-  }
-}
-
-@media (max-width: 767px) {
-  .home-desktop .home-recruiting::after {
-    content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 12px;
-    background: var(--color-canvas); pointer-events: none;
-    mask: url("/assets/brush-mask-t.svg") center top / 100% 12px no-repeat;
   }
 }

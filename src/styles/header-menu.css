@@ -285,9 +285,6 @@
 }
 
 @media (max-width: 767px) and (hover: none) {
-  .menu-drawer .city-picker {
-    -webkit-tap-highlight-color: transparent;
-  }
   .site-header .menu-drawer .menu-panel-city .city {
     transition: none;
   }

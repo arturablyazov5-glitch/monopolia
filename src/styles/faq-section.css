@@ -32,7 +32,6 @@
   transform: rotate(var(--faq-tilt));
   /* Поворот закреплён сверху и не зависит от высоты раскрытого ответа. */
   transform-origin: center top;
-  overflow-anchor: none;
 }
 
 /* Карточка — FaqCard variant="accordion", Figma 1380:5740 */

@@ -14,6 +14,7 @@
   font: 500 var(--text-heading)/1 var(--font-heading);
 }
 .home-partner-logos {
+  --partner-scale: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -22,13 +23,16 @@
 }
 .home-partner-logo {
   position: relative;
-  height: 72px;
+  width: calc(var(--logo-width) * var(--partner-scale));
+  height: calc(72px * var(--partner-scale));
   flex-shrink: 0;
 }
 .home-partner-logo img {
   position: absolute;
-  left: var(--asset-left);
-  top: -7.5px;
+  left: calc(var(--asset-left) * var(--partner-scale));
+  top: calc(-7.5px * var(--partner-scale));
+  width: calc(var(--image-width) * var(--partner-scale));
+  height: calc(var(--image-height) * var(--partner-scale));
   max-width: none;
 }
 .home-partner-etalon {
@@ -50,7 +54,7 @@
 /* Общий контейнер логотипов: на телефоне уменьшен на любой странице. */
 @media (max-width: 767px) {
   .home-partner-logos {
-    zoom: 0.6;
-    gap: 16px;
+    --partner-scale: 0.6;
+    gap: 9.6px;
   }
 }

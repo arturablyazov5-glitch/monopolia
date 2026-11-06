@@ -58,6 +58,27 @@ const modes: PopupMode[] = [
   const dialog = document.querySelector<HTMLDialogElement>("#lead-dialog");
   if (dialog) {
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    let lockedPage: { y: number; bodyStyle: string; rootStyle: string } | null = null;
+    const lockPage = () => {
+      if (lockedPage) return;
+      lockedPage = {
+        y: window.scrollY,
+        bodyStyle: document.body.style.cssText,
+        rootStyle: document.documentElement.style.cssText,
+      };
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${lockedPage.y}px`;
+      document.body.style.width = "100%";
+    };
+    const unlockPage = () => {
+      if (!lockedPage) return;
+      const saved = lockedPage;
+      lockedPage = null;
+      document.body.style.cssText = saved.bodyStyle;
+      document.documentElement.style.cssText = saved.rootStyle;
+      window.scrollTo({ top: saved.y, behavior: "instant" });
+    };
     let closeTimer: ReturnType<typeof setTimeout> | undefined;
     const clearCloseTimer = () => {
       clearTimeout(closeTimer);
@@ -244,7 +265,10 @@ const modes: PopupMode[] = [
         : button;
       // Restart from the current visual frame when reopening during exit.
       void dialog.offsetWidth;
-      if (!dialog.open) dialog.showModal();
+      if (!dialog.open) {
+        lockPage();
+        dialog.showModal();
+      }
       dialog.scrollTop = 0;
       // autofocus also directs showModal's native focus step here, so even
       // reopening after editing a phone never briefly focuses a text field.
@@ -290,7 +314,8 @@ const modes: PopupMode[] = [
       if (dialog.open) return;
       clearCloseTimer();
       dialog.classList.remove("is-opening", "is-closing");
-      opener?.focus();
+      unlockPage();
+      opener?.focus({ preventScroll: true });
       opener = null;
     });
     dialog

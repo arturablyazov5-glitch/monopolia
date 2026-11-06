@@ -1,6 +1,7 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import ConsultationButton from "./ConsultationButton.astro";
+import Button from "./Button.astro";
 import TapedNote from "./TapedNote.astro";
 import "../styles/prepared-viewing.css";
 interface Props {
@@ -116,18 +117,18 @@ const lists = [
         </div>
       )}
       <div class="prepared-viewing-actions">
-        <ConsultationButton
-          label={
-            selling
-              ? siteText("prepared-viewing.label.15")
-              : siteText("client-cases.label.28")
-          }
-          subject={
-            selling
-              ? "Продажа: подготовка объекта"
-              : "Покупка: комфортный показ объекта"
-          }
-        />
+        {selling ? (
+          <Button
+            label={siteText("prepared-viewing.label.15")}
+            subject="Продажа: подготовка объекта"
+            quiz="sell"
+          />
+        ) : (
+          <ConsultationButton
+            label={siteText("client-cases.label.28")}
+            subject="Покупка: комфортный показ объекта"
+          />
+        )}
         {!selling && (
           <p class="cta-caption-mobile-inline">
             <span>{siteText("realtor-comparison.text.3")}</span>{" "}
