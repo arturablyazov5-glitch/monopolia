@@ -155,7 +155,7 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
           },
         ]}
       >
-        <div class="popup-media-window brush-stroke">
+        <div class:list={["popup-media-window", { "brush-stroke": mode !== "analysis" && mode !== "closed-base" }]}>
           {(data.image || mode === "viewing") && (
             <img
               class:list={[

@@ -1,5 +1,6 @@
 ---
 import "../styles/contact-fields.css";
+import { RESUME_ACCEPT } from "../lib/resume-file";
 interface Props {
   id: string;
 }
@@ -34,7 +35,7 @@ const { id } = Astro.props;
         id={id}
         class="sr-only"
         type="file"
-        accept=".pdf,.doc,.docx,.txt,.rtf"
+        accept={RESUME_ACCEPT}
         aria-describedby={id + "-error"}
       />
       <div class="resume-file-actions" hidden>

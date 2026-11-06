@@ -1228,9 +1228,6 @@
   }
 
   /* --- 5. Certificates --- */
-  .home-desktop .certificates-divider {
-    display: none;
-  }
   .home-desktop .certificates-scene {
     padding: calc(var(--section-space) + var(--certificates-edge-height)) var(--rg) var(--section-space);
   }
@@ -1409,7 +1406,7 @@
   }
   .home-desktop .case-person {
     font-size: 16px;
-    padding: 8px 12px;
+    padding: 8px 12px 8px 8px;
     left: 16px;
     bottom: 16px;
   }

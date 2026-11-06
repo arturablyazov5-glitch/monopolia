@@ -140,7 +140,7 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
 #lead-dialog .popup-context {
   width: fit-content;
   max-width: 100%;
-  margin: -20px 0 40px;
+  margin: -20px 0 24px;
   padding: 6px 12px;
   font: 400 var(--text-small)/1.4 var(--font-body);
   overflow-wrap: anywhere;
@@ -223,6 +223,9 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
   inset: 0;
   overflow: hidden;
 }
+#lead-dialog .popup-viewing .popup-media-window {
+  --brush-images: var(--brush-square-images);
+}
 #lead-dialog .popup-media-window > img {
   width: 100%;
   height: 100%;
@@ -263,7 +266,7 @@ html:has(#lead-dialog[open]) {
 }
 @media (min-width: 768px) {
   #lead-dialog .popup-context {
-    margin-top: 0;
+    margin-top: -8px;
   }
   #lead-dialog .popup-submit {
     gap: 12px;
@@ -343,7 +346,18 @@ html:has(#lead-dialog[open]) {
   #lead-dialog .popup-media-badge {
     top: 36px;
   }
+  #lead-dialog .popup-media-document {
+    margin-inline: 0;
+    padding: 0 16px 20px;
+  }
+  #lead-dialog .popup-media-document .popup-media-window > img {
+    max-height: 220px;
+  }
+  #lead-dialog .popup-media-document .popup-media-badge {
+    inset: auto 0 0 auto;
+  }
   #lead-dialog .popup-media-neutral,
+  #lead-dialog .popup-viewing .popup-media,
   #lead-dialog .popup-closed-base .popup-media {
     display: none;
   }

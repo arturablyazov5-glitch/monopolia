@@ -148,7 +148,6 @@
   background: var(--color-diamond);
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform var(--duration-fast) linear;
 }
 .deal-progress-value {
   min-width: 4ch;
