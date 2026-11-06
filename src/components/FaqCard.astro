@@ -9,6 +9,7 @@ interface Props {
   answer?: string | FaqAnswerBlock[];
   cta?: string;
   quiz?: "buy" | "sell";
+  popup?: "closed-base";
   /** kit — прежний вид UI kit; accordion — карточка секции FAQ (Figma 1380:5740) */
   variant?: "kit" | "accordion";
   /** Уникальный id для связки кнопки и ответа (только accordion) */
@@ -22,6 +23,7 @@ const {
   answer = siteText("faq-card.answer.2"),
   cta = siteText("client-cases.label.28"),
   quiz,
+  popup,
   variant = "kit",
   id = "faq-card",
   open = true,
@@ -84,7 +86,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
             ),
           )}
         </div>
-        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} quiz={quiz} popup={quiz ? undefined : "office"} />
+        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} quiz={quiz} popup={quiz ? undefined : (popup ?? "office")} />
       </div>
     </div>
   </Paper>
@@ -102,7 +104,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
       {question}
     </h3>
     <p>{blocks.filter((block) => typeof block === "string").join(" ")}</p>
-    <Button label={cta} tone="black" popup="office" subject={`Вопрос: ${question}`} />
+    <Button label={cta} tone="black" popup={popup ?? "office"} subject={`Вопрос: ${question}`} />
   </Paper>
 )}
 

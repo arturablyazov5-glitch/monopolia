@@ -151,26 +151,6 @@
   bottom: 0.52px;
   padding: 24px;
 }
-.sell-valuation-file > .paper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 16px;
-  transform: rotate(-3deg);
-}
-.sell-valuation-file p {
-  display: flex;
-  flex-direction: column;
-  font: 16px/1.2 var(--font-body);
-  color: var(--color-ink);
-  white-space: nowrap;
-}
-.sell-valuation-file small {
-  font-size: 14px;
-  line-height: 1.2;
-  color: var(--color-muted);
-}
-
 /* 1380:5814 «05» */
 .sell-week {
   width: 1160px;

@@ -3,7 +3,7 @@ import { siteText } from "../data/site-texts.mjs";
 // «Продажа», Figma 1380:5771: бумажный фон с рваными краями,
 // блок «Узнайте реальную цену» (1380:5777) и «Хотите продать жилье на этой неделе?» (1380:5814).
 import Button from "./Button.astro";
-import Paper from "./Paper.astro";
+import PdfFileNote from "./PdfFileNote.astro";
 import SellWeekCase from "./SellWeekCase.astro";
 import "../styles/sell-valuation.css";
 
@@ -82,20 +82,7 @@ const columns = [
         />
       </div>
       <div class="sell-valuation-file" data-node-id="1380:5794">
-        <Paper class="sell-valuation-file-card" tapeNode="1380:5795" node="1380:5795">
-          <img
-            src="/assets/sell-valuation-note-icon.svg"
-            alt=""
-            width="36"
-            height="36"
-            loading="lazy"
-            decoding="async"
-          />
-          <p>
-            <span>{siteText("sell-valuation.text.5")}</span>
-            <small>{siteText("sell-valuation.text.6")}</small>
-          </p>
-        </Paper>
+        <PdfFileNote />
       </div>
     </div>
   </div>

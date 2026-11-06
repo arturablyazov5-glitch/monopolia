@@ -234,6 +234,10 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
 #lead-dialog .popup-media-document .popup-media-window > img {
   object-fit: contain;
   padding: 12px;
+  filter: drop-shadow(0 5px 8px #0000001a);
+}
+#lead-dialog .popup-media-document .popup-media-window {
+  overflow: visible;
 }
 #lead-dialog .popup-team .popup-media-window > img {
   object-position: left center;
@@ -249,10 +253,6 @@ dialog#lead-dialog.lead-popup-dialog:has(.popup-without-media:not([hidden])) {
   font-size: var(--text-small);
   line-height: 1.4;
 }
-#lead-dialog .popup-media-badge .taped-note-paper > p {
-  white-space: normal;
-  font-size: var(--text-small);
-}
 #lead-dialog .popup-form .form-result {
   position: static;
   font-size: 16px;
@@ -262,6 +262,9 @@ html:has(#lead-dialog[open]) {
   overflow: hidden;
 }
 @media (min-width: 768px) {
+  #lead-dialog .popup-context {
+    margin-top: 0;
+  }
   #lead-dialog .popup-submit {
     gap: 12px;
   }
@@ -316,14 +319,9 @@ html:has(#lead-dialog[open]) {
   }
   #lead-dialog .popup-body,
   #lead-dialog .popup-without-media .popup-body {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "description" "media" "fields";
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
     gap: 24px;
-  }
-  #lead-dialog .popup-without-media .popup-body,
-  #lead-dialog .popup-closed-base .popup-body {
-    grid-template-areas: "description" "fields";
   }
   #lead-dialog .popup-actions {
     margin-top: 4px;
@@ -331,7 +329,7 @@ html:has(#lead-dialog[open]) {
   #lead-dialog .popup-media {
     min-height: 0;
     margin-inline: -20px;
-    align-self: start;
+    align-self: stretch;
   }
   #lead-dialog .popup-media-window {
     position: relative;

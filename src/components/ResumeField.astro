@@ -35,7 +35,7 @@ const { id } = Astro.props;
         class="sr-only"
         type="file"
         accept=".pdf,.doc,.docx,.txt,.rtf"
-        aria-describedby={id + "-note " + id + "-error"}
+        aria-describedby={id + "-error"}
       />
       <div class="resume-file-actions" hidden>
         <button
@@ -86,9 +86,6 @@ const { id } = Astro.props;
     </div>
   </div>
   <p id={id + "-error"} class="resume-error" role="alert" hidden></p>
-  <p id={id + "-note"} class="resume-note">
-    Резюме можно прислать в мессенджере. Здесь отправляются ваши контакты.
-  </p>
 </div>
 
 <script>
@@ -102,6 +99,13 @@ const { id } = Astro.props;
       const actions = field.querySelector<HTMLElement>(".resume-file-actions")!;
       const error = field.querySelector<HTMLElement>(".resume-error")!;
       let version = 0;
+      let attachedFile: File | undefined;
+      const restoreFile = () => {
+        if (!attachedFile || input.files?.length) return;
+        const files = new DataTransfer();
+        files.items.add(attachedFile);
+        input.files = files.files;
+      };
       const clearError = () => {
         error.hidden = true;
         error.textContent = "";
@@ -112,11 +116,20 @@ const { id } = Astro.props;
         name.textContent = file ? file.name : "Прикрепить резюме";
         actions.hidden = !file;
       };
+      input.addEventListener("cancel", (event) => {
+        event.stopPropagation();
+        restoreFile();
+        sync();
+      });
       input.addEventListener("change", async () => {
         const current = ++version;
         clearError();
         const file = input.files?.[0];
-        if (!file) return;
+        if (!file) {
+          restoreFile();
+          sync();
+          return;
+        }
         let message: string;
         try {
           message = await resumeFileError(file);
@@ -125,10 +138,13 @@ const { id } = Astro.props;
         }
         if (current !== version) return;
         if (message) {
+          attachedFile = undefined;
           input.value = "";
           error.textContent = message;
           error.hidden = false;
           input.setAttribute("aria-invalid", "true");
+        } else {
+          attachedFile = file;
         }
         sync();
       });
@@ -139,6 +155,7 @@ const { id } = Astro.props;
         .querySelector("[data-resume-remove]")!
         .addEventListener("click", () => {
           ++version;
+          attachedFile = undefined;
           input.value = "";
           clearError();
           sync();
@@ -146,6 +163,7 @@ const { id } = Astro.props;
         });
       input.form?.addEventListener("reset", () => {
         ++version;
+        attachedFile = undefined;
         clearError();
         queueMicrotask(sync);
       });
@@ -200,10 +218,5 @@ const { id } = Astro.props;
     margin-top: 8px;
     color: var(--color-accent);
     font: var(--text-small)/1.4 var(--font-body);
-  }
-  .resume-note {
-    margin-top: 8px;
-    font: var(--text-small)/1.4 var(--font-body);
-    color: var(--color-muted);
   }
 </style>

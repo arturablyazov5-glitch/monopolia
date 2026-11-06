@@ -9,6 +9,7 @@ export interface FaqItem {
   /** Текст кнопки. По умолчанию «Записаться на консультацию». */
   cta?: string;
   quiz?: "buy" | "sell";
+  popup?: "closed-base";
   /** Колонка 1 или 2. Без значения карточки распределяются по очереди. */
   column?: 1 | 2;
   /** Поворот карточки в градусах (в макете −1, 0 или 1). */
@@ -251,6 +252,7 @@ export const buyFaq: FaqItem[] = [
     answer:
       siteText("faq.answer.48"),
     cta: siteText("faq.cta.49"),
+    popup: "closed-base",
   },
   {
     column: 1,
@@ -260,6 +262,7 @@ export const buyFaq: FaqItem[] = [
     answer:
       siteText("faq.answer.51"),
     cta: siteText("faq.cta.49"),
+    popup: "closed-base",
   },
   {
     column: 1,

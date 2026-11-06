@@ -119,6 +119,7 @@ const modes: PopupMode[] = [
         dialog.classList.remove("is-opening");
     });
     dialog.addEventListener("cancel", (event) => {
+      if (event.target !== dialog) return;
       event.preventDefault();
       requestClose();
     });
