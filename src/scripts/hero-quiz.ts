@@ -189,7 +189,9 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
     result.hidden = true;
     if (!validPhone || !channel || !consent.checked) return;
     city = card.querySelector<HTMLInputElement>('[name=city]')?.value || city;
-    form.dataset.context = JSON.stringify({ city, propertyType: type, subject: selling ? 'Продать объект' : 'Подборка объектов', channel, comment: selling ? `Характеристики: ${answers[2].join(', ')}${extraAnswer ? '; участок: ' + extraAnswer : ''}.\nСостояние: ${answers[3].join(', ')}.\nСрок продажи: ${answers[4].join(', ')}.` : `Бюджет: ${answers[2].join(', ')}.\nПожелания: ${answers[3].join(', ')}.\nСпособ покупки: ${answers[4].join(', ')}.` });
+    const characteristicsLabel = type === 'Квартира' ? 'Комнаты' : type === 'Гараж' ? 'Тип гаража' : type === 'Участок' ? 'Площадь участка' : 'Площадь';
+    const conditionLabel = type === 'Гараж' ? 'Оснащение гаража' : type === 'Участок' ? 'На участке' : type === 'Коммерческая недвижимость' ? 'Использование помещения' : type === 'Другое' ? 'Описание объекта' : 'Состояние';
+    form.dataset.context = JSON.stringify({ city, propertyType: type, subject: selling ? 'Продать объект' : 'Подборка объектов', channel, comment: selling ? `${characteristicsLabel}: ${answers[2].join(', ')}${extraAnswer ? '; участок: ' + extraAnswer : ''}.\n${conditionLabel}: ${answers[3].join(', ')}.\nСрок продажи: ${answers[4].join(', ')}.` : `Бюджет: ${answers[2].join(', ')}.\nПожелания: ${answers[3].join(', ')}.\nСпособ покупки: ${answers[4].join(', ')}.` });
     if (type === 'Другое' && otherTypeInput.value.trim()) {
       const context = JSON.parse(form.dataset.context);
       context.comment = `Тип объекта: ${otherTypeInput.value.trim()}.\n${context.comment}`;
