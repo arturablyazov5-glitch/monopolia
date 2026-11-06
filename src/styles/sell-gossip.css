@@ -106,41 +106,64 @@
 /* The same panoramic scene and speech bubbles on phones. */
 @media (max-width: 767px) {
   .sell-gossip {
-    height: auto;
-    aspect-ratio: 390 / 340;
-    margin-top: var(--section-space);
+    --gossip-photo-offset: 20px;
+    /* Полная высота фото плюс сдвиг; реплики остаются на своих местах. */
+    aspect-ratio: auto;
+    height: calc((100vw - 20px) * 1.29736 * 3430 / 4096 + var(--gossip-photo-offset));
+    /* Сдвиг фото входит в стандартный межсекционный отступ. */
+    margin-top: calc(var(--section-space) - var(--gossip-photo-offset) - 20px);
     overflow: clip;
   }
   .sell-gossip-photo {
-    top: auto;
-    bottom: 0;
+    top: calc(var(--gossip-photo-offset) + 20px);
+    bottom: auto;
+    /* Поля по 10 px до крайних силуэтов нового мобильного кадра. */
+    width: calc((100% - 20px) * 1.29736);
+    left: calc(10px - (100% - 20px) * 0.16604);
     height: auto;
+    aspect-ratio: auto;
     object-fit: initial;
+    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(#000, #000);
+    mask-size: 100% 20px, 100% calc(100% - 18px);
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
   }
   .sell-gossip-edge {
     display: none;
   }
+
   .sell-gossip-content {
+    --gossip-bubble-font-size: clamp(12px, 3.35vw, 16px);
     position: absolute;
-    inset: 0;
+    inset: 0 0 var(--gossip-photo-offset);
     width: auto;
     height: auto;
     margin: 0 16px;
   }
   .sell-gossip-rumor {
-    top: 0;
-    left: 0;
-    width: 70%;
+    top: 22%;
+    left: 13%;
+    width: max-content;
+    max-width: 75%;
   }
   .sell-gossip-reply {
-    top: 26%;
-    right: 0;
+    /* Три строки белой реплики + её поля, с нахлёстом 8 px. */
+    top: calc(22% + var(--gossip-bubble-font-size) * 3.6 + 12px);
+    right: 33%;
     left: auto;
-    width: 60%;
+    width: max-content;
+    max-width: 60%;
   }
   .sell-gossip-content .speech-bubble p {
     padding: 10px 12px;
-    font-size: clamp(12px, 3.35vw, 16px);
+    font-size: var(--gossip-bubble-font-size);
     white-space: normal;
+  }
+  .sell-gossip-content .sell-gossip-rumor > img {
+    margin-left: 12px;
+  }
+  .sell-gossip-content .sell-gossip-rumor p,
+  .sell-gossip-content .sell-gossip-reply p {
+    white-space: pre-line;
   }
 }

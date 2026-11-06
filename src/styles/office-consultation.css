@@ -270,6 +270,10 @@
     padding: 0;
     gap: 0;
   }
+  .office-consultation-copy h2 {
+    position: relative;
+    z-index: 1;
+  }
   .office-consultation-inner {
     min-height: 0;
     gap: var(--space-6);

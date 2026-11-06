@@ -338,11 +338,13 @@
   }
   .home-desktop .client-cases .cases-content {
     display: flex;
-    align-items: stretch;
+    align-items: flex-start;
     gap: var(--space-4);
     margin: 0 calc(-1 * var(--rg));
     padding: var(--space-2) var(--rg) var(--space-4);
     overflow-x: auto;
+    overflow-y: hidden;
+    transition: height 240ms ease;
     overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     scroll-padding-inline: var(--rg);
@@ -376,13 +378,17 @@
   }
   .home-desktop .client-cases .cases-mobile-cta {
     display: block;
-    margin-top: var(--space-4);
+    /* Вместе с нижним padding карусели — 20 px от текста до кнопки. */
+    margin-top: 4px;
+  }
+  .home-desktop .client-cases .cases-mobile-cta[hidden] {
+    display: none;
   }
   .home-desktop .client-cases .cases-mobile-cta > .button {
     width: 100%;
   }
-  .home-desktop .client-cases .cases-content[hidden] ~ .cases-mobile-cta {
-    display: none;
+  .home-desktop .client-cases .case-columns {
+    min-height: 0;
   }
   .cases-content:focus-visible {
     outline: var(--focus-width) solid currentColor;
@@ -400,5 +406,11 @@
   .home-desktop .client-cases .case-result { min-width: 0; width: 100%; }
   .home-desktop .client-cases .case-result .paper-tape[data-tape-corner="bottom-right"] {
     left: calc(100% - var(--tape-box-width) - var(--tape-box-left) + 2px);
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .home-desktop .client-cases .cases-content {
+    transition: none;
   }
 }

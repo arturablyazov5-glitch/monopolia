@@ -31,14 +31,23 @@
   transform: rotate(180deg);
 }
 .telegram-news-wrap {
-  --tape-border: 6px;
   position: relative;
   width: 749.712px;
   height: 285.895px;
   margin: 16px auto 0;
 }
 .paper.telegram-news-frame {
+  --tape-border: var(--brush-border);
   --paper-fill: var(--color-paper-warm);
+}
+/* Скотч пересекает внешний край рамки; 80% силуэта остаётся над бумагой. */
+.telegram-news-frame > .tape-layer .paper-tape[data-tape-edge="top"] {
+  left: calc(100% - var(--tape-box-width) * 0.8 - var(--tape-box-left));
+  top: calc(-1 * var(--tape-box-height) * 0.2 - var(--tape-box-top));
+}
+.telegram-news-frame > .tape-layer .paper-tape[data-tape-edge="bottom"] {
+  left: calc(-1 * var(--tape-box-width) * 0.2 - var(--tape-box-left));
+  top: calc(100% - var(--tape-box-height) * 0.8 - var(--tape-box-top));
 }
 .paper.telegram-news-frame::after {
   background-color: var(--color-paper-warm);

@@ -241,17 +241,32 @@ const cases = clientCases;
     );
     const content = root.querySelector<HTMLElement>("[data-case-content]")!;
     const empty = root.querySelector<HTMLElement>("[data-case-empty]")!;
-    const cta = root.querySelector<HTMLElement>(".cases-mobile-cta > .button");
+    const scrollHint = root.querySelector<HTMLElement>(".mobile-scroll-hint")!;
+    const mobileCta = root.querySelector<HTMLElement>(".cases-mobile-cta")!;
+    const mobileButton = mobileCta.querySelector<HTMLElement>(".button")!;
+    const fitActiveCase = () => {
+      const active = categorySlides[current];
+      if (!mobile.matches || !active) {
+        content.style.removeProperty("height");
+        return;
+      }
+      const style = getComputedStyle(content);
+      const height = active.getBoundingClientRect().height
+        + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      content.style.height = `${height}px`;
+    };
+    const caseResize = new ResizeObserver(fitActiveCase);
+    slides.forEach((slide) => caseResize.observe(slide));
+
 
     const updateCase = (index: number, focusedButton?: HTMLButtonElement) => {
       current = Math.max(0, Math.min(index, categorySlides.length - 1));
       content.hidden = categorySlides.length === 0;
-      cta?.setAttribute(
-        "data-subject",
-        category === "sell"
-          ? "Консультация по продаже недвижимости"
-          : "Консультация по покупке недвижимости",
-      );
+      mobileCta.hidden = categorySlides.length === 0;
+      mobileButton.dataset.subject = category === "sell"
+        ? "Консультация по продаже недвижимости"
+        : "Консультация по покупке недвижимости";
+      scrollHint.hidden = categorySlides.length <= 1;
       empty.hidden = categorySlides.length !== 0;
       slides.forEach((slide) => {
         const active = slide === categorySlides[current];
@@ -264,6 +279,7 @@ const cases = clientCases;
         );
         slide.inert = mobile.matches ? !included : !active;
       });
+      fitActiveCase();
       const previousDisabled = current === 0 || categorySlides.length <= 1;
       const nextDisabled =
         current === categorySlides.length - 1 || categorySlides.length <= 1;
@@ -323,6 +339,7 @@ const cases = clientCases;
           0,
         );
         current = nearest;
+        fitActiveCase();
         status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
       },
       { passive: true },

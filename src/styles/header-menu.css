@@ -129,11 +129,11 @@
   }
   .menu-panel-brand > span {
     display: grid;
-    gap: 6px;
+    gap: 5px;
   }
   .menu-panel-descriptor {
     white-space: nowrap;
-    font: clamp(11px, 3.05vw, 12px)/1.2 var(--font-body);
+    font: clamp(11px, 3.05vw, 12px)/14px var(--font-body);
     letter-spacing: -0.1px;
     color: var(--color-muted);
   }
@@ -238,6 +238,9 @@
 }
 
 @media (max-width: 767px) {
+  .menu-drawer .menu-panel-actions {
+    margin-top: var(--space-8);
+  }
   .menu-drawer .menu-panel-contact {
     background: none;
   }

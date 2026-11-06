@@ -57,12 +57,6 @@
 .paper.paper-has-tape { overflow: visible; }
 
 @media (max-width: 767px) {
-  .telegram-news-wrap > .tape-layer .paper-tape[data-tape-edge="top"] {
-    translate: 0 -6px;
-  }
-  .telegram-news-wrap > .tape-layer .paper-tape[data-tape-edge="bottom"] {
-    translate: -3px 7px;
-  }
   .staff-certificate .paper-tape[data-tape-edge="top"],
   .director-coffee-note .paper-tape[data-tape-edge="top"],
   .company-recommendations .paper-tape[data-tape-edge="top"] {

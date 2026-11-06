@@ -1516,6 +1516,9 @@
     zoom: 0.65;
   }
 
+  .home-desktop .company-about {
+    padding-bottom: var(--section-space-double);
+  }
   /* --- 11. CompanyGuild --- */
   .home-desktop .guild-card {
     padding: 32px 20px;

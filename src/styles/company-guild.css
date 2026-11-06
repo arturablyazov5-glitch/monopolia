@@ -79,32 +79,26 @@
 /* Keep the perimeter inside the section gutter on narrow screens. */
 @media (max-width: 767px) {
   .home-desktop .company-guild.company-guild {
-    padding: 0 var(--space-7) var(--sec);
+    padding: 0 var(--space-7) var(--section-space-double);
   }
   .home-desktop .guild-card.guild-card {
     --brush-border: 8px;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(50px, 14vw, 64px);
-    gap: 24px 12px;
+    display: flow-root;
     padding: 24px 20px 32px;
   }
   .home-desktop .guild-card.guild-card #guild-title {
-    grid-row: 1;
-    grid-column: 1;
     font-size: var(--heading-section);
     margin: 0;
   }
   .home-desktop .guild-card .guild-details {
-    grid-row: 2;
-    grid-column: 1 / -1;
+    margin-top: 24px;
   }
   .home-desktop .guild-card .guild-logo-crop {
     position: relative;
     inset: auto;
-    grid-row: 1;
-    grid-column: 2;
-    align-self: start;
-    width: 100%;
+    float: right;
+    width: clamp(50px, 14vw, 64px);
+    margin-left: 12px;
     aspect-ratio: 4 / 3;
     mask: none;
   }

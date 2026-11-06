@@ -158,11 +158,17 @@
 }
 .buy-mortgage-range {
   gap: 0;
+  min-width: 0;
 }
 /* Значение плывет над ползунком, как подпись 10,9 млн в макете */
 .buy-mortgage-range output {
   justify-self: start;
-  margin-left: calc(8px + (100% - 16px) * var(--range-progress, 0.5));
+  /* Относительное смещение не меняет размеры grid и дорожки ползунка. */
+  position: relative;
+  left: clamp(40px, calc(8px + (100% - 16px) * var(--range-progress, 0.5)), calc(100% - 40px));
+  margin-left: 0;
+  min-width: 8ch;
+  text-align: center;
   transform: translateX(-50%);
   margin-bottom: 7px;
   font: var(--text-body) / 1.2 var(--font-body);
@@ -688,7 +694,7 @@
 /* Мобилка: значение «10,9 млн» — на одной строке с подписью «Стоимость жилья» */
 @media (max-width: 767px) {
   .buy-mortgage-range {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) 8ch;
     grid-template-areas:
       "slider slider"
       "label value";
@@ -702,6 +708,7 @@
   }
   .buy-mortgage-range output {
     grid-area: value;
+    left: auto;
     justify-self: end;
     margin: 0;
     transform: none;

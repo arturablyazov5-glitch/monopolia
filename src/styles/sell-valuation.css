@@ -473,7 +473,8 @@
 }
 @media (max-width: 767px) {
   .sell-valuation {
-    margin-top: 0;
+    /* Существующий рваный край бумаги перекрывает низ фотографии. */
+    margin-top: -105px;
     padding: calc(var(--valuation-edge-height) + var(--section-space)) 20px calc(var(--valuation-edge-height) + var(--section-space));
     gap: var(--section-space-double);
   }

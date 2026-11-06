@@ -35,3 +35,7 @@
 @media (max-width: 767px) {
   .carousel > .mobile-scroll-hint { position: static; margin-top: 0; margin-bottom: var(--space-4); }
 }
+
+.mobile-scroll-hint[hidden] {
+  display: none;
+}
