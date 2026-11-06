@@ -34,15 +34,15 @@
     inset: 0;
     z-index: -2;
     background:
-      linear-gradient(to right, var(--color-dark) 20%, transparent 70%),
-      var(--viewing-edge-colors, linear-gradient(to bottom, color-mix(in srgb, var(--color-paper-warm) 60%, var(--color-muted)) 15%, color-mix(in srgb, var(--color-paper-warm) 50%, var(--color-disabled)) 40%, color-mix(in srgb, var(--color-muted) 70%, var(--color-caption)) 65%, color-mix(in srgb, var(--color-muted) 25%, var(--color-caption)) 85%));
+      linear-gradient(to right, #151515 20%, transparent 70%),
+      var(--viewing-edge-colors, linear-gradient(to bottom, #bdafa4 15%, #c6bfbc 40%, #676360 65%, #91857d 85%));
     mask-image: var(--viewing-photo-mask);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     pointer-events: none;
   }
   .prepared-viewing-sell {
-    --viewing-edge-colors: linear-gradient(to bottom, var(--color-disabled) 15%, var(--color-muted) 40%, color-mix(in srgb, var(--color-muted) 55%, var(--color-caption)) 65%, color-mix(in srgb, var(--color-muted) 60%, var(--color-caption)) 85%);
+    --viewing-edge-colors: linear-gradient(to bottom, #bbb8b2 15%, #5c5047 40%, #736b65 65%, #7c6959 85%);
   }
 }
 .prepared-viewing-inner {

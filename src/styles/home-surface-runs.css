@@ -3,7 +3,16 @@
 .home-surface-run {
   display: contents;
 }
+/* Match the warm dark edges of the team photo on all screen widths. */
+.home-desktop .home-surface-run--reviews {
+  --color-dark: #1a0b05;
+}
 @media (max-width: 767px) {
+  /* The certificates and team photo share this warm, nearly black backdrop. */
+  .home-desktop .certificates {
+    --color-dark: #1a0b05;
+    background: var(--color-dark);
+  }
   .home-surface-run {
     display: flow-root;
     background: var(--color-dark);

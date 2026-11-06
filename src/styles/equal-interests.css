@@ -69,6 +69,13 @@
 .equal-interests-actions .button > img {
   transition: filter 0.4s ease;
 }
+@media (max-width: 767px) {
+  /* Fade the dark bottom of the photo into the section's matching backdrop. */
+  .home-desktop .equal-interests .equal-interests-photo {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 28px), transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 28px), transparent);
+  }
+}
 /* NOV02-10: плавно выводим нижний край фото в фон HonestReviews на планшетах. */
 @media (min-width: 768px) and (max-width: 1199px) {
   .home-desktop .equal-interests {

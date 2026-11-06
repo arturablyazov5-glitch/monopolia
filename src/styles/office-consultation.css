@@ -82,7 +82,7 @@
     inset: 0;
     z-index: -1;
     overflow: hidden;
-    background: var(--color-dark);
+    background: #190f0a;
     mask: url("/assets/office-consultation-background.webp") center / 100% 100% no-repeat;
   }
   .office-consultation-background {
@@ -218,7 +218,7 @@
 
 @media (max-width: 767px) {
   .office-consultation {
-    --office-scene-background: var(--color-dark);
+    --office-scene-background: #190f0a;
     background: var(--office-scene-background);
     overflow-x: clip;
     overflow-y: visible;

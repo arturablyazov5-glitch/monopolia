@@ -131,17 +131,17 @@
   .blockbuster-case {
     /* TASK-058: фон за маской взят из усредненных крайних колонок
        скомпонованного кадра 1440 (небо → горизонт → снег):
-       var(--color-canvas), color-mix(in srgb, var(--color-canvas) 50%, var(--color-disabled)), var(--color-disabled), var(--color-caption), var(--color-disabled).
+       #e2ebf1, #c7d3dc, #9eb5c5, #97979f, #abb0bb, #a4a9b7.
        Так исходный кадр мягко растворяется в продолжение пейзажа,
        а не в чужую темную заливку. */
     background: linear-gradient(
       to bottom,
-      var(--color-canvas) 0 15.7%,
-      color-mix(in srgb, var(--color-canvas) 50%, var(--color-disabled)) 33.7%,
-      var(--color-disabled) 42.7%,
-      var(--color-caption) 47.2%,
-      var(--color-disabled) 56.2%,
-      var(--color-disabled) 100%
+      #e2ebf1 0 15.7%,
+      #c7d3dc 33.7%,
+      #9eb5c5 42.7%,
+      #97979f 47.2%,
+      #abb0bb 56.2%,
+      #a4a9b7 100%
     );
   }
   .blockbuster-scene {

@@ -606,7 +606,7 @@
     --scene-h: calc(866.965px * var(--k));
     height: auto;
     /* цвет белой дымки над сценой: текст сверху читается на светлом */
-    background: linear-gradient(var(--color-dark) 0 40px, color-mix(in srgb, var(--color-paper) 50%, var(--color-canvas)) 40px);
+    background: linear-gradient(var(--color-dark) 0 40px, #e2ebf1 40px);
   }
   .home-desktop .blockbuster-scene {
     top: auto;
@@ -1573,7 +1573,7 @@
   /* --- 15. BlockbusterCase --- */
   .home-desktop .blockbuster-case {
     --k: 0.54;
-    background: color-mix(in srgb, var(--color-paper) 50%, var(--color-canvas));
+    background: #e2ebf1;
   }
   .home-desktop .blockbuster-content {
     padding: calc(var(--blockbuster-edge-height) + var(--section-space)) var(--rg) calc(var(--scene-h) * 0.55 + 150px);
