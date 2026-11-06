@@ -1155,13 +1155,31 @@ dialog::backdrop {
   line-height: var(--leading-body);
   letter-spacing: -0.2px;
 }
-.speech-bubble > img {
+.speech-bubble-blue p {
+  background: var(--color-speech-blue);
+  color: var(--color-paper);
+}
+.speech-bubble > img,
+.speech-bubble > .speech-bubble-blue-tail {
   margin-top: -16px;
   transform: scaleX(-1);
 }
-.speech-bubble.right > img {
+.speech-bubble.right > img,
+.speech-bubble.right > .speech-bubble-blue-tail {
   margin-left: auto;
   transform: none;
+}
+.speech-bubble-blue-tail {
+  display: block;
+  width: 42.183px;
+  height: 24.858px;
+  background: var(--color-speech-blue);
+  -webkit-mask: url("/assets/speech-tail-blue-left.svg") center / 100% 100% no-repeat;
+  mask: url("/assets/speech-tail-blue-left.svg") center / 100% 100% no-repeat;
+}
+.speech-bubble.right > .speech-bubble-blue-tail {
+  -webkit-mask-image: url("/assets/speech-tail-blue-right.svg");
+  mask-image: url("/assets/speech-tail-blue-right.svg");
 }
 .range-field {
   display: grid;

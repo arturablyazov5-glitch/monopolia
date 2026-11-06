@@ -312,16 +312,15 @@
   inset: 0;
   z-index: -1;
 }
-/* Перечеркивание 1299:5137 — исходный вектор, центр по линии цены */
+/* Чистый векторный штрих поверх старой цены. */
 .buy-safari-old-price img {
   position: absolute;
-  /* Видимый штрих SVG подгоняем под сумму без полей бумажной плашки. */
-  width: calc((100% - 10.544px) * 69.6587 / 29.13);
-  height: 42.9098px;
+  width: calc(100% - 10.544px);
+  height: 1.3em;
   left: 50%;
-  top: calc(50% - 10.35px);
+  top: 50%;
   max-width: none;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 }
 .buy-safari-price {
   height: 21px;

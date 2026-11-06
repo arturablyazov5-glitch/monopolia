@@ -51,11 +51,6 @@
   left: 506px;
   top: 157px;
 }
-.sell-gossip-content .sell-gossip-reply p {
-  background: var(--color-accent);
-  color: var(--color-paper);
-}
-
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
 @media (max-width: 1199px) {
   .sell-gossip {

@@ -237,9 +237,9 @@
     z-index: -3;
     background: linear-gradient(
       to right,
-      var(--color-canvas),
-      color-mix(in srgb, var(--color-canvas) 60%, var(--color-disabled)) 55%,
-      color-mix(in srgb, var(--color-canvas) 30%, var(--color-disabled))
+      rgb(225 228 236),
+      rgb(206 217 231) 55%,
+      rgb(184 205 224)
     );
     -webkit-mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
     mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);

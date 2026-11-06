@@ -468,6 +468,25 @@
     top: calc(8px + var(--header-height) + 16px);
     z-index: 3;
     margin-top: 24px;
+    /* iOS Safari перерисовывает многослойную маску на sticky-элементе
+       при асинхронном скролле, из-за чего край дрожит на 1px. */
+    mask-image: none;
+    background: transparent;
+    isolation: isolate;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  .deal-progress::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--color-paper);
+    mask-image: var(--brush-images);
+    mask-size: var(--brush-sizes);
+    mask-position: var(--brush-positions);
+    mask-repeat: no-repeat;
   }
   .deal-steps-list {
     margin-top: 32px;

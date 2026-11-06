@@ -118,11 +118,9 @@
 }
 .deal-insurance-visual .speech-bubble p {
   white-space: pre;
-  color: var(--color-ink);
 }
-.deal-insurance-elena .speech-bubble p {
-  background: var(--color-accent);
-  color: var(--color-paper);
+.deal-insurance-client .speech-bubble p {
+  color: var(--color-ink);
 }
 
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */

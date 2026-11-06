@@ -32,7 +32,7 @@
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
     .office-status-dot {
-      transform: none;
+      transform: translateY(-1px);
     }
   }
 }

@@ -1,6 +1,7 @@
 /* Figma Чистовой макет. Responsive sizes and interaction states are code additions. */
 :root {
   --color-accent: #ea1818;
+  --color-speech-blue: #269dfd;
   --color-diamond: #ff0000;
   /* TASK-050: исходный SVG заказчика; base добавляется как у brush-mask. */
   --bullet-diamond: url("/assets/icons/bullet-diamond.svg");

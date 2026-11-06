@@ -548,6 +548,12 @@
     /* Между самостоятельными блоками — два общих отступа секции. */
     gap: var(--section-space-double);
   }
+  /* Маска секции перерисовывается при движении ползунка.
+     Отдельный слой удерживает дробно масштабированные SVG-логотипы на месте. */
+  .buy-mortgage-banks .home-partner-logos {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
   .buy-mortgage::before {
     content: none;
   }

@@ -72,7 +72,6 @@ const cases = clientCases;
             class:list={[
               "case-photo",
               {
-                "case-photo-plan": caseItem.id === "1951:5075",
                 "case-photo-natural": caseItem.naturalPhoto,
               },
             ]}
@@ -244,22 +243,47 @@ const cases = clientCases;
     const scrollHint = root.querySelector<HTMLElement>(".mobile-scroll-hint")!;
     const mobileCta = root.querySelector<HTMLElement>(".cases-mobile-cta")!;
     const mobileButton = mobileCta.querySelector<HTMLElement>(".button")!;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
     let scrolling = false;
+    let scrollFrame = 0;
+    let ctaAnimation: Animation | null = null;
+    let initialized = false;
     let scrollSettleTimer: ReturnType<typeof setTimeout> | undefined;
-    const fitActiveCase = () => {
+    const fitActiveCase = (animateButton = false) => {
       // Do not move the CTA while the user is swiping between cards.
       if (scrolling) return;
       const active = categorySlides[current];
       if (!mobile.matches || !active) {
+        ctaAnimation?.cancel();
+        ctaAnimation = null;
         content.style.removeProperty("height");
         return;
       }
       const style = getComputedStyle(content);
       const height = active.getBoundingClientRect().height
         + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const previousHeight = content.getBoundingClientRect().height;
+      if (Math.abs(previousHeight - height) < 1) return;
+
+      ctaAnimation?.cancel();
       content.style.height = `${height}px`;
+      // Only animate the button on the compositor. Animating the scroll
+      // container's height repaints the whole section on every frame.
+      if (animateButton && !reduceMotion.matches && !mobileCta.hidden) {
+        const distance = previousHeight - height;
+        ctaAnimation = mobileCta.animate(
+          [
+            { transform: `translate3d(0, ${distance}px, 0)` },
+            { transform: "translate3d(0, 0, 0)" },
+          ],
+          {
+            duration: Math.min(480, Math.max(240, Math.abs(distance) * 0.4)),
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          },
+        );
+      }
     };
-    const caseResize = new ResizeObserver(fitActiveCase);
+    const caseResize = new ResizeObserver(() => fitActiveCase());
     slides.forEach((slide) => caseResize.observe(slide));
 
 
@@ -283,7 +307,8 @@ const cases = clientCases;
         );
         slide.inert = mobile.matches ? !included : !active;
       });
-      fitActiveCase();
+      fitActiveCase(initialized);
+      initialized = true;
       const previousDisabled = current === 0 || categorySlides.length <= 1;
       const nextDisabled =
         current === categorySlides.length - 1 || categorySlides.length <= 1;
@@ -323,6 +348,8 @@ const cases = clientCases;
     mobile.addEventListener("change", () => {
       scrolling = false;
       clearTimeout(scrollSettleTimer);
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = 0;
       updateCase(current);
       content.scrollLeft = 0;
     });
@@ -336,20 +363,29 @@ const cases = clientCases;
             : best,
         0,
       );
-      current = nearest;
-      status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
+      if (nearest !== current) {
+        current = nearest;
+        status.textContent = `Кейс ${current + 1} из ${categorySlides.length}`;
+      }
     };
     const finishScroll = () => {
       if (!scrolling) return;
       clearTimeout(scrollSettleTimer);
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = 0;
       scrolling = false;
       syncScrolledCase();
-      fitActiveCase();
+      fitActiveCase(true);
     };
     content.addEventListener("scroll", () => {
       if (!mobile.matches || !categorySlides.length) return;
       scrolling = true;
-      syncScrolledCase();
+      if (!scrollFrame) {
+        scrollFrame = requestAnimationFrame(() => {
+          scrollFrame = 0;
+          syncScrolledCase();
+        });
+      }
       // Safari versions without scrollend still settle after scrolling stops.
       clearTimeout(scrollSettleTimer);
       scrollSettleTimer = setTimeout(finishScroll, 200);
@@ -359,6 +395,8 @@ const cases = clientCases;
     root.addEventListener("choice-change", (event) => {
       scrolling = false;
       clearTimeout(scrollSettleTimer);
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = 0;
       const value = (event as CustomEvent<{ value: string }>).detail.value;
       const tabs = [
         ...root.querySelectorAll<HTMLElement>(

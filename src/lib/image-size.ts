@@ -723,8 +723,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 73.4912,
   },
   "/assets/partner-etalon.svg": {
-    width: 110.043,
-    height: 18.8212,
+    width: 153,
+    height: 26,
   },
   "/assets/marketplace-avito-icon.svg": {
     width: 36.7731,
@@ -755,8 +755,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 35.7208,
   },
   "/assets/partner-etalon-home.svg": {
-    width: 152.367,
-    height: 26.0603,
+    width: 153,
+    height: 26,
   },
   "/assets/buy-catalog-quiz-shadow.svg": {
     width: 447.229,
@@ -823,8 +823,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 73.4912,
   },
   "/assets/catalog-old-price-strikethrough.svg": {
-    width: 69.6587,
-    height: 42.9098,
+    width: 423,
+    height: 14,
   },
   "/assets/telegram-news-person.webp": {
     width: 1024,
