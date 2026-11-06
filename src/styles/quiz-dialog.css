@@ -7,7 +7,27 @@ dialog#lead-dialog.quiz-dialog {
   backdrop-filter: none;
 }
 #lead-dialog.quiz-dialog .dialog-sheet {
-  padding: 56px 20px 20px;
+  padding: 24px 20px 20px;
+}
+#lead-dialog.quiz-dialog .inner-hero-card-top > .buy-quiz-question,
+#lead-dialog.quiz-dialog [data-quiz-question],
+#lead-dialog.quiz-dialog [data-quiz-contact] > .buy-quiz-question {
+  padding-right: 40px;
+}
+#lead-dialog.quiz-dialog .inner-hero-card-top {
+  gap: 24px;
+}
+#lead-dialog.quiz-dialog .inner-hero-quiz {
+  display: block;
+}
+#lead-dialog.quiz-dialog .inner-hero-booklet {
+  width: min(430px, 100%);
+  padding: 0 24px;
+  margin: 0 auto -28px;
+  zoom: 0.95;
+}
+#lead-dialog.quiz-dialog .inner-hero-booklet-shadow {
+  margin-left: 0;
 }
 #lead-dialog.quiz-dialog .inner-hero-card {
   max-width: 100%;
@@ -15,17 +35,20 @@ dialog#lead-dialog.quiz-dialog {
   min-height: 526px;
   gap: 24px;
 }
+#lead-dialog.quiz-dialog .inner-hero-card:has(.buy-quiz:not([hidden])) {
+  min-height: 0;
+}
+#lead-dialog.quiz-dialog .buy-quiz,
+#lead-dialog.quiz-dialog .buy-quiz [data-quiz-questions],
+#lead-dialog.quiz-dialog .buy-quiz [data-quiz-contact] {
+  flex: none;
+}
 #lead-dialog [data-dialog-form][hidden] {
   display: none !important;
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  #lead-dialog.quiz-dialog .inner-hero-quiz {
-    display: block;
-  }
-}
 @media (max-width: 767px) {
   #lead-dialog.quiz-dialog .dialog-sheet {
-    padding: 56px 12px 16px;
+    padding: 24px 12px 16px;
   }
   #lead-dialog.quiz-dialog .inner-hero-card {
     min-height: 0;

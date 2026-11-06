@@ -89,13 +89,9 @@
   .home-desktop .private-catalog-assurance-detail::after {
     right: 50%;
     width: min(11em, 87%);
+    height: auto;
+    aspect-ratio: 423 / 14;
     bottom: -9px;
     transform: translateX(50%) rotate(1deg);
-  }
-}
-
-@media (max-width: 700px) {
-  .home-desktop .private-catalog-assurance-detail::after {
-    transform: translateX(50%) rotate(1deg) scaleY(2);
   }
 }

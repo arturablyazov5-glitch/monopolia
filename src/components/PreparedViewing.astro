@@ -1,6 +1,6 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import TapedNote from "./TapedNote.astro";
 import "../styles/prepared-viewing.css";
 interface Props {
@@ -38,6 +38,7 @@ const lists = [
 <section
   data-surface="dark"
   class:list={["prepared-viewing", { "prepared-viewing-sell": selling }]}
+  style={`--viewing-photo-mask: url("${comparisonPhoto}")`}
   data-node-id={node}
   aria-labelledby={`${id}-title`}
 >
@@ -115,9 +116,7 @@ const lists = [
         </div>
       )}
       <div class="prepared-viewing-actions">
-        <Button
-          quiz={selling ? "sell" : undefined}
-          popup={selling ? undefined : "viewing"}
+        <ConsultationButton
           label={
             selling
               ? siteText("prepared-viewing.label.15")

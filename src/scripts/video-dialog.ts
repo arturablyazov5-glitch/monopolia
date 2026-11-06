@@ -19,8 +19,6 @@ if (dialog) {
     loading.textContent = "Не удалось загрузить видео. Попробуйте открыть его снова.";
   });
   let scrollY = 0;
-  let bodyStyle: string | null = null;
-  let rootStyle: string | null = null;
   let closeTimer: ReturnType<typeof setTimeout> | undefined;
   let suspended = false;
   let resumeOnReturn = false;
@@ -101,13 +99,12 @@ if (dialog) {
     );
   };
   dialog.addEventListener("close", () => {
+    // A queued close event must not tear down a newly opened player.
+    if (dialog.open) return;
     clearTimeout(closeTimer);
     unload();
     dialog.classList.remove("is-closing");
-    if (bodyStyle === null) document.body.removeAttribute("style");
-    else document.body.setAttribute("style", bodyStyle);
-    if (rootStyle === null) document.documentElement.removeAttribute("style");
-    else document.documentElement.setAttribute("style", rootStyle);
+    document.documentElement.classList.remove("video-dialog-open");
     window.scrollTo({ top: scrollY, behavior: "instant" });
     trigger?.focus({ preventScroll: true });
   });
@@ -156,15 +153,9 @@ if (dialog) {
     title.textContent = button.getAttribute("aria-label") || "Видеоотзыв";
     unload();
     scrollY = window.scrollY;
-    bodyStyle = document.body.getAttribute("style");
-    rootStyle = document.documentElement.getAttribute("style");
-    Object.assign(document.body.style, {
-      position: "fixed",
-      top: `-${scrollY}px`,
-      width: "100%",
-      overflow: "hidden",
-    });
-    document.documentElement.style.overflow = "hidden";
+    // Keep the page in normal flow so closing the video cannot leave a
+    // stale fixed/composited page layer behind the native dialog backdrop.
+    document.documentElement.classList.add("video-dialog-open");
     dialog.showModal();
     closeButton.focus({ preventScroll: true });
     // Publish the video layer only after its first decoded frame is presented.

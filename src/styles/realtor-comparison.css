@@ -111,7 +111,7 @@
     padding-right: 16px;
   }
   .realtor-comparison-heading h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
 

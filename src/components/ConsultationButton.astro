@@ -1,0 +1,23 @@
+---
+import Button from "./Button.astro";
+import { siteText } from "../data/site-texts.mjs";
+
+// Назначение фиксировано: страница меняет текст, но не форму или ссылку.
+interface Props {
+  label?: string;
+  subject?: string;
+  loading?: "eager" | "lazy";
+  tone?: "red" | "black" | "white";
+  popup?: never;
+  quiz?: never;
+  href?: never;
+}
+const {
+  label = siteText("client-cases.label.28"),
+  subject,
+  loading,
+  tone,
+} = Astro.props;
+---
+
+<Button popup="office" label={label} subject={subject} loading={loading} tone={tone} />

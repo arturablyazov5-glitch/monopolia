@@ -116,6 +116,6 @@
     padding-bottom: 16px;
   }
   .sell-answers-heading h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }

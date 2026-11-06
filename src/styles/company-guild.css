@@ -22,7 +22,7 @@
   position: relative;
   z-index: 2;
   margin: 0 0 32px;
-  font: var(--weight-heading) var(--text-heading)/var(--leading-heading)
+  font: var(--weight-heading) var(--h2, var(--text-heading))/var(--leading-heading)
     var(--font-heading);
 }
 .guild-details {
@@ -71,9 +71,6 @@
 }
 
 @media (min-width: 768px) {
-  .home-desktop .guild-card #guild-title {
-    font-size: var(--text-heading);
-  }
   .home-desktop .guild-card #guild-title br {
     display: inline;
   }
@@ -94,7 +91,7 @@
   .home-desktop .guild-card.guild-card #guild-title {
     grid-row: 1;
     grid-column: 1;
-    font-size: min(var(--h2), 5.55vw);
+    font-size: var(--heading-section);
     margin: 0;
   }
   .home-desktop .guild-card .guild-details {

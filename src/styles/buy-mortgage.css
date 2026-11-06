@@ -615,7 +615,7 @@
 @media (max-width: 539px) {
   .buy-mortgage-title,
   .buy-mortgage-deals-heading h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
   .buy-mortgage-review {
     flex-direction: column;

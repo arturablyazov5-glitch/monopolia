@@ -120,10 +120,9 @@
   :root {
     --bullet-list-gap: 20px;
     --h1: 29px;
-    --h1-fluid: min(29px, calc((100vw - 40px) / 11.2 * 0.91));
+    --h1-fluid: var(--h1);
     --heading-section: 27px;
     --h2: var(--heading-section);
-    --h2-compact: 25.5px;
     --h3: 18px;
     --h3-large: 20px;
     --h3-small: 16.5px;
@@ -134,8 +133,6 @@
 }
 @media (max-width: 389px) {
   :root {
-    --h1: 27.3px;
-    --heading-section: var(--h2-compact);
     --heading-hero-hand: var(--heading-hand);
   }
 }

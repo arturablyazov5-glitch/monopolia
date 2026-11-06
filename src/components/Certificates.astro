@@ -1,6 +1,6 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import "../styles/certificates.css";
 import "../styles/decorative-stroke.css";
 ---
@@ -37,7 +37,7 @@ import "../styles/decorative-stroke.css";
       <h2 id="certificates-title">{siteText("certificates.text.1")}</h2>
       <p class="certificates-handwriting">{siteText("certificates.text.2")}</p>
       <div class="certificates-actions">
-        <Button popup="office"
+        <ConsultationButton
           label={siteText("certificates.label.3")}
           subject="Консультация"
         />

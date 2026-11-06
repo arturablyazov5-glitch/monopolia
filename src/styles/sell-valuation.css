@@ -599,7 +599,7 @@
   }
   .sell-valuation-heading h2,
   .sell-week > h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
   .sell-valuation-visual {
     zoom: 0.54;

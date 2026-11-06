@@ -17,6 +17,23 @@
 }
 /* Разделители 785:7946: 1 px, у первых двух колонок черный 5%, у третьей белый */
 @media (min-width: 768px) {
+  .comparison-risk .comparison-risk-ours {
+    --risk-edge-top: 0px;
+    --risk-edge-bottom: 0px;
+    mask-image: var(--brush-square-images);
+    mask-size:
+      12px var(--risk-edge-top), calc(100% - 22px) var(--risk-edge-top), 12px var(--risk-edge-top),
+      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)), calc(100% - 22px) calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)),
+      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)), 12px var(--risk-edge-bottom), calc(100% - 22px) var(--risk-edge-bottom), 12px var(--risk-edge-bottom);
+    mask-position: left top, center top, right top, left 0 top var(--risk-edge-top), left 50% top var(--risk-edge-top), right 0 top var(--risk-edge-top), left bottom, center bottom, right bottom;
+    mask-repeat: no-repeat;
+  }
+  .comparison-risk thead .comparison-risk-ours {
+    --risk-edge-top: 12px;
+  }
+  .comparison-risk tbody tr:last-child .comparison-risk-ours {
+    --risk-edge-bottom: 12px;
+  }
   .comparison-risk tbody tr:not(:last-child) > * {
     border-bottom: 1px solid #0000000d;
   }

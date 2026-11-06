@@ -21,11 +21,28 @@
   top: 0;
   height: 756.791px;
 }
-/* Рваные края — альфа самого фото (1440 × 655/757). Шире макета cover увеличивал фото по высоте
-   и срезал края, оставляя прямой срез: растягиваем по ширине, высота фиксирована. */
+/* На широких экранах центральный кадр не растягивается. */
 @media (min-width: 1441px) {
   .prepared-viewing-background {
-    object-fit: fill;
+    width: 1440px;
+    object-fit: contain;
+    mask-image: linear-gradient(to right, transparent, #000 100px, #000 calc(100% - 240px), transparent);
+  }
+  .prepared-viewing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      linear-gradient(to right, #151515 20%, transparent 70%),
+      var(--viewing-edge-colors, linear-gradient(to bottom, #bdafa4 15%, #c6bfbc 40%, #676360 65%, #91857d 85%));
+    mask-image: var(--viewing-photo-mask);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+  }
+  .prepared-viewing-sell {
+    --viewing-edge-colors: linear-gradient(to bottom, #bbb8b2 15%, #5c5047 40%, #736b65 65%, #7c6959 85%);
   }
 }
 .prepared-viewing-inner {
@@ -101,7 +118,8 @@
 .prepared-viewing-probability {
   position: absolute;
   top: 460.886px;
-  left: calc(50% + 132px);
+  /* Шов исходного кадра x=1007 из 1440 остается на 287px правее центра. */
+  left: calc(50% + 287px - 154.841px);
   width: 309.682px;
 }
 .prepared-viewing-sell .prepared-viewing-probability {
@@ -281,7 +299,7 @@
     padding-right: 16px;
   }
   .prepared-viewing h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
 

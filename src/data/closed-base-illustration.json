@@ -114,5 +114,41 @@
     "source": "https://t.me/monopoliyabelogorsk/3124?single",
     "publishedAt": "2026-08-24",
     "illustrativeOldPrice": "5 990 000 ₽"
+  },
+  {
+    "title": "ул. Кирова, 62",
+    "caption": "43,4 м²",
+    "price": "6 000 000 ₽",
+    "image": "/assets/closed-base-kirova-62.webp",
+    "photo": {
+      "width": 340,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3189",
+    "publishedAt": "2026-11-02"
+  },
+  {
+    "title": "пгт Серышево, ул. Ленина, 47",
+    "caption": "29,3 м²",
+    "price": "900 000 ₽",
+    "image": "/assets/closed-base-seryshevo-lenina-47.webp",
+    "photo": {
+      "width": 340,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3189",
+    "publishedAt": "2026-11-02"
+  },
+  {
+    "title": "ул. Титова, 10",
+    "caption": "41 м²",
+    "price": "4 400 000 ₽",
+    "image": "/assets/closed-base-titova-10.webp",
+    "photo": {
+      "width": 340,
+      "height": 218
+    },
+    "source": "https://t.me/monopoliyabelogorsk/3175",
+    "publishedAt": "2026-10-19"
   }
 ]

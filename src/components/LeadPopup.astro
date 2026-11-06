@@ -4,6 +4,7 @@ import LeadForm from "./LeadForm.astro";
 import { imageSize } from "../lib/image-size";
 import ExpertProfile from "./ExpertProfile.astro";
 import PdfFileNote from "./PdfFileNote.astro";
+import ClosedBasePreview from "./ClosedBasePreview.astro";
 const popups = {
   callback: {
     title: "Обратный звонок",
@@ -40,8 +41,6 @@ const popups = {
       "Свяжемся с вами в течение 10 минут и пришлем объекты из закрытой базы, подходящие под ваши требования",
     button: "Получить доступ к базе",
     node: "2045:3906",
-    image: "/assets/buyer-catalog-booklet.webp",
-    alt: "Пример подборки объектов Монополии",
   },
   service: {
     title: "Консультация по услуге",
@@ -109,7 +108,7 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
     `popup-${mode}`,
     {
       "popup-without-media":
-        hasExpertProfile || (!data.image && mode !== "viewing"),
+        hasExpertProfile || (!data.image && mode !== "viewing" && mode !== "closed-base"),
     },
   ]}
   hidden
@@ -143,19 +142,24 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
         {data.badge && <p class="popup-action-note">{data.badge}</p>}
       </Fragment>
     )}
-    {!hasExpertProfile && (data.image || mode === "viewing") && (
+    {mode === "closed-base" && (
+      <figure slot="media" class="popup-media popup-catalog-preview">
+        <ClosedBasePreview expanded />
+      </figure>
+    )}
+    {!hasExpertProfile && mode !== "closed-base" && (data.image || mode === "viewing") && (
       <figure
         slot="media"
         class:list={[
           "popup-media",
           {
             "popup-media-document":
-              mode === "analysis" || mode === "closed-base",
+              mode === "analysis",
             "popup-media-neutral": !data.image,
           },
         ]}
       >
-        <div class:list={["popup-media-window", { "brush-stroke": mode !== "analysis" && mode !== "closed-base" }]}>
+        <div class:list={["popup-media-window", { "brush-stroke": mode !== "analysis" }]}>
           {(data.image || mode === "viewing") && (
             <img
               class:list={[

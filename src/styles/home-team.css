@@ -85,11 +85,12 @@
 .home-team .staff-photo .badge {
   filter: drop-shadow(0 2px 3px #0000000d);
   position: absolute;
+  --staff-badge-inset: 12px;
   left: auto;
-  right: 0;
-  bottom: 12px;
+  right: var(--staff-badge-inset);
+  bottom: var(--staff-badge-inset);
   width: calc(var(--badge-text-width, 13em) + 40px);
-  max-width: 100%;
+  max-width: calc(100% - 2 * var(--staff-badge-inset));
   text-align: left;
   padding: 10px 20px;
   font: 14px/1.2 var(--font-body);

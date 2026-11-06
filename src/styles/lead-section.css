@@ -253,6 +253,6 @@
     margin: 0 16px;
   }
   .lead-section .lead-form h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }

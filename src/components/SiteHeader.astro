@@ -6,7 +6,7 @@ import OfficeHours from "./OfficeHours.astro";
 import CityPicker from "./CityPicker.astro";
 import PhoneAction from "./PhoneAction.astro";
 import { cities as defaultCities } from "../data/cities";
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import AdminIcon from "./AdminIcon.astro";
 import "../styles/header-menu.css";
 interface Props {
@@ -266,8 +266,7 @@ const isCurrentMenuPage = (href: string) =>
               <OfficeHours class="menu-panel-hours" />
             </div>
             <div class="menu-panel-actions">
-              <Button
-                popup="office"
+              <ConsultationButton
                 label="Получить консультацию"
                 loading="lazy"
               />

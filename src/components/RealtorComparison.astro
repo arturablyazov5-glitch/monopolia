@@ -5,7 +5,7 @@ import { siteText } from "../data/site-texts.mjs";
 // сделку — всего 3%», заголовок, сравнение со шкалой риска, CTA и
 // утверждение «Кстати…» (AccentStatement). На «Продаже» — те же части
 // с другими rows / заголовком / текстом в слоте statement.
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import TapedNote from "./TapedNote.astro";
 import ComparisonTable from "./ComparisonTable.astro";
 import AccentStatement from "./AccentStatement.astro";
@@ -90,7 +90,7 @@ const {
         caption={title}
       />
       <div class="realtor-comparison-cta" data-node-id="1380:7003">
-        <Button popup="office" label={ctaLabel} subject={subject} />
+        <ConsultationButton label={ctaLabel} subject={subject} />
         <p>
           {siteText("realtor-comparison.text.3")} <strong>{siteText("realtor-comparison.text.4")}</strong>
         </p>

@@ -125,6 +125,6 @@
 }
 @media (max-width: 539px) {
   .buy-new-build-card h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }

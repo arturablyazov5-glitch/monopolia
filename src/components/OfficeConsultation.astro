@@ -1,7 +1,7 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 // Общий мастер 1380:6560 / 1380:6326. Тексты экземпляров отличаются.
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import TapedNote from "./TapedNote.astro";
 import "../styles/office-consultation.css";
 import "../styles/mobile-photo-scene.css";
@@ -81,8 +81,7 @@ const notes = (selling
       </ul>
     </div>
     <div class="office-consultation-actions">
-      <Button
-        popup="office"
+      <ConsultationButton
         label={siteText("client-cases.label.28")}
         subject={`Консультация в офисе: ${selling ? "продажа" : "покупка"}`}
       />

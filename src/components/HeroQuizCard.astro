@@ -34,7 +34,7 @@ const options = [1, 2, 3, 4, 5, 6].map(index => siteText(`inner-hero.options.${i
             </div>
             <div
               class="inner-hero-booklet-frame"
-              style={`height:${image.height}px`}
+              style={inDialog ? undefined : `height:${image.height}px`}
             >
               <picture style="display:contents">
                 {image.mobile && (

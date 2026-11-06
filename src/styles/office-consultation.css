@@ -73,7 +73,25 @@
   font-size: 14px;
 }
 
-/* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
+/* В узком desktop кадр опускается под записки; маска сохраняет рваные
+   границы секции, а подложка заполняет освободившийся верх фотографии. */
+@media (min-width: 1200px) and (max-width: 1590px) {
+  .office-consultation-photo {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #190f0a;
+    mask: url("/assets/office-consultation-background.webp") center / 100% 100% no-repeat;
+  }
+  .office-consultation-background {
+    top: 48px;
+    mask-image: linear-gradient(to bottom, transparent, #000 120px);
+  }
+}
+
+/* ===== Адаптив R2 ===== */
 /* Порядок: метка → заголовок → свободная зона с лицами → записки → CTA. */
 @media (max-width: 1199px) {
   .office-consultation {
@@ -179,7 +197,7 @@
     margin: 0 16px;
   }
   .office-consultation-copy h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
 

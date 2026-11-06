@@ -1,7 +1,7 @@
 ---
 import { people } from "../data/people.mjs";
 import { siteText } from "../data/site-texts.mjs";
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import Paper from "./Paper.astro";
 import TapedNote from "./TapedNote.astro";
 import PersonLabel from "./PersonLabel.astro";
@@ -88,8 +88,7 @@ const ratingParts = ratingText.split("Домклик");
           <strong>{siteText("director-invitation.text.8")}</strong>
         </TapedNote>
         <div class="director-cta">
-          <Button
-            popup="office"
+          <ConsultationButton
             label={siteText("director-invitation.label.9")}
             subject="Консультация в офисе за кофе"
           />

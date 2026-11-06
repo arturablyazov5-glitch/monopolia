@@ -180,7 +180,6 @@ button.button {
   --brush-ring: 0px 4px 0px 0.5px;
 }
 .paper.faq-card-accordion {
-  --brush-border: 16px;
   --brush-ring: 0px 2.25px 0px 0px;
 }
 .paper.service-card-coupon {
@@ -214,11 +213,6 @@ button.button {
 .lead-form textarea {
   --brush-ring-inline-end: 2px;
   --brush-ring: 0px var(--brush-ring-inline-end) 0px 0px;
-}
-@media (max-width: 767px) {
-  .paper.faq-card-accordion {
-    --brush-border: 12px;
-  }
 }
 /* Темный лист имеет собственную непрозрачную текстуру. */
 .paper.blockbuster-label::after {
@@ -480,6 +474,11 @@ button.button {
 .paper.paper-unframed::before,
 .paper.paper-unframed::after {
   display: none;
+}
+
+/* Белая кромка 2 px сверху и снизу готового рваного силуэта. */
+.paper.staff-card {
+  filter: drop-shadow(0 -2px 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 5px 7px #0000000f);
 }
 
 /* A visible torn bottom for tall paper cards; content and tape stay uncut. */

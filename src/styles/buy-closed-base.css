@@ -526,7 +526,7 @@
 }
 @media (max-width: 539px) {
   .buy-closed-base-title {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
 

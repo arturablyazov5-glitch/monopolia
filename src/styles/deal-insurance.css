@@ -317,7 +317,7 @@
     margin: 0 16px;
   }
   .deal-insurance-heading h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
 

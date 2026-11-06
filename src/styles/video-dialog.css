@@ -1,3 +1,9 @@
+html.video-dialog-open,
+html.video-dialog-open body {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 #video-dialog {
   --video-height: min(
     86dvh,

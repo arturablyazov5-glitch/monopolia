@@ -82,6 +82,10 @@ const business = {
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <style is:inline>
+      /* Paint the document canvas before external styles and images arrive. */
+      html { background: #fff; color-scheme: light; }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/* LCP mobile: фотографический фон главной. Бумага загружается из CSS. */}
     {seo && pathname === "/" && (

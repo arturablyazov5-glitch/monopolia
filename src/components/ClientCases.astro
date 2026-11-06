@@ -2,7 +2,7 @@
 import { siteText } from "../data/site-texts.mjs";
 import { clientCases } from "../data/client-cases";
 import Paper from "./Paper.astro";
-import Button from "./Button.astro";
+import ConsultationButton from "./ConsultationButton.astro";
 import ChoiceGroup from "./ChoiceGroup.astro";
 import ScrollHint from "./ScrollHint.astro";
 import CarouselControls from "./CarouselControls.astro";
@@ -191,8 +191,7 @@ const cases = clientCases;
               ))}
             </div>
             <div class="case-actions">
-              <Button
-                popup="office"
+              <ConsultationButton
                 label={siteText("client-cases.label.28")}
                 subject={
                   caseItem.category === "sell"
@@ -211,8 +210,7 @@ const cases = clientCases;
       ))}
     </div>
     <div class="cases-mobile-cta">
-      <Button
-        popup="office"
+      <ConsultationButton
         label={siteText("client-cases.label.28")}
         subject="Консультация по продаже недвижимости"
       />

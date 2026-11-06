@@ -28,11 +28,11 @@
   }
 }
 .faq-slot {
-  /* Строки колонки в Figma считаются по габаритам повернутой карточки */
   padding: var(--faq-overhang) 0;
   transform: rotate(var(--faq-tilt));
-  /* Верх карточки остается на месте, когда ответ меняет ее высоту. */
+  /* Поворот закреплён сверху и не зависит от высоты раскрытого ответа. */
   transform-origin: center top;
+  overflow-anchor: none;
 }
 
 /* Карточка — FaqCard variant="accordion", Figma 1380:5740 */
@@ -43,21 +43,11 @@
   gap: 0;
   --faq-gap: 20px;
   /* В Figma обводка 16 px внутренняя: 32 px от внешнего края до контента */
-  padding: 16px;
-  border: 16px solid #fff;
-  border-radius: 4px;
+  padding: 32px;
+  border: 0;
   box-shadow:
     0 14px 14px #3d0b0b08,
     0 5px 7px #0000000f;
-}
-/* В рендере Figma белая обводка не видна: бумажная текстура идет до края.
-   Текстура и рваный край Paper выведены на внешнюю границу (через border). */
-.faq-card-accordion:before {
-  inset: -16px;
-  border-radius: 4px;
-}
-.faq-card-accordion:after {
-  inset: -18px;
 }
 .faq-question {
   font: 500 var(--text-card) / 1.2 var(--font-heading);
@@ -172,7 +162,7 @@
 }
 
 /* ===== Адаптив (R1): одна колонка. Планшет ≤ 1199 — до 720 px по центру,
-   телефон ≤ 767 — поля 20 px. Повороты карточек сохраняются. ===== */
+   телефон ≤ 767 — поля 20 px. ===== */
 @media (max-width: 1199px) {
   .faq-section {
     width: calc(100% - 64px);
@@ -192,7 +182,6 @@
     gap: 24px;
   }
   .faq-slot {
-    /* перерасчет выноса повернутой карточки не нужен — запас 4 px */
     padding: 4px 0;
   }
   .faq-toggle {
@@ -209,14 +198,7 @@
   }
   .faq-card.faq-card-accordion {
     --faq-gap: 16px;
-    padding: 8px;
-    border-width: 12px;
-  }
-  .faq-card-accordion:before {
-    inset: -12px;
-  }
-  .faq-card-accordion:after {
-    inset: -14px;
+    padding: 20px;
   }
   .faq-question {
     font-size: var(--h3-small);
@@ -236,6 +218,6 @@
     width: calc(100% - 32px);
   }
   .faq-section > h2 {
-    font-size: var(--h2-compact);
+    font-size: var(--heading-section);
   }
 }
