@@ -168,7 +168,15 @@
    подгоняя изображение под высоту секции вместо десктопных 1440 px. */
 @media (max-width: 767px) {
   .home-team {
-    background: white;
+    background: transparent;
+  }
+  .home-team::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 -32px;
+    z-index: -2;
+    background: #fdfdfd;
+    pointer-events: none;
     mask-image:
       url("/assets/background-paper-edge-white.svg"),
       linear-gradient(#000, #000);
@@ -183,10 +191,11 @@
     left: 0;
     transform: none;
     width: 100%;
-    height: calc(125% + 80px);
+    height: calc(100% + 80px);
     object-fit: cover;
     object-position: center top;
-    mask: none;
+    clip-path: inset(112px 0 0);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
   }
 }
 
