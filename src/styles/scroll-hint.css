@@ -21,6 +21,17 @@
     transform: translateY(-1px);
   }
 }
+
+/* iOS uses different font metrics from desktop Chromium: the arrow looks
+   higher than the adjacent text even though flex centers their boxes. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .mobile-scroll-hint img {
+      transform: translateY(2px);
+    }
+  }
+}
+
 @keyframes mobile-scroll-arrow {
   50% {
     transform: translateX(-5px);

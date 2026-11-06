@@ -32,6 +32,14 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
     flex: none;
     transform: translateY(-1px);
   }
+  /* WebKit renders Calibri's visible text slightly lower than Chromium. */
+  @supports (-webkit-touch-callout: none) {
+    @media (max-width: 767px) {
+      .video-duration svg {
+        transform: translateY(2px);
+      }
+    }
+  }
   .bottom-right {
     position: absolute;
     right: 16px;
