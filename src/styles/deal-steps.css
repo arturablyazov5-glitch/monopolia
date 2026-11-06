@@ -333,7 +333,7 @@
 .deal-funnel-icon {
   object-fit: cover;
 }
-/* бокс повёрнутой метки 157.482 × 31.736 */
+/* бокс повернутой метки 157.482 × 31.736 */
 .deal-funnel-result {
   --brush-images: var(--brush-square-images);
   margin: 1.47px 0;
@@ -391,7 +391,7 @@
   .deal-funnel-image {
     max-width: none;
   }
-  /* Блок шириной 0: обрезаем только по высоте (длинная картинка), по ширине пунктир остаётся видимым */
+  /* Блок шириной 0: обрезаем только по высоте (длинная картинка), по ширине пунктир остается видимым */
   .deal-step-dash {
     overflow-x: visible;
     overflow-y: clip;

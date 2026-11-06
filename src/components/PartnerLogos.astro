@@ -29,7 +29,7 @@ const logos = [
 ---
 
 {home ? (
-  <div class="home-partner-logos" role="group" aria-label="Логотипы партнёров">
+  <div class="home-partner-logos" role="group" aria-label="Логотипы партнеров">
     {homeLogos.map(([file, width, left, name]) => (
       <span
         class:list={[
@@ -54,7 +54,7 @@ const logos = [
     class="partner-logos"
     data-node-id="1380:6392"
     role="group"
-    aria-label="Логотипы партнёров"
+    aria-label="Логотипы партнеров"
   >
     {[
       ...logos.slice(0, etalonIndex ?? logos.length),
@@ -68,7 +68,7 @@ const logos = [
         >
           <img
             src={"/assets/" + logo[0]}
-            alt="Партнёр агентства"
+            alt="Партнер агентства"
             loading="lazy"
             width={imageSize("/assets/" + logo[0]).width}
             height={imageSize("/assets/" + logo[0]).height}

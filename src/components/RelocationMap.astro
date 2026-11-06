@@ -7,7 +7,7 @@ import { getRelocationTrainLayers } from "../data/relocation-routes";
 // Figma 1380:6590 («Покупка»): шапка блока 1380:6589 — заголовок,
 // рукописная подпись и маршруты к Белогорску поверх карты 1380:6591.
 // Карта (relocation-map-buy.svg, 5385×3035) уходит на 2132 px выше блока и лежит
-// под предыдущими секциями (z-index: -1), как в Figma; её верх
+// под предыдущими секциями (z-index: -1), как в Figma; ее верх
 // закрыт градиентом #EDEDED. Слои маршрутов передаются данными —
 // для «Продажи» (1380:5933) достаточно передать свои routes/markers.
 import "../styles/relocation-map.css";
@@ -38,7 +38,7 @@ interface Props {
   fadeStart?: number;
 }
 
-// Координаты — из get_design_context 1380:6590 (с учётом inset экспорта)
+// Координаты — из get_design_context 1380:6590 (с учетом inset экспорта)
 const buyLayers: MapLayer[] = [
   // Метка Белогорска 1380:6829 (в Figma ниже маршрутов)
   {

@@ -58,7 +58,7 @@ body:has(.cookie-banner[hidden]) .footer-up.site-back-to-top {
   font: var(--text-body)/1.3 var(--font-body);
   filter: none;
 }
-/* Кнопка остаётся доступной, пока баннер занимает её обычное место. */
+/* Кнопка остается доступной, пока баннер занимает ее обычное место. */
 body:has(.cookie-banner:not([hidden])) .footer-up.site-back-to-top {
   right: 500px;
 }

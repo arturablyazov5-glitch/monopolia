@@ -50,7 +50,7 @@ const fieldHints: Record<keyof typeof labels, [string, string]> = {
     "Укажите город, чтобы посетитель понял расположение.",
   ],
   price: ["5 950 000 ₽", "Полная стоимость объекта с валютой."],
-  oldPrice: ["6 400 000 ₽", "Необязательно. Будет показана зачёркнутой."],
+  oldPrice: ["6 400 000 ₽", "Необязательно. Будет показана зачеркнутой."],
   pricePerMeter: ["114 423 ₽/м²", "Необязательно. Цена за квадратный метр."],
   mortgage: [
     "от 35 000 ₽/мес.",
@@ -174,12 +174,12 @@ function updateObjectPreview() {
   $("#preview-photo-placeholder").hidden = !$("#current-image").hidden;
   $("#visibility-help").textContent = visible
     ? "После сохранения карточка появится на сайте."
-    : "Карточка останется в админке. Посетители её не увидят.";
+    : "Карточка останется в админке. Посетители ее не увидят.";
   $("#object-save-status").textContent = dirty
-    ? "Есть несохранённые изменения"
+    ? "Есть несохраненные изменения"
     : editing
       ? "Карточка сохранена. Можно внести изменения."
-      : "Изменения ещё не сохранены";
+      : "Изменения еще не сохранены";
 }
 const editor = $<HTMLDialogElement>("#editor"),
   confirmation = $<HTMLDialogElement>("#confirmation");
@@ -326,7 +326,7 @@ function errors(error: unknown) {
   if (editor.open && e.fields?.length) objectErrors(e.fields);
   const errorText =
     e instanceof TypeError
-      ? "Нет связи с сервером. Ваши поля сохранены в редакторе. Попробуйте ещё раз."
+      ? "Нет связи с сервером. Ваши поля сохранены в редакторе. Попробуйте еще раз."
       : e.message || "Нет связи с сервером";
   if (editor.open || (!$("#texts-panel").hidden && !$("#workspace").hidden))
     dismissMessage();
@@ -351,7 +351,7 @@ function errors(error: unknown) {
     banner.append(
       el(
         "p",
-        "Каталог изменён в другой вкладке. Ваши поля сохранены. Получите свежую версию перед повторным сохранением.",
+        "Каталог изменен в другой вкладке. Ваши поля сохранены. Получите свежую версию перед повторным сохранением.",
       ),
     );
     const refresh = el("button", "Получить свежую версию");
@@ -362,7 +362,7 @@ function errors(error: unknown) {
         catalog = await api("/api/admin/catalog");
         render();
         banner.remove();
-        message("Список обновлён. Проверьте поля и сохраните карточку.");
+        message("Список обновлен. Проверьте поля и сохраните карточку.");
       } catch (error) {
         errors(error);
       }
@@ -451,7 +451,7 @@ async function load() {
     state.append(
       icon("reload"),
       el("h3", "Не удалось загрузить объекты"),
-      el("p", "Проверьте соединение и попробуйте ещё раз."),
+      el("p", "Проверьте соединение и попробуйте еще раз."),
     );
     const retry = el("button", "Повторить");
     retry.type = "button";
@@ -497,7 +497,7 @@ async function save(objects: Property[]) {
           `[data-id="${CSS.escape(activeId)}"] [data-action="${activeAction}"]`,
         )
         ?.focus();
-    message("Сохранено. Список объектов обновлён.");
+    message("Сохранено. Список объектов обновлен.");
     return true;
   } catch (e) {
     errors(e);
@@ -943,7 +943,7 @@ $("#login").addEventListener("submit", async (event) => {
       $("#object-error-summary").hidden = true;
       updateObjectPreview();
       $("#object-save-status").textContent =
-        "Вход восстановлен. Ваши несохранённые изменения остались в редакторе.";
+        "Вход восстановлен. Ваши несохраненные изменения остались в редакторе.";
     }
   } catch (e) {
     errors(e);
@@ -965,7 +965,7 @@ $("#logout").addEventListener("click", async () => {
     (dirty || contentEditor.dirty) &&
     !(await ask(
       "Выйти без сохранения?",
-      "Несохранённые изменения будут потеряны.",
+      "Несохраненные изменения будут потеряны.",
       "Выйти",
     ))
   )

@@ -235,7 +235,7 @@ const modes: PopupMode[] = [
       const input = form.querySelector<HTMLInputElement>("[name=subject]");
       if (input)
         input.value = calc ? "Подбор ипотеки" : detail || button.dataset.subject || title;
-      // Панель меню закрывается при открытии формы: её скрытая кнопка
+      // Панель меню закрывается при открытии формы: ее скрытая кнопка
       // не может принять фокус после Escape. Возвращаем его на бургер.
       opener = button.closest(".menu-panel")
         ? (button

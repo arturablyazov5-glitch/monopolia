@@ -159,7 +159,7 @@
 .buy-mortgage-range {
   gap: 0;
 }
-/* Значение плывёт над ползунком, как подпись 10,9 млн в макете */
+/* Значение плывет над ползунком, как подпись 10,9 млн в макете */
 .buy-mortgage-range output {
   justify-self: start;
   margin-left: calc(8px + (100% - 16px) * var(--range-progress, 0.5));
@@ -197,7 +197,7 @@
   border-radius: 50%;
   box-shadow: none;
 }
-/* Hover на точке: чуть вырастает и темнеет, при перетаскивании — ещё сильнее */
+/* Hover на точке: чуть вырастает и темнеет, при перетаскивании — еще сильнее */
 .buy-mortgage-range input {
   cursor: pointer;
 }
@@ -623,7 +623,7 @@
   }
 }
 
-/* Обёртка picture не создаёт собственного блока. */
+/* Обертка picture не создает собственного блока. */
 .buy-mortgage-bg-picture {
   display: contents;
 }
@@ -709,7 +709,7 @@
   }
 }
 
-/* Мобилка: три шага («1 Подберём…») — по центру */
+/* Мобилка: три шага («1 Подберем…») — по центру */
 @media (max-width: 767px) {
   .buy-mortgage-steps {
     align-items: center;

@@ -41,7 +41,7 @@ const names: Record<string, string> = {
   "company-about": "О компании",
   "company-guild": "Гильдия риелторов",
   "office-expansion": "Новый офис",
-  "home-partners": "Партнёры",
+  "home-partners": "Партнеры",
   "director-invitation": "Приглашение директора",
   "blockbuster-case": "Кейс",
   "home-telegram": "Telegram",
@@ -222,13 +222,13 @@ export function createContentEditor(
     $("#text-draft-badge").textContent = String(drafts.size);
     $("#text-draft-badge").setAttribute(
       "aria-label",
-      `Несохранённых текстов: ${drafts.size}`,
+      `Несохраненных текстов: ${drafts.size}`,
     );
     $("#content-review").hidden = !drafts.size;
     if (($("#content-review") as HTMLDetailsElement).open) renderReview();
     $("#content-dirty-count").textContent = drafts.size
       ? `${drafts.size} изменено · не сохранено`
-      : "Нет несохранённых изменений";
+      : "Нет несохраненных изменений";
     for (const button of document.querySelectorAll<HTMLButtonElement>(
       "[data-content-page]",
     )) {
@@ -243,7 +243,7 @@ export function createContentEditor(
       button.querySelector("span")!.hidden = !count;
       button.setAttribute(
         "aria-label",
-        `${page.label}. Изменённых текстов: ${count}`,
+        `${page.label}. Измененных текстов: ${count}`,
       );
     }
     const definitions = itemMap();
@@ -566,9 +566,9 @@ export function createContentEditor(
         const refresh = () => {
           counter.textContent = `${input.value.length} / ${item.maxLength}`;
           indicator.textContent = drafts.has(item.id)
-            ? "Не сохранён"
+            ? "Не сохранен"
             : hasOverride(item)
-              ? "Изменён"
+              ? "Изменен"
               : "Исходный";
           field.dataset.dirty = String(drafts.has(item.id));
           indicator.dataset.state = drafts.has(item.id) ? "draft" : "saved";
@@ -591,7 +591,7 @@ export function createContentEditor(
           preview.apply();
           say(
             drafts.size
-              ? `Есть несохранённые изменения: ${drafts.size}`
+              ? `Есть несохраненные изменения: ${drafts.size}`
               : "Все изменения сохранены.",
           );
         };
@@ -639,7 +639,7 @@ export function createContentEditor(
         element(
           "p",
           changed.checked
-            ? "На этой странице нет изменённых текстов."
+            ? "На этой странице нет измененных текстов."
             : "На этой странице совпадений нет. Выберите результат поиска выше.",
         ),
       );
@@ -665,7 +665,7 @@ export function createContentEditor(
       drafts.size &&
       !(await ask(
         "Обновить без сохранения?",
-        "Несохранённые правки текстов будут потеряны.",
+        "Несохраненные правки текстов будут потеряны.",
         "Обновить",
       ))
     )
@@ -792,8 +792,8 @@ export function createContentEditor(
     if (saving || loading || !drafts.size) return;
     if (
       await ask(
-        "Отменить все несохранённые правки?",
-        "Вернутся последние сохранённые тексты.",
+        "Отменить все несохраненные правки?",
+        "Вернутся последние сохраненные тексты.",
         "Отменить правки",
       )
     ) {
@@ -801,7 +801,7 @@ export function createContentEditor(
       fieldErrors.clear();
       render();
       preview.apply();
-      say("Несохранённые правки отменены.");
+      say("Несохраненные правки отменены.");
     }
   });
   $("#content-reload").addEventListener("click", () => void load());

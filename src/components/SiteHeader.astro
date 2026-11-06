@@ -618,7 +618,7 @@ const isCurrentMenuPage = (href: string) =>
       if (open && !mobile.matches && e.detail === 0)
         panel.querySelector<HTMLElement>(".menu-panel-links a")?.focus();
     });
-    // a11y: фокус ушёл из шапки (Tab дальше последнего пункта) — меню закрывается
+    // a11y: фокус ушел из шапки (Tab дальше последнего пункта) — меню закрывается
     header.addEventListener("focusout", (e) => {
       const next = (e as FocusEvent).relatedTarget as Node | null;
       if (

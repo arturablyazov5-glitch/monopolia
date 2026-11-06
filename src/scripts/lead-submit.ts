@@ -31,14 +31,14 @@ export async function sendLead(form: HTMLFormElement): Promise<void> {
     });
   } catch {
     throw new Error(
-      "Нет связи с сервером. Попробуйте ещё раз или позвоните нам.",
+      "Нет связи с сервером. Попробуйте еще раз или позвоните нам.",
     );
   }
   let result: { ok?: boolean; error?: string };
   try {
     result = await response.json();
   } catch {
-    throw new Error("Не удалось отправить заявку. Попробуйте ещё раз.");
+    throw new Error("Не удалось отправить заявку. Попробуйте еще раз.");
   }
   if (!response.ok || result.ok !== true) {
     throw new Error(
@@ -46,7 +46,7 @@ export async function sendLead(form: HTMLFormElement): Promise<void> {
         ? "Слишком много попыток. Повторите через 10 минут."
         : response.status === 400
           ? "Проверьте имя, телефон и согласие. Затем повторите отправку."
-          : "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+          : "Не удалось отправить заявку. Попробуйте еще раз или позвоните нам.",
     );
   }
 }

@@ -1,5 +1,5 @@
 /* Figma 1380:5754 — общий footer. Desktop 1440: рваный край 99.21 px,
-   тёмный блок 561 px (24 + 360 + 40 + 1 + 40 + 44 + 52).
+   темный блок 561 px (24 + 360 + 40 + 1 + 40 + 44 + 52).
    Селекторы с .site-footer, чтобы перекрыть прежние правила global.css. */
 .site-footer {
   position: relative;
@@ -125,7 +125,7 @@
   text-align: left;
   text-decoration: none;
 }
-/* Единый footer на всех страницах: ссылки на документы подчёркнуты (Figma 1380:7023) */
+/* Единый footer на всех страницах: ссылки на документы подчеркнуты (Figma 1380:7023) */
 .site-footer .footer-doc-link {
   text-decoration-line: underline;
   text-decoration-style: solid;
@@ -267,7 +267,7 @@
 }
 
 /* ===== Адаптив (R1). Планшет ≤ 1199: компания + контакты в две колонки,
-   разделы и документы ниже. Телефон ≤ 767: всё в стопку. ===== */
+   разделы и документы ниже. Телефон ≤ 767: все в стопку. ===== */
 @media (max-width: 1199px) {
   .site-footer .container.footer-inner {
     max-width: none;

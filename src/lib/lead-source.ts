@@ -49,7 +49,7 @@ export function leadSource(element: HTMLElement): string {
 }
 
 /** Button уже выводит явный атрибут; добавляем секцию, недоступную Astro.props.
- * Не меняем защищённые компоненты карточек/калькулятора. */
+ * Не меняем защищенные компоненты карточек/калькулятора. */
 export function initializeLeadSources(): void {
   document.querySelectorAll<HTMLElement>("[data-lead]").forEach((element) => {
     if (element.dataset.leadSourceReady) return;

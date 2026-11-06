@@ -168,7 +168,7 @@
     transform: none;
     object-position: 58% 50%;
   }
-  /* Затемнение под белый текст; у рваных краёв сходит на нет. */
+  /* Затемнение под белый текст; у рваных краев сходит на нет. */
   .prepared-viewing::after {
     content: "";
     position: absolute;

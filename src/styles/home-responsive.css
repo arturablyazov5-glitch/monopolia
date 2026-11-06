@@ -27,7 +27,7 @@
   .home-desktop h2 {
     font-size: var(--h2);
   }
-  /* Жёсткие переносы десктопа — перенос по ширине (пробелы перед <br> в разметке) */
+  /* Жесткие переносы десктопа — перенос по ширине (пробелы перед <br> в разметке) */
   .home-desktop h2 br {
     display: none;
   }
@@ -369,7 +369,7 @@
   .home-desktop .proven-trust {
     --k: 0.62;
     /* Видимая кромка background-paper-tall-white.webp при ширине 1453.82px.
-       Полный межсекционный отступ начинается после её нижней точки. */
+       Полный межсекционный отступ начинается после ее нижней точки. */
     --trust-paper-edge-height: 44px;
     min-height: 0;
     padding-top: calc(var(--trust-paper-edge-height) + var(--section-space));
@@ -439,7 +439,7 @@
     --cases-pad: var(--sec);
     height: auto;
     padding: var(--cases-pad) 0 calc(var(--sec) + 40px);
-    /* бумага сверху, тёмный блок компании — в вырезах рваного низа */
+    /* бумага сверху, темный блок компании — в вырезах рваного низа */
     background: transparent;
   }
 
@@ -535,7 +535,7 @@
     margin: 0 auto;
   }
 
-  /* --- 13. Партнёры --- */
+  /* --- 13. Партнеры --- */
   .home-desktop .home-partners {
     height: auto;
     padding-bottom: var(--sec);
@@ -796,7 +796,7 @@
 /* ============ ПЛАНШЕТ 768–1023: правки пустот (TASK-009) ============ */
 @media (min-width: 768px) and (max-width: 1023px) {
   /* --- 19. HomeRecruiting: фото во всю ширину экрана (раньше сдвигалось,
-     слева оставалась чёрная полоса) --- */
+     слева оставалась черная полоса) --- */
   .home-desktop .recruiting-photo {
     left: 0;
     width: 100%;
@@ -1538,7 +1538,7 @@
     flex-shrink: 1;
   }
 
-  /* --- 13. Партнёры: логотипы-картинки в масштабе 0,6 --- */
+  /* --- 13. Партнеры: логотипы-картинки в масштабе 0,6 --- */
   .home-desktop .home-partners {
     padding-bottom: var(--section-space-double);
   }

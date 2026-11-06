@@ -5,11 +5,11 @@
   min-height: 1015px;
   padding: var(--cases-pad) 0 var(--section-space);
   overflow: hidden;
-  /* Якорь #cases: заголовок встаёт под шапкой (общий scroll-padding у html), а не ниже на высоту
+  /* Якорь #cases: заголовок встает под шапкой (общий scroll-padding у html), а не ниже на высоту
      верхнего отступа секции; прежний scroll-margin 96 px складывался с scroll-padding и давал +200 px */
   scroll-margin-top: calc(-1 * var(--cases-pad));
-  /* Figma: тёмный фон блока компании 1380:5236 начинается на 120 px выше
-     конца бумаги 1380:5154 — в вырезах рваного низа бумаги виден тёмный. */
+  /* Figma: темный фон блока компании 1380:5236 начинается на 120 px выше
+     конца бумаги 1380:5154 — в вырезах рваного низа бумаги виден темный. */
   background: transparent;
 }
 
@@ -196,7 +196,7 @@
   transform-origin: var(--portrait-focus, 50% 50%);
 }
 .case-photo-natural > img {
-  /* Лёгкая тональная коррекция оригинала без перерисовки интерьера. */
+  /* Легкая тональная коррекция оригинала без перерисовки интерьера. */
   filter: brightness(1.04) contrast(1.03) saturate(0.94);
 }
 .case-details {

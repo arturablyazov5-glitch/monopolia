@@ -38,7 +38,7 @@
   align-items: center;
   gap: 16px;
 }
-/* Бокс повёрнутой заметки 255.572 × 39.445 */
+/* Бокс повернутой заметки 255.572 × 39.445 */
 .realtor-comparison-heading .taped-note {
   margin: 2.2px 0;
 }
@@ -115,7 +115,7 @@
   }
 }
 
-/* Обёртка picture не создаёт собственного блока. */
+/* Обертка picture не создает собственного блока. */
 .realtor-comparison-bg-picture {
   display: contents;
 }

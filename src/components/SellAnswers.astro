@@ -3,7 +3,7 @@ import { siteText } from "../data/site-texts.mjs";
 // «Продажа», Figma 1380:5914 («23»): карточка «Вам не придется отвечать
 // покупателям по 100 раз…», 11 меток-тем (1380:5919) и кнопка (1380:5931).
 // Секция держит верхний отступ 120 px (зазор от 1380:5852); нижний зазор 120 px
-// даёт следующий блок 1380:5932 (RelocationMap со своим padding-top).
+// дает следующий блок 1380:5932 (RelocationMap со своим padding-top).
 import Button from "./Button.astro";
 import Paper from "./Paper.astro";
 import Badge from "./Badge.astro";
@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 
 
-// box — габарит повёрнутой метки в Figma (w × h), rotate — угол в градусах.
+// box — габарит повернутой метки в Figma (w × h), rotate — угол в градусах.
 const topics: { text: string; box: [number, number]; rotate: number }[] = [
   { text: siteText("sell-answers.text.1"), box: [171.48, 31.98], rotate: -1 },
   { text: siteText("sell-answers.text.2"), box: [147.484, 31.561], rotate: 1 },

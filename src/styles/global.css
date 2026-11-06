@@ -25,7 +25,7 @@
 * {
   box-sizing: border-box;
 }
-/* Декоративная бумага и её края не должны перехватывать наведение на картинки. */
+/* Декоративная бумага и ее края не должны перехватывать наведение на картинки. */
 :is(
   .cases-background,
   .team-paper-background,
@@ -133,7 +133,7 @@ button:disabled {
 :focus-visible {
   outline: none !important;
 }
-/* a11y: прокручиваемая лента карусели — рамка внутрь, иначе её режет
+/* a11y: прокручиваемая лента карусели — рамка внутрь, иначе ее режет
    overflow секции; бургер — ближе, иначе режет overflow шапки. */
 main[tabindex="-1"]:focus-visible {
   outline: none;
@@ -145,7 +145,7 @@ main[tabindex="-1"]:focus-visible {
   outline-offset: 2px;
 }
 /* a11y: внутри прокручиваемых лент (карусели, вкладки кейсов) и тесной
-   мобильной шапки внешнюю рамку режет overflow — рамка внутрь и тёмная,
+   мобильной шапки внешнюю рамку режет overflow — рамка внутрь и темная,
    чтобы читалась и на красных кнопках. */
 .carousel-track :focus-visible,
 .cases-tabs :focus-visible {
@@ -202,7 +202,7 @@ hr {
 .fixed-site-header .site-header {
   margin-top: 0;
 }
-/* Лёгкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout) */
+/* Легкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout) */
 .fixed-site-header {
   filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
   transition: filter 0.3s ease;
@@ -297,7 +297,7 @@ button.header-callback {
   pointer-events: none;
 }
 /* TASK-044: одна непрозрачная текстура; маски, скотч и тени остаются отдельно.
-   Белые листы без текстуры и тёмная подпись сохраняют свои заливки. */
+   Белые листы без текстуры и темная подпись сохраняют свои заливки. */
 .paper:not(.paper-white, .blockbuster-label, .paper-frame, .guild-card, .staff-certificate, .sell-week-story-card, .taped-note-plain)::before,
 .lead-form input[name="name"],
 .lead-form textarea,
@@ -869,7 +869,7 @@ dialog::backdrop {
   .header-phone {
     margin-left: auto;
   }
-  /* Только в шапке: выбор города в квизах (.inner-hero-city-picker) остаётся. */
+  /* Только в шапке: выбор города в квизах (.inner-hero-city-picker) остается. */
   .site-header .city,
   .site-header .city-picker {
     display: none;
@@ -1441,7 +1441,7 @@ dialog::backdrop {
 }
 /* В Forma и Calibri нет знака рубля ₽ (U+20BD), он падал в системный serif.
    Отдельная семья «Ruble» содержит только его (из вариативного Inter Tight) и стоит
-   первой в стеках шрифтов: остальные символы она не покрывает и отдаёт Forma/Calibri.
+   первой в стеках шрифтов: остальные символы она не покрывает и отдает Forma/Calibri.
    Нельзя делать это второй @font-face внутри Forma: первая грань покрывает весь Unicode
    и выигрывает, пустой глиф уходит в fallback, а не в соседнюю грань. */
 @font-face {
@@ -1636,7 +1636,7 @@ dialog::backdrop {
     transform: translate(-50%, -50%);
   }
   /* Q1: зона нажатия телефона и логотипа ≥ 44 px на планшете (были 22 и
-     37 px) — невидимое расширение, вёрстка шапки не меняется */
+     37 px) — невидимое расширение, верстка шапки не меняется */
   .site-header.desktop .header-phone > :is(a, .header-callback),
   .site-header.desktop .brand {
     position: relative;
@@ -1709,7 +1709,7 @@ dialog::backdrop {
     order: 3;
   }
   /* Модальная демоформа: на всю ширину, прокрутка внутри,
-     крестик 44 × 44 закреплён сверху и доступен при прокрутке */
+     крестик 44 × 44 закреплен сверху и доступен при прокрутке */
   dialog#lead-dialog {
     width: calc(100% - 16px);
     max-width: none;
@@ -1849,8 +1849,8 @@ button.city:hover {
    Панель — потомок шапки (position: absolute), поэтому overflow шапки не нужен;
    рваный край — готовый .brush-stroke. На ≤ 1199 inline-навигация скрыта,
    полный список разделов — только в панели. */
-/* Тень — фильтром на обёртке: filter на самом элементе применяется ДО его маски и рисовал бы
-   тень от ровной рамки, а у обёртки он обводит уже замаскированный (рваный) силуэт панели */
+/* Тень — фильтром на обертке: filter на самом элементе применяется ДО его маски и рисовал бы
+   тень от ровной рамки, а у обертки он обводит уже замаскированный (рваный) силуэт панели */
 .menu-panel-shadow {
   position: absolute;
   top: calc(100% + 8px);

@@ -23,8 +23,8 @@ export function applyPhoneMask(input: HTMLInputElement, onChange?: () => void) {
   input.addEventListener("input", (event) => {
     const deleting = (event as InputEvent).inputType?.startsWith("delete");
     let digits = nationalDigits(input.value).slice(0, 10);
-    // Стёрли только символ маски («)», пробел, «-») — убираем цифру перед ним,
-    // иначе маска тут же вернёт символ и стереть его не получится.
+    // Стерли только символ маски («)», пробел, «-») — убираем цифру перед ним,
+    // иначе маска тут же вернет символ и стереть его не получится.
     if (deleting && digits === previous && digits.length)
       digits = digits.slice(0, -1);
     input.value = digits.length ? format(digits) : "";

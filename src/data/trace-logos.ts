@@ -1,6 +1,6 @@
 /**
- * Логотипы с Trace Logos (https://trace-logos.ru/): картинка берётся оттуда же,
- * где лежит страница логотипа, и каждый логотип ведёт обратной ссылкой на неё:
+ * Логотипы с Trace Logos (https://trace-logos.ru/): картинка берется оттуда же,
+ * где лежит страница логотипа, и каждый логотип ведет обратной ссылкой на нее:
  * <a href="https://trace-logos.ru/logos/market/wildberries/">
  *   <img src="https://trace-logos.ru/assets/logos/svgs/wildberries.svg" alt="Логотип Wildberries">
  * </a>

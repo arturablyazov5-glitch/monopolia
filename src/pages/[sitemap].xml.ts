@@ -2,7 +2,7 @@ import type { APIRoute, GetStaticPaths } from "astro";
 import { site as configuredSite } from "astro:config/server";
 import { escapeXml, indexablePaths, siteUrl } from "../lib/seo";
 
-// Без подтверждённого домена XML не генерируется. После задания site
+// Без подтвержденного домена XML не генерируется. После задания site
 // статическая сборка создаст /sitemap.xml, robots.txt добавит его адрес.
 export const getStaticPaths: GetStaticPaths = () =>
   configuredSite ? [{ params: { sitemap: "sitemap" } }] : [];

@@ -10,7 +10,7 @@ export interface DealImage {
   width: number;
   height: number;
   alt: string;
-  /** Белая плашка с зелёной галочкой в правом верхнем углу фото */
+  /** Белая плашка с зеленой галочкой в правом верхнем углу фото */
   badge?: string;
 }
 
@@ -18,7 +18,7 @@ export interface DealChip {
   text: string;
   /** Поворот из макета, градусы */
   rotate?: number;
-  /** Габарит повёрнутой метки в Figma [w, h] — по нему идёт перенос строк */
+  /** Габарит повернутой метки в Figma [w, h] — по нему идет перенос строк */
   box?: [number, number];
 }
 

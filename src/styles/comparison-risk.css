@@ -15,7 +15,7 @@
   vertical-align: middle;
   font-weight: 400;
 }
-/* Разделители 785:7946: 1 px, у первых двух колонок чёрный 5%, у третьей белый */
+/* Разделители 785:7946: 1 px, у первых двух колонок черный 5%, у третьей белый */
 @media (min-width: 768px) {
   .comparison-risk tbody tr:not(:last-child) > * {
     border-bottom: 1px solid #0000000d;

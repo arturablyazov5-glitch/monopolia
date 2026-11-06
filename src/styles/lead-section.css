@@ -52,7 +52,7 @@
     calc(100% - 24px) 18px, 13px 13px;
 }
 /* Белая рамка карточки: рваный край общим скриптом (brush-stroke.css), как у остальных листов.
-   Слой выступает на 5 px за панель, сама панель прозрачная — иначе её прямые углы закрывают вырезы. */
+   Слой выступает на 5 px за панель, сама панель прозрачная — иначе ее прямые углы закрывают вырезы. */
 .lead-section-card:before {
   content: "";
   position: absolute;
@@ -78,7 +78,7 @@
   font: 500 var(--text-heading) / 1 var(--font-heading);
   color: var(--color-ink);
 }
-/* Поля используют общую текстуру без полупрозрачных слоёв. */
+/* Поля используют общую текстуру без полупрозрачных слоев. */
 .lead-section .lead-form textarea,
 .lead-section .lead-form input[name="name"] {
   padding: 16px 28px;

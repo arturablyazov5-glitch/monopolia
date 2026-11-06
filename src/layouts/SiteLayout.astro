@@ -53,7 +53,7 @@ const socialTitle = pathname === "/" ? "Монополия — недвижим�
 const imagePath = "/seo/monopolia-social-v2.jpg";
 const socialImage = Astro.site ? siteUrl(imagePath, Astro.site) : imagePath;
 const imageAlt = "Первый экран агентства недвижимости Монополия: команда, Белогорск, работаем с 2006 года.";
-// Контакты и часы сверены с SiteFooter; неподтверждённых рейтингов,
+// Контакты и часы сверены с SiteFooter; неподтвержденных рейтингов,
 // геокоординат, внешних профилей и будущего офиса здесь нет.
 const business = {
   "@context": "https://schema.org",
@@ -93,7 +93,7 @@ const business = {
         media="(max-width: 767px)"
       />
     )}
-    {/* Denistina видна на первом экране главной и продажи; не ждём CSS. */}
+    {/* Denistina видна на первом экране главной и продажи; не ждем CSS. */}
     {seo && pathname !== "/buy/" && (
       <link
         rel="preload"

@@ -205,7 +205,7 @@ document.querySelectorAll<HTMLElement>('.inner-hero-card').forEach(card => {
       form.append(result);
       result.classList.add("is-success");
       result.textContent = selling ? sellQuizSuccess : 'Ваша заявка получена. Будьте на связи — отправим подборку в течение 10 минут и свяжемся для обсуждения вариантов.'; result.hidden = false;
-    } catch (error) { result.textContent = error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте ещё раз.'; result.hidden = false; }
+    } catch (error) { result.textContent = error instanceof Error ? error.message : 'Не удалось отправить заявку. Попробуйте еще раз.'; result.hidden = false; }
     finally { next.disabled = false; back.disabled = false; form.removeAttribute('aria-busy'); }
   });
 });

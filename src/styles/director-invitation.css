@@ -160,7 +160,7 @@
 @media (max-width: 767px) {
   .home-desktop .director-invitation.director-invitation {
     padding-top: var(--paper-frame-width, 8px);
-    /* Рамка выступает за размер карточки: отступ считаем от её видимого края. */
+    /* Рамка выступает за размер карточки: отступ считаем от ее видимого края. */
     padding-bottom: calc(var(--section-space) + var(--paper-frame-width, 8px));
   }
 }

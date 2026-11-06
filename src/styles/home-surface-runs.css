@@ -11,7 +11,7 @@
   .home-surface-run--reviews {
     background: #151515;
   }
-  /* Светлый стык отзывов и кейсов не должен сглаживаться в тёмную подложку. */
+  /* Светлый стык отзывов и кейсов не должен сглаживаться в темную подложку. */
   .home-surface-run:has(> .client-cases) {
     background: linear-gradient(#fdfdfd 2px, var(--color-dark) 2px);
   }

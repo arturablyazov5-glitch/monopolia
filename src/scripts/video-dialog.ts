@@ -149,7 +149,7 @@ if (dialog) {
         status.className = "caption";
         wrapper.append(status);
       }
-      status.textContent = "Демонстрация плеера: видеофайл пока не подключён.";
+      status.textContent = "Демонстрация плеера: видеофайл пока не подключен.";
       return;
     }
     trigger = button;
