@@ -160,7 +160,7 @@ test(
       );
       await page.type("[name=username]", username);
       await page.type("[name=password]", password);
-      await page.click("#login button");
+      await page.click("#login button[type=submit]");
       await page.waitForFunction(
         () => !document.querySelector("#workspace").hidden,
       );
@@ -226,7 +226,7 @@ test(
           )
         ).forEach((id) => allIds.add(id));
       }
-      assert.equal(allIds.size, 570);
+      assert.equal(allIds.size, 510);
       await choose("home");
       await page.$eval("[data-content-block]:nth-child(2)", (node) =>
         node.click(),
@@ -265,10 +265,30 @@ test(
       assert.equal(await text("home-hero.text.3"), "Квартиры");
       for (const width of [1440, 1024, 768, 390, 360]) {
         await page.setViewport({ width, height: 1100 });
+        if (width < 768) {
+          // The complex text editor is desktop-only: phones get a notice instead.
+          assert(
+            await page.$eval(".admin-mobile-note", (node) =>
+              getComputedStyle(node).display !== "none",
+            ),
+          );
+          assert(
+            await page.$eval(
+              "#texts-panel .admin-content-workbench",
+              (node) => getComputedStyle(node).display === "none",
+            ),
+          );
+          assert(
+            await page.evaluate(
+              () => document.documentElement.scrollWidth <= innerWidth,
+            ),
+          );
+          continue;
+        }
         await choose("sell");
         await mode("fields");
-        await set("sell.title.1", "Продадим объект");
-        assert.equal(await text("sell.title.1"), "Продадим объект");
+        await set("sell.formtext.6", "Черновик вопроса");
+        assert.equal(await text("sell.formtext.6"), "Черновик вопроса");
         await mode("preview");
         let frame = await getFrame();
         await page.$eval("#content-preview-viewport", (node) =>
@@ -276,11 +296,11 @@ test(
         );
         const point = await frame.evaluate(() => {
           const node = document.querySelector(
-            '[data-content-id~="sell.title.1"]',
+            '[data-content-id~="sell.formtext.6"]',
           );
           const index = node.dataset.contentId
             .split(" ")
-            .indexOf("sell.title.1");
+            .indexOf("sell.formtext.6");
           const text = [...node.childNodes].filter(
             (child) => child.nodeType === 3,
           )[Number(node.dataset.contentSlots.split(" ")[index])];
@@ -305,7 +325,7 @@ test(
         );
         assert.equal(
           await page.evaluate(() => document.activeElement.id),
-          "content-sell.title.1",
+          "content-sell.formtext.6",
         );
         assert.equal(
           (await frame.$$eval(
@@ -359,6 +379,7 @@ test(
           });
         }
       }
+      await page.setViewport({ width: 1440, height: 1100 });
       await mode("fields");
       await page.$eval("#content-search", (node) => {
         node.value = "buy.title.1";
@@ -378,7 +399,7 @@ test(
           await page.$$eval("[data-text-id]", (nodes) =>
             nodes.map((node) => node.dataset.textId),
           )
-        ).every((id) => ["home-hero.text.3", "sell.title.1"].includes(id)),
+        ).every((id) => ["home-hero.text.3", "sell.formtext.6"].includes(id)),
       );
       await choose("home");
       assert.equal(
@@ -426,7 +447,7 @@ test(
       assert.equal(await text("home-hero.text.3"), "Квартиры");
       for (const [key, id] of [
         ["home", "home-hero.text.3"],
-        ["sell", "sell.title.1"],
+        ["sell", "sell.formtext.6"],
       ]) {
         await choose(key);
         await page.$eval(`[data-text-id="${id}"] button`, (node) =>

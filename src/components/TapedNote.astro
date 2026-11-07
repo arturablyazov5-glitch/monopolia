@@ -17,6 +17,11 @@ interface Props {
   tape?: boolean;
   /** card — многострочная заметка с иконкой у верхнего края текста. */
   variant?: "label" | "card";
+  /** Явная привязка текста заметки к content-id (когда автопривязка
+      неоднозначна). Формат как у data-content-* в собранном HTML. */
+  contentId?: string;
+  contentSlots?: string;
+  contentParts?: string;
 }
 
 const {
@@ -28,6 +33,9 @@ const {
   tapeNode = "I1380:6985;569:1388",
   tape = true,
   variant = "label",
+  contentId,
+  contentSlots,
+  contentParts,
 } = Astro.props;
 ---
 
@@ -57,7 +65,11 @@ const {
         decoding="async"
       />
     )}
-    <p>
+    <p
+      data-content-id={contentId}
+      data-content-slots={contentSlots}
+      data-content-parts={contentParts}
+    >
       <slot />
     </p>
   </Paper>

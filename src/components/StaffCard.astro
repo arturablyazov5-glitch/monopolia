@@ -1,11 +1,13 @@
 ---
 import { siteText } from "../data/site-texts.mjs";
 import Paper from "./Paper.astro";
-import { people } from "../data/people.mjs";
+import { people, type PersonId } from "../data/people.mjs";
 import Badge from "./Badge.astro";
 interface Props {
   name?: string;
   role?: string;
+  /** Ключ сотрудника: включает редактирование имени и должности в админке. */
+  person?: PersonId;
   image?: string;
   badge?: string;
   badgeTextWidth?: number;
@@ -20,6 +22,7 @@ const {
   certificate,
   badgeTextWidth,
   photo = true,
+  person,
   name = people["evgeniya-matukhnova"].name,
   role = siteText("staff-card.role.1"),
   image = "/assets/staff-evgeniya-matukhnova.webp",
@@ -48,8 +51,21 @@ const {
     <Badge text={badge.replace(/\u00a0/g, " ")} textWidth={badgeTextWidth} />
   </div>
   <div>
-    <h3>{name}</h3>
-    <p class="muted">{role}</p>
+    <h3
+      data-content-id={person ? `person.${person}.name` : undefined}
+      data-content-slots={person ? "0" : undefined}
+      data-content-parts={person ? "-1" : undefined}
+    >
+      {name}
+    </h3>
+    <p
+      class="muted"
+      data-content-id={person ? `person.${person}.role` : undefined}
+      data-content-slots={person ? "0" : undefined}
+      data-content-parts={person ? "-1" : undefined}
+    >
+      {role}
+    </p>
   </div>
   {certificate && (
     <Paper class="staff-certificate" tapeNode="I1467:10447;569:1633">

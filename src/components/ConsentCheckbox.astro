@@ -4,14 +4,34 @@ import { legal } from "../data/legal";
 // Единый чекбокс согласия на обработку персональных данных.
 // Единственный источник разметки и стилей (src/styles/consent.css) для
 // формы заявки, модалки и блока «Продать за неделю».
+// Фрагменты текста привязаны в content-bindings; ссылки — явно, чтобы
+// не пересекаться с одноименными подписями в подвале.
 ---
 
 <label class="consent">
   <input type="checkbox" name="consent" required />
   <span class="consent-text">
-    Я согласен(а) на{" "}
-    <a class="consent-doc" href={legal.consent.href} target="_blank" rel="noopener noreferrer">обработку персональных данных</a>{" "}
-    и принимаю{" "}
-    <a class="consent-doc" href={legal.privacy.href} target="_blank" rel="noopener noreferrer">политику конфиденциальности</a>
+    Я согласен(а) на{" "}
+    <a
+      class="consent-doc"
+      href={legal.consent.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-content-id="consent.text.2"
+      data-content-slots="0"
+      data-content-parts="-1"
+      >обработку персональных данных</a
+    >{" "}
+    и принимаю{" "}
+    <a
+      class="consent-doc"
+      href={legal.privacy.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-content-id="consent.text.4"
+      data-content-slots="0"
+      data-content-parts="-1"
+      >политику конфиденциальности</a
+    >
   </span>
 </label>

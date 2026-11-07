@@ -843,6 +843,17 @@ export function createContentEditor(
   for (const tab of ["objects", "texts"])
     $("#tab-" + tab).addEventListener("click", async () => {
       if (saving || loading) return;
+      if (
+        tab === "objects" &&
+        !panel.hidden &&
+        drafts.size &&
+        !(await ask(
+          "Переключить раздел?",
+          "Несохраненные правки текстов останутся в черновике.",
+          "Переключить",
+        ))
+      )
+        return;
       $("#objects-panel").hidden = tab !== "objects";
       panel.hidden = tab !== "texts";
       for (const name of ["objects", "texts"])

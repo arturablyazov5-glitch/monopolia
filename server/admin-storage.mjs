@@ -3,7 +3,7 @@ import {constants} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {randomBytes} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
-import {validateCatalog,isMediaPath,legacyImage} from '../src/lib/catalog-schema.mjs';
+import {validateCatalog,isMediaPath,legacyImage,normalizeCatalog,TRASH_TTL} from '../src/lib/catalog-schema.mjs';
 import {inspectWebP} from './admin-media.mjs';
 export class AdminError extends Error {
   constructor(status,code,message,fields){super(message);Object.assign(this,{status,code,fields});}
@@ -31,27 +31,45 @@ export class Storage {
   async catalog() {
     const h=await fs.open(this.file,constants.O_RDONLY|constants.O_NOFOLLOW);
     try {
-      if((await h.stat()).size>256*1024)throw Error('Catalog too large');
+      if((await h.stat()).size>512*1024)throw Error('Catalog too large');
       const data=JSON.parse(await h.readFile('utf8'));
-      if(!validateCatalog(data).valid)throw Error('Invalid catalog');
-      return data;
+      const normalized=normalizeCatalog(data);
+      normalized.trash=(normalized.trash||[]).filter(p=>Date.now()-p.deletedAt<=TRASH_TTL);
+      if(!validateCatalog(normalized).valid)throw Error('Invalid catalog');
+      return normalized;
     } finally {await h.close();}
+  }
+  // Permanent removal of trash items older than TRASH_TTL, independent of reads.
+  purgeTrash() {
+    const task=this.queue.then(async()=>{
+      const previous=await this.catalog();
+      const cutoff=Date.now()-TRASH_TTL;
+      const trash=(previous.trash||[]).filter(p=>p.deletedAt>cutoff);
+      if(trash.length===(previous.trash||[]).length)return previous;
+      const next={revision:previous.revision,objects:previous.objects,trash};
+      await atomic(this.file,JSON.stringify(next,null,2)+'\n');
+      return next;
+    });
+    this.queue=task.catch(()=>{});return task;
   }
   save(input) {
     const task=this.queue.then(async()=>{
-      if(!input || Object.keys(input).some(k=>!['baseRevision','objects'].includes(k)))throw new AdminError(422,'fields','Неизвестные поля запроса');
+      if(!input || Object.keys(input).some(k=>!['baseRevision','objects','trash'].includes(k)))throw new AdminError(422,'fields','Неизвестные поля запроса');
       const previous=await this.catalog();
       if(input.baseRevision!==previous.revision)throw new AdminError(409,'revision','Каталог изменён в другой вкладке. Поля остались в форме; загрузите свежую версию.');
-      const next={revision:previous.revision+1,objects:input.objects},v=validateCatalog(next);
+      const now=Date.now();
+      const candidate=normalizeCatalog({revision:previous.revision+1,objects:input.objects,trash:(input.trash||[]).map(p=>({...p,deletedAt:Number.isSafeInteger(p?.deletedAt)?p.deletedAt:now}))});
+      candidate.trash=candidate.trash.filter(p=>now-p.deletedAt<=TRASH_TTL);
+      const v=validateCatalog(candidate);
       if(!v.valid)throw new AdminError(422,'validation','Исправьте поля',v.errors);
-      for(const p of next.objects)if(p.image.large!==legacyImage) {
+      for(const p of [...candidate.objects,...candidate.trash])if(p.image && p.image.large!==legacyImage) {
         for(const [k,w] of [['small',360],['large',680]]) {
           const bytes=await this.readMedia(p.image[k]);inspectWebP(bytes,w);
         }
       }
       await atomic(this.file+'.bak',JSON.stringify(previous,null,2)+'\n');
-      await atomic(this.file,JSON.stringify(next,null,2)+'\n');
-      return next;
+      await atomic(this.file,JSON.stringify(candidate,null,2)+'\n');
+      return candidate;
     });
     this.queue=task.catch(()=>{});return task;
   }

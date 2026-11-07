@@ -1,5 +1,6 @@
 ---
 import Paper from "./Paper.astro";
+import type { PersonId } from "../data/people.mjs";
 import "../styles/person-label.css";
 
 interface Props {
@@ -7,12 +8,30 @@ interface Props {
   role: string;
   class?: string;
   node?: string;
+  /** Ключ сотрудника: включает редактирование имени и должности в админке. */
+  person?: PersonId;
 }
 
-const { name, role, class: className = "", node = "" } = Astro.props;
+const { name, role, class: className = "", node = "", person } = Astro.props;
+const nameId = person ? `person.${person}.name` : "";
+const roleId = person ? `person.${person}.role` : "";
 ---
 
 <Paper class:list={["person-label", className]} node={node}>
-  <p class="person-label-name">{name}</p>
-  <p class="person-label-role">{role}</p>
+  <p
+    class="person-label-name"
+    data-content-id={nameId || undefined}
+    data-content-slots={nameId ? "0" : undefined}
+    data-content-parts={nameId ? "-1" : undefined}
+  >
+    {name}
+  </p>
+  <p
+    class="person-label-role"
+    data-content-id={roleId || undefined}
+    data-content-slots={roleId ? "0" : undefined}
+    data-content-parts={roleId ? "-1" : undefined}
+  >
+    {role}
+  </p>
 </Paper>

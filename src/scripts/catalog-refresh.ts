@@ -23,8 +23,12 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-catalog]')) {
     const city = getHeaderCity();
     let count = 0;
     for (const card of Array.from(track.children) as HTMLElement[]) {
-      const address = card.querySelector('[data-card=address]')?.textContent ?? '';
-      card.hidden = !matchesCatalogCity(address, city);
+      if (card.dataset.city) {
+        card.hidden = card.dataset.city !== city;
+      } else {
+        const address = card.querySelector('[data-card=address]')?.textContent ?? '';
+        card.hidden = !matchesCatalogCity(address, city);
+      }
       if (!card.hidden) count++;
     }
     live.hidden = count === 0;
@@ -61,7 +65,8 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-catalog]')) {
       const cards: DocumentFragment[] = [];
       for (const p of data.objects as Card[]) {
         if (!['title','address','price','oldPrice','pricePerMeter','mortgage','discount'].every(
-          k => typeof p[k as keyof Card] === 'string') || !p.image) throw Error('Некорректная карточка');
+          k => typeof p[k as keyof Card] === 'string') || !p.image ||
+          (p.city !== undefined && typeof p.city !== 'string')) throw Error('Некорректная карточка');
         const imageURL = (src: string) => {
           // Uploaded pictures stay on the configured media origin.
           if (src === '/assets/property-card-default-photo.webp') return new URL(src, location.origin).href;
@@ -97,6 +102,8 @@ for (const root of document.querySelectorAll<HTMLElement>('[data-catalog]')) {
         } else {
           source.srcset = small + ' 360w, ' + large + ' 680w';
         }
+        const cardEl = fragment.firstElementChild as HTMLElement | null;
+        if (cardEl && p.city) cardEl.dataset.city = p.city;
         const button = fragment.querySelector<HTMLElement>('[data-lead]')!;
         button.dataset.subject = p.title;
         button.dataset.leadSource = p.title + ' · Кнопка «Записаться на просмотр»';

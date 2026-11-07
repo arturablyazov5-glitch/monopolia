@@ -20,6 +20,7 @@ export const iconPaths = {
   camera: "M4 6h4l2-3h4l2 3h4v15H4ZM16 13a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z",
   search: "M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-2 5 6 6",
   login: "M9 4h11v16H9M3 12h11m-4-4 4 4-4 4",
+  undo: "M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3",
 } as const;
 export type IconName = keyof typeof iconPaths;
 export const iconAttributes = {

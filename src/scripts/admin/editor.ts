@@ -1,11 +1,23 @@
 import { formatPrice, priceForEditing } from "./price-format";
 import { createContentEditor } from "./content-editor";
-import type {
-  Catalog,
-  Property,
-  Image,
-  FieldError,
+import {
+  buildAddress,
+  buildTitle,
+  discountValue,
+  displayCities,
+  formatMoney,
+  kindOptions,
+  parseMoney,
+  pricePerMeterValue,
+  settlementOptions,
+  streetOptions,
+  TRASH_TTL,
+  type Catalog,
+  type FieldError,
+  type Property,
+  type TrashItem,
 } from "../../lib/catalog-schema.mjs";
+import type { Image } from "../../lib/catalog-schema.mjs";
 import { icon, type IconName } from "./icons";
 import { preparePhoto } from "./image-editor";
 const $ = <T extends HTMLElement = HTMLElement>(selector: string) =>
@@ -22,42 +34,6 @@ let csrf = "",
 let objectFilter = "all";
 let resumeObject = false;
 let photoPromise: Promise<void> | null = null;
-const labels = {
-  title: "Заголовок",
-  address: "Адрес",
-  price: "Цена",
-  oldPrice: "Старая цена",
-  pricePerMeter: "Цена за метр",
-  mortgage: "Ипотека в месяц",
-  discount: "Скидка",
-};
-const limits = {
-  title: 100,
-  address: 160,
-  price: 32,
-  oldPrice: 32,
-  pricePerMeter: 40,
-  mortgage: 100,
-  discount: 8,
-};
-const fieldHints: Record<keyof typeof labels, [string, string]> = {
-  title: [
-    "Например: 2-комнатная квартира, 52 м²",
-    "Тип объекта, площадь и этаж — коротко и по делу.",
-  ],
-  address: [
-    "Город, улица, дом",
-    "Укажите город, чтобы посетитель понял расположение.",
-  ],
-  price: ["5 950 000 ₽", "Полная стоимость объекта с валютой."],
-  oldPrice: ["6 400 000 ₽", "Необязательно. Будет показана зачеркнутой."],
-  pricePerMeter: ["114 423 ₽/м²", "Необязательно. Цена за квадратный метр."],
-  mortgage: [
-    "от 35 000 ₽/мес.",
-    "Необязательно. Подпись об ипотечном платеже.",
-  ],
-  discount: ["−7%", "Необязательно. Короткая отметка на фото."],
-};
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, text = "") => {
   const node = document.createElement(tag);
   node.textContent = text;
@@ -89,6 +65,220 @@ function message(text: string, error = false) {
     toast.hidePopover();
     toast.hidden = true;
   }, 4200);
+}
+// ---------- structured field definitions ----------
+type FieldKind = "text" | "number" | "money" | "select";
+interface FieldDef {
+  name: string;
+  label: string;
+  kind: FieldKind;
+  required?: boolean;
+  options?: [string, string][];
+  placeholder?: string;
+  hint?: string;
+  when?: (values: Record<string, string>) => boolean;
+}
+const numberField = (name: string, label: string, hint: string): FieldDef => ({
+  name,
+  label,
+  kind: "number",
+  placeholder: "—",
+  hint,
+});
+const FIELD_DEFS: FieldDef[] = [
+  {
+    name: "kind",
+    label: "Тип объекта",
+    kind: "select",
+    required: true,
+    options: kindOptions,
+    hint: "Квартира, студия, дом, участок или коммерческое помещение.",
+  },
+  {
+    name: "rooms",
+    label: "Комнат",
+    kind: "number",
+    placeholder: "2",
+    hint: "Только для квартиры. Участвует в названии.",
+    when: (v) => v.kind === "flat",
+  },
+  numberField(
+    "area",
+    "Площадь объекта, м²",
+    "Например: 40 или 29,3. Необязательно.",
+  ),
+  numberField("floor", "Этаж", "Необязательно. Например: 5."),
+  numberField("floors", "Этажность здания", "Необязательно. Например: 8."),
+  numberField(
+    "landArea",
+    "Площадь участка, сот.",
+    "Только для дома с участком. Например: 14,85.",
+  ),
+  {
+    name: "settlement",
+    label: "Населенный пункт",
+    kind: "text",
+    required: true,
+    placeholder: "Серышево",
+    hint: "Название без типа: Серышево, Яковлевка, Белогорск.",
+  },
+  {
+    name: "settlementKind",
+    label: "Тип населенного пункта",
+    kind: "select",
+    options: [["", "Без типа"], ...settlementOptions],
+    hint: "Выберите г., с., пос. или пгт. — приставка добавится сама.",
+  },
+  {
+    name: "street",
+    label: "Улица",
+    kind: "text",
+    placeholder: "Ленина",
+    hint: "Название без «ул.» — тип улицы выбирается рядом.",
+  },
+  {
+    name: "streetKind",
+    label: "Тип улицы",
+    kind: "select",
+    options: [["", "—"], ...streetOptions],
+    hint: "Для проездов, переулков и других типов выбирайте соответствующий вариант.",
+  },
+  {
+    name: "house",
+    label: "Номер дома",
+    kind: "text",
+    placeholder: "47",
+    hint: "Только номер: 47 или 12к3. Для «вл. 5» введите значение целиком.",
+  },
+  {
+    name: "city",
+    label: "Город отображения",
+    kind: "select",
+    required: true,
+    options: displayCities.map((c) => [c, c] as [string, string]),
+    hint: "В каком городском каталоге показывать объект. Это не адрес.",
+  },
+  {
+    name: "price",
+    label: "Цена",
+    kind: "money",
+    required: true,
+    placeholder: "900 000 ₽",
+    hint: "Только число: 900000. Рубли и пробелы добавятся автоматически.",
+  },
+  {
+    name: "oldPrice",
+    label: "Старая цена",
+    kind: "money",
+    placeholder: "1 000 000 ₽",
+    hint: "Необязательно. Скидка рассчитается автоматически.",
+  },
+  {
+    name: "mortgage",
+    label: "Ипотека в месяц",
+    kind: "text",
+    placeholder: "от 35 000 ₽/мес.",
+    hint: "Необязательно. Подпись об ипотечном платеже.",
+  },
+];
+const NUMBER_NAMES = new Set(["rooms", "area", "floor", "floors", "landArea"]);
+const MONEY_NAMES = new Set(["price", "oldPrice"]);
+function fieldValue(name: string): string {
+  const input = document.querySelector<HTMLInputElement>(
+    `#form [name="${name}"]`,
+  );
+  return input ? input.value.trim() : "";
+}
+function numberOrNull(name: string): number | null {
+  const raw = fieldValue(name).replace(",", ".");
+  if (!raw) return null;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : NaN;
+}
+// Live snapshot used for title/address/price preview and final validation.
+function snapshot(): Record<string, string> {
+  const values: Record<string, string> = {};
+  for (const def of FIELD_DEFS)
+    if (!def.when || def.when(values)) values[def.name] = fieldValue(def.name);
+  return values;
+}
+function previewValues() {
+  const v = snapshot();
+  const draft = {
+    kind: v.kind || "",
+    rooms: numberOrNull("rooms"),
+    area: numberOrNull("area"),
+    floor: numberOrNull("floor"),
+    floors: numberOrNull("floors"),
+    landArea: numberOrNull("landArea"),
+    settlement: v.settlement || "",
+    settlementKind: v.settlementKind || "",
+    street: v.street || "",
+    streetKind: v.streetKind || "",
+    house: v.house || "",
+    price: parseMoney(v.price),
+    oldPrice: parseMoney(v.oldPrice),
+  } as Property;
+  const title = v.kind ? buildTitle(draft) : fieldValue("title");
+  const address = buildAddress(draft) || v.settlement || "";
+  return {
+    title: title || "Название объекта",
+    address: address || "Адрес объекта",
+    price: v.price ? formatMoney(parseMoney(v.price)) || "Цена" : "Цена",
+    oldPrice: v.oldPrice ? formatMoney(parseMoney(v.oldPrice)) : "",
+    pricePerMeter: pricePerMeterValue(draft),
+    discount: discountValue(draft),
+    mortgage: v.mortgage || "",
+  };
+}
+function updateObjectPreview() {
+  const values = previewValues();
+  for (const [name, fallback] of [
+    ["title", "Название объекта"],
+    ["address", "Адрес объекта"],
+    ["price", "Цена"],
+    ["oldPrice", ""],
+    ["pricePerMeter", ""],
+    ["mortgage", ""],
+    ["discount", ""],
+  ] as const) {
+    const target = $(
+      "#preview-" + name.replace(/[A-Z]/g, (l) => "-" + l.toLowerCase()),
+    );
+    const value = values[name];
+    target.textContent = value || fallback;
+    target.hidden = !fallback && !value;
+  }
+  $("#preview-photo-placeholder").hidden = !$("#current-image").hidden;
+  $("#visibility-help").textContent = visible
+    ? image
+      ? "После сохранения карточка появится на сайте."
+      : "Без фотографии объект сохранится как черновик и не будет виден посетителям."
+    : "Карточка останется в админке. Посетители ее не увидят.";
+  $("#object-save-status").textContent = dirty
+    ? "Есть несохраненные изменения"
+    : editing
+      ? "Карточка сохранена. Можно внести изменения."
+      : "Изменения еще не сохранены";
+  syncConditionalFields();
+}
+function syncConditionalFields() {
+  const values = snapshot();
+  for (const wrapper of document.querySelectorAll<HTMLElement>(
+    "#form [data-conditional]",
+  )) {
+    const def = FIELD_DEFS.find((d) => d.name === wrapper.dataset.conditional);
+    const show =
+      wrapper.id === "field-title-manual"
+        ? !values.kind
+        : def?.when
+          ? def.when(values)
+          : true;
+    wrapper.hidden = !show;
+    wrapper
+      .querySelectorAll("input,select")
+      .forEach((input) => input.removeAttribute("required"));
+  }
 }
 function clearObjectErrors() {
   $("#object-error-summary").hidden = true;
@@ -141,51 +331,15 @@ function refreshObjectErrorSummary() {
     clearObjectErrors();
     return;
   }
-  // Keep the remaining error links accurate without moving focus while typing.
   objectErrors(fields, false);
 }
-function updateObjectPreview() {
-  const form = $<HTMLFormElement>("#form");
-  const read = (name: keyof typeof labels) => {
-    const text = (
-      form.elements.namedItem(name) as HTMLInputElement
-    ).value.trim();
-    return ["price", "oldPrice", "pricePerMeter"].includes(name)
-      ? formatPrice(text, name === "pricePerMeter")
-      : text;
-  };
-  for (const [name, fallback] of [
-    ["title", "Название объекта"],
-    ["address", "Адрес объекта"],
-    ["price", "Цена"],
-    ["oldPrice", ""],
-    ["pricePerMeter", ""],
-    ["mortgage", ""],
-    ["discount", ""],
-  ] as const) {
-    const target = $(
-      "#preview-" +
-        name.replace(/[A-Z]/g, (letter) => "-" + letter.toLowerCase()),
-    );
-    const value = read(name);
-    target.textContent = value || fallback;
-    target.hidden = !fallback && !value;
-  }
-  $("#preview-photo-placeholder").hidden = !$("#current-image").hidden;
-  $("#visibility-help").textContent = visible
-    ? "После сохранения карточка появится на сайте."
-    : "Карточка останется в админке. Посетители ее не увидят.";
-  $("#object-save-status").textContent = dirty
-    ? "Есть несохраненные изменения"
-    : editing
-      ? "Карточка сохранена. Можно внести изменения."
-      : "Изменения еще не сохранены";
-}
+// ---------- dialogs ----------
 const editor = $<HTMLDialogElement>("#editor"),
   confirmation = $<HTMLDialogElement>("#confirmation");
 let editorOpener: HTMLElement | null = null,
   confirmOpener: HTMLElement | null = null,
-  confirmResolve: ((value: boolean) => void) | null = null;
+  confirmResolve: ((value: boolean) => void) | null = null,
+  closeResolve: ((value: "save" | "discard" | "cancel") => void) | null = null;
 let scrollOverflow = "",
   scrollPadding = "";
 function scrollLock() {
@@ -203,6 +357,18 @@ function scrollUnlock() {
   document.body.style.paddingRight = scrollPadding;
   document.body.classList.remove("admin-modal-open");
 }
+function showConfirm() {
+  confirmOpener = document.activeElement as HTMLElement;
+  scrollLock();
+  confirmation.showModal();
+}
+function hideConfirm() {
+  confirmation.close();
+  const opener = confirmOpener;
+  confirmOpener = null;
+  opener?.focus();
+  scrollUnlock();
+}
 function ask(
   title: string,
   description: string,
@@ -211,28 +377,64 @@ function ask(
   $("#confirm-title").textContent = title;
   $("#confirm-description").textContent = description;
   $("#confirm-ok").textContent = label;
-  confirmOpener = document.activeElement as HTMLElement;
-  scrollLock();
-  confirmation.showModal();
+  $("#confirm-ok").hidden = false;
+  $("#confirm-save").hidden = true;
+  $("#confirm-cancel").textContent = "Оставить как есть";
+  $("#confirm-cancel").className = "admin-button admin-secondary";
+  showConfirm();
   $("#confirm-cancel").focus();
   return new Promise((resolve) => {
     confirmResolve = resolve;
   });
 }
 function answer(value: boolean) {
-  confirmation.close();
+  hideConfirm();
   const resolve = confirmResolve;
   confirmResolve = null;
-  confirmOpener?.focus();
-  scrollUnlock();
   resolve?.(value);
 }
-$("#confirm-ok").addEventListener("click", () => answer(true));
+// Save/discard/cancel choice for closing the object editor with edits.
+function askEditorClose(): Promise<"save" | "discard" | "cancel"> {
+  $("#confirm-title").textContent = "Сохранить изменения?";
+  $("#confirm-description").textContent =
+    "В карточке есть несохраненные изменения.";
+  $("#confirm-ok").hidden = true;
+  $("#confirm-save").hidden = false;
+  $("#confirm-save").textContent = "Сохранить и закрыть";
+  $("#confirm-cancel").textContent = "Закрыть без сохранения";
+  $("#confirm-cancel").className = "admin-button admin-secondary";
+  showConfirm();
+  $("#confirm-save").focus();
+  return new Promise((resolve) => {
+    closeResolve = resolve;
+  });
+}
+function answerClose(value: "save" | "discard" | "cancel") {
+  hideConfirm();
+  const resolve = closeResolve;
+  closeResolve = null;
+  resolve?.(value);
+}
+$("#confirm-ok").addEventListener("click", () => {
+  if (closeResolve) answerClose("discard");
+  else answer(true);
+});
+$("#confirm-save").addEventListener("click", () => {
+  answerClose("save");
+  void (async () => {
+    if (await saveCurrent()) closeEditor();
+  })();
+});
 for (const selector of ["#confirm-cancel", "#confirm-close"])
-  $(selector).addEventListener("click", () => answer(false));
+  $(selector).addEventListener("click", () => {
+    if (closeResolve)
+      answerClose(selector === "#confirm-cancel" ? "discard" : "cancel");
+    else answer(false);
+  });
 confirmation.addEventListener("cancel", (event) => {
   event.preventDefault();
-  answer(false);
+  if (closeResolve) answerClose("cancel");
+  else answer(false);
 });
 function outside(event: MouseEvent, dialog: HTMLDialogElement) {
   const r = dialog.getBoundingClientRect();
@@ -245,22 +447,23 @@ function outside(event: MouseEvent, dialog: HTMLDialogElement) {
   );
 }
 confirmation.addEventListener("click", (event) => {
-  if (outside(event, confirmation)) answer(false);
+  if (outside(event, confirmation)) {
+    if (closeResolve) answerClose("cancel");
+    else answer(false);
+  }
 });
 async function requestClose() {
   if (busy || photoPromise) {
     message("Дождитесь завершения операции", true);
     return;
   }
-  if (
-    !dirty ||
-    (await ask(
-      "Закрыть без сохранения?",
-      "Изменения в карточке будут потеряны.",
-      "Закрыть",
-    ))
-  )
+  if (!dirty) {
     closeEditor();
+    return;
+  }
+  const choice = await askEditorClose();
+  if (choice === "save") return; // handled by #confirm-save
+  if (choice === "discard") closeEditor();
 }
 editor.addEventListener("cancel", (event) => {
   // File inputs also emit a bubbling cancel event when the picker is dismissed.
@@ -270,6 +473,23 @@ editor.addEventListener("cancel", (event) => {
 });
 editor.addEventListener("click", (event) => {
   if (outside(event, editor)) void requestClose();
+});
+// Paste an image straight from the clipboard into the photo block.
+editor.addEventListener("paste", (event) => {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  for (const item of items) {
+    if (!item.type.startsWith("image/")) continue;
+    const file = item.getAsFile();
+    if (!file) continue;
+    event.preventDefault();
+    void uploadPhoto(
+      new File([file], "clipboard." + (file.type.split("/")[1] || "png"), {
+        type: file.type,
+      }),
+    );
+    return; // one paste event = one upload
+  }
 });
 // Native dialog makes the page inert; explicitly wrap Tab across its controls.
 for (const dialog of [editor, confirmation])
@@ -465,7 +685,7 @@ async function load() {
     $<HTMLButtonElement>("#add").disabled = !catalog;
   }
 }
-async function save(objects: Property[]) {
+async function save(objects: Property[], trash: TrashItem[] = []) {
   if (busy) return false;
   busy = true;
   const buttons = [
@@ -488,6 +708,7 @@ async function save(objects: Property[]) {
     catalog = await api("/api/admin/catalog", "PUT", {
       baseRevision: catalog.revision,
       objects,
+      trash,
     });
     render();
     $("#workspace-notice").hidden = true;
@@ -513,6 +734,102 @@ async function save(objects: Property[]) {
     if (editor.open) updateObjectPreview();
   }
 }
+// Build the canonical object from the form; returns issues for invalid input.
+function collectProperty(): {
+  property: Property | null;
+  issues: FieldError[];
+} {
+  const issues: FieldError[] = [];
+  const v = snapshot();
+  const manualTitle = fieldValue("title");
+  const draft = {
+    kind: v.kind || "",
+    rooms: numberOrNull("rooms"),
+    area: numberOrNull("area"),
+    floor: numberOrNull("floor"),
+    floors: numberOrNull("floors"),
+    landArea: numberOrNull("landArea"),
+    settlement: v.settlement || "",
+    settlementKind: v.settlementKind || "",
+    street: v.street || "",
+    streetKind: v.streetKind || (v.street ? "street" : ""),
+    house: v.house || "",
+    city: v.city || "",
+    price: parseMoney(v.price),
+    oldPrice: v.oldPrice ? parseMoney(v.oldPrice) : null,
+    mortgage: v.mortgage || "",
+  } as Property;
+  for (const name of NUMBER_NAMES) {
+    const raw = fieldValue(name);
+    if (raw && Number.isNaN(numberOrNull(name)))
+      issues.push({ path: name, message: "Введите число" });
+  }
+  if (!v.kind) {
+    if (!editing || editing.kind)
+      issues.push({ path: "kind", message: "Выберите тип объекта" });
+    if (!manualTitle)
+      issues.push({ path: "title", message: "Укажите название объекта" });
+  }
+  if (!draft.price || !Number.isFinite(draft.price))
+    issues.push({ path: "price", message: "Укажите цену объекта" });
+  if (v.oldPrice && !draft.oldPrice)
+    issues.push({
+      path: "oldPrice",
+      message: "Укажите корректную старую цену",
+    });
+  const address = buildAddress(draft as Property);
+  if (!address)
+    issues.push({
+      path: "settlement",
+      message: "Укажите адрес: населенный пункт, улицу или дом",
+    });
+  if (!displayCities.includes(draft.city || ""))
+    issues.push({ path: "city", message: "Выберите город отображения" });
+  if (issues.length) return { property: null, issues };
+  const title = draft.kind ? buildTitle(draft) : manualTitle;
+  const property: Property = {
+    id: editing?.id || crypto.randomUUID(),
+    visible: image ? visible : false,
+    image,
+    kind: draft.kind || "",
+    rooms: draft.kind === "flat" ? (draft.rooms ?? null) : null,
+    area: draft.area ?? null,
+    floor: draft.floor ?? null,
+    floors: draft.floors ?? null,
+    landArea: draft.landArea ?? null,
+    settlement: draft.settlement || "",
+    settlementKind: draft.settlementKind || "",
+    street: draft.street || "",
+    streetKind: draft.streetKind || "",
+    house: draft.house || "",
+    city: draft.city || displayCities[0],
+    price: draft.price!,
+    oldPrice: draft.oldPrice ?? null,
+    mortgage: draft.mortgage || "",
+    title,
+    address,
+  };
+  return { property, issues };
+}
+async function saveCurrent(): Promise<boolean> {
+  const { property, issues } = collectProperty();
+  if (!property) {
+    objectErrors(issues);
+    return false;
+  }
+  clearObjectErrors();
+  const objects = structuredClone(catalog.objects),
+    trash = structuredClone(catalog.trash || []),
+    index = objects.findIndex((o) => o.id === property.id);
+  if (index < 0) objects.push(property);
+  else objects[index] = property;
+  const saved = await save(objects, trash);
+  if (saved && !image && visible)
+    message(
+      "Объект сохранен, но не опубликован. Добавьте фотографию, чтобы разместить его на сайте.",
+    );
+  return saved;
+}
 function render() {
   if (!catalog) return;
   const container = $("#objects");
@@ -524,8 +841,149 @@ function render() {
   $("#object-hidden-count").textContent = String(
     catalog.objects.filter((item) => !item.visible).length,
   );
+  $("#object-trash-count").textContent = String((catalog.trash || []).length);
   $("#object-count").textContent = String(catalog.objects.length);
   const query = $<HTMLInputElement>("#search").value.toLocaleLowerCase().trim();
+  const trash = catalog.trash || [];
+  if (objectFilter === "trash") {
+    $("#object-results").textContent = trash.length
+      ? `В корзине: ${trash.length}. Хранение — 30 дней.`
+      : "Корзина пуста";
+    if (!trash.length) {
+      const state = el("div");
+      state.className = "admin-card admin-state";
+      state.append(
+        icon("trash"),
+        el("h3", "Корзина пуста"),
+        el("p", "Удаленные объекты хранятся здесь 30 дней."),
+      );
+      container.append(state);
+      return;
+    }
+    trash.forEach((item) => {
+      if (
+        ![item.title, item.address]
+          .join(" ")
+          .toLocaleLowerCase()
+          .includes(query)
+      )
+        return;
+      const row = el("article");
+      row.className = "admin-card admin-object is-hidden";
+      row.dataset.id = item.id;
+      const img = el("img");
+      if (item.image) img.src = photoURL(item.image.small);
+      img.alt = "";
+      img.width = 144;
+      img.height = 108;
+      img.hidden = !item.image;
+      row.append(img);
+      const copy = el("div");
+      copy.className = "admin-object-copy";
+      copy.append(el("h3", item.title));
+      const price = el("p");
+      price.className = "admin-price";
+      price.append(document.createTextNode(formatMoney(item.price)));
+      copy.append(price);
+      const address = el("p", item.address);
+      address.className = "admin-address";
+      copy.append(address);
+      const daysLeft = Math.max(
+        0,
+        Math.ceil((item.deletedAt + TRASH_TTL - Date.now()) / 86400000),
+      );
+      const meta = el("div");
+      meta.className = "admin-object-meta";
+      const deleted = el(
+        "span",
+        "Удален " +
+          new Date(item.deletedAt).toLocaleDateString("ru-RU") +
+          " · осталось " +
+          daysLeft +
+          " дн.",
+      );
+      deleted.className = "admin-order";
+      const status = el("span", "В корзине");
+      status.className = "admin-status";
+      meta.append(deleted, status);
+      const footer = el("div");
+      footer.className = "admin-object-footer";
+      footer.append(meta);
+      row.append(copy);
+      const actions = el("div");
+      actions.className = "admin-actions";
+      actions.setAttribute("role", "group");
+      actions.setAttribute("aria-label", "Действия: " + item.title);
+      const action = (label: string, name: IconName, fn: () => void) => {
+        const b = el("button");
+        b.type = "button";
+        b.className = "admin-icon-button" + (name === "trash" ? " danger" : "");
+        b.setAttribute("aria-label", label);
+        b.title = label;
+        b.dataset.tooltip = label;
+        b.dataset.action = name;
+        b.append(icon(name));
+        if (["edit", "eye", "eyeOff", "undo"].includes(name)) {
+          b.classList.add("admin-action-label");
+          b.append(el("span", label));
+        }
+        b.addEventListener("click", fn);
+        actions.append(b);
+      };
+      const change = async (
+        fn: () => { objects: Property[]; trash: TrashItem[] },
+      ) => {
+        const next = fn();
+        await save(next.objects, next.trash);
+      };
+      action(
+        "Восстановить",
+        "undo",
+        () =>
+          void (async () => {
+            const { deletedAt: _removed, ...rest } = item;
+            await change(() => ({
+              objects: [
+                ...structuredClone(catalog.objects),
+                { ...rest, visible: rest.image ? rest.visible : false },
+              ],
+              trash: structuredClone(catalog.trash || []).filter(
+                (t) => t.id !== item.id,
+              ),
+            }));
+            if (!row.isConnected) $("#add").focus();
+          })(),
+      );
+      action(
+        "Удалить навсегда",
+        "trash",
+        () =>
+          void (async () => {
+            if (
+              await ask(
+                "Удалить «" + item.title + "» навсегда?",
+                "Объект будет удален без возможности восстановления.",
+                "Удалить навсегда",
+              )
+            ) {
+              await change(() => ({
+                objects: structuredClone(catalog.objects),
+                trash: structuredClone(catalog.trash || []).filter(
+                  (t) => t.id !== item.id,
+                ),
+              }));
+              if (!row.isConnected) $("#add").focus();
+            }
+          })(),
+      );
+      footer.append(actions);
+      row.append(footer);
+      container.append(row);
+    });
+    $("#object-results").textContent =
+      `В корзине: ${trash.length}. Хранение — 30 дней.`;
+    return;
+  }
   if (!catalog.objects.length) {
     const state = el("div");
     state.className = "admin-card admin-state";
@@ -555,23 +1013,31 @@ function render() {
     row.className = "admin-card admin-object" + (p.visible ? "" : " is-hidden");
     row.dataset.id = p.id;
     const img = el("img");
-    img.src = photoURL(p.image.small);
+    if (p.image) img.src = photoURL(p.image.small);
     img.alt = "";
     img.width = 144;
     img.height = 108;
+    img.hidden = !p.image;
     row.append(img);
     const copy = el("div");
     copy.className = "admin-object-copy";
     copy.append(el("h3", p.title));
     const price = el("p");
     price.className = "admin-price";
-    price.append(document.createTextNode(p.price));
-    if (p.oldPrice) price.append(el("del", p.oldPrice));
+    price.append(document.createTextNode(formatMoney(p.price)));
+    if (p.oldPrice) price.append(el("del", formatMoney(p.oldPrice)));
     copy.append(price);
     const address = el("p", p.address);
     address.className = "admin-address";
     copy.append(address);
-    const status = el("span", p.visible ? "На сайте" : "Скрыт с сайта");
+    const status = el(
+      "span",
+      p.visible && p.image
+        ? "На сайте"
+        : p.image
+          ? "Скрыт с сайта"
+          : "Черновик",
+    );
     status.className = "admin-status";
     const footer = el("div");
     footer.className = "admin-object-footer";
@@ -608,10 +1074,13 @@ function render() {
       b.addEventListener("click", fn);
       actions.append(b);
     };
-    const change = async (fn: (objects: Property[]) => void) => {
+    const change = async (
+      fn: (objects: Property[], trash: TrashItem[]) => void,
+    ) => {
       const objects = structuredClone(catalog.objects);
-      fn(objects);
-      await save(objects);
+      const trash = structuredClone(catalog.trash || []);
+      fn(objects, trash);
+      await save(objects, trash);
     };
     action("Изменить", "edit", () => edit(p));
     action(
@@ -619,7 +1088,7 @@ function render() {
       p.visible ? "eyeOff" : "eye",
       () =>
         void change((objects) => {
-          objects[index].visible = !p.visible;
+          objects[index].visible = !p.visible && !!p.image;
         }),
     );
     for (const [label, delta, name] of [
@@ -646,11 +1115,15 @@ function render() {
           if (
             await ask(
               "Удалить «" + p.title + "»?",
-              "Это действие нельзя отменить.",
-              "Удалить",
+              "Объект переместится в корзину и будет храниться там 30 дней. Его можно восстановить.",
+              "В корзину",
             )
           ) {
-            await change((objects) => {
+            await change((objects, trash) => {
+              trash.push({
+                ...structuredClone(objects[index]),
+                deletedAt: Date.now(),
+              });
               objects.splice(index, 1);
             });
             if (!row.isConnected) $("#add").focus();
@@ -693,13 +1166,28 @@ function edit(property: Property | null) {
   }
   editing = property ? structuredClone(property) : null;
   image = editing?.image || null;
-  visible = editing?.visible ?? true;
+  visible = editing ? editing.visible : false;
   dirty = false;
   const form = $<HTMLFormElement>("#form");
   form.reset();
-  for (const [name] of Object.entries(labels))
-    (form.elements.namedItem(name) as HTMLInputElement).value =
-      editing?.[name as keyof typeof labels] || "";
+  for (const input of form.querySelectorAll<
+    HTMLInputElement | HTMLSelectElement
+  >("#fields input,#fields select,#fields textarea")) {
+    const name = input.name;
+    if (!name) continue;
+    if (name === "title") input.value = editing?.title || "";
+    else if (NUMBER_NAMES.has(name)) {
+      const n = editing?.[name as keyof Property];
+      input.value =
+        n === null || n === undefined ? "" : String(n).replace(".", ",");
+    } else if (MONEY_NAMES.has(name)) {
+      const n = editing?.[name as keyof Property];
+      input.value = typeof n === "number" && n > 0 ? String(n) : "";
+    } else {
+      const v = editing?.[name as keyof Property];
+      input.value = typeof v === "string" ? v : "";
+    }
+  }
   document
     .querySelectorAll<HTMLElement>("[data-field]")
     .forEach((n) => (n.textContent = ""));
@@ -712,7 +1200,7 @@ function edit(property: Property | null) {
   if (image) $<HTMLImageElement>("#current-image").src = photoURL(image.large);
   clearObjectErrors();
   $("#image-status").textContent =
-    "Фото будет обрезано по центру в формате 4:3. Проверьте кадр в предпросмотре.";
+    "Фото будет обрезано по центру в формате 4:3. Можно выбрать файл или вставить изображение из буфера обмена.";
   updateObjectPreview();
   $("#edit-title").textContent = editing ? "Изменить объект" : "Новый объект";
   editorOpener = document.activeElement as HTMLElement;
@@ -722,40 +1210,76 @@ function edit(property: Property | null) {
   editor.scrollTop = 0;
   $("#edit-title").focus();
 }
-for (const [name, label] of Object.entries(labels)) {
-  const wrapper = el(
-      "label",
-      label + (["title", "address", "price"].includes(name) ? " *" : ""),
-    ),
-    input = el("input");
-  input.name = name;
-  if (["price", "oldPrice", "pricePerMeter"].includes(name)) {
-    input.inputMode = "decimal";
-    let initial = "";
-    input.addEventListener("focus", () => {
-      initial = input.value;
-      input.value = priceForEditing(input.value);
-    });
-    input.addEventListener("blur", () => {
-      input.value = formatPrice(input.value, name === "pricePerMeter");
-      if (input.value !== initial) dirty = true;
-      updateObjectPreview();
-    });
+// Build the field inputs once; conditional fields toggle via data-conditional.
+for (const def of FIELD_DEFS) {
+  const wrapper = el("label", def.label + (def.required ? " *" : "")),
+    input = document.createElement(
+      def.kind === "select" ? "select" : "input",
+    ) as HTMLInputElement | HTMLSelectElement;
+  input.name = def.name;
+  input.id = "object-" + def.name;
+  if (def.kind === "select") {
+    for (const [value, label] of def.options || []) {
+      const option = el("option", label);
+      option.value = value;
+      (input as HTMLSelectElement).append(option);
+    }
+  } else {
+    const textInput = input as HTMLInputElement;
+    textInput.placeholder = def.placeholder || "";
+    if (def.kind === "number") {
+      textInput.inputMode = "decimal";
+      textInput.autocomplete = "off";
+    }
+    if (def.kind === "money") {
+      textInput.inputMode = "decimal";
+      let initial = "";
+      textInput.addEventListener("focus", () => {
+        initial = textInput.value;
+        textInput.value = priceForEditing(textInput.value);
+      });
+      textInput.addEventListener("blur", () => {
+        textInput.value = formatPrice(textInput.value);
+        if (textInput.value !== initial) dirty = true;
+        updateObjectPreview();
+      });
+    }
+    if (def.name === "title") textInput.maxLength = 160;
+    if (def.name === "mortgage") textInput.maxLength = 100;
   }
-  input.id = "object-" + name;
-  const [placeholder, hint] = fieldHints[name as keyof typeof labels];
-  input.placeholder = placeholder;
-  const help = el("small", hint);
+  const help = el("small", def.hint || "");
   help.className = "admin-field-hint";
-  help.id = "hint-" + name;
-  input.maxLength = limits[name as keyof typeof limits];
-  input.required = ["title", "address", "price"].includes(name);
-  input.setAttribute("aria-describedby", "hint-" + name + " error-" + name);
+  help.id = "hint-" + def.name;
+  input.setAttribute(
+    "aria-describedby",
+    "hint-" + def.name + " error-" + def.name,
+  );
   const error = el("span");
   error.className = "field-error";
-  error.dataset.field = name;
-  error.id = "error-" + name;
+  error.dataset.field = def.name;
+  error.id = "error-" + def.name;
   wrapper.append(input, help, error);
+  if (def.when) wrapper.dataset.conditional = def.name;
+  $("#fields").append(wrapper);
+}
+// Legacy objects without a parsed kind keep a manual title field.
+{
+  const wrapper = el("label", "Название (свой вариант)"),
+    input = el("input");
+  input.name = "title";
+  input.id = "object-title";
+  input.maxLength = 160;
+  input.placeholder = "Название объекта";
+  const help = el("small", "Видно только если тип объекта не определен.");
+  help.className = "admin-field-hint";
+  help.id = "hint-title";
+  const error = el("span");
+  error.className = "field-error";
+  error.dataset.field = "title";
+  error.id = "error-title";
+  wrapper.append(input, help, error);
+  wrapper.dataset.conditional = "kind";
+  wrapper.id = "field-title-manual";
   $("#fields").append(wrapper);
 }
 $("#form").addEventListener("input", (event) => {
@@ -769,16 +1293,30 @@ $("#form").addEventListener("input", (event) => {
   }
   updateObjectPreview();
 });
+$("#form").addEventListener("change", () => updateObjectPreview());
 $("#object-visible").addEventListener("click", () => {
-  visible = !visible;
+  const next = !visible;
+  if (next && !image) {
+    const slot = document.querySelector<HTMLElement>(
+      '#form [data-field="image"]',
+    );
+    if (slot) slot.textContent = "Сначала загрузите фотографию";
+    $("#image-file").setAttribute("aria-invalid", "true");
+    $("#visibility-help").textContent =
+      "Публикация требует фотографию. Добавьте фото, затем включите показ на сайте.";
+    return;
+  }
+  visible = next;
   $("#object-visible").setAttribute("aria-checked", String(visible));
   dirty = true;
   updateObjectPreview();
 });
 $("#image-file").setAttribute("aria-describedby", "error-image");
-$("#image-file").addEventListener("change", () => {
-  const file = $<HTMLInputElement>("#image-file").files?.[0];
-  if (!file) return;
+async function uploadPhoto(file: File) {
+  if (photoPromise) {
+    message("Дождитесь подготовки предыдущей фотографии", true);
+    return;
+  }
   const previousImage = image;
   const fileInput = $<HTMLInputElement>("#image-file");
   fileInput.disabled = true;
@@ -839,6 +1377,10 @@ $("#image-file").addEventListener("change", () => {
       $<HTMLButtonElement>("#object-save").disabled = false;
     }
   })();
+}
+$("#image-file").addEventListener("change", () => {
+  const file = $<HTMLInputElement>("#image-file").files?.[0];
+  if (file) void uploadPhoto(file);
 });
 $("#form").addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -847,45 +1389,7 @@ $("#form").addEventListener("submit", async (event) => {
     message("Дождитесь подготовки фотографии", true);
     return;
   }
-  const issues: FieldError[] = [];
-  for (const name of ["title", "address", "price"] as const) {
-    const input = document.querySelector<HTMLInputElement>(
-      `#form [name="${name}"]`,
-    )!;
-    if (!input.value.trim())
-      issues.push({
-        path: name,
-        message: {
-          title: "Укажите название объекта",
-          address: "Укажите адрес объекта",
-          price: "Укажите цену объекта",
-        }[name],
-      });
-  }
-  if (!image)
-    issues.push({ path: "image", message: "Выберите фотографию объекта" });
-  if (issues.length) {
-    objectErrors(issues);
-    return;
-  }
-  clearObjectErrors();
-  for (const name of ["price", "oldPrice", "pricePerMeter"]) {
-    const input = document.querySelector<HTMLInputElement>(
-      `#form [name="${name}"]`,
-    )!;
-    input.value = formatPrice(input.value, name === "pricePerMeter");
-  }
-  const form = $<HTMLFormElement>("#form"),
-    p = { id: editing?.id || crypto.randomUUID(), visible, image } as Property;
-  for (const name of Object.keys(labels))
-    p[name as keyof typeof labels] = (
-      form.elements.namedItem(name) as HTMLInputElement
-    ).value.trim();
-  const objects = structuredClone(catalog.objects),
-    index = objects.findIndex((o) => o.id === p.id);
-  if (index < 0) objects.push(p);
-  else objects[index] = p;
-  if (await save(objects)) closeEditor();
+  if (await saveCurrent()) closeEditor();
 });
 $("#add").addEventListener("click", () => edit(null));
 for (const selector of ["#cancel", "#editor-close"])

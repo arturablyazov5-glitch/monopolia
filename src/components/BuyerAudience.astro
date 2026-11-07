@@ -49,6 +49,7 @@ const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
     <PersonLabel
       class="buyer-name"
       node="1380:4974"
+      person="elena-sidelina"
       {...people["elena-sidelina"]}
     />
     <div class="buyer-audience-content">
@@ -85,14 +86,14 @@ const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
             </span>
             <span class="buyer-m-line buyer-m-count-line">
               <span class="buyer-count-mobile handwritten-number">{siteText("buyer-audience.text.3")}</span>{" "}
-              <span class="buyer-intent-word">{intent[1]}</span>
+              <span class="buyer-intent-word" data-content-bind="off">{intent[1]}</span>
             </span>
             <span class="buyer-m-line">
-              <span class="buyer-intent-next">{intent[2]}</span><span class="buyer-intent-rest">{intent[3]}</span>{" "}
-              <span class="buyer-tail-first">{tail[1]}</span>
+              <span class="buyer-intent-next" data-content-bind="off">{intent[2]}</span><span class="buyer-intent-rest" data-content-bind="off">{intent[3]}</span>{" "}
+              <span class="buyer-tail-first" data-content-bind="off">{tail[1]}</span>
             </span>
             <span class="buyer-m-line">
-              <span class="buyer-tail-rest">{tail[2].trim()}</span>{" "}
+              <span class="buyer-tail-rest" data-content-bind="off">{tail[2].trim()}</span>{" "}
               <span>{siteText("buyer-audience.text.6")}</span>
             </span>
           </span>

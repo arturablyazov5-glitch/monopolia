@@ -66,20 +66,20 @@ test('browser: edit home headline and sell button, reload visitor, reset, offlin
    try{const h=req.headers();const response=await fetch(s.origin+path,{method:req.method(),headers:{Origin:site,'Content-Type':h['content-type']||'application/json',Cookie:h.cookie||'','X-Admin-CSRF':h['x-admin-csrf']||'','X-Admin-Request':h['x-admin-request']||'',...(h['if-none-match']?{'If-None-Match':h['if-none-match']}:{})},...(['GET','HEAD'].includes(req.method())?{}:{body:req.postData()})});await req.respond({status:response.status,headers:Object.fromEntries(response.headers),body:Buffer.from(await response.arrayBuffer())});}catch{await req.abort('connectionrefused')}
   }else await req.continue();});};
   await configure(page);await page.setViewport({width:1440,height:1000});await page.goto(site+'/admin/',{waitUntil:'networkidle0'});
-  await page.type('[name=username]',username);await page.type('[name=password]',password);await page.click('#login button');await page.waitForFunction(()=>!document.querySelector('#workspace').hidden);
+  await page.type('[name=username]',username);await page.type('[name=password]',password);await page.click('#login button[type=submit]');await page.waitForFunction(()=>!document.querySelector('#workspace').hidden);
   await page.click('#tab-texts');await page.waitForSelector('[data-text-id="'+titleId+'"] textarea');
   const set=async(id,value)=>page.$eval('[data-text-id="'+id+'"] textarea',(n,value)=>{n.value=value;n.dispatchEvent(new Event('input',{bubbles:true}))},value);
   await set(titleId,'Квартиры');await set(buttonId,'Оценить объект');await page.click('#tab-objects');await page.waitForSelector('#confirmation[open]');await page.click('#confirm-cancel');assert.equal(await page.$eval('#texts-panel',n=>n.hidden),false);await page.click('#content-save');await page.waitForFunction(()=>document.querySelector('#content-status').textContent.startsWith('Сохранено.'),{polling:'mutation'});
   const visitor=await browser.newPage();await configure(visitor);await visitor.setViewport({width:1440,height:900});
   await visitor.goto(site+'/',{waitUntil:'networkidle0'});assert.equal(await visitor.$eval('[data-content-id="'+titleId+'"]',n=>[...n.childNodes].filter(n=>n.nodeType===3)[Number(n.dataset.contentSlots)].textContent.trim()),'Квартиры');
-  await visitor.goto(site+'/sell/',{waitUntil:'networkidle0'});assert.equal(await visitor.$eval('.inner-hero-submit [data-content-id="'+buttonId+'"]',n=>n.childNodes[0].textContent.trim()),'Оценить объект');
+  await visitor.goto(site+'/sell/',{waitUntil:'networkidle0'});assert((await visitor.$$eval('[data-content-id="'+buttonId+'"]',n=>n.map(x=>x.textContent))).some(t=>t.includes('Оценить объект')));
   for(const width of [1440,1024,768,390,360]){await page.setViewport({width,height:1000});await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));if([1440,390].includes(width))await page.screenshot({path:qa+'/admin-texts-'+width+'.png'});}
   // Reset and verify the actual public response and visitor DOM after reload.
   for(const id of [titleId,buttonId])await page.$eval('[data-text-id="'+id+'"] button',n=>n.click());
   await page.bringToFront();await page.$eval('#content-save',n=>n.click());await page.waitForFunction(()=>document.querySelector('#content-status').textContent.startsWith('Сохранено.'),{polling:'mutation'});
   assert.deepEqual((await s.api.content.read()).overrides,{});
   await visitor.goto(site+'/',{waitUntil:'networkidle0'});assert.equal(await visitor.$eval('[data-content-id="'+titleId+'"]',n=>[...n.childNodes].filter(n=>n.nodeType===3)[Number(n.dataset.contentSlots)].textContent.trim()),siteTexts.find(x=>x.id===titleId).defaultValue);
-  await visitor.goto(site+'/sell/',{waitUntil:'networkidle0'});assert.equal(await visitor.$eval('.inner-hero-submit [data-content-id="'+buttonId+'"]',n=>n.childNodes[0].textContent.trim()),siteTexts.find(x=>x.id===buttonId).defaultValue);
+  await visitor.goto(site+'/sell/',{waitUntil:'networkidle0'});assert((await visitor.$$eval('[data-content-id="'+buttonId+'"]',n=>n.map(x=>x.textContent))).some(t=>t.includes(siteTexts.find(x=>x.id===buttonId).defaultValue)));
   offline=true;for(const route of ['/','/sell/','/buy/']){await visitor.goto(site+route,{waitUntil:'networkidle0'});assert(await visitor.$('[data-content-id]'));}
   assert.deepEqual(errors,[]);assert.deepEqual(consoleErrors,[]);await fs.writeFile(qa+'/content-browser-results.json',JSON.stringify({passed:true,textCount:siteTexts.length,errors,consoleErrors,offline:true,adminWidths:[1440,1024,768,390,360]},null,2));
  }finally{await browser?.close();await s.cleanup()}

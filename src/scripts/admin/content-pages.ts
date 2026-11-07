@@ -19,6 +19,25 @@ export const pageChoices: { key: PageKey; label: string; path: string }[] = [
   { key: "common", label: "Общие", path: "/" },
 ];
 const clean = (text: string) => text.replace(/\s+/g, " ").trim();
+// Friendly names for [data-dialog-form] groups inside the shared lead dialog.
+const dialogFormNames: Record<string, string> = {
+  callback: "Заявка · Обратный звонок",
+  office: "Заявка · Консультация в офисе",
+  analysis: "Заявка · Анализ объекта",
+  "closed-base": "Заявка · Закрытая база",
+  service: "Заявка · Консультация по услуге",
+  team: "Заявка · Вакансия",
+  mortgage: "Заявка · Ипотека",
+  viewing: "Заявка · Просмотр",
+  "new-build": "Заявка · Новостройка",
+  buy: "Форма · Покупка",
+  sell: "Форма · Продажа",
+};
+const caseBlocks = new Set([
+  "client-cases",
+  "blockbuster-case",
+  "sell-week-case",
+]);
 function headingText(heading: Element | null) {
   if (!heading) return "";
   const clone = heading.cloneNode(true) as Element;
@@ -121,25 +140,43 @@ export async function readTextPages(
               group.ids.push(id);
             }
         } else {
-          const key = node.closest(".site-header")
-            ? "header"
-            : node.closest(".site-footer")
-              ? "footer"
-              : node.closest("dialog")
-                ? "dialog"
+          const form = node.closest<HTMLElement>("[data-dialog-form]");
+          const dialog = node.closest("dialog");
+          let key: string, label: string;
+          if (form) {
+            // Each popup/quiz inside the lead dialog is its own group.
+            key = "form:" + (form.dataset.dialogForm || "other");
+            label =
+              dialogFormNames[form.dataset.dialogForm || ""] ||
+              "Модальная форма";
+          } else if (dialog) {
+            key =
+              "dialog:" +
+              (dialog.id || dialog.getAttribute("aria-label") || "dialog");
+            label =
+              dialog.id === "lead-dialog"
+                ? "Модальная форма"
+                : headingText(dialog.querySelector("h1,h2,h3")) ||
+                  dialog.getAttribute("aria-label") ||
+                  "Диалог";
+          } else {
+            key = node.closest(".site-header")
+              ? "header"
+              : node.closest(".site-footer")
+                ? "footer"
                 : "other";
+            label =
+              (
+                {
+                  header: "Шапка",
+                  footer: "Подвал",
+                  other: "Общие подписи",
+                } as Record<string, string>
+              )[key] || "Общие подписи";
+          }
           let group = commonGroups.get(key);
           if (!group) {
-            group = {
-              id: "common-" + key,
-              label: {
-                header: "Шапка",
-                footer: "Подвал",
-                dialog: "Модальная форма",
-                other: "Общие подписи",
-              }[key],
-              ids: [],
-            };
+            group = { id: "common-" + key, label, ids: [] };
             commonGroups.set(key, group);
             common.push(group);
           }
@@ -161,33 +198,32 @@ export async function readTextPages(
     ...pages.flatMap((page) => page.groups.flatMap((group) => group.ids)),
     ...commonSeen,
   ]);
-  const remaining = items
-    .filter((item) => !allSeen.has(item.id))
-    .map((item) => item.id);
-  if (remaining.length)
-    common.push({
-      id: "common-other-texts",
-      label: "Другие общие тексты",
-      ids: remaining,
-    });
-  // Promise completion must not influence the navigation order.
-  common.sort(
-    (a, b) =>
-      [
-        "common-header",
-        "common-footer",
-        "common-dialog",
-        "common-other",
-        "common-other-texts",
-      ].indexOf(a.id) -
-      [
-        "common-header",
-        "common-footer",
-        "common-dialog",
-        "common-other",
-        "common-other-texts",
-      ].indexOf(b.id),
+  const remaining = items.filter((item) => !allSeen.has(item.id));
+  // Group leftovers by their real block: cases together, the rest by section.
+  const blockGroups = new Map<string, string[]>();
+  for (const item of remaining) {
+    const block = caseBlocks.has(item.block) ? "__cases" : item.block || "other";
+    const list = blockGroups.get(block) || [];
+    list.push(item.id);
+    blockGroups.set(block, list);
+  }
+  const orderedBlocks = [...blockGroups.keys()].sort((a, b) =>
+    a === "__cases" ? -1 : b === "__cases" ? 1 : a.localeCompare(b, "ru"),
   );
+  for (const block of orderedBlocks) {
+    common.push({
+      id: "common-block-" + block,
+      label:
+        block === "__cases"
+          ? "Кейсы"
+          : names[block] || block || "Другие общие тексты",
+      ids: blockGroups.get(block)!,
+    });
+  }
+  // Header and footer stay first; everything else keeps DOM encounter order.
+  const priority = (id: string) =>
+    id === "common-header" ? 0 : id === "common-footer" ? 1 : 2;
+  common.sort((a, b) => priority(a.id) - priority(b.id));
   return [
     ...pages,
     { ...pageChoices[3], groups: common.filter((group) => group.ids.length) },

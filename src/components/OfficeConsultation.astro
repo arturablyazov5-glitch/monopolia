@@ -23,7 +23,7 @@ const notes = (selling
     ]
   : [
       ["office-consultation.text.8", "office-consultation.text.9", "office-consultation.text.7"],
-      ["office-consultation.text.13", "office-consultation.text.14", "home-hero.text.3"],
+      ["office-consultation.text.13", "office-consultation.text.14", "office-consultation.text.18"],
     ]
 ).map((keys) => keys.map((key) => siteText(key)));
 ---
@@ -71,6 +71,17 @@ const notes = (selling
             tapeNode={`I${node};${index === 0 ? "1281:4701" : "1281:4795"};569:1388`}
             class="office-consultation-note"
             textured
+            contentId={
+              !selling && index === 1
+                ? "office-consultation.text.13 office-consultation.text.14 office-consultation.text.18"
+                : undefined
+            }
+            contentSlots={
+              !selling && index === 1 ? "0 1 2" : undefined
+            }
+            contentParts={
+              !selling && index === 1 ? "-1 -1 -1" : undefined
+            }
           >
             {lines.map((line, lineIndex) => <>{lineIndex > 0 && <br />}{line}</>)}
           </TapedNote>

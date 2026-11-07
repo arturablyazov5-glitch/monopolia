@@ -1,6 +1,7 @@
 ---
 import { imageSize } from "../lib/image-size";
 import { expertPortraits } from "../data/expert-portraits";
+import type { PersonId } from "../data/people.mjs";
 import SpeechBubble from "./SpeechBubble.astro";
 interface Props {
   name: string;
@@ -8,11 +9,15 @@ interface Props {
   src: string;
   alwaysVisible?: boolean;
   quote?: string;
+  /** Ключ сотрудника: включает редактирование имени и должности в админке. */
+  person?: PersonId;
 }
-const { name, role, src, alwaysVisible = false, quote } = Astro.props;
+const { name, role, src, alwaysVisible = false, quote, person } = Astro.props;
 const portrait = expertPortraits[src];
 if (!portrait) throw new Error(`Не задан кадр портрета эксперта: ${src}`);
 const signatureRole = role.charAt(0).toLocaleLowerCase("ru-RU") + role.slice(1);
+const nameId = person ? `person.${person}.name` : "";
+const roleId = person ? `person.${person}.role` : "";
 ---
 
 <div
@@ -42,13 +47,31 @@ const signatureRole = role.charAt(0).toLocaleLowerCase("ru-RU") + role.slice(1);
         text={quote}
       />
       <p class="expert-profile-signature">
-        {name}, {signatureRole}
+        <span
+          data-content-id={nameId || undefined}
+          data-content-slots={nameId ? "0" : undefined}
+          data-content-parts={nameId ? "-1" : undefined}>{name}</span
+        >,{" "}
+        <span
+          data-content-id={roleId || undefined}
+          data-content-slots={roleId ? "0" : undefined}
+          data-content-parts={roleId ? "-1" : undefined
+          }>{signatureRole}</span
+        >
       </p>
     </>
   ) : (
     <span class="expert-profile-info">
-      <strong>{name}</strong>
-      <span>{role}</span>
+      <strong
+        data-content-id={nameId || undefined}
+        data-content-slots={nameId ? "0" : undefined}
+        data-content-parts={nameId ? "-1" : undefined}>{name}</strong
+      >
+      <span
+        data-content-id={roleId || undefined}
+        data-content-slots={roleId ? "0" : undefined}
+        data-content-parts={roleId ? "-1" : undefined}>{role}</span
+      >
     </span>
   )}
 </div>

@@ -11,6 +11,10 @@ const fail=(status,code,message)=>{throw new AdminError(status,code,message);};
 export async function createAdminAPI({root=project,env=process.env,now=Date.now}={}) {
   const storage=new Storage(env.DATA_DIR || resolve(root,'.local-admin'));await storage.init();
   const content=new ContentStorage(storage.root);
+  // Trash expiry runs on the server clock, not on admin page visits.
+  void storage.purgeTrash().catch(()=>{});
+  const purgeTimer=setInterval(()=>{void storage.purgeTrash().catch(()=>{});},3600e3);
+  purgeTimer.unref?.();
   const origins=new Set((env.ALLOWED_ORIGINS || env.PUBLIC_SITE_ORIGIN || 'http://127.0.0.1:4321').split(',').map(s=>s.trim()).filter(Boolean));
   const apiOrigin=env.ADMIN_API_ORIGIN || 'http://127.0.0.1:'+String(env.PORT || 8787);
   for(const origin of [...origins,apiOrigin]) {const u=new URL(origin);if(u.origin!==origin || (u.protocol!=='https:' && !(u.protocol==='http:' && u.hostname==='127.0.0.1')))throw Error('Use exact HTTPS origins or 127.0.0.1');}
@@ -95,5 +99,5 @@ export async function createAdminAPI({root=project,env=process.env,now=Date.now}
       fail(404,'route','Маршрут отсутствует');
     } catch(e){send(res,e instanceof AdminError?e.status:e.code==='ENOENT'?404:500,{error:{code:e instanceof AdminError?e.code:'operation',message:e instanceof AdminError?e.message:'Операция не выполнена',...(e.fields?{fields:e.fields}:{})}});}
   };
-  return {handler,storage,content,close:async()=>{sessions.clear();await Promise.all([storage.close(),content.close()]);}};
+  return {handler,storage,content,close:async()=>{clearInterval(purgeTimer);sessions.clear();await Promise.all([storage.close(),content.close()]);}};
 }

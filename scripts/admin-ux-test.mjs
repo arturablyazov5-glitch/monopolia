@@ -201,11 +201,12 @@ test(
         "Search by address; visibility filter and clear empty results",
       );
       await click(page, "#add");
+      // A new object has no photo yet: publication stays off and cannot be enabled.
       assert.equal(
         await page.$eval("#object-visible", (e) =>
           e.getAttribute("aria-checked"),
         ),
-        "true",
+        "false",
       );
       await click(page, "#object-visible");
       assert.equal(
@@ -216,7 +217,7 @@ test(
       );
       assert.match(
         await page.$eval("#visibility-help", (e) => e.textContent),
-        /не увидят/,
+        /фотографи/,
       );
       await page.focus("#object-visible");
       await page.keyboard.press("Space");
@@ -224,7 +225,7 @@ test(
         await page.$eval("#object-visible", (e) =>
           e.getAttribute("aria-checked"),
         ),
-        "true",
+        "false",
       );
       await page.focus("#edit-title");
       await page.keyboard.press("Tab");
@@ -244,7 +245,7 @@ test(
       await click(page, "#object-save");
       assert.equal(
         await page.$$("#object-error-summary a").then((x) => x.length),
-        4,
+        5,
       );
       assert.equal(
         s.writes.length,
@@ -258,18 +259,22 @@ test(
       await click(page, "#object-error-summary a");
       assert.equal(
         await page.evaluate(() => document.activeElement.id),
-        "object-title",
+        "object-kind",
       );
       checks.push(
-        "Object validation: four linked inline errors, focus, no write",
+        "Object validation: five linked inline errors, focus, no write",
       );
-      await fill(page, "#object-title", "Тестовая квартира, 64 м²");
-      await fill(page, "#object-address", "Тестовый адрес, дом 12");
+      await page.select("#object-kind", "flat");
+      await fill(page, "#object-rooms", "2");
+      await fill(page, "#object-area", "52");
+      await fill(page, "#object-settlement", "Благовещенск");
+      await fill(page, "#object-street", "Ленина");
+      await fill(page, "#object-house", "10");
+      await fill(page, "#object-city", "Благовещенск");
       await fill(page, "#object-price", "6 400 000 ₽");
       for (const [name, raw, formatted] of [
         ["price", "4900000", "4 900 000 ₽"],
         ["oldPrice", "7000000", "7 000 000 ₽"],
-        ["pricePerMeter", "122500", "122 500 ₽/м²"],
       ]) {
         await page.focus(`[name="${name}"]`);
         await fill(page, `[name="${name}"]`, raw);
@@ -285,14 +290,27 @@ test(
       }
       await fill(page, "#object-price", "6 400 000 ₽");
       await fill(page, "#object-oldPrice", "");
-      await fill(page, "#object-pricePerMeter", "");
       checks.push(
         "iOS-style visibility switch with Space support; currency formatting only on blur",
       );
-      assert.equal(
+      assert.match(
         await page.$eval("#preview-title", (e) => e.textContent),
-        "Тестовая квартира, 64 м²",
+        /2-комнатная квартира/,
       );
+      assert.match(
+        await page.$eval("#preview-address", (e) => e.textContent),
+        /Ленина/,
+      );
+      await fill(page, "#object-oldPrice", "7 000 000 ₽");
+      assert.match(
+        await page.$eval("#preview-price-per-meter", (e) => e.textContent),
+        /₽\/м²/,
+      );
+      assert.match(
+        await page.$eval("#preview-discount", (e) => e.textContent),
+        /−/,
+      );
+      await fill(page, "#object-oldPrice", "");
       await page.$eval("#image-file", (node) =>
         node.dispatchEvent(new Event("cancel", { bubbles: true })),
       );
@@ -307,7 +325,7 @@ test(
       );
       await click(page, "#editor-close");
       await page.waitForSelector("#confirmation[open]");
-      await click(page, "#confirm-cancel");
+      await click(page, "#confirm-close");
       assert.equal(await page.$eval("#editor", (e) => e.open), true);
       const photo = await page.evaluate(async () => {
         const canvas = document.createElement("canvas");
@@ -338,13 +356,13 @@ test(
             .textContent.includes("готова"),
       );
       assert.equal(await page.$eval("#current-image", (e) => e.hidden), false);
-      await fill(page, "#object-title", "Квартира".repeat(12));
-      await fill(page, "#object-address", "Адрес".repeat(32));
-      await fill(page, "#object-price", "9".repeat(32));
+      await fill(page, "#object-settlement", "Населенный пункт".repeat(8));
+      await fill(page, "#object-street", "Улица".repeat(24));
+      await fill(page, "#object-mortgage", "Ипотека".repeat(24));
       await layout(page, "long-object", [1440, 390, 320]);
-      await fill(page, "#object-title", "Тестовая квартира, 64 м²");
-      await fill(page, "#object-address", "Тестовый адрес, дом 12");
-      await fill(page, "#object-price", "6 400 000 ₽");
+      await fill(page, "#object-settlement", "Благовещенск");
+      await fill(page, "#object-street", "Ленина");
+      await fill(page, "#object-mortgage", "");
       await layout(page, "object-editor", [1440, 768, 390, 320]);
       await page.setViewport({ width: 1440, height: 940 });
       s.fail("/api/admin/catalog");
@@ -375,9 +393,10 @@ test(
           !document.querySelector("#object-error-summary").hidden,
       );
       assert.equal(
-        await page.$eval("#object-title", (e) => e.value),
-        "Тестовая квартира, 64 м²",
+        await page.$eval("#object-settlement", (e) => e.value),
+        "Благовещенск",
       );
+      assert.equal(await page.$eval("#object-kind", (e) => e.value), "flat");
       await page.screenshot({ path: join(artifacts, "object-save-error.png") });
       await click(page, "#object-save");
       await page.waitForFunction(() => !document.querySelector("#editor").open);
@@ -396,7 +415,7 @@ test(
           !document.querySelector("#image-file").disabled,
       );
       assert.equal(await page.$eval("#current-image", (e) => e.src), oldImage);
-      await fill(page, "#object-title", "Карточка после повторного входа");
+      await fill(page, "#object-mortgage", "Карточка после повторного входа");
       s.expire();
       await click(page, "#object-save");
       await page.waitForFunction(
@@ -405,7 +424,7 @@ test(
       await login(page);
       await page.waitForFunction(() => document.querySelector("#editor").open);
       assert.equal(
-        await page.$eval("#object-title", (e) => e.value),
+        await page.$eval("#object-mortgage", (e) => e.value),
         "Карточка после повторного входа",
       );
       await click(page, "#object-save");
@@ -414,12 +433,16 @@ test(
         "Invalid replacement preserves previous image; expired session resumes the unsaved object",
       );
       await click(page, ".admin-object:first-child [data-action=eyeOff]");
+      // Wait for the hide request to finish: save() disables every button meanwhile,
+      // and the new photo-backed draft already counts as hidden.
       await page.waitForFunction(
         () =>
-          document.querySelector("#object-hidden-count").textContent === "1",
+          document.querySelector("#object-hidden-count").textContent === "2" &&
+          document.querySelector('.admin-object [data-action="eye"]') &&
+          !document.querySelector('.admin-object [data-action="eye"]').disabled,
       );
       await click(page, "[data-object-filter=hidden]");
-      assert.equal(await page.$$(".admin-object").then((x) => x.length), 1);
+      assert.equal(await page.$$(".admin-object").then((x) => x.length), 2);
       await click(page, "[data-object-filter=all]");
       const originalFirst = (await s.api.storage.catalog()).objects[0].id;
       await click(page, ".admin-object:first-child [data-action=down]");
@@ -427,6 +450,11 @@ test(
         (id) => document.querySelectorAll(".admin-object")[1].dataset.id === id,
         {},
         originalFirst,
+      );
+      await page.waitForFunction(
+        () =>
+          !document.querySelector('.admin-object [data-action="eye"]')
+            ?.disabled && document.querySelectorAll(".admin-object").length > 0,
       );
       await click(page, ".admin-object:last-child [data-action=trash]");
       await page.waitForSelector("#confirmation[open]");
@@ -517,7 +545,8 @@ test(
         "preview text must focus its editable field",
       );
       await click(page, "#tab-objects");
-      assert.equal(await page.$eval("#confirmation", (e) => e.open), false);
+      await page.waitForSelector("#confirmation[open]");
+      await click(page, "#confirm-cancel");
       await click(page, "#tab-texts");
       assert.equal(await page.$eval(`[id="${id}"]`, (e) => e.value), draft);
       await click(page, "#content-review summary");
@@ -555,7 +584,7 @@ test(
           document.querySelector("#content-save").disabled &&
           document
             .querySelector("#content-dirty-count")
-            .textContent.includes("Нет несохранённых"),
+            .textContent.includes("Нет несохраненных"),
       );
       assert.equal(
         (await s.api.content.read()).overrides[textId].replace(/\s/g, " "),
@@ -571,8 +600,9 @@ test(
       );
       await fill(page, "#content-search", "");
       await click(page, "#content-block-picker summary");
-      assert((await page.$$("[data-content-block]").then((x) => x.length)) > 4);
-      await click(page, "[data-content-block]:nth-child(3)");
+      const blockButtons = await page.$$("[data-content-block]");
+      assert(blockButtons.length > 4);
+      await blockButtons[2].click();
       assert.equal(
         await page.$eval("#content-block-picker", (e) => e.open),
         false,
@@ -583,14 +613,24 @@ test(
       );
       await click(page, "[data-content-page=home]");
       await page.setViewport({ width: 390, height: 844 });
-      await click(page, "[data-content-view=preview]");
+      // Below 768px the text workbench is replaced by a desktop-only notice.
       assert.equal(
         await page.$eval(
-          "#content-fields-pane",
+          ".admin-mobile-note",
+          (e) => getComputedStyle(e).display,
+        ),
+        "block",
+      );
+      assert.equal(
+        await page.$eval(
+          ".admin-content-workbench",
           (e) => getComputedStyle(e).display,
         ),
         "none",
       );
+      await page.screenshot({ path: join(artifacts, "mobile-editor.png") });
+      await page.setViewport({ width: 1440, height: 940 });
+      await click(page, "[data-content-view=preview]");
       await click(page, "[data-preview-width='390']");
       assert.equal(
         await page.$eval("#content-preview-frame", (e) => e.style.width),
@@ -635,7 +675,7 @@ test(
           document.querySelector("#content-save").disabled &&
           document
             .querySelector("#content-dirty-count")
-            .textContent.includes("Нет несохранённых"),
+            .textContent.includes("Нет несохраненных"),
       );
       const joinedSaved = (await s.api.content.read()).overrides;
       assert.equal(
@@ -664,7 +704,7 @@ test(
           document.querySelector("#content-save").disabled &&
           document
             .querySelector("#content-dirty-count")
-            .textContent.includes("Нет несохранённых"),
+            .textContent.includes("Нет несохраненных"),
       );
       const resetSaved = (await s.api.content.read()).overrides;
       assert.equal(resetSaved["private-catalog.text.17"], undefined);

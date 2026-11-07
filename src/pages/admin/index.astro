@@ -184,6 +184,9 @@ const csp = adminCsp(api, media);
                 <span>
                   Скрыто <strong id="object-hidden-count">—</strong>
                 </span>
+                <span>
+                  В корзине <strong id="object-trash-count">—</strong>
+                </span>
                 <a href="/buy/" target="_blank" rel="noopener noreferrer">
                   Посмотреть на сайте <AdminIcon name="external" />
                   <span class="sr-only"> в новой вкладке</span>
@@ -226,6 +229,13 @@ const csp = adminCsp(api, media);
                     aria-pressed="false"
                   >
                     Скрытые
+                  </button>
+                  <button
+                    type="button"
+                    data-object-filter="trash"
+                    aria-pressed="false"
+                  >
+                    Корзина
                   </button>
                 </div>
                 <button
@@ -274,6 +284,10 @@ const csp = adminCsp(api, media);
                   Обновить
                 </button>
               </div>
+              <p class="admin-mobile-note" role="note">
+                Редактирование текстов доступно только с компьютера. Добавлять
+                и изменять объекты недвижимости можно с телефона.
+              </p>
               <ol class="admin-workflow" aria-label="Порядок работы">
                 <li>
                   <span>1</span>Выберите страницу
@@ -545,8 +559,8 @@ const csp = adminCsp(api, media);
                   <span>1</span>Описание и цена
                 </h3>
                 <p class="admin-field-note">
-                  Название, адрес и цена обязательны. Остальные поля можно
-                  оставить пустыми.
+                  Тип, площадь, этаж и адрес собирают название и адрес
+                  автоматически. Цена и адрес обязательны.
                 </p>
                 <div id="fields" class="fields"></div>
               </section>
@@ -562,7 +576,10 @@ const csp = adminCsp(api, media);
                   <AdminIcon name="camera" />
                   <span>
                     <strong>Выберите фотографию</strong>
-                    <small>JPEG, PNG или WebP · до 15 МБ</small>
+                    <small
+                      >JPEG, PNG или WebP · до 15 МБ · или вставьте
+                      из буфера обмена</small
+                    >
                   </span>
                   <input
                     id="image-file"
@@ -612,7 +629,8 @@ const csp = adminCsp(api, media);
                   </label>
                 </div>
                 <p id="visibility-help" class="admin-field-note">
-                  После сохранения карточка появится на сайте.
+                  Для публикации нужна фотография. Без фото объект сохранится
+                  как черновик.
                 </p>
               </section>
             </div>
@@ -701,6 +719,14 @@ const csp = adminCsp(api, media);
             autofocus
           >
             Оставить как есть
+          </button>
+          <button
+            id="confirm-save"
+            class="admin-button admin-primary"
+            type="button"
+            hidden
+          >
+            Сохранить и закрыть
           </button>
           <button
             id="confirm-ok"

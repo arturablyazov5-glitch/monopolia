@@ -18,9 +18,9 @@ export function bindContent(html) {
   const token=tokens[i];
   if(token.startsWith('<!--')||/^<(script|style|textarea)\b/i.test(token)||/^<!/i.test(token))continue;
   if(token.startsWith('</')) { const name=token.match(/^<\/([^\s>]+)/)?.[1]?.toLowerCase();for(let j=stack.length-1;j>=0;j--)if(stack[j].name===name){stack.length=j;break;}continue; }
-  if(token.startsWith('<')) {const name=token.match(/^<([^\s/>]+)/)?.[1]?.toLowerCase();if(name&&!/^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/.test(name)&&!token.endsWith('/>'))stack.push({name,index:i,textIndex:0,blocked:stack.at(-1)?.blocked||['svg','template'].includes(name)});continue;}
+  if(token.startsWith('<')) {const name=token.match(/^<([^\s/>]+)/)?.[1]?.toLowerCase();if(name&&!/^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/.test(name)&&!token.endsWith('/>'))stack.push({name,index:i,textIndex:0,blocked:stack.at(-1)?.blocked||['svg','template'].includes(name),manual:/data-content-id\s*=/.test(token),off:stack.at(-1)?.off||/data-content-bind\s*=\s*["']?off/i.test(token)});continue;}
   const parent=stack.at(-1);if(!parent)continue;const slot=parent.textIndex++;
-  if(parent.blocked)continue;
+  if(parent.blocked||parent.manual||parent.off)continue;
   const match=byText.get(normalizeText(decode(token)));if(!match)continue;
   const list=bindings.get(parent.index)||[];list.push({...match,slot});bindings.set(parent.index,list);
  }

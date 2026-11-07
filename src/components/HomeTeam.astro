@@ -51,6 +51,7 @@ import "../styles/home-team.css";
     <Carousel swipeHint label="Команда Монополии">
       {staff.map((person) => (
         <StaffCard
+          person={person.id}
           name={person.name}
           role={person.role}
           badge={person.badge}

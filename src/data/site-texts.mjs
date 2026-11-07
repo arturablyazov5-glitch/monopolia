@@ -184,6 +184,42 @@ export const siteTexts = [
     "multiline": false
   },
   {
+    "id": "consent.text.1",
+    "page": "Общие блоки",
+    "block": "lead-form",
+    "label": "Согласие: начало",
+    "defaultValue": "Я согласен(а) на",
+    "maxLength": 200,
+    "multiline": false
+  },
+  {
+    "id": "consent.text.2",
+    "page": "Общие блоки",
+    "block": "lead-form",
+    "label": "Согласие: обработка данных",
+    "defaultValue": "обработку персональных данных",
+    "maxLength": 200,
+    "multiline": false
+  },
+  {
+    "id": "consent.text.3",
+    "page": "Общие блоки",
+    "block": "lead-form",
+    "label": "Согласие: середина",
+    "defaultValue": "и принимаю",
+    "maxLength": 200,
+    "multiline": false
+  },
+  {
+    "id": "consent.text.4",
+    "page": "Общие блоки",
+    "block": "lead-form",
+    "label": "Согласие: политика",
+    "defaultValue": "политику конфиденциальности",
+    "maxLength": 200,
+    "multiline": false
+  },
+  {
     "id": "site-footer.text.1",
     "page": "Общие блоки",
     "block": "site-footer",
@@ -315,6 +351,15 @@ export const siteTexts = [
     "block": "site-footer",
     "label": "© Все права защищены, 2026",
     "defaultValue": "© Все права защищены, 2026",
+    "maxLength": 200,
+    "multiline": false
+  },
+  {
+    "id": "office-consultation.text.18",
+    "page": "Общие блоки",
+    "block": "office-consultation",
+    "label": "недвижимости",
+    "defaultValue": "недвижимости",
     "maxLength": 200,
     "multiline": false
   },
@@ -5162,7 +5207,29 @@ export const siteTexts = [
   "defaultValue": "Елена",
   "maxLength": 200,
   "multiline": false
-}
+},
+  // Имена и должности сотрудников: привязка задается явно в PersonLabel/StaffCard,
+  // поэтому повторяющиеся должности не конфликтуют с другими текстами.
+  ...Object.entries(people).flatMap(([id, person]) => [
+    {
+      "id": `person.${id}.name`,
+      "page": "Общие блоки",
+      "block": "people",
+      "label": `${person.name} — имя`,
+      "defaultValue": person.name,
+      "maxLength": 200,
+      "multiline": false
+    },
+    {
+      "id": `person.${id}.role`,
+      "page": "Общие блоки",
+      "block": "people",
+      "label": `${person.name} — должность`,
+      "defaultValue": person.role,
+      "maxLength": 200,
+      "multiline": false
+    },
+  ])
 ];
 const defaults = new Map(siteTexts.map(item => [item.id, item.defaultValue]));
 export function siteText(id) { if (!defaults.has(id)) throw new Error('Unknown site text: '+id); return defaults.get(id); }
