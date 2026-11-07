@@ -66,24 +66,16 @@
 }
 .hero-cross-out {
   position: absolute;
-  inset: 21.99% -1.58% 12.33% 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  container-type: size;
-}
-.hero-cross-out > span {
-  position: relative;
-  flex: none;
-  width: hypot(99.4388cqw, -43.7006cqh);
-  height: hypot(0.561215cqw, 56.2994cqh);
-  transform: rotate(-4.23deg) skewX(-0.84deg);
+  left: 0;
+  right: -1.58%;
+  top: 50%;
+  transform: translateY(-50%) rotate(-4.23deg);
+  pointer-events: none;
 }
 .hero-cross-out img {
-  position: absolute;
-  inset: -188.37% -39.55% -642.42%;
-  width: 179.1%;
-  height: 930.79%;
+  display: block;
+  width: 100%;
+  height: auto;
   max-width: none;
 }
 .hero-title-second {

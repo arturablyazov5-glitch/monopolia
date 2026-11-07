@@ -1,6 +1,7 @@
 /* «Продажа» 1380:5760: 1440 × 712.5, начинается через 80 px после первого экрана. */
 .sell-gossip {
   position: relative;
+  width: 100%;
   /* Фон/кромка шире секции на 1200–1439 (max(100%, 1440px)) — обрезаем у самой секции, иначе горизонтальная прокрутка */
   overflow-x: clip;
   z-index: 1;
@@ -50,6 +51,38 @@
 .sell-gossip-reply {
   left: 506px;
   top: 157px;
+}
+@media (min-width: 1700px) {
+  .sell-gossip-rumor {
+    left: 158px;
+  }
+  .sell-gossip-reply {
+    left: 538px;
+  }
+}
+@media (min-width: 1920px) {
+  .sell-gossip-rumor {
+    left: 126px;
+  }
+  .sell-gossip-reply {
+    left: 570px;
+  }
+}
+@media (min-width: 2100px) {
+  .sell-gossip-rumor {
+    left: 62px;
+  }
+  .sell-gossip-reply {
+    left: 634px;
+  }
+}
+@media (min-width: 2260px) {
+  .sell-gossip-rumor {
+    left: -2px;
+  }
+  .sell-gossip-reply {
+    left: 666px;
+  }
 }
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
 @media (max-width: 1199px) {

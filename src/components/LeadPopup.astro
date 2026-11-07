@@ -22,7 +22,7 @@ const popups = {
     note: "Консультация ни к чему не обязывает",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
     alt: `${people["elena-gorbaneva"].name}, ${people["elena-gorbaneva"].role.toLocaleLowerCase("ru-RU")}`,
-    badge: "На этой неделе осталось 4 свободных места",
+    badge: "На этой неделе осталось\n4 свободных места",
   },
   analysis: {
     title: "Сделаем анализ вашего объекта перед продажей",
@@ -96,9 +96,7 @@ const data: {
   alt?: string;
   badge?: string;
 } = popups[mode];
-const hasExpertProfile = ["service", "office", "mortgage"].includes(
-  mode,
-);
+const hasExpertProfile = ["service", "office", "mortgage"].includes(mode);
 ---
 
 <div
@@ -108,7 +106,8 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
     `popup-${mode}`,
     {
       "popup-without-media":
-        hasExpertProfile || (!data.image && mode !== "viewing" && mode !== "closed-base"),
+        hasExpertProfile ||
+        (!data.image && mode !== "viewing" && mode !== "closed-base"),
     },
   ]}
   hidden
@@ -138,8 +137,8 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
           alwaysVisible
           {...people["elena-gorbaneva"]}
           src={data.image!}
+          quote={data.badge}
         />
-        {data.badge && <p class="popup-action-note">{data.badge}</p>}
       </Fragment>
     )}
     {mode === "closed-base" && (
@@ -147,43 +146,49 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(
         <ClosedBasePreview expanded />
       </figure>
     )}
-    {!hasExpertProfile && mode !== "closed-base" && (data.image || mode === "viewing") && (
-      <figure
-        slot="media"
-        class:list={[
-          "popup-media",
-          {
-            "popup-media-document":
-              mode === "analysis",
-            "popup-media-neutral": !data.image,
-          },
-        ]}
-      >
-        <div class:list={["popup-media-window", { "brush-stroke": mode !== "analysis" }]}>
-          {(data.image || mode === "viewing") && (
-            <img
-              class:list={[
-                {
-                  "person-photo": ["service", "team", "mortgage"].includes(
-                    mode,
-                  ),
-                },
-              ]}
-              src={data.image}
-              alt={data.alt ?? ""}
-              data-popup-image={mode === "viewing" ? "" : undefined}
-              {...(data.image ? imageSize(data.image) : {})}
-              loading="lazy"
-              hidden={!data.image}
-            />
+    {!hasExpertProfile &&
+      mode !== "closed-base" &&
+      (data.image || mode === "viewing") && (
+        <figure
+          slot="media"
+          class:list={[
+            "popup-media",
+            {
+              "popup-media-document": mode === "analysis",
+              "popup-media-neutral": !data.image,
+            },
+          ]}
+        >
+          <div
+            class:list={[
+              "popup-media-window",
+              { "brush-stroke": mode !== "analysis" },
+            ]}
+          >
+            {(data.image || mode === "viewing") && (
+              <img
+                class:list={[
+                  {
+                    "person-photo": ["service", "team", "mortgage"].includes(
+                      mode,
+                    ),
+                  },
+                ]}
+                src={data.image}
+                alt={data.alt ?? ""}
+                data-popup-image={mode === "viewing" ? "" : undefined}
+                {...(data.image ? imageSize(data.image) : {})}
+                loading="lazy"
+                hidden={!data.image}
+              />
+            )}
+          </div>
+          {data.badge && (
+            <figcaption class="popup-media-badge">
+              <PdfFileNote />
+            </figcaption>
           )}
-        </div>
-        {data.badge && (
-          <figcaption class="popup-media-badge">
-            <PdfFileNote />
-          </figcaption>
-        )}
-      </figure>
-    )}
+        </figure>
+      )}
   </LeadForm>
 </div>

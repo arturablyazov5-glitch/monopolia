@@ -823,8 +823,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 73.4912,
   },
   "/assets/catalog-old-price-strikethrough.svg": {
-    width: 423,
-    height: 14,
+    width: 172,
+    height: 17,
   },
   "/assets/telegram-news-person.webp": {
     width: 1024,
