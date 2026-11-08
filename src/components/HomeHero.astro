@@ -4,6 +4,7 @@ import RatingBadge from "./RatingBadge.astro";
 import Button from "./Button.astro";
 import TornSlash from "./TornSlash.astro";
 import HeroTeam from "./HeroTeam.astro";
+import heroCrossOut from "../../public/assets/catalog-old-price-strikethrough.svg?raw";
 import "../styles/home-hero.css";
 ---
 
@@ -34,16 +35,11 @@ import "../styles/home-hero.css";
             <span class="sr-only">{siteText("home-hero.text.1")}</span>
             <span class="crossed-word" aria-hidden="true">
               {siteText("home-hero.text.2")}
-              <span class="hero-cross-out" aria-hidden="true">
-                <img
-                  src="/assets/catalog-old-price-strikethrough.svg"
-                  alt=""
-                  width="172"
-                  height="17"
-                  loading="eager"
-                  decoding="async"
-                />
-              </span>
+              <span
+                class="hero-cross-out"
+                aria-hidden="true"
+                set:html={heroCrossOut}
+              />
             </span>{" "}
             {siteText("home-hero.text.3")}
           </span>

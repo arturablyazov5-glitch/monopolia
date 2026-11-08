@@ -93,6 +93,7 @@
     height: auto;
     aspect-ratio: 423 / 14;
     bottom: -9px;
-    transform: translateX(50%) rotate(1deg);
+    background-image: url("/assets/catalog-assurance-underline-mobile.svg");
+    transform: translateX(50%);
   }
 }

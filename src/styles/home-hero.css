@@ -72,7 +72,7 @@
   transform: translateY(-50%) rotate(-4.23deg);
   pointer-events: none;
 }
-.hero-cross-out img {
+.hero-cross-out svg {
   display: block;
   width: 100%;
   height: auto;
@@ -181,7 +181,6 @@
   .home-desktop .home-hero .hero-team {
     margin-top: calc(28px - var(--hero-gap-buttons-photo) * 0.35);
   }
-
 }
 
 @media (max-width: 751px) {
@@ -203,7 +202,11 @@
     height: 320px;
     object-fit: initial;
     z-index: -2;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-ink) 140px
+    );
     mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
   }
   .home-hero::before {
@@ -214,8 +217,13 @@
     z-index: -1;
     width: 170px;
     height: 320px;
-    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px no-repeat;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
+    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px
+      no-repeat;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-ink) 140px
+    );
     mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
     pointer-events: none;
   }
@@ -233,7 +241,11 @@
       rgb(206 217 231) 55%,
       rgb(184 205 224)
     );
-    -webkit-mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      var(--color-ink) 45%,
+      transparent
+    );
     mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
     pointer-events: none;
   }

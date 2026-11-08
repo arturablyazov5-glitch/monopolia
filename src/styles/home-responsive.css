@@ -1796,7 +1796,19 @@
     z-index: 2;
     pointer-events: none;
     background: var(--color-canvas);
-    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100% no-repeat;
+    /* Сплошная часть SVG маски вплотную к границе секции давала дробный
+       пиксельный шов с тёмным фоном. Закрываем верхние 20px градиентом, как
+       в sell-gossip-photo; ниже начинается рваный край SVG-слоя. */
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% 100%,
+      100% 20px;
+    mask-position:
+      center,
+      top;
+    mask-repeat: no-repeat;
     transform: rotate(180deg);
   }
   .home-desktop .private-catalog-markets {
