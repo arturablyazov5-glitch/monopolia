@@ -147,7 +147,7 @@
 }
 @media (max-width: 767px) {
   .office-consultation {
-    --office-edge-height: 20px;
+    --office-edge-height: 28px;
     margin-block: var(--office-edge-height);
     padding-top: var(--section-space);
     display: flex;
@@ -290,6 +290,8 @@
     top: calc(-1 * var(--office-edge-height));
     height: calc(var(--office-edge-height) + 1px);
     background: var(--office-scene-background);
+    -webkit-mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+      no-repeat;
     mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
       no-repeat;
     pointer-events: none;
@@ -304,6 +306,8 @@
     width: 100%;
     height: calc(var(--office-edge-height) + 1px);
     background: var(--office-scene-background);
+    -webkit-mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+      no-repeat;
     mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
       no-repeat;
     transform: rotate(180deg);

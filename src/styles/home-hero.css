@@ -177,6 +177,10 @@
   .home-desktop .home-hero {
     /* Учитываем отступ контейнера и прозрачную область над портретами. */
     --hero-gap-buttons-photo: calc(28px + 7.1vw);
+    /* Chrome может залипать композитный слой hero при прокрутке;
+       пропускаем его отрисовку вне вьюпорта. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1600px;
   }
   .home-desktop .home-hero .hero-team {
     margin-top: calc(28px - var(--hero-gap-buttons-photo) * 0.35);

@@ -164,7 +164,7 @@
   /* Перекрытие шва на 1px остается за пределами 10px видимого запаса
      текста. На телефоне компенсируем масштаб всей композиции. */
   padding-inline-end: calc(10px / var(--company-badge-scale) + 1px);
-  background: var(--color-accent);
+  background: #965feb;
   height: 28px;
   display: flex;
   align-items: center;

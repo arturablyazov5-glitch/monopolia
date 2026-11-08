@@ -469,12 +469,12 @@
     z-index: 3;
     margin-top: 24px;
     /* iOS Safari перерисовывает многослойную маску на sticky-элементе
-       при асинхронном скролле, из-за чего край дрожит на 1px. */
+       при асинхронном скролле, из-за чего край дрожит на 1px. Маска живет
+       на ::before ниже. Принудительное промотирование слоя (translateZ,
+       isolation, backface-visibility) заставляло iOS обновлять позицию
+       sticky-элемента с задержкой — плашка дёргалась вверх/вниз. */
     mask-image: none;
     background: transparent;
-    isolation: isolate;
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
   .deal-progress::before {
     content: "";

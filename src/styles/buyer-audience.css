@@ -117,6 +117,12 @@
 }
 
 @media (max-width: 767px) {
+  .home-desktop .buyer-audience {
+    /* Chrome может залипать композитный слой первых экранов при прокрутке;
+       пропускаем отрисовку секции вне вьюпорта. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1400px;
+  }
   .home-desktop .buyer-audience h2 {
     text-wrap: wrap;
   }

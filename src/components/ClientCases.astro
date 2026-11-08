@@ -265,11 +265,13 @@ const cases = clientCases;
       const previousHeight = content.getBoundingClientRect().height;
       if (Math.abs(previousHeight - height) < 1) return;
 
-      ctaAnimation?.cancel();
       content.style.height = `${height}px`;
       // Only animate the button on the compositor. Animating the scroll
       // container's height repaints the whole section on every frame.
+      // The running animation always lands on translate3d(0,0,0), so it is
+      // only cancelled when a new one replaces it — not by resize updates.
       if (animateButton && !reduceMotion.matches && !mobileCta.hidden) {
+        ctaAnimation?.cancel();
         const distance = previousHeight - height;
         ctaAnimation = mobileCta.animate(
           [

@@ -1784,32 +1784,30 @@
   }
   .home-desktop .certificates {
     --certificates-edge-height: 56px;
-    background: var(--color-canvas);
-  }
-  .home-desktop .certificates::before {
-    content: "";
-    position: absolute;
-    top: -1px;
-    left: 0;
-    width: 100%;
-    height: var(--certificates-edge-height);
-    z-index: 2;
-    pointer-events: none;
-    background: var(--color-canvas);
-    /* Сплошная часть SVG маски вплотную к границе секции давала дробный
-       пиксельный шов с тёмным фоном. Закрываем верхние 20px градиентом, как
-       в sell-gossip-photo; ниже начинается рваный край SVG-слоя. */
+    /* Рваный контур SVG — единая верхняя граница тёмной секции: выше контура
+       секция прозрачна и виден светлый фон страницы, ниже — тёмные фон,
+       фото и контент. Сплошной градиент под SVG-слоем закрывает низ без шва,
+       как в sell-gossip-photo. */
+    -webkit-mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
     mask-image:
       url("/assets/background-paper-edge-white.svg"),
       linear-gradient(var(--color-ink), var(--color-ink));
+    -webkit-mask-size:
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
     mask-size:
-      100% 100%,
-      100% 20px;
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
+    -webkit-mask-position:
+      top,
+      bottom;
     mask-position:
-      center,
-      top;
+      top,
+      bottom;
+    -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    transform: rotate(180deg);
   }
   .home-desktop .private-catalog-markets {
     margin-top: 6px;
