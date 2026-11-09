@@ -62,4 +62,11 @@ const {
     object-fit: cover;
     object-position: center;
   }
+  @media (max-width: 767px) {
+    @supports (-webkit-touch-callout: none) {
+      .review-photo :global(.video-duration svg) {
+        transform: translateY(1px);
+      }
+    }
+  }
 </style>
