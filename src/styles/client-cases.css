@@ -135,9 +135,15 @@
   /* Общий рваный контур с прямыми углами, чуть глубже контура кнопок. */
   mask-image: var(--brush-square-images);
   mask-size:
-    12px 12px, calc(100% - 22px) 12px, 12px 12px,
-    12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
-    12px calc(100% - 22px), 12px 12px, calc(100% - 22px) 12px, 12px 12px;
+    12px 12px,
+    calc(100% - 22px) 12px,
+    12px 12px,
+    12px calc(100% - 22px),
+    calc(100% - 22px) calc(100% - 22px),
+    12px calc(100% - 22px),
+    12px 12px,
+    calc(100% - 22px) 12px,
+    12px 12px;
   mask-position: var(--brush-positions);
   mask-repeat: no-repeat;
   mask-mode: alpha;
@@ -242,7 +248,12 @@
   left: 334.7px;
   width: 1px;
   background: var(--color-divider);
-  mask-image: linear-gradient(to bottom, transparent 0%, var(--color-ink) 5%, transparent 100%);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-ink) 5%,
+    transparent 100%
+  );
 }
 .case-columns h4 {
   margin: 0 0 15px;
@@ -275,7 +286,12 @@
   width: 1px;
   height: 52px;
   background: var(--color-divider);
-  mask-image: linear-gradient(to bottom, transparent 0%, var(--color-ink) 50%, transparent 100%);
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--color-ink) 50%,
+    transparent 100%
+  );
 }
 @media (min-width: 1024px) {
   .home-desktop .client-cases .case-slide {
@@ -323,7 +339,12 @@
     width: 100%;
     height: 1px;
     background: var(--color-divider);
-    mask-image: linear-gradient(to right, transparent 0%, var(--color-ink) 5%, transparent 100%);
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--color-ink) 5%,
+      transparent 100%
+    );
     pointer-events: none;
   }
   .home-desktop .client-cases .mobile-scroll-hint {
@@ -390,14 +411,41 @@
 }
 
 @media (max-width: 767px) {
-  .home-desktop .client-cases .cases-content { gap: var(--carousel-gap); }
+  .home-desktop .client-cases .cases-content {
+    gap: var(--carousel-gap);
+  }
 }
 
-
 @media (max-width: 767px) {
-  .home-desktop .client-cases .case-slide { min-width: 0; }
-  .home-desktop .client-cases .case-result { min-width: 0; width: 100%; }
-  .home-desktop .client-cases .case-result .paper-tape[data-tape-corner="bottom-right"] {
+  .home-desktop .client-cases .case-slide {
+    min-width: 0;
+  }
+  .home-desktop .client-cases .case-result {
+    min-width: 0;
+    width: 100%;
+  }
+  .home-desktop
+    .client-cases
+    .case-result
+    .paper-tape[data-tape-corner="bottom-right"] {
     left: calc(100% - var(--tape-box-width) - var(--tape-box-left) + 2px);
+  }
+}
+
+/* Лаги iOS при свайпе карусели кейсов: замаскированное фото .case-photo
+   (9-слойная mask-image + rotate) перерисовывалось каждый кадр. Выносим
+   скроллер и карточки в композитные слои — растр считается один раз,
+   при прокрутке compositing двигает готовый битмап. Тот же прием, что у
+   .home-team .carousel-track/.staff-card. Только iOS Safari, визуально
+   ничего не меняет. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    .home-desktop .client-cases .cases-content {
+      will-change: scroll-position;
+    }
+    .home-desktop .client-cases .case-slide.is-in-category {
+      will-change: transform;
+      transform: translateZ(0);
+    }
   }
 }

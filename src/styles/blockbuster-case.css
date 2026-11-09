@@ -167,8 +167,12 @@
 @media (max-width: 767px) {
   .home-desktop .blockbuster-case {
     --blockbuster-edge-height: 32px;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size: 100% var(--blockbuster-edge-height), 100% calc(100% - var(--blockbuster-edge-height) + 1px);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% var(--blockbuster-edge-height),
+      100% calc(100% - var(--blockbuster-edge-height) + 1px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
   }
@@ -192,5 +196,48 @@
     right: max(12px, calc(50% - 183px));
     width: 132px;
     bottom: calc(var(--scene-h) * 0.55 + 36px);
+  }
+}
+
+/* iOS (Safari на iPhone): маска секции (рваный верхний край) собирает
+   сцену и пузыри в один слой, перерисовываемый при скролле. Переносим
+   маску на отдельный фоновый слой ::before: контент не заходит в зону
+   края (padding-top = высота края + section-space), картинка не
+   меняется, секция перестаёт быть маскированным контейнером. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    /* :root добавлен, чтобы фон гарантированно перебил правило
+       home-responsive.css независимо от порядка подключения стилей. */
+    :root .home-desktop .blockbuster-case {
+      background: transparent;
+      mask: none;
+    }
+    .home-desktop .blockbuster-case::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      /* Значение фона мобильной секции задано в home-responsive.css. */
+      background: #e2ebf1;
+      mask-image:
+        url("/assets/background-paper-edge-white.svg"),
+        linear-gradient(var(--color-ink), var(--color-ink));
+      mask-size:
+        100% var(--blockbuster-edge-height),
+        100% calc(100% - var(--blockbuster-edge-height) + 1px);
+      mask-position: top, bottom;
+      mask-repeat: no-repeat;
+      pointer-events: none;
+    }
+  }
+}
+
+/* iOS: у сцены своя маска поверх фона секции — отдельный слой,
+   скролл не перерисовывает поддерево. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .blockbuster-scene {
+      transform: translateZ(0);
+    }
   }
 }

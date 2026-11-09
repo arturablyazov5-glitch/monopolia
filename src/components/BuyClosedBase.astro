@@ -109,5 +109,10 @@ const checks = [
       .querySelectorAll("[data-current-month]")
       .forEach((el) => (el.textContent = currentMonth()));
   document.addEventListener("visibilitychange", updateMonth);
-  setInterval(updateMonth, 60 * 60 * 1000);
+  setInterval(
+    () => {
+      if (!document.hidden) updateMonth();
+    },
+    60 * 60 * 1000,
+  );
 </script>

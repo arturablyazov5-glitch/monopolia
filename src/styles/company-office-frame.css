@@ -6,10 +6,15 @@
     border-radius: 0;
     mask-image: var(--brush-square-images);
     mask-size:
-      12px 12px, calc(100% - 22px) 12px, 12px 12px,
-      12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
-      12px calc(100% - 22px), 12px 12px,
-      calc(100% - 22px) 12px, 12px 12px;
+      12px 12px,
+      calc(100% - 22px) 12px,
+      12px 12px,
+      12px calc(100% - 22px),
+      calc(100% - 22px) calc(100% - 22px),
+      12px calc(100% - 22px),
+      12px 12px,
+      calc(100% - 22px) 12px,
+      12px 12px;
     mask-position: var(--brush-positions);
     mask-repeat: no-repeat;
   }

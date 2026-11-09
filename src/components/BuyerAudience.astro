@@ -81,19 +81,41 @@ const tail = siteText("buyer-audience.text.5").match(/^(\S+)([\s\S]*)$/)!;
           </span>
           <span class="buyer-title-mobile">
             <span class="buyer-m-line buyer-mobile-intro">
-              <span>{siteText("buyer-audience.text.1")}</span>{" "}<span>{siteText("buyer-audience.text.2")}</span>
-              <img class="buyer-quote-mobile" src="/assets/buyer-quote-mark.svg" width="42.6102" height="33.2195" alt="" />
+              <span>{siteText("buyer-audience.text.1")}</span>{" "}
+              <span>{siteText("buyer-audience.text.2")}</span>
+              <img
+                class="buyer-quote-mobile"
+                src="/assets/buyer-quote-mark.svg"
+                width="42.6102"
+                height="33.2195"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <span class="buyer-m-line buyer-m-count-line">
-              <span class="buyer-count-mobile handwritten-number">{siteText("buyer-audience.text.3")}</span>{" "}
-              <span class="buyer-intent-word" data-content-bind="off">{intent[1]}</span>
+              <span class="buyer-count-mobile handwritten-number">
+                {siteText("buyer-audience.text.3")}
+              </span>{" "}
+              <span class="buyer-intent-word" data-content-bind="off">
+                {intent[1]}
+              </span>
             </span>
             <span class="buyer-m-line">
-              <span class="buyer-intent-next" data-content-bind="off">{intent[2]}</span><span class="buyer-intent-rest" data-content-bind="off">{intent[3]}</span>{" "}
-              <span class="buyer-tail-first" data-content-bind="off">{tail[1]}</span>
+              <span class="buyer-intent-next" data-content-bind="off">
+                {intent[2]}
+              </span>
+              <span class="buyer-intent-rest" data-content-bind="off">
+                {intent[3]}
+              </span>{" "}
+              <span class="buyer-tail-first" data-content-bind="off">
+                {tail[1]}
+              </span>
             </span>
             <span class="buyer-m-line">
-              <span class="buyer-tail-rest" data-content-bind="off">{tail[2].trim()}</span>{" "}
+              <span class="buyer-tail-rest" data-content-bind="off">
+                {tail[2].trim()}
+              </span>{" "}
               <span>{siteText("buyer-audience.text.6")}</span>
             </span>
           </span>

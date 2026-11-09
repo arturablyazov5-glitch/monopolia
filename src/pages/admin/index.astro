@@ -576,10 +576,10 @@ const csp = adminCsp(api, media);
                   <AdminIcon name="camera" />
                   <span>
                     <strong>Выберите фотографию</strong>
-                    <small
-                      >JPEG, PNG или WebP · до 15 МБ · или вставьте
-                      из буфера обмена</small
-                    >
+                    <small>
+                      JPEG, PNG или WebP · до 15 МБ · или вставьте из буфера
+                      обмена
+                    </small>
                   </span>
                   <input
                     id="image-file"
@@ -646,6 +646,8 @@ const csp = adminCsp(api, media);
                     width="360"
                     height="270"
                     alt="Фото объекта в карточке"
+                    loading="lazy"
+                    decoding="async"
                     hidden
                   />
                   <span id="preview-photo-placeholder">

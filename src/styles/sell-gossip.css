@@ -137,7 +137,9 @@
     --gossip-photo-offset: 20px;
     /* Полная высота фото плюс сдвиг; реплики остаются на своих местах. */
     aspect-ratio: auto;
-    height: calc((100vw - 20px) * 1.29736 * 3430 / 4096 + var(--gossip-photo-offset));
+    height: calc(
+      (100vw - 20px) * 1.29736 * 3430 / 4096 + var(--gossip-photo-offset)
+    );
     /* Сдвиг фото входит в стандартный межсекционный отступ. */
     margin-top: calc(var(--section-space) - var(--gossip-photo-offset) - 20px);
     overflow: clip;
@@ -151,8 +153,12 @@
     height: auto;
     aspect-ratio: auto;
     object-fit: initial;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size: 100% 20px, 100% calc(100% - 18px);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% 20px,
+      100% calc(100% - 18px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
   }
@@ -193,5 +199,29 @@
   .sell-gossip-content .sell-gossip-rumor p,
   .sell-gossip-content .sell-gossip-reply p {
     white-space: pre-line;
+  }
+}
+
+/* iOS Safari: секция с полноэкранным фото и двумя слоями маски
+   пропускает отрисовку, пока целиком вне экрана.
+   Высота задана calc()-формулой, auto в contain-intrinsic-size
+   дополнительно запоминает реальную после первой отрисовки. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .sell-gossip {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
+    }
+  }
+}
+
+/* iOS: полноэкранное фото с двумя слоями маски — в отдельный слой,
+   скролл двигает готовый растр вместо перерисовки маски. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .sell-gossip-photo {
+      transform: translateZ(0);
+    }
   }
 }

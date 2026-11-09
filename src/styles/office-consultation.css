@@ -83,7 +83,8 @@
     z-index: -1;
     overflow: hidden;
     background: #190f0a;
-    mask: url("/assets/office-consultation-background.webp") center / 100% 100% no-repeat;
+    mask: url("/assets/office-consultation-background.webp") center / 100% 100%
+      no-repeat;
   }
   .office-consultation-background {
     top: 48px;
@@ -238,7 +239,7 @@
       transparent 0%,
       rgb(from var(--color-ink) r g b / 3.9%) 4%,
       rgb(from var(--color-ink) r g b / 16.1%) 9%,
-      rgb(from var(--color-ink) r g b / 40.0%) 15%,
+      rgb(from var(--color-ink) r g b / 40%) 15%,
       rgb(from var(--color-ink) r g b / 67.8%) 22%,
       rgb(from var(--color-ink) r g b / 90.2%) 29%,
       var(--color-ink) 36%,
@@ -246,7 +247,7 @@
       rgb(from var(--color-ink) r g b / 96.1%) 70%,
       rgb(from var(--color-ink) r g b / 85.1%) 76%,
       rgb(from var(--color-ink) r g b / 65.1%) 82%,
-      rgb(from var(--color-ink) r g b / 40.0%) 88%,
+      rgb(from var(--color-ink) r g b / 40%) 88%,
       rgb(from var(--color-ink) r g b / 16.1%) 94%,
       rgb(from var(--color-ink) r g b / 3.9%) 98%,
       transparent 100%

@@ -34,7 +34,12 @@
   gap: 12px;
   border-radius: 20px;
   background: var(--color-paper);
-  filter: drop-shadow(0 -14px 9px rgb(from var(--color-ink) r g b / 3.1%)) drop-shadow(0 14px 9px rgb(from var(--color-ink) r g b / 3.1%));
+  /* Тень через box-shadow, а не filter: drop-shadow — карточка непрозрачная
+     и скруглённая, силуэт совпадает, а filter на повёрнутом элементе
+     заметно дорожает при композитинге на iOS. */
+  box-shadow:
+    0 -14px 9px rgb(from var(--color-ink) r g b / 3.1%),
+    0 14px 9px rgb(from var(--color-ink) r g b / 3.1%);
   transform: rotate(var(--notification-rotation));
   color: var(--color-ink);
   font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
@@ -115,8 +120,8 @@
 .referral-promotion-label > .taped-note-paper {
   --paper-mask-sizes:
     8px 8px, calc(100% - 14px) 8px, 8px 8px, 8px calc(100% - 14px),
-    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px),
-    8px 8px, calc(100% - 14px) 8px, 8px 8px;
+    calc(100% - 14px) calc(100% - 14px), 8px calc(100% - 14px), 8px 8px,
+    calc(100% - 14px) 8px, 8px 8px;
 }
 
 /* ===== Адаптив R2: desktop ≥ 1200 без изменений ===== */
@@ -216,7 +221,7 @@
     padding: 10px 12px;
     gap: 10px;
     border-radius: 16px;
-    filter: drop-shadow(0 4px 8px rgb(from var(--color-ink) r g b / 5.1%));
+    box-shadow: 0 4px 8px rgb(from var(--color-ink) r g b / 5.1%);
     /* Мобильная стопка использует свой угол, без координат desktop-веера. */
     transform: rotate(var(--notification-mobile-rotation, -3deg));
   }

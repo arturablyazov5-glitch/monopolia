@@ -22,8 +22,8 @@
   position: relative;
   z-index: 2;
   margin: 0 0 32px;
-  font: var(--weight-heading) var(--h2, var(--text-heading))/var(--leading-heading)
-    var(--font-heading);
+  font: var(--weight-heading)
+    var(--h2, var(--text-heading))/var(--leading-heading) var(--font-heading);
 }
 .guild-details {
   position: relative;

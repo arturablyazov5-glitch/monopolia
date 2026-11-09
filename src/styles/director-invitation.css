@@ -232,3 +232,15 @@
     bottom: 24px;
   }
 }
+
+/* iOS Safari глючит на mask-image + transform: rotate(): рваный край карточки
+   мерцает при скролле (та же причина, что у .faq-slot). Отдельное свойство
+   rotate рендерится по другому пути — только на iPhone, наклон тот же. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .paper.director-card {
+      transform: none;
+      rotate: 0.15deg;
+    }
+  }
+}

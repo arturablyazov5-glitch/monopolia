@@ -133,7 +133,11 @@
   }
   /* Верхний край фото растворяется в бумаге. */
   .home-desktop .fast-sale-portrait {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-ink) 14%
+    );
     mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%);
   }
   .home-desktop .buyer-portrait {
@@ -277,7 +281,9 @@
   .home-desktop .certificates-art {
     left: auto;
     right: 0;
-    clip-path: inset(0 0 0 1100px); /* только листы; лента — отдельным окном ниже */
+    clip-path: inset(
+      0 0 0 1100px
+    ); /* только листы; лента — отдельным окном ниже */
   }
   /* лента слева — окно в тот же цельный растр (левые 460px), как раньше */
   .home-desktop .certificates-scene::before {
@@ -330,7 +336,7 @@
       to bottom,
       var(--color-dark) 0%,
       rgb(from var(--color-dark) r g b / 85.1%) 30%,
-      rgb(from var(--color-dark) r g b / 0.0%) 70%
+      rgb(from var(--color-dark) r g b / 0%) 70%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -612,7 +618,11 @@
     bottom: calc(-14px * var(--k));
     width: calc(1480px * var(--k));
     height: var(--scene-h);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 16%);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-ink) 16%
+    );
     mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 16%);
   }
   .home-desktop .blockbuster-content {
@@ -676,7 +686,9 @@
   .home-desktop .home-telegram {
     --k: 0.85;
     height: auto;
-    padding-bottom: calc(var(--section-space) + var(--telegram-edge-height, 56px));
+    padding-bottom: calc(
+      var(--section-space) + var(--telegram-edge-height, 56px)
+    );
     background: var(--color-paper);
   }
   .home-desktop .telegram-background {
@@ -771,12 +783,17 @@
     transform: translateX(calc(-50% + 390px * var(--k)));
   }
   .home-desktop .recruiting-photo:after {
-    background: linear-gradient(to bottom, rgb(from var(--color-dark) r g b / 0.0%) 45%, var(--color-dark) 96%);
+    background: linear-gradient(
+      to bottom,
+      rgb(from var(--color-dark) r g b / 0%) 45%,
+      var(--color-dark) 96%
+    );
   }
   .home-desktop .recruiting-container {
     width: auto;
     margin: 0 var(--rg);
-    padding: calc(743px * var(--k) - 80px) 0 calc(var(--section-space) + var(--recruiting-edge-overlap, 0px));
+    padding: calc(743px * var(--k) - 80px) 0
+      calc(var(--section-space) + var(--recruiting-edge-overlap, 0px));
   }
   .home-desktop .recruiting-copy {
     width: 100%;
@@ -834,7 +851,7 @@
       to right,
       var(--color-dark) 0%,
       rgb(from var(--color-dark) r g b / 70.2%) 30%,
-      rgb(from var(--color-dark) r g b / 0.0%) 58%
+      rgb(from var(--color-dark) r g b / 0%) 58%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -1004,7 +1021,7 @@
       to right,
       var(--color-dark) 0%,
       rgb(from var(--color-dark) r g b / 70.2%) 26.059%,
-      rgb(from var(--color-dark) r g b / 0.0%) 52.118%
+      rgb(from var(--color-dark) r g b / 0%) 52.118%
     );
   }
   .home-desktop .honest-reviews-scene {
@@ -1094,7 +1111,7 @@
       269.96deg,
       var(--color-dark) 0%,
       var(--color-dark) 30%,
-      rgb(from var(--color-dark) r g b / 0.0%) 60%
+      rgb(from var(--color-dark) r g b / 0%) 60%
     );
   }
   .home-desktop .recruiting-container {
@@ -1227,7 +1244,8 @@
 
   /* --- 5. Certificates --- */
   .home-desktop .certificates-scene {
-    padding: calc(var(--section-space) + var(--certificates-edge-height)) var(--rg) var(--section-space);
+    padding: calc(var(--section-space) + var(--certificates-edge-height))
+      var(--rg) var(--section-space);
   }
   .home-desktop .certificates-scene::before {
     display: none;
@@ -1290,7 +1308,7 @@
       to bottom,
       var(--color-dark),
       rgb(from var(--color-dark) r g b / 50.2%) 12%,
-      rgb(from var(--color-dark) r g b / 0.0%) 27%
+      rgb(from var(--color-dark) r g b / 0%) 27%
     );
   }
   .home-desktop .honest-reviews-broken {
@@ -1311,15 +1329,18 @@
     zoom: calc(var(--k) * 1.32);
     height: 600px;
     overflow: hidden;
-
   }
   .home-desktop .trust-team::after {
     content: "";
     position: absolute;
     inset: 440px 0 0;
     background: var(--color-paper);
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size: 100% 80px, 100% calc(100% - 78px);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% 80px,
+      100% calc(100% - 78px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
     pointer-events: none;
@@ -1442,8 +1463,12 @@
   .home-desktop .client-cases {
     padding-bottom: calc(var(--section-space) + 32px);
     background: var(--color-paper);
-    mask-image: linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
-    mask-size: 100% calc(100% - 31px), 100% 32px;
+    mask-image:
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      url("/assets/gossip-paper-edge.svg");
+    mask-size:
+      100% calc(100% - 31px),
+      100% 32px;
     mask-position: top, bottom;
     mask-repeat: no-repeat;
   }
@@ -1575,7 +1600,8 @@
     background: #e2ebf1;
   }
   .home-desktop .blockbuster-content {
-    padding: calc(var(--blockbuster-edge-height) + var(--section-space)) var(--rg) calc(var(--scene-h) * 0.55 + 150px);
+    padding: calc(var(--blockbuster-edge-height) + var(--section-space))
+      var(--rg) calc(var(--scene-h) * 0.55 + 150px);
   }
   /* --- 16. HomeTeam --- */
   .home-desktop .home-team {
@@ -1679,7 +1705,8 @@
   .home-desktop .home-telegram::after {
     display: block;
     height: var(--telegram-edge-height);
-    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100% no-repeat;
+    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100%
+      no-repeat;
     transform: none;
   }
   .home-desktop .telegram-photo::after {
@@ -1781,33 +1808,6 @@
     max-width: 24ch;
     text-wrap: balance;
   }
-  .home-desktop .certificates {
-    --certificates-edge-height: 56px;
-    /* Рваный контур SVG — единая верхняя граница тёмной секции: выше контура
-       секция прозрачна и виден светлый фон страницы, ниже — тёмные фон,
-       фото и контент. Сплошной градиент под SVG-слоем закрывает низ без шва,
-       как в sell-gossip-photo. */
-    -webkit-mask-image:
-      url("/assets/background-paper-edge-white.svg"),
-      linear-gradient(var(--color-ink), var(--color-ink));
-    mask-image:
-      url("/assets/background-paper-edge-white.svg"),
-      linear-gradient(var(--color-ink), var(--color-ink));
-    -webkit-mask-size:
-      100% var(--certificates-edge-height),
-      100% calc(100% - 50px);
-    mask-size:
-      100% var(--certificates-edge-height),
-      100% calc(100% - 50px);
-    -webkit-mask-position:
-      top,
-      bottom;
-    mask-position:
-      top,
-      bottom;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-  }
   .home-desktop .private-catalog-markets {
     margin-top: 6px;
     line-height: 1;
@@ -1860,8 +1860,12 @@
     order: 3;
   }
   .home-desktop .fast-sale-portrait {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%), linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 14%), linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent, var(--color-ink) 14%),
+      linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, transparent, var(--color-ink) 14%),
+      linear-gradient(to right, var(--color-ink) 82%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
   }
@@ -1891,5 +1895,56 @@
 @media (max-width: 389px) {
   .home-desktop {
     --rg: 16px;
+  }
+}
+
+/* ============ iOS: пропуск отрисовки секций ниже первого экрана ============
+   iPhone лагал на скролле: секции с фото, масками и рваными краями держат
+   растровые слои в памяти. content-visibility:auto позволяет не рисовать
+   секцию вне вьюпорта (как уже сделано для .home-hero, .buyer-audience и
+   .equal-interests). Только iOS Safari (@supports -webkit-touch-callout) и
+   только телефон.
+   В список включены секции, где paint containment ничего не обрезает:
+   у корня уже стоит overflow:hidden/.clip либо выступающие декорации
+   (рваные рамки .paper, повороты, underline-штрихи) лежат внутри
+   паддингов секции.
+   НЕ включены (есть JS-замеры или выступающий контент за границами):
+   .client-cases и .home-team — getBoundingClientRect/ResizeObserver в их
+   скриптах; .proven-trust — Carousel с ResizeObserver; .honest-reviews —
+   clip-path разрешает bleed фото за пределы padding box;
+   .director-invitation — у .paper-frame-deep внешняя рваная рамка
+   выступает на 8 px за верх секции (padding-top: 0);
+   .equal-interests — уже покрыта в equal-interests.css;
+   .home-partners — секция легкая, выигрыш нулевой.
+   contain-intrinsic-size:auto запоминает реальную высоту после первой
+   отрисовки; число — оценка до нее, чтобы не прыгал скроллбар. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .home-desktop .fast-sale,
+    .home-desktop .private-catalog,
+    .home-desktop .certificates,
+    .home-desktop .company-about,
+    .home-desktop .company-guild,
+    .home-desktop .office-expansion,
+    .home-desktop .blockbuster-case,
+    .home-desktop .home-telegram,
+    .home-desktop .home-services,
+    .home-desktop .home-recruiting {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1000px;
+    }
+  }
+}
+
+/* iOS: портреты и сцена с mask-image на мобильной — в композитные слои,
+   чтобы скролл не перерисовывал маскированный растр каждый кадр. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .home-desktop .buyer-portrait,
+    .home-desktop .fast-sale-portrait,
+    .home-desktop .blockbuster-scene {
+      transform: translateZ(0);
+    }
   }
 }

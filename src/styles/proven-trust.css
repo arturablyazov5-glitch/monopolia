@@ -171,7 +171,10 @@
   }
   .proven-trust-scene {
     margin: calc(100cqw * 120 / 1440) 0
-      calc((var(--trust-scene-height) + var(--scene-footer)) * var(--scene-scale) - var(--trust-scene-height));
+      calc(
+        (var(--trust-scene-height) + var(--scene-footer)) * var(--scene-scale) -
+          var(--trust-scene-height)
+      );
     transform: scale(var(--scene-scale));
     transform-origin: top left;
   }
@@ -180,7 +183,6 @@
        рейтингов и декоративной кромки остаются исходными. */
     width: 1440px;
   }
-
 }
 @media (min-width: 1200px) and (max-width: 1295px) {
   .proven-trust {
@@ -203,6 +205,23 @@
   }
 }
 
+/* Лаги iOS при свайпе карусели видео-отзывов: .review-photo с рваной
+   brush-маской перерисовывался каждый кадр. Выносим скроллер и карточки
+   в композитные слои — растр один раз, прокрутка двигает битмап.
+   Тот же прием, что у .home-team. Только iOS Safari, визуально
+   ничего не меняет. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    .home-desktop .trust-reviews .carousel-track {
+      will-change: scroll-position;
+    }
+    .home-desktop .trust-reviews .review-card {
+      will-change: transform;
+      transform: translateZ(0);
+    }
+  }
+}
+
 /* Animated lettering belongs only to the homepage video-review buttons. */
 .home-desktop .trust-reviews .review-photo .play-review-video {
   width: 75px;
@@ -216,24 +235,12 @@
   overflow: visible;
   pointer-events: none;
 }
-.play-review-video .review-video-text {
-  transform-origin: 37.1797px 39.8047px;
-  animation: review-video-text-turn 32s linear infinite;
-}
-.play-review-video .review-video-play-fill {
-  transition: fill var(--duration-fast) ease;
-}
+/* Анимация и hover-цвет живут в same-document спрайте ReviewPlaySprite.astro
+   (иконка рисуется через <use>, внутренние классы снаружи не видны).
+   Hover передаётся CSS-переменными, которые наследуются в use-тень. */
 @media (hover: hover) and (pointer: fine) {
-  .play-review-video:hover .review-video-text {
-    animation-play-state: paused;
+  .play-review-video:hover {
+    --rv-play-state: paused;
+    --rv-play-fill: var(--color-ink);
   }
-  .play-review-video:hover .review-video-play-fill {
-    fill: var(--color-ink);
-  }
-}
-@keyframes review-video-text-turn {
-  to { transform: rotate(-360deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .play-review-video .review-video-text { animation: none; }
 }

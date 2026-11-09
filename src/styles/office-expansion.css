@@ -25,7 +25,11 @@
 .expansion-map > div {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, var(--color-dark) 40.63%, rgb(from var(--color-dark) r g b / 0.0%) 85.815%);
+  background: linear-gradient(
+    to bottom,
+    var(--color-dark) 40.63%,
+    rgb(from var(--color-dark) r g b / 0%) 85.815%
+  );
 }
 .expansion-container {
   width: var(--container-width);

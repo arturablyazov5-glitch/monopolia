@@ -91,7 +91,8 @@
     width: 7cqi;
     height: 3.5cqi;
     background: var(--office-photo-border);
-    mask: url("/assets/office-speech-tail-centered.svg") center / 100% 100% no-repeat;
+    mask: url("/assets/office-speech-tail-centered.svg") center / 100% 100%
+      no-repeat;
     z-index: 2;
   }
   .home-desktop .expansion-locations .office-photo-frame > img {
@@ -129,7 +130,10 @@
     gap: 0;
     width: max-content;
     left: calc(var(--office-photo-center) - var(--office-pin-x));
-    top: calc(var(--office-photo-top) + var(--office-photo-height) + var(--office-label-gap) - var(--office-pin-y));
+    top: calc(
+      var(--office-photo-top) + var(--office-photo-height) +
+        var(--office-label-gap) - var(--office-pin-y)
+    );
     transform: translateX(-50%);
   }
   .home-desktop .expansion-locations .office-label {

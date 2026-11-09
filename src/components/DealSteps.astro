@@ -182,8 +182,15 @@ const {
                 <div class="deal-step-main">
                   {step.image && (
                     <div
-                      class:list={["deal-step-image", { "deal-step-image-badged": !!step.image.badge }]}
-                      style={step.image.badge ? undefined : `aspect-ratio:${step.image.width} / ${step.image.height}`}
+                      class:list={[
+                        "deal-step-image",
+                        { "deal-step-image-badged": !!step.image.badge },
+                      ]}
+                      style={
+                        step.image.badge
+                          ? undefined
+                          : `aspect-ratio:${step.image.width} / ${step.image.height}`
+                      }
                     >
                       <picture>
                         {responsiveImages.has(step.image.src) && (
@@ -213,7 +220,9 @@ const {
                             loading="lazy"
                             decoding="async"
                           />
-                          <span class="deal-step-badge-label">{step.image.badge}</span>
+                          <span class="deal-step-badge-label">
+                            {step.image.badge}
+                          </span>
                         </span>
                       )}
                     </div>
@@ -221,7 +230,13 @@ const {
                   <h3>
                     {step.textParts
                       ? step.textParts.map((part) => (
-                          <span style={part.muted ? "color:rgb(from var(--color-ink) r g b / 40%)" : undefined}>
+                          <span
+                            style={
+                              part.muted
+                                ? "color:rgb(from var(--color-ink) r g b / 40%)"
+                                : undefined
+                            }
+                          >
                             {part.text}
                           </span>
                         ))
@@ -245,7 +260,8 @@ const {
                             : undefined
                         }
                       >
-                        <span class="paper-label"
+                        <span
+                          class="paper-label"
                           style={
                             chip.rotate
                               ? `transform: rotate(${chip.rotate}deg)`
@@ -261,9 +277,7 @@ const {
                 {step.list && (
                   <ul class="deal-step-list bullet-list">
                     {step.list.map((item) => (
-                      <li>
-                        {item}
-                      </li>
+                      <li>{item}</li>
                     ))}
                   </ul>
                 )}
@@ -300,7 +314,8 @@ const {
                       ))}
                     </ul>
                     <picture style="display: contents">
-                      {step.funnel.image.src === "/assets/property-selection-funnel.webp" && (
+                      {step.funnel.image.src ===
+                        "/assets/property-selection-funnel.webp" && (
                         <source
                           style="display: none"
                           media="(max-width: 767px)"
@@ -327,7 +342,9 @@ const {
                       loading="lazy"
                       decoding="async"
                     />
-                    <p class="deal-funnel-result brush-stroke">{step.funnel.result}</p>
+                    <p class="deal-funnel-result brush-stroke">
+                      {step.funnel.result}
+                    </p>
                   </div>
                 )}
               </Paper>
@@ -355,10 +372,24 @@ const {
     if (!list || !bar || !fill || !value) continue;
     let frame = 0;
     let previousPercent = -1;
+    // Позиция списка в координатах документа и высота кэшируются:
+    // на скролле они не меняются, поэтому getBoundingClientRect
+    // вызывается только при инвалидации (resize, изменение layout).
+    let docTop = 0;
+    let height = 1;
+    const measure = () => {
+      const rect = list.getBoundingClientRect();
+      docTop = rect.top + window.scrollY;
+      height = rect.height;
+    };
     const update = () => {
       frame = 0;
-      const rect = list.getBoundingClientRect();
-      const ratio = Math.min(1, Math.max(0, (window.innerHeight / 2 - rect.top) / rect.height));
+      if (Number.isNaN(docTop)) measure();
+      const top = docTop - window.scrollY;
+      const ratio = Math.min(
+        1,
+        Math.max(0, (window.innerHeight / 2 - top) / height),
+      );
       const percent = Math.round(ratio * 100);
       if (percent === previousPercent) return;
       fill.style.transform = `scaleX(${percent / 100})`;
@@ -369,8 +400,24 @@ const {
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
+    const invalidate = () => {
+      // ResizeObserver стреляет на любое изменение высоты body: синхронный
+      // measure() внутри колбэка форсировал бы layout — только флаг + кадр.
+      docTop = NaN;
+      schedule();
+    };
+    const ensureMeasured = () => {
+      if (Number.isNaN(docTop)) measure();
+    };
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+    window.addEventListener("resize", invalidate, { passive: true });
+    // Позиция списка может сдвинуться без resize: догрузка изображений,
+    // шрифтов и контента выше по странице меняет высоту body.
+    const observer = new ResizeObserver(invalidate);
+    observer.observe(document.body);
+    observer.observe(list);
+    window.addEventListener("load", invalidate, { once: true });
+    measure();
     update();
   }
 </script>

@@ -3,14 +3,26 @@
   --admin-container: 1360px;
   --admin-gutter: 32px;
   --admin-bg: var(--color-canvas);
-  --admin-raised: color-mix(in srgb, var(--color-paper) 60%, var(--color-canvas));
-  --admin-border: color-mix(in srgb, var(--color-canvas) 80%, var(--color-disabled));
+  --admin-raised: color-mix(
+    in srgb,
+    var(--color-paper) 60%,
+    var(--color-canvas)
+  );
+  --admin-border: color-mix(
+    in srgb,
+    var(--color-canvas) 80%,
+    var(--color-disabled)
+  );
   --admin-radius: 12px;
   --admin-control-radius: 8px;
   --admin-text-secondary: var(--color-muted);
   --admin-surface: var(--color-paper);
 
-  --admin-muted: color-mix(in srgb, var(--color-muted) 60%, var(--color-caption));
+  --admin-muted: color-mix(
+    in srgb,
+    var(--color-muted) 60%,
+    var(--color-caption)
+  );
   --admin-ink: var(--color-ink);
   --admin-accent: var(--color-accent);
   --admin-tint: color-mix(in srgb, var(--color-paper) 95%, var(--color-accent));
@@ -58,6 +70,10 @@
   left: 50%;
   right: auto;
   transform: translateX(-50%);
+}
+/* В админке тень фиксированной шапки не показывается (как раньше filter: none). */
+.admin-page .fixed-site-header .site-header {
+  box-shadow: none;
 }
 .admin-page .site-header.admin-site-header {
   gap: 24px;
@@ -1404,7 +1420,11 @@
   min-width: 0;
   padding: 18px;
   border-radius: 12px;
-  background: color-mix(in srgb, var(--color-paper) 75%, var(--color-paper-warm));
+  background: color-mix(
+    in srgb,
+    var(--color-paper) 75%,
+    var(--color-paper-warm)
+  );
 }
 .admin-object-preview > .admin-eyebrow {
   font-size: 10px;
@@ -1422,7 +1442,11 @@
 .admin-property-photo {
   position: relative;
   aspect-ratio: 4/3;
-  background: color-mix(in srgb, var(--color-canvas) 60%, var(--color-paper-warm));
+  background: color-mix(
+    in srgb,
+    var(--color-canvas) 60%,
+    var(--color-paper-warm)
+  );
   display: grid;
   place-items: center;
 }

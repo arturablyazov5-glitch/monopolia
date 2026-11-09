@@ -28,7 +28,12 @@
      мессенджеров и градиентная линия-разделитель (слева 100 % → справа 0 %). */
   --menu-dot-gap: 2px;
   --menu-social-gap: 6px;
-  --line-fade: linear-gradient(to right, transparent 0%, var(--color-divider) 5%, transparent 100%);
+  --line-fade: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--color-divider) 5%,
+    transparent 100%
+  );
   --color-backdrop: #00000099;
   --font-heading: Ruble, Forma, Arial, sans-serif;
   --font-body: Ruble, Calibri, Arial, sans-serif;
@@ -140,14 +145,29 @@
 
 /* Межсекционный отступ: 120 / 80 / 56 px. Двойной интервал производный;
    глубину рваного края и вынос рамки резервирует сам компонент. */
-:root { --section-space: 120px; --section-space-double: calc(2 * var(--section-space)); --section-space-compact: 80px; --carousel-gap: 32px; }
-@media (max-width: 1199px) { :root { --section-space: 80px; } }
-@media (max-width: 767px) { :root { --section-space: 56px; --radius-speech: 20px; } }
+:root {
+  --section-space: 120px;
+  --section-space-double: calc(2 * var(--section-space));
+  --section-space-compact: 80px;
+  --carousel-gap: 32px;
+}
+@media (max-width: 1199px) {
+  :root {
+    --section-space: 80px;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --section-space: 56px;
+    --radius-speech: 20px;
+  }
+}
 
 :root {
   /* Бумажные плашки: тот же заметный рваный край, что у кнопок,
      с прямыми углами из --brush-square-images. */
-  --paper-mask-sizes: 10px 10px, calc(100% - 18px) 10px, 10px 10px,
-    10px calc(100% - 18px), calc(100% - 18px) calc(100% - 18px),
-    10px calc(100% - 18px), 10px 10px, calc(100% - 18px) 10px, 10px 10px;
+  --paper-mask-sizes:
+    10px 10px, calc(100% - 18px) 10px, 10px 10px, 10px calc(100% - 18px),
+    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px), 10px 10px,
+    calc(100% - 18px) 10px, 10px 10px;
 }

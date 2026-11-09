@@ -8,89 +8,117 @@ import ChoiceGroup from "./ChoiceGroup.astro";
 import Paper from "./Paper.astro";
 import HeroQuiz from "./HeroQuiz.astro";
 import "../styles/inner-hero.css";
-const { variant = "buy", node = "", surface = "paper", inDialog = false } = Astro.props as { variant?: QuizVariant; node?: string; surface?: "paper" | "none"; inDialog?: boolean };
+const {
+  variant = "buy",
+  node = "",
+  surface = "paper",
+  inDialog = false,
+} = Astro.props as {
+  variant?: QuizVariant;
+  node?: string;
+  surface?: "paper" | "none";
+  inDialog?: boolean;
+};
 const { formText, image, shadow } = heroQuiz[variant];
 const prefix = `${variant}-quiz-${crypto.randomUUID()}`;
-const options = [1, 2, 3, 4, 5, 6].map(index => siteText(`inner-hero.options.${index}`));
+const options = [1, 2, 3, 4, 5, 6].map((index) =>
+  siteText(`inner-hero.options.${index}`),
+);
 ---
-    <Paper class="inner-hero-card" node={node} surface={surface}>
-      <div class="inner-hero-card-top" data-quiz-intro>
-        <p class="buy-quiz-question">{formText}</p>
-        <div class="inner-hero-quiz">
-          <div class="inner-hero-booklet">
-            <div
-              class="inner-hero-booklet-shadow"
-              style={`left:${shadow.left}px;top:${shadow.top}px;width:${shadow.width}px;height:${shadow.height}px`}
-            >
-              <img
-                src={"/assets/" + shadow.src}
-                alt=""
-                style={`inset:${shadow.bleed}`}
-                width={imageSize("/assets/" + shadow.src).width}
-                height={imageSize("/assets/" + shadow.src).height}
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <div
-              class="inner-hero-booklet-frame"
-              style={inDialog ? undefined : `height:${image.height}px`}
-            >
-              <picture style="display:contents">
-                {image.mobile && (
-                  <source
-                    media="(max-width: 767px)"
-                    srcset={image.mobile}
-                    style="display:none"
-                  />
-                )}
-                <img
-                  src={image.src}
-                  fetchpriority="low"
-                  alt={image.alt ?? "Пример отчета Монополии"}
-                  width={image.width}
-                  style={`aspect-ratio:${image.ratio}`}
-                  height={imageSize(image.src, image.width).height}
-                  loading="eager"
-                  decoding="async"
-                />
-              </picture>
-            </div>
-          </div>
-          <div class="inner-hero-fields">
-            <CityPicker variant="quiz" />
-            <div class="inner-hero-types">
-              <ChoiceGroup
-                class="choice-hover"
-                loading="eager"
-                name="Тип недвижимости"
-                options={options}
-                selected={-1}
-              >
-                <span class="inner-hero-cursor" aria-hidden="true">
-                  <img
-                    src="/assets/icon-quiz-cursor.svg"
-                    alt=""
-                    width="20.3387"
-                    height="20.643"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </span>
-              </ChoiceGroup>
-              <label class="inner-hero-other" data-hero-other hidden>
-                <span class="sr-only">Уточните тип объекта, обязательно при выборе «Другое»</span>
-                <input type="text" data-hero-other-input maxlength="200" placeholder="Например: апартаменты, склад, доля в квартире, таунхаус" />
-              </label>
-              <p class="lead-field-error form-error" data-hero-type-error role="status" hidden>{formErrors.answer}</p>
 
-            </div>
-          </div>
+<Paper class="inner-hero-card" node={node} surface={surface}>
+  <div class="inner-hero-card-top" data-quiz-intro>
+    <p class="buy-quiz-question">{formText}</p>
+    <div class="inner-hero-quiz">
+      <div class="inner-hero-booklet">
+        <div
+          class="inner-hero-booklet-shadow"
+          style={`left:${shadow.left}px;top:${shadow.top}px;width:${shadow.width}px;height:${shadow.height}px`}
+        >
+          <img
+            src={"/assets/" + shadow.src}
+            alt=""
+            style={`inset:${shadow.bleed}`}
+            width={imageSize("/assets/" + shadow.src).width}
+            height={imageSize("/assets/" + shadow.src).height}
+            loading={inDialog ? "lazy" : "eager"}
+            decoding="async"
+          />
+        </div>
+        <div
+          class="inner-hero-booklet-frame"
+          style={inDialog ? undefined : `height:${image.height}px`}
+        >
+          <picture style="display:contents">
+            {image.mobile && (
+              <source
+                media="(max-width: 767px)"
+                srcset={image.mobile}
+                style="display:none"
+              />
+            )}
+            <img
+              src={image.src}
+              fetchpriority="low"
+              alt={image.alt ?? "Пример отчета Монополии"}
+              width={image.width}
+              style={`aspect-ratio:${image.ratio}`}
+              height={imageSize(image.src, image.width).height}
+              loading={inDialog ? "lazy" : "eager"}
+              decoding="async"
+            />
+          </picture>
         </div>
       </div>
-      <div class="inner-hero-submit" data-quiz-intro>
-        <button type="button" class="button red" data-quiz-start>Далее</button>
-        <p class="inner-hero-step">Шаг 1 из 5</p>
+      <div class="inner-hero-fields">
+        <CityPicker variant="quiz" />
+        <div class="inner-hero-types">
+          <ChoiceGroup
+            class="choice-hover"
+            loading="eager"
+            name="Тип недвижимости"
+            options={options}
+            selected={-1}
+          >
+            <span class="inner-hero-cursor" aria-hidden="true">
+              <img
+                src="/assets/icon-quiz-cursor.svg"
+                alt=""
+                width="20.3387"
+                height="20.643"
+                loading={inDialog ? "lazy" : "eager"}
+                decoding="async"
+              />
+            </span>
+          </ChoiceGroup>
+          <label class="inner-hero-other" data-hero-other hidden>
+            <span class="sr-only">
+              Уточните тип объекта, обязательно при выборе «Другое»
+            </span>
+            <input
+              type="text"
+              data-hero-other-input
+              maxlength="200"
+              placeholder="Например: апартаменты, склад, доля в квартире, таунхаус"
+            />
+          </label>
+          <p
+            class="lead-field-error form-error"
+            data-hero-type-error
+            role="status"
+            hidden
+          >
+            {formErrors.answer}
+          </p>
+        </div>
       </div>
-      <HeroQuiz variant={variant} prefix={prefix} inDialog={inDialog} />
-    </Paper>
+    </div>
+  </div>
+  <div class="inner-hero-submit" data-quiz-intro>
+    <button type="button" class="button red" data-quiz-start>
+      Далее
+    </button>
+    <p class="inner-hero-step">Шаг 1 из 5</p>
+  </div>
+  <HeroQuiz variant={variant} prefix={prefix} inDialog={inDialog} />
+</Paper>

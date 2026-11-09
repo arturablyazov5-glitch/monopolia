@@ -35,43 +35,51 @@ const roleId = person ? `person.${person}.role` : "";
       alt={name}
       width={imageSize(src).width}
       height={imageSize(src).height}
-      loading="eager"
+      loading="lazy"
       decoding="async"
     />
   </span>
   {quote ? (
-    <>
+    <div class="expert-profile-quote-body">
+      <p class="expert-profile-bubble-name">
+        <span
+          data-content-id={nameId || undefined}
+          data-content-slots={nameId ? "0" : undefined}
+          data-content-parts={nameId ? "-1" : undefined}
+        >
+          {name}
+        </span>
+        ,{" "}
+        <span
+          data-content-id={roleId || undefined}
+          data-content-slots={roleId ? "0" : undefined}
+          data-content-parts={roleId ? "-1" : undefined}
+        >
+          {signatureRole}
+        </span>
+      </p>
       <SpeechBubble
         class="expert-profile-bubble"
         tail="speech-tail-blue-left.svg"
         text={quote}
       />
-      <p class="expert-profile-signature">
-        <span
-          data-content-id={nameId || undefined}
-          data-content-slots={nameId ? "0" : undefined}
-          data-content-parts={nameId ? "-1" : undefined}>{name}</span
-        >,{" "}
-        <span
-          data-content-id={roleId || undefined}
-          data-content-slots={roleId ? "0" : undefined}
-          data-content-parts={roleId ? "-1" : undefined
-          }>{signatureRole}</span
-        >
-      </p>
-    </>
+    </div>
   ) : (
     <span class="expert-profile-info">
       <strong
         data-content-id={nameId || undefined}
         data-content-slots={nameId ? "0" : undefined}
-        data-content-parts={nameId ? "-1" : undefined}>{name}</strong
+        data-content-parts={nameId ? "-1" : undefined}
       >
+        {name}
+      </strong>
       <span
         data-content-id={roleId || undefined}
         data-content-slots={roleId ? "0" : undefined}
-        data-content-parts={roleId ? "-1" : undefined}>{role}</span
+        data-content-parts={roleId ? "-1" : undefined}
       >
+        {role}
+      </span>
     </span>
   )}
 </div>
@@ -95,16 +103,20 @@ const roleId = person ? `person.${person}.role` : "";
   .expert-profile-quote .expert-profile-avatar {
     align-self: flex-start;
   }
-  .expert-profile-bubble {
+  .expert-profile-quote-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     flex: 0 1 auto;
     min-width: 0;
-    max-width: 100%;
+    /* аватар 76px + gap 12px: колонка не шире остатка строки */
+    max-width: calc(100% - 88px);
   }
-  .expert-profile-signature {
-    flex: 0 0 100%;
-    margin: 0;
-    font: 14px/1.4 var(--font-body);
+  .expert-profile-bubble-name {
+    margin: 0 0 4px;
     color: var(--color-muted);
+    font: 14px/1.3 var(--font-body);
+    white-space: nowrap;
   }
   .expert-profile-avatar {
     position: relative;
@@ -137,26 +149,45 @@ const roleId = person ? `person.${person}.role` : "";
     .expert-profile {
       display: flex;
     }
-    .expert-profile-bubble {
-      flex-basis: 200px;
+    /* Имя в две строки делает колонку выше фото — прижимаем аватар
+       к низу, чтобы низ реплики не уходил ниже снимка. */
+    .expert-profile-quote .expert-profile-avatar {
+      align-self: flex-end;
+    }
+    .expert-profile-bubble-name {
+      font-size: 12.5px;
+      /* в одну строку имя+должность не влезает в колонку 246px — разрешаем перенос */
+      white-space: normal;
+    }
+    @media (max-width: 391px) {
+      .expert-profile-bubble-name {
+        font-size: 12px;
+      }
     }
   }
 </style>
 
 <style is:global>
-  .expert-profile-bubble p {
-    padding: 10px 20px;
+  /* Класс висит на корне SpeechBubble — scoped-стили сюда не достают,
+     поэтому типографику облачка задаём глобально. */
+  .speech-bubble.expert-profile-bubble p {
+    padding: 10px 16px 8px;
     font-size: 16px;
-    line-height: 1.35;
+    line-height: 1.3;
     white-space: pre-line;
   }
   /* На телефоне реплика с хвостиком должна помещаться в высоту фото (76px):
      уменьшаем поля и кегль только внутри медиа-запроса. */
   @media (max-width: 767px) {
-    .expert-profile-bubble p {
-      padding: 8px 14px;
+    .speech-bubble.expert-profile-bubble p {
+      padding: 6px 10px 5px;
       font-size: 14px;
-      line-height: 1.3;
+      line-height: 1.22;
+    }
+    @media (max-width: 391px) {
+      .speech-bubble.expert-profile-bubble p {
+        font-size: 12px;
+      }
     }
   }
 </style>

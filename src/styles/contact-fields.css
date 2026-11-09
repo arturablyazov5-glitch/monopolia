@@ -129,6 +129,20 @@
   }
 }
 
+/* iOS Safari перерисовывает 9-слойные маски полей и чипсов при скролле
+   страницы (формы секций и квизы). Выносим каждое замаскированное поле
+   в композитный слой — растр с маской считается один раз. Только iOS,
+   визуально ничего не меняет. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    .contact-field,
+    .phone-field.brush-stroke,
+    .contact-method-options .chip {
+      transform: translateZ(0);
+    }
+  }
+}
+
 /* Общая группа поля и сообщения об ошибке для форм и квизов. */
 .lead-field-group {
   display: flex;

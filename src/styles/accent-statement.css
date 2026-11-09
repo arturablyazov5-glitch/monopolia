@@ -11,7 +11,7 @@
 }
 .accent-statement > p {
   font: var(--weight-heading) var(--text-heading) / 1 var(--font-heading);
-  color: rgb(from var(--color-ink) r g b / 40.0%);
+  color: rgb(from var(--color-ink) r g b / 40%);
   text-align: center;
 }
 .accent-statement strong {
@@ -43,5 +43,17 @@
 @media (max-width: 539px) {
   .accent-statement > p {
     font-size: var(--heading-section);
+  }
+}
+
+/* iOS Safari: mask (.decorative-stroke) + transform: rotate() дают мерцание
+   рваного края при скролле — тот же обход, что у .faq-slot: отдельное
+   свойство rotate только на iPhone, угол тот же. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .accent-statement-stroke {
+      transform: none;
+      rotate: -0.07deg;
+    }
   }
 }

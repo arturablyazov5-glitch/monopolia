@@ -10,11 +10,16 @@ const { case: cityCase = "name" } = Astro.props;
 <script is:inline define:vars={{ cityForms }}>
   {
     const el = document.currentScript.previousElementSibling;
-    let city = "Белогорск";
-    try {
-      city = localStorage.getItem("city") || city;
-    } catch {}
-    el.textContent = (cityForms[city] || cityForms.Белогорск)[
+    // Экземпляров компонента много, а город не меняется во время загрузки:
+    // читаем localStorage один раз и кэшируем на window.
+    if (window.__cityTextCity === undefined) {
+      let city = "Белогорск";
+      try {
+        city = localStorage.getItem("city") || city;
+      } catch {}
+      window.__cityTextCity = city;
+    }
+    el.textContent = (cityForms[window.__cityTextCity] || cityForms.Белогорск)[
       el.dataset.cityCase
     ];
     document.currentScript.remove();

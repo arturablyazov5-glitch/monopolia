@@ -4,7 +4,10 @@ import ReferralNotification from "./ReferralNotification.astro";
 import TapedNote from "./TapedNote.astro";
 import { traceLogo } from "../data/trace-logos";
 import "../styles/referral-bonus.css";
-import { referralPeriod, referralHeadingPrefix } from "../scripts/referral-bonus.mjs";
+import {
+  referralPeriod,
+  referralHeadingPrefix,
+} from "../scripts/referral-bonus.mjs";
 const period = referralPeriod();
 const notifications = [
   {
@@ -104,12 +107,30 @@ const notifications = [
           <br />
           {siteText("referral-bonus.text.13")}
           <br />
-          <span data-referral-prefix data-content-id="referral-bonus.text.14" data-content-slots="0" data-content-parts="-1">{referralHeadingPrefix(siteText("referral-bonus.text.14"))}</span> <span data-referral-month>{period.month}</span>
+          <span
+            data-referral-prefix
+            data-content-id="referral-bonus.text.14"
+            data-content-slots="0"
+            data-content-parts="-1"
+          >
+            {referralHeadingPrefix(siteText("referral-bonus.text.14"))}
+          </span>{" "}
+          <span data-referral-month>{period.month}</span>
         </h2>
         <p>{siteText("referral-bonus.text.15")}</p>
       </div>
-      <TapedNote class="referral-promotion-label" tapeNode="I1380:6355;569:1388" textured rotate={-1}>
-        {siteText("referral-bonus.text.16")}{" "}<strong><span data-referral-days>{period.days}</span>{" "}<span data-referral-word>{period.word}</span></strong>
+      <TapedNote
+        class="referral-promotion-label"
+        tapeNode="I1380:6355;569:1388"
+        textured
+        rotate={-1}
+      >
+        {siteText("referral-bonus.text.16")}{" "}
+        <strong>
+          <span data-referral-days>{period.days}</span>
+          {" "}
+          <span data-referral-word>{period.word}</span>
+        </strong>
       </TapedNote>
     </div>
   </div>
@@ -119,11 +140,20 @@ const notifications = [
 <script>
   import { updateReferralBonuses } from "../scripts/referral-bonus.mjs";
   updateReferralBonuses();
-  setInterval(updateReferralBonuses, 60 * 60 * 1000);
+  setInterval(
+    () => {
+      if (!document.hidden) updateReferralBonuses();
+    },
+    60 * 60 * 1000,
+  );
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) updateReferralBonuses();
   });
   for (const prefix of document.querySelectorAll("[data-referral-prefix]")) {
-    new MutationObserver(updateReferralBonuses).observe(prefix, { childList: true, characterData: true, subtree: true });
+    new MutationObserver(updateReferralBonuses).observe(prefix, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
   }
 </script>

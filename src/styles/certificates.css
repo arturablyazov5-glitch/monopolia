@@ -3,7 +3,67 @@
   height: 500.681px;
   overflow: hidden;
   isolation: isolate;
-  background: linear-gradient(to bottom, #17110f, #1a0b05);
+  --certificates-edge-height: 56px;
+}
+/* Фон и рваный верхний край живут на ::before, а не на секции: маска
+   на контейнере заставляла Safari пересобирать при скролле весь контент
+   (текст, фото-композицию, кнопки). Маскируется только сплошной градиент;
+   видимые потомки в зоне края прозрачны (верх certificates-composition
+   пуст до ~15% высоты) или начинаются ниже края (контент от 180px),
+   поэтому картинка не меняется. z-index:-1 держит подложку внутри
+   stacking context секции (isolation:isolate), под всем контентом. */
+@media (min-width: 768px) {
+  .certificates::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #17110f, #1a0b05);
+    /* Рваный контур SVG — единая верхняя граница тёмной секции: выше контура
+       секция прозрачна и виден светлый фон страницы, ниже — тёмные фон,
+       фото и контент. Сплошной градиент под SVG-слоем закрывает низ без шва. */
+    -webkit-mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    -webkit-mask-size:
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
+    mask-size:
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
+    -webkit-mask-position: top, bottom;
+    mask-position: top, bottom;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+}
+/* На телефоне маска остается на самой секции: видимый срез
+   .certificates-art (правые ~170px композиции) заходит в зону рваного
+   края, и перенести маску только на фон нельзя без изменения картинки. */
+@media (max-width: 767px) {
+  .certificates {
+    background: linear-gradient(to bottom, #17110f, #1a0b05);
+    -webkit-mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    -webkit-mask-size:
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
+    mask-size:
+      100% var(--certificates-edge-height),
+      100% calc(100% - 50px);
+    -webkit-mask-position: top, bottom;
+    mask-position: top, bottom;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
 }
 .certificates-scene {
   position: relative;

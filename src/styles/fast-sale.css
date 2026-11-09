@@ -112,8 +112,7 @@
     height: auto;
   }
   .fast-sale-scene {
-    margin: calc(100cqw * 20 / 1440) 0
-      calc(100cqw * 552 / 1440 - 552px);
+    margin: calc(100cqw * 20 / 1440) 0 calc(100cqw * 552 / 1440 - 552px);
     transform: scale(var(--scene-scale));
     transform-origin: top left;
   }
@@ -147,7 +146,11 @@
   .fast-sale-portrait {
     /* Справа заканчивается фото здания, а не вырезанный портрет.
        Плавный переход убирает прямой обрыв за пределами сцены. */
-    mask-image: linear-gradient(to right, var(--color-ink) calc(100% - 120px), transparent);
+    mask-image: linear-gradient(
+      to right,
+      var(--color-ink) calc(100% - 120px),
+      transparent
+    );
   }
   .fast-sale-edge {
     /* Масштабируется только бумага: высота рваной кромки прежняя. */
@@ -155,3 +158,6 @@
     height: 80px;
   }
 }
+
+/* content-visibility для .fast-sale задан в home-responsive.css
+   (.home-desktop .fast-sale) — секция всегда внутри .home-desktop. */

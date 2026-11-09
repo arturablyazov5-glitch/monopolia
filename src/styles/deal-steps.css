@@ -40,7 +40,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, var(--color-dark), rgb(from var(--color-dark) r g b / 0.0%) 5%);
+  background: linear-gradient(
+    to bottom,
+    var(--color-dark),
+    rgb(from var(--color-dark) r g b / 0%) 5%
+  );
 }
 .deal-steps-grid {
   width: var(--container-width);
@@ -93,7 +97,7 @@
   color: var(--color-paper);
 }
 .deal-mission-muted {
-  color: rgb(from var(--color-paper) r g b / 40.0%);
+  color: rgb(from var(--color-paper) r g b / 40%);
 }
 .deal-mission-accent {
   display: flex;
@@ -122,9 +126,9 @@
   --brush-images:
     url("/assets/brush-square-tl.svg"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
-    url("/assets/brush-square-bl.svg"), url("/assets/brush-mask-b.svg"),
-    url("/assets/brush-square-br.svg");
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/brush-mask-r.svg"), url("/assets/brush-square-bl.svg"),
+    url("/assets/brush-mask-b.svg"), url("/assets/brush-square-br.svg");
 }
 .deal-progress {
   margin-top: 34px;
@@ -272,7 +276,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2.0%));
+  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2%));
 }
 .deal-step-chips > li {
   display: flex;
@@ -568,4 +572,18 @@
 
 .deal-step-image-badged {
   overflow: visible;
+}
+
+/* iOS Safari: карточки шагов далеко за экраном не участвуют в paint.
+   contain-intrinsic-size с auto держит оценку высоты до первой отрисовки
+   и запоминает реальную после неё — высота списка и прогресс не прыгают.
+   Маска прогресса остается на ::before (см. комментарий выше про дрожание). */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .deal-step {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 720px;
+    }
+  }
 }

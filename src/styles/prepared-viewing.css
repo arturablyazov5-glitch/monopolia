@@ -26,7 +26,13 @@
   .prepared-viewing-background {
     width: 1440px;
     object-fit: contain;
-    mask-image: linear-gradient(to right, transparent, var(--color-ink) 100px, var(--color-ink) calc(100% - 240px), transparent);
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      var(--color-ink) 100px,
+      var(--color-ink) calc(100% - 240px),
+      transparent
+    );
   }
   .prepared-viewing::before {
     content: "";
@@ -35,14 +41,29 @@
     z-index: -2;
     background:
       linear-gradient(to right, #151515 20%, transparent 70%),
-      var(--viewing-edge-colors, linear-gradient(to bottom, #bdafa4 15%, #c6bfbc 40%, #676360 65%, #91857d 85%));
+      var(
+        --viewing-edge-colors,
+        linear-gradient(
+          to bottom,
+          #bdafa4 15%,
+          #c6bfbc 40%,
+          #676360 65%,
+          #91857d 85%
+        )
+      );
     mask-image: var(--viewing-photo-mask);
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     pointer-events: none;
   }
   .prepared-viewing-sell {
-    --viewing-edge-colors: linear-gradient(to bottom, #bbb8b2 15%, #5c5047 40%, #736b65 65%, #7c6959 85%);
+    --viewing-edge-colors: linear-gradient(
+      to bottom,
+      #bbb8b2 15%,
+      #5c5047 40%,
+      #736b65 65%,
+      #7c6959 85%
+    );
   }
 }
 .prepared-viewing-inner {
@@ -312,8 +333,14 @@
     background: var(--color-dark);
     --viewing-edge-height: 56px;
     padding-block: calc(var(--viewing-edge-height) + var(--section-space));
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
-    mask-size: 100% var(--viewing-edge-height), 100% calc(100% - 2 * var(--viewing-edge-height) + 2px), 100% var(--viewing-edge-height);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      url("/assets/gossip-paper-edge.svg");
+    mask-size:
+      100% var(--viewing-edge-height),
+      100% calc(100% - 2 * var(--viewing-edge-height) + 2px),
+      100% var(--viewing-edge-height);
     mask-position: top, center, bottom;
     mask-repeat: no-repeat;
   }
@@ -460,5 +487,49 @@
   }
   .viewing-comparison-after .viewing-comparison-rating {
     right: 12px;
+  }
+}
+
+/* iOS (Safari на iPhone): маска всей секции собирает текст, списки,
+   стикер «Вероятность» и слайдер «до/после» в один маскированный слой,
+   который перерисовывается при каждом скролле. Переносим маску на
+   отдельный фоновый слой ::before: контент не заходит в зоны
+   прозрачных краёв (padding-block равен высоте края плюс отступ
+   секции), поэтому изображение не меняется, а секция перестаёт быть
+   маскированным контейнером. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .prepared-viewing {
+      background: transparent;
+      mask: none;
+    }
+    .prepared-viewing::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--color-dark);
+      mask-image:
+        url("/assets/background-paper-edge-white.svg"),
+        linear-gradient(var(--color-ink), var(--color-ink)),
+        url("/assets/gossip-paper-edge.svg");
+      mask-size:
+        100% var(--viewing-edge-height),
+        100% calc(100% - 2 * var(--viewing-edge-height) + 2px),
+        100% var(--viewing-edge-height);
+      mask-position: top, center, bottom;
+      mask-repeat: no-repeat;
+      pointer-events: none;
+    }
+  }
+}
+
+/* iOS: блок сравнения «до/после» держит brush-маску и clip-path слайдера —
+   выносим в композитный слой, чтобы drag не перерисовывал маску. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .prepared-viewing-comparison {
+      transform: translateZ(0);
+    }
   }
 }

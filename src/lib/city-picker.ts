@@ -126,8 +126,20 @@ export function initCityPickers() {
         target.click();
       }
     });
-    document.addEventListener("click", (e) => {
-      if (!picker.contains(e.target as Node)) setOpen(false);
+  });
+  // Один слушатель на документ для всех пикеров страницы: раньше каждый
+  // [data-city-picker] вешал свой, и каждый клик прогонял contains по всем.
+  document.addEventListener("click", (e) => {
+    pickers.forEach((picker) => {
+      if (!picker.contains(e.target as Node)) {
+        const list = picker.querySelector<HTMLElement>("[data-city-menu]");
+        if (list && !list.hidden) {
+          list.hidden = true;
+          picker
+            .querySelector("[data-city-toggle]")
+            ?.setAttribute("aria-expanded", "false");
+        }
+      }
     });
   });
 }

@@ -46,8 +46,8 @@
   /* Глубина края только карточки проверки; скотч и контент вне маски. */
   --paper-mask-sizes:
     10px 10px, calc(100% - 18px) 10px, 10px 10px, 10px calc(100% - 18px),
-    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px),
-    10px 10px, calc(100% - 18px) 10px, 10px 10px;
+    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px), 10px 10px,
+    calc(100% - 18px) 10px, 10px 10px;
   box-shadow: none;
   padding: 20px 24px;
   display: flex;
@@ -154,7 +154,9 @@
   justify-content: space-between;
   background: var(--color-paper);
   border-radius: 2px;
-  filter: drop-shadow(0 2.218px 1.552px rgb(from var(--color-ink) r g b / 5.9%));
+  filter: drop-shadow(
+    0 2.218px 1.552px rgb(from var(--color-ink) r g b / 5.9%)
+  );
   font-family: var(--font-body);
   font-size: 6.21px;
   line-height: 1.2;
@@ -254,7 +256,10 @@
   width: 4.435px;
   height: 4.435px;
   border-radius: 50%;
-  background: radial-gradient(var(--color-status) 0 1.33px, rgb(from var(--color-status) r g b / 18.0%) 1.4px);
+  background: radial-gradient(
+    var(--color-status) 0 1.33px,
+    rgb(from var(--color-status) r g b / 18%) 1.4px
+  );
 }
 
 /* Карточки помещаются в строку сетки, оставляя междурядный отступ. */
@@ -433,6 +438,10 @@
   }
   .buy-closed-base {
     padding-top: var(--section-space);
+    /* Мокап окна Safari с десятками drop-shadow внутри: вне вьюпорта
+       пропускаем растрирование секции (как .buyer-audience). */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
   }
   .buy-closed-base-container {
     gap: 32px;
@@ -469,7 +478,10 @@
     position: absolute;
     inset: auto 0 0;
     height: 80px;
-    background: linear-gradient(rgb(from var(--color-paper) r g b / 0%), var(--color-paper));
+    background: linear-gradient(
+      rgb(from var(--color-paper) r g b / 0%),
+      var(--color-paper)
+    );
     pointer-events: none;
     z-index: 3;
   }

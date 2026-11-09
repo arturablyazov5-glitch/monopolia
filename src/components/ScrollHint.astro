@@ -5,7 +5,15 @@ const { class: className = "" } = Astro.props;
 
 <p class:list={["mobile-scroll-hint", className]}>
   <span aria-hidden="true">
-    <img src="/assets/icon-scroll-left.svg" alt="" width="16" height="16" style="display: block;" />
+    <img
+      src="/assets/icon-scroll-left.svg"
+      alt=""
+      width="16"
+      height="16"
+      style="display: block;"
+      loading="lazy"
+      decoding="async"
+    />
   </span>
   Скролльте влево
 </p>

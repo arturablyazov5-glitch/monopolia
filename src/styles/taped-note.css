@@ -53,3 +53,14 @@
     font-size: 16px;
   }
 }
+
+/* iOS Safari перерисовывает drop-shadow на повёрнутом .taped-note при
+   скролле. Тень 5.9% альфы почти незаметна на мобильном — на iOS
+   отключаем фильтр, на остальных платформах дизайн сохранен. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .taped-note {
+      filter: none;
+    }
+  }
+}

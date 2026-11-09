@@ -31,7 +31,7 @@ html.video-dialog-open body {
   z-index: 10000;
 }
 #video-dialog::backdrop {
-  background: rgb(from var(--color-ink) r g b / 85.0%);
+  background: rgb(from var(--color-ink) r g b / 85%);
 }
 #video-dialog[open],
 #video-dialog[open]::backdrop {
@@ -83,7 +83,7 @@ html.video-dialog-open body {
   padding: 0;
   border: 0;
   border-radius: 100px;
-  background: rgb(from var(--color-ink) r g b / 50.0%);
+  background: rgb(from var(--color-ink) r g b / 50%);
   backdrop-filter: blur(8px);
   color: var(--color-paper);
   cursor: pointer;
@@ -93,12 +93,12 @@ html.video-dialog-open body {
 }
 @media (hover: hover) {
   .video-dialog-close:hover {
-    background: rgb(from var(--color-ink) r g b / 65.0%);
+    background: rgb(from var(--color-ink) r g b / 65%);
     color: var(--color-paper);
   }
 }
 .video-dialog-close:focus-visible {
-  background: rgb(from var(--color-ink) r g b / 50.0%);
+  background: rgb(from var(--color-ink) r g b / 50%);
   color: var(--color-paper);
   box-shadow: 0 0 0 2px var(--color-paper);
 }

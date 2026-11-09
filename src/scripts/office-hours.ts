@@ -6,14 +6,17 @@ import {
 } from "../lib/office-hours.mjs";
 
 let periods: OfficePeriod[] = [];
+// Разметка статична (редактируемый контент меняет только textContent),
+// поэтому список элементов кэшируем вместо querySelectorAll на каждый тик.
+const statuses = [
+  ...document.querySelectorAll<HTMLElement>("[data-office-status]"),
+];
 const updateStatus = () => {
   const open = isOfficeOpen(new Date(), periods);
-  document
-    .querySelectorAll<HTMLElement>("[data-office-status]")
-    .forEach((status) => {
-      status.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
-      status.closest(".office-status")?.classList.toggle("closed", !open);
-    });
+  statuses.forEach((status) => {
+    status.textContent = open ? "Сейчас работаем" : "Сейчас закрыто";
+    status.closest(".office-status")?.classList.toggle("closed", !open);
+  });
 };
 const refreshSchedule = () => {
   const element = document.querySelector("[data-office-hours]");
@@ -47,14 +50,28 @@ document.querySelectorAll("[data-office-hours]").forEach((element) => {
   });
 });
 // Обновляем статус и после смены минуты, и после возврата в открытую вкладку.
-const nextMinute = () => {
-  setTimeout(
+// В фоновой вкладке таймер не держим: он лишь разбудит процесс раз в минуту.
+// При возврате видимости статус пересчитывается сразу, а таймер встаёт
+// на ближайшую границу минуты заново.
+let minuteTimer: ReturnType<typeof setTimeout> | undefined;
+const scheduleNextMinute = () => {
+  clearTimeout(minuteTimer);
+  minuteTimer = setTimeout(
     () => {
       updateStatus();
-      nextMinute();
+      scheduleNextMinute();
     },
     60_000 - (Date.now() % 60_000),
   );
 };
-nextMinute();
-document.addEventListener("visibilitychange", updateStatus);
+const onVisibilityChange = () => {
+  if (document.hidden) {
+    clearTimeout(minuteTimer);
+    minuteTimer = undefined;
+    return;
+  }
+  updateStatus();
+  scheduleNextMinute();
+};
+if (!document.hidden) scheduleNextMinute();
+document.addEventListener("visibilitychange", onVisibilityChange);

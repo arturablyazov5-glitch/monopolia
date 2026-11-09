@@ -1,3 +1,4 @@
 .standalone-page {
-  background: var(--color-canvas) url("/assets/home-background-no-plane.webp") center / cover;
+  background: var(--color-canvas) url("/assets/home-background-no-plane.webp")
+    center / cover;
 }

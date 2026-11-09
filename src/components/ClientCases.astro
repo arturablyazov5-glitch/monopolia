@@ -59,10 +59,7 @@ const cases = clientCases;
     >
       {cases.map((caseItem, index) => (
         <article
-          class:list={[
-            "case-slide",
-            { "is-active": index === 0 },
-          ]}
+          class:list={["case-slide", { "is-active": index === 0 }]}
           data-case-slide
           data-category={caseItem.category}
           data-node-id={caseItem.id}
@@ -249,6 +246,19 @@ const cases = clientCases;
     let ctaAnimation: Animation | null = null;
     let initialized = false;
     let scrollSettleTimer: ReturnType<typeof setTimeout> | undefined;
+    // offsetLeft не меняется во время прокрутки: кэшируем и сбрасываем
+    // только при реальной смене раскладки (resize, смена категории).
+    let offsetsValid = false;
+    let contentOffsetLeft = 0;
+    let slideOffsets: number[] = [];
+    const invalidateCaseOffsets = () => {
+      offsetsValid = false;
+    };
+    const measureCaseOffsets = () => {
+      offsetsValid = true;
+      contentOffsetLeft = content.offsetLeft;
+      slideOffsets = categorySlides.map((slide) => slide.offsetLeft);
+    };
     const fitActiveCase = (animateButton = false) => {
       // Do not move the CTA while the user is swiping between cards.
       if (scrolling) return;
@@ -260,8 +270,10 @@ const cases = clientCases;
         return;
       }
       const style = getComputedStyle(content);
-      const height = active.getBoundingClientRect().height
-        + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const height =
+        active.getBoundingClientRect().height +
+        parseFloat(style.paddingTop) +
+        parseFloat(style.paddingBottom);
       const previousHeight = content.getBoundingClientRect().height;
       if (Math.abs(previousHeight - height) < 1) return;
 
@@ -285,17 +297,20 @@ const cases = clientCases;
         );
       }
     };
-    const caseResize = new ResizeObserver(() => fitActiveCase());
+    const caseResize = new ResizeObserver(() => {
+      invalidateCaseOffsets();
+      fitActiveCase();
+    });
     slides.forEach((slide) => caseResize.observe(slide));
-
 
     const updateCase = (index: number, focusedButton?: HTMLButtonElement) => {
       current = Math.max(0, Math.min(index, categorySlides.length - 1));
       content.hidden = categorySlides.length === 0;
       mobileCta.hidden = categorySlides.length === 0;
-      mobileButton.dataset.subject = category === "sell"
-        ? "Консультация по продаже недвижимости"
-        : "Консультация по покупке недвижимости";
+      mobileButton.dataset.subject =
+        category === "sell"
+          ? "Консультация по продаже недвижимости"
+          : "Консультация по покупке недвижимости";
       scrollHint.hidden = categorySlides.length <= 1;
       empty.hidden = categorySlides.length !== 0;
       slides.forEach((slide) => {
@@ -352,15 +367,18 @@ const cases = clientCases;
       clearTimeout(scrollSettleTimer);
       cancelAnimationFrame(scrollFrame);
       scrollFrame = 0;
+      invalidateCaseOffsets();
       updateCase(current);
       content.scrollLeft = 0;
     });
     const syncScrolledCase = () => {
       if (!mobile.matches || !categorySlides.length) return;
+      if (!offsetsValid) measureCaseOffsets();
+      const scrollLeft = content.scrollLeft - contentOffsetLeft;
       const nearest = categorySlides.reduce(
         (best, slide, index) =>
-          Math.abs(slide.offsetLeft - content.offsetLeft - content.scrollLeft) <
-          Math.abs(categorySlides[best].offsetLeft - content.offsetLeft - content.scrollLeft)
+          Math.abs(slideOffsets[index] - scrollLeft) <
+          Math.abs(slideOffsets[best] - scrollLeft)
             ? index
             : best,
         0,
@@ -379,26 +397,34 @@ const cases = clientCases;
       syncScrolledCase();
       fitActiveCase(true);
     };
-    content.addEventListener("scroll", () => {
-      if (!mobile.matches || !categorySlides.length) return;
-      scrolling = true;
-      if (!scrollFrame) {
-        scrollFrame = requestAnimationFrame(() => {
-          scrollFrame = 0;
-          syncScrolledCase();
-        });
-      }
-      // Safari versions without scrollend still settle after scrolling stops.
-      clearTimeout(scrollSettleTimer);
-      scrollSettleTimer = setTimeout(finishScroll, 200);
-    }, { passive: true });
+    content.addEventListener(
+      "scroll",
+      () => {
+        if (!mobile.matches || !categorySlides.length) return;
+        scrolling = true;
+        if (!scrollFrame) {
+          scrollFrame = requestAnimationFrame(() => {
+            scrollFrame = 0;
+            syncScrolledCase();
+          });
+        }
+        // Safari versions without scrollend still settle after scrolling stops.
+        // 350 ms: у iOS momentum паузы между scroll-событиями бывают >200 ms,
+        // finishScroll в середине инерции дёргал высоту контейнера.
+        clearTimeout(scrollSettleTimer);
+        scrollSettleTimer = setTimeout(finishScroll, 350);
+      },
+      { passive: true },
+    );
     content.addEventListener("scrollend", finishScroll);
 
+    addEventListener("resize", invalidateCaseOffsets, { passive: true });
     root.addEventListener("choice-change", (event) => {
       scrolling = false;
       clearTimeout(scrollSettleTimer);
       cancelAnimationFrame(scrollFrame);
       scrollFrame = 0;
+      invalidateCaseOffsets();
       const value = (event as CustomEvent<{ value: string }>).detail.value;
       const tabs = [
         ...root.querySelectorAll<HTMLElement>(

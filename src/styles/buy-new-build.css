@@ -13,7 +13,8 @@
   width: 584.154px;
   height: 14.681px;
   background: var(--color-diamond);
-  mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 584.154px 14.681px;
+  mask: url("/assets/background-paper-edge-light.webp") no-repeat center /
+    584.154px 14.681px;
 }
 /* 05 — белый мятый лист 858 × 338, без тени. */
 .buy-new-build-card {
@@ -32,9 +33,15 @@
 .buy-new-build-card.paper::before,
 .buy-new-build-card.paper::after {
   mask-size:
-    8px 8px, calc(100% - 14px) 8px, 8px 8px,
-    8px calc(100% - 14px), calc(100% - 14px) calc(100% - 14px),
-    8px calc(100% - 14px), 8px 8px, calc(100% - 14px) 8px, 8px 8px;
+    8px 8px,
+    calc(100% - 14px) 8px,
+    8px 8px,
+    8px calc(100% - 14px),
+    calc(100% - 14px) calc(100% - 14px),
+    8px calc(100% - 14px),
+    8px 8px,
+    calc(100% - 14px) 8px,
+    8px 8px;
 }
 .buy-new-build .buy-new-build-card.paper::before {
   display: block;
@@ -49,7 +56,7 @@
 .buy-new-build-card > p {
   width: 592px;
   margin-top: -24px;
-  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
+  color: var(--color-muted);
 }
 /* 1380:6559 — бумажная заметка «Комиссия — 0%», −1°, по центру над листом */
 .buy-new-build-note-wrap {
@@ -99,11 +106,19 @@
   }
 }
 @media (max-width: 767px) {
+  .buy-new-build {
+    /* Лист с brush-масками и заметкой с drop-shadow: вне вьюпорта
+       пропускаем растрирование (как .buyer-audience). */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 700px;
+  }
   .buy-new-build-divider {
     display: none;
   }
   .buy-new-build {
-    padding-top: calc(var(--section-space-double) + var(--new-build-note-overhang));
+    padding-top: calc(
+      var(--section-space-double) + var(--new-build-note-overhang)
+    );
     padding-bottom: var(--section-space);
     gap: var(--section-space);
   }

@@ -52,9 +52,22 @@ const {
         (el) => !(el as HTMLElement).hidden,
       ) as HTMLElement[];
     let cardCount = -1;
+    let lastIndex = -1;
+    // Метрики трека не меняются во время прокрутки: кэшируем и сбрасываем
+    // по ResizeObserver/MutationObserver/resize, а не читаем layout каждый кадр.
+    const metrics = { step: 1, clientWidth: 0, scrollWidth: 0 };
+    let metricsDirty = true;
     const hint = root.querySelector<HTMLElement>(".mobile-scroll-hint");
     const update = () => {
       const cards = visibleCards();
+      if (metricsDirty) {
+        metricsDirty = false;
+        metrics.step =
+          ((cards[0] as HTMLElement | undefined)?.offsetWidth || 1) +
+          (parseFloat(getComputedStyle(track).columnGap) || 0);
+        metrics.clientWidth = track.clientWidth;
+        metrics.scrollWidth = track.scrollWidth;
+      }
       root.toggleAttribute("data-single", cards.length === 1);
       // Один объект — листать нечего, подсказку «Скролльте влево» прячем.
       if (hint) hint.style.display = cards.length <= 1 ? "none" : "";
@@ -70,8 +83,10 @@ const {
               dot.setAttribute("aria-label", `Объект ${index + 1}`);
               dot.addEventListener("click", () => {
                 const current = visibleCards();
+                const card = current[index];
+                if (!card || !current[0]) return;
                 track.scrollTo({
-                  left: current[index].offsetLeft - current[0].offsetLeft,
+                  left: card.offsetLeft - current[0].offsetLeft,
                   behavior: matchMedia("(prefers-reduced-motion: reduce)")
                     .matches
                     ? "instant"
@@ -82,17 +97,21 @@ const {
             }),
           );
         }
-        const step =
-          ((cards[0] as HTMLElement)?.offsetWidth || 1) +
-          (parseFloat(getComputedStyle(track).columnGap) || 0);
-        const index = Math.round(track.scrollLeft / step);
-        [...pagination.children].forEach((dot, i) =>
-          dot.setAttribute("aria-current", String(i === index)),
-        );
+        // DOM пишем только при смене индекса: при инерционном скролле
+        // update() бежит каждый кадр, а setAttribute — нет.
+        const index = Math.round(track.scrollLeft / metrics.step);
+        if (index !== lastIndex) {
+          lastIndex = index;
+          [...pagination.children].forEach((dot, i) =>
+            dot.setAttribute("aria-current", String(i === index)),
+          );
+        }
       }
-      prev.disabled = track.scrollLeft < 2;
-      next.disabled =
-        track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+      const prevDisabled = track.scrollLeft < 2;
+      const nextDisabled =
+        track.scrollLeft + metrics.clientWidth >= metrics.scrollWidth - 2;
+      if (prevDisabled !== prev.disabled) prev.disabled = prevDisabled;
+      if (nextDisabled !== next.disabled) next.disabled = nextDisabled;
     };
     [prev, next].forEach((button) => {
       button.addEventListener("click", () => {
@@ -123,15 +142,35 @@ const {
       },
       { passive: true },
     );
-    new ResizeObserver(update).observe(track);
-    new MutationObserver(update).observe(track, {
+    new ResizeObserver(() => {
+      metricsDirty = true;
+      update();
+    }).observe(track);
+    new MutationObserver(() => {
+      metricsDirty = true;
+      update();
+    }).observe(track, {
       childList: true,
       attributes: true,
       attributeFilter: ["hidden"],
       subtree: true,
     });
+    let resizeFrame = 0;
+    addEventListener(
+      "resize",
+      () => {
+        metricsDirty = true;
+        if (resizeFrame) return;
+        resizeFrame = requestAnimationFrame(() => {
+          resizeFrame = 0;
+          update();
+        });
+      },
+      { passive: true },
+    );
     root.addEventListener("catalog-updated", () => {
       track.scrollLeft = 0;
+      metricsDirty = true;
       update();
     });
     update();

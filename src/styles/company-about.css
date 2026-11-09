@@ -42,18 +42,35 @@
   background: var(--color-paper);
   pointer-events: none;
   mask-image:
-    url("/assets/office-edge-mask-tl.svg"), url("/assets/office-edge-mask-t.svg"),
-    url("/assets/office-edge-mask-tr.svg"), url("/assets/office-edge-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/office-edge-mask-r.svg"),
-    url("/assets/office-edge-mask-bl.svg"), url("/assets/office-edge-mask-b.svg"),
+    url("/assets/office-edge-mask-tl.svg"),
+    url("/assets/office-edge-mask-t.svg"),
+    url("/assets/office-edge-mask-tr.svg"),
+    url("/assets/office-edge-mask-l.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/office-edge-mask-r.svg"),
+    url("/assets/office-edge-mask-bl.svg"),
+    url("/assets/office-edge-mask-b.svg"),
     url("/assets/office-edge-mask-br.svg");
   mask-size:
-    32px 32px, calc(100% - 60px) 32px, 32px 32px,
-    32px calc(100% - 60px), calc(100% - 60px) calc(100% - 60px),
-    32px calc(100% - 60px), 32px 32px, calc(100% - 60px) 32px, 32px 32px;
+    32px 32px,
+    calc(100% - 60px) 32px,
+    32px 32px,
+    32px calc(100% - 60px),
+    calc(100% - 60px) calc(100% - 60px),
+    32px calc(100% - 60px),
+    32px 32px,
+    calc(100% - 60px) 32px,
+    32px 32px;
   mask-position:
-    left top, center top, right top, left center, center center, right center,
-    left bottom, center bottom, right bottom;
+    left top,
+    center top,
+    right top,
+    left center,
+    center center,
+    right center,
+    left bottom,
+    center bottom,
+    right bottom;
   mask-repeat: no-repeat;
   mask-mode: alpha;
 }
@@ -70,18 +87,35 @@
   /* Удалены выступы и отдельные островки фото за правым краем рамки.
      Остальная геометрия исходных срезов сохранена. */
   mask-image:
-    url("/assets/office-photo-mask-tl.svg"), url("/assets/office-photo-mask-t.svg"),
-    url("/assets/office-photo-mask-tr-clean.svg"), url("/assets/office-photo-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/office-photo-mask-r.svg"),
-    url("/assets/office-photo-mask-bl.svg"), url("/assets/office-photo-mask-b.svg"),
+    url("/assets/office-photo-mask-tl.svg"),
+    url("/assets/office-photo-mask-t.svg"),
+    url("/assets/office-photo-mask-tr-clean.svg"),
+    url("/assets/office-photo-mask-l.svg"),
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/office-photo-mask-r.svg"),
+    url("/assets/office-photo-mask-bl.svg"),
+    url("/assets/office-photo-mask-b.svg"),
     url("/assets/office-photo-mask-br-clean.svg");
   mask-size:
-    24px 24px, calc(100% - 44px) 24px, 24px 24px,
-    24px calc(100% - 44px), calc(100% - 44px) calc(100% - 44px),
-    24px calc(100% - 44px), 24px 24px, calc(100% - 44px) 24px, 24px 24px;
+    24px 24px,
+    calc(100% - 44px) 24px,
+    24px 24px,
+    24px calc(100% - 44px),
+    calc(100% - 44px) calc(100% - 44px),
+    24px calc(100% - 44px),
+    24px 24px,
+    calc(100% - 44px) 24px,
+    24px 24px;
   mask-position:
-    left top, center top, right top, left center, center center, right center,
-    left bottom, center bottom, right bottom;
+    left top,
+    center top,
+    right top,
+    left center,
+    center center,
+    right center,
+    left bottom,
+    center bottom,
+    right bottom;
   mask-repeat: no-repeat;
   mask-mode: alpha;
 }
@@ -103,9 +137,8 @@
   /* Умеренный рваный край на белой плашке, без скругления. */
   --brush-images: var(--brush-square-images);
   --brush-sizes:
-    8px 11px, calc(100% - 14px) 11px, 8px 11px,
-    8px calc(100% - 20px), calc(100% - 14px) calc(100% - 20px),
-    8px calc(100% - 20px), 8px 11px,
+    8px 11px, calc(100% - 14px) 11px, 8px 11px, 8px calc(100% - 20px),
+    calc(100% - 14px) calc(100% - 20px), 8px calc(100% - 20px), 8px 11px,
     calc(100% - 14px) 11px, 8px 11px;
   position: absolute;
   top: 32px;
@@ -266,8 +299,23 @@
 @media (max-width: 1199px) {
   .company-office {
     --brush-images: var(--brush-square-images);
-    background: var(--color-paper);
     padding: 12px;
+    /* Маска карточки перенесена на фоновой слой ::before: раньше через
+       девятичастную маску перерисовывался весь состав (фото и плашка
+       бейджей), теперь — только бумажная подложка. Фото имеет собственную
+       маску и отступает от кромки на 12 px (глубина края ~11 px), бейдж —
+       на 24 px, поэтому вид не меняется. z-index:-1 держит подложку под
+       контентом внутри stacking context карточки (transform: rotate). */
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .company-office::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--color-paper);
     mask-image: var(--brush-images);
     mask-size: var(--brush-sizes);
     mask-position: var(--brush-positions);
@@ -275,10 +323,6 @@
     mask-origin: border-box;
     mask-clip: border-box;
     mask-mode: alpha;
-    overflow: hidden;
-  }
-  .company-office::before {
-    content: none;
   }
   .company-office-photo {
     display: inline;

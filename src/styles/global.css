@@ -44,7 +44,9 @@
   pointer-events: none;
 }
 @media (min-width: 768px) {
-  html { scrollbar-gutter: stable; }
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 html {
   /* Наследуется всеми элементами: без нативной серой вспышки при тапе.
@@ -212,13 +214,16 @@ hr {
 .fixed-site-header .site-header {
   margin-top: 0;
 }
-/* Легкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout) */
-.fixed-site-header {
-  filter: drop-shadow(0 0 0 rgb(from var(--color-ink) r g b / 0.0%));
-  transition: filter 0.3s ease;
+/* Легкая размытая тень шапки: появляется после 150 px прокрутки (класс ставит SiteLayout).
+   Тень — box-shadow на самой панели, а не filter на fixed/sticky-обёртке:
+   filter создает фильтруемый слой, который iOS Safari перерисовывает при
+   прокрутке. Панель прямоугольная, поэтому drop-shadow и box-shadow с теми же
+   параметрами дают тот же силуэт. */
+.fixed-site-header .site-header {
+  transition: box-shadow 0.3s ease;
 }
-.fixed-site-header.is-scrolled {
-  filter: drop-shadow(0 6px 10px rgb(from var(--color-ink) r g b / 10.0%));
+.fixed-site-header.is-scrolled .site-header {
+  box-shadow: 0 6px 10px rgb(from var(--color-ink) r g b / 10%);
 }
 .site-header {
   display: flex;
@@ -308,7 +313,15 @@ button.header-callback {
 }
 /* TASK-044: одна непрозрачная текстура; маски, скотч и тени остаются отдельно.
    Белые листы без текстуры и темная подпись сохраняют свои заливки. */
-.paper:not(.paper-white, .blockbuster-label, .paper-frame, .guild-card, .staff-certificate, .sell-week-story-card, .taped-note-plain)::before,
+.paper:not(
+    .paper-white,
+    .blockbuster-label,
+    .paper-frame,
+    .guild-card,
+    .staff-certificate,
+    .sell-week-story-card,
+    .taped-note-plain
+  )::before,
 .lead-form input[name="name"],
 .lead-form textarea,
 #lead-dialog .popup-media-neutral .popup-media-window,
@@ -347,14 +360,12 @@ button.header-callback {
 .paper.paper-frame-deep {
   /* Общая рваная кромка блоков гильдии и владельца компании. */
   --brush-sizes:
-    12px 12px, calc(100% - 22px) 12px, 12px 12px,
-    12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
-    12px calc(100% - 22px), 12px 12px,
+    12px 12px, calc(100% - 22px) 12px, 12px 12px, 12px calc(100% - 22px),
+    calc(100% - 22px) calc(100% - 22px), 12px calc(100% - 22px), 12px 12px,
     calc(100% - 22px) 12px, 12px 12px;
   --paper-frame-mask-sizes:
-    12px 12px, calc(100% - 22px) 12px, 12px 12px,
-    12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
-    12px calc(100% - 22px), 12px 12px,
+    12px 12px, calc(100% - 22px) 12px, 12px 12px, 12px calc(100% - 22px),
+    calc(100% - 22px) calc(100% - 22px), 12px calc(100% - 22px), 12px 12px,
     calc(100% - 22px) 20px, 12px 12px;
 }
 .paper.paper-frame::after,
@@ -577,7 +588,8 @@ s {
 }
 .coupon {
   padding: var(--space-6);
-  border-top: 2px dashed color-mix(in srgb, var(--color-disabled) 60%, var(--color-canvas));
+  border-top: 2px dashed
+    color-mix(in srgb, var(--color-disabled) 60%, var(--color-canvas));
   position: relative;
 }
 .coupon:before,
@@ -607,7 +619,11 @@ s {
 }
 .progress {
   height: 4px;
-  background: color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
+  background: color-mix(
+    in srgb,
+    var(--color-canvas) 70%,
+    var(--color-disabled)
+  );
 }
 .progress span {
   display: block;
@@ -686,7 +702,8 @@ s {
 .comparison th,
 .comparison td {
   padding: var(--space-6);
-  border-bottom: 1px solid color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
 }
 .comparison td img {
   margin: auto;
@@ -717,7 +734,11 @@ s {
   width: 100%;
   border: 0;
   border-radius: var(--radius-control);
-  background-color: color-mix(in srgb, var(--color-paper) 60%, var(--color-canvas));
+  background-color: color-mix(
+    in srgb,
+    var(--color-paper) 60%,
+    var(--color-canvas)
+  );
   padding: var(--space-4) var(--space-7);
   color: var(--color-field-text);
 }
@@ -1047,7 +1068,8 @@ dialog::backdrop {
 .socials > a:focus-visible,
 .socials > span:hover {
   transform: translateY(-2px);
-  filter: brightness(1.08) drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
+  filter: brightness(1.08)
+    drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
 }
 .rating {
   gap: var(--space-2);
@@ -1105,7 +1127,12 @@ dialog::backdrop {
   width: 1px;
   height: 18px;
   transform: translateY(-50%);
-  background: linear-gradient(to bottom, transparent, rgb(from var(--color-ink) r g b / 10.2%) 50%, transparent);
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(from var(--color-ink) r g b / 10.2%) 50%,
+    transparent
+  );
 }
 .rating b > img {
   display: block;
@@ -1174,7 +1201,8 @@ dialog::backdrop {
   width: 42.183px;
   height: 24.858px;
   background: var(--color-speech-blue);
-  -webkit-mask: url("/assets/speech-tail-blue-left.svg") center / 100% 100% no-repeat;
+  -webkit-mask: url("/assets/speech-tail-blue-left.svg") center / 100% 100%
+    no-repeat;
   mask: url("/assets/speech-tail-blue-left.svg") center / 100% 100% no-repeat;
 }
 .speech-bubble.right > .speech-bubble-blue-tail {
@@ -1369,7 +1397,11 @@ dialog::backdrop {
   display: flex;
   gap: 10px;
   align-items: center;
-  background: color-mix(in srgb, var(--color-dark) 80%, var(--color-field-text));
+  background: color-mix(
+    in srgb,
+    var(--color-dark) 80%,
+    var(--color-field-text)
+  );
   padding: var(--space-2) var(--space-4);
 }
 .footer-social {
@@ -1603,7 +1635,8 @@ dialog::backdrop {
 .site-header .menu-button:hover,
 .site-header .menu-button:focus-visible {
   transform: translateY(-2px);
-  filter: brightness(1.08) drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
+  filter: brightness(1.08)
+    drop-shadow(0 3px 3px rgb(from var(--color-ink) r g b / 9.4%));
 }
 
 /* ===== Адаптив (R1): шапка и модалка. Планшет ≤ 1199, телефон ≤ 767.
@@ -1832,10 +1865,28 @@ button.city:hover {
   left: 0;
   z-index: 50;
   min-width: 100%;
-  filter: drop-shadow(0 8px 12px rgb(from var(--color-ink) r g b / 14.0%));
+  filter: drop-shadow(0 8px 12px rgb(from var(--color-ink) r g b / 14%));
 }
 .city-menu-shadow[hidden] {
   display: none;
+}
+/* iOS Safari перерисовывает drop-shadow поверх маски .brush-stroke — тень
+   меню города и панели-бургера мерцает при скролле. Отдельный слой
+   растрирует тень один раз. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .city-menu-shadow,
+    .menu-panel-shadow {
+      transform: translateZ(0);
+    }
+  }
+}
+/* Якорная навигация: на iOS секции ниже фолда пропускают рендер
+   (content-visibility:auto), и getBoundingClientRect считает позицию
+   по оценочным высотам — якорь ложился мимо. На время замера
+   SiteHeader отключает cv на странице и ждёт два кадра. */
+html.anchor-cv-render * {
+  content-visibility: visible !important;
 }
 .city-menu {
   margin: 0;
@@ -1856,7 +1907,13 @@ button.city:hover {
   outline: none;
 }
 .city-picker .city-menu li + li {
-  background: linear-gradient(to right, transparent 0%, var(--color-divider) 5%, transparent 100%) top / 100% 1px no-repeat;
+  background: linear-gradient(
+      to right,
+      transparent 0%,
+      var(--color-divider) 5%,
+      transparent 100%
+    )
+    top / 100% 1px no-repeat;
 }
 .city-menu li::before {
   content: "";
@@ -1890,7 +1947,7 @@ button.city:hover {
   z-index: 60;
   width: 320px;
   max-width: calc(100vw - 24px);
-  filter: drop-shadow(0 10px 12px rgb(from var(--color-ink) r g b / 16.0%));
+  filter: drop-shadow(0 10px 12px rgb(from var(--color-ink) r g b / 16%));
 }
 .menu-panel {
   position: relative;
@@ -2129,7 +2186,9 @@ a[href^="https://trace-logos.ru/"] {
   .button.button.button.button.white:hover:not(:focus-visible):not(:disabled) {
     color: var(--color-ink);
   }
-  .button.button.button.button:hover:not(:focus-visible):not(:disabled)::before {
+  .button.button.button.button:hover:not(:focus-visible):not(
+      :disabled
+    )::before {
     background: var(--button-base-color);
   }
 }
@@ -2141,9 +2200,15 @@ a[href^="https://trace-logos.ru/"] {
   --expert-avatar-mask: none;
   mask-image: var(--expert-avatar-mask);
   mask-size:
-    6px 6px, calc(100% - 10px) 6px, 6px 6px, 6px calc(100% - 10px),
-    calc(100% - 10px) calc(100% - 10px), 6px calc(100% - 10px), 6px 6px,
-    calc(100% - 10px) 6px, 6px 6px;
+    6px 6px,
+    calc(100% - 10px) 6px,
+    6px 6px,
+    6px calc(100% - 10px),
+    calc(100% - 10px) calc(100% - 10px),
+    6px calc(100% - 10px),
+    6px 6px,
+    calc(100% - 10px) 6px,
+    6px 6px;
   mask-position: var(--brush-positions);
   mask-repeat: no-repeat;
 }
@@ -2161,7 +2226,8 @@ a[href^="https://trace-logos.ru/"] {
 /* TASK-042b. Variant wins over surface: white → site red + white text.
    Icon colour is independent of the changing label colour. External brand SVGs
    retain their own fills; inline currentColor/mask icons inherit this fixed token. */
-.button.button.button.button.white :is(img, svg, [class*="icon"], [data-button-icon]) {
+.button.button.button.button.white
+  :is(img, svg, [class*="icon"], [data-button-icon]) {
   color: var(--color-button-white-icon);
 }
 .button.button.button.button.white:focus-visible:not(:disabled) {
@@ -2183,11 +2249,20 @@ a[href^="https://trace-logos.ru/"] {
 
 /* White contour around handwritten letters, without a rectangular paper backing.
    Stroke is centered on the glyph edge: 5px creates ~2.5px of outer contour. */
-:is(.handwriting, .hero-annotation, .buyer-count, .buyer-count-mobile,
-    .buyer-count-space,
-    .fast-sale-time, .cases-handwriting, .inner-hero-accent,
-    .buy-mortgage-hand, .deal-insurance-hand,
-    .sell-valuation-hand span, .director-copy h2 span) {
+:is(
+  .handwriting,
+  .hero-annotation,
+  .buyer-count,
+  .buyer-count-mobile,
+  .buyer-count-space,
+  .fast-sale-time,
+  .cases-handwriting,
+  .inner-hero-accent,
+  .buy-mortgage-hand,
+  .deal-insurance-hand,
+  .sell-valuation-hand span,
+  .director-copy h2 span
+) {
   background-color: transparent;
   -webkit-text-stroke: 5px var(--color-paper);
   paint-order: stroke fill;
@@ -2207,7 +2282,9 @@ a[href^="https://trace-logos.ru/"] {
 }
 
 /* Validation errors share a fixed semantic color even on dark surfaces. */
-.form-error { color: var(--color-accent); }
+.form-error {
+  color: var(--color-accent);
+}
 
 .cta-caption-mobile-inline > :is(span, strong) {
   display: block;

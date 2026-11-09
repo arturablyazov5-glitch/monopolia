@@ -33,7 +33,7 @@
 }
 .deal-insurance-description {
   margin-top: 16px;
-  color: color-mix(in srgb, var(--color-muted) 50%, var(--color-caption));
+  color: var(--color-muted);
 }
 .deal-insurance-note {
   margin: 40px auto 80px;
@@ -270,7 +270,7 @@
   /* Белая реплика клиента: уже паддинги и кегль смайликов, сдвиг влево,
      чтобы не накрывать человека на фото. */
   .deal-insurance-client .speech-bubble {
-    margin-left: -12px;
+    margin-left: -8px;
   }
   .deal-insurance-client .speech-bubble p {
     padding: 12px 12px;
@@ -344,5 +344,18 @@
     margin-inline-start: 0.2em;
     position: relative;
     top: -1px;
+  }
+}
+
+/* iOS Safari: сцена с фото, SVG-тенью и масштабированным stage
+   пропускает отрисовку вне экрана; auto в contain-intrinsic-size
+   запоминает реальную высоту после первой отрисовки. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .deal-insurance {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1100px;
+    }
   }
 }

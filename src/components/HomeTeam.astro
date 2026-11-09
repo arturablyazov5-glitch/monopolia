@@ -101,8 +101,18 @@ import "../styles/home-team.css";
         !!heading.querySelector(".team-heading-line"),
       );
     };
-    new ResizeObserver(drawLines).observe(heading);
-    new MutationObserver(drawLines).observe(strike, {
+    // Ресайз и мутации текста могут сработать в одном кадре:
+    // чтение Range.getClientRects объединяем в один rAF.
+    let frame = 0;
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        drawLines();
+      });
+    };
+    new ResizeObserver(schedule).observe(heading);
+    new MutationObserver(schedule).observe(strike, {
       childList: true,
       characterData: true,
       subtree: true,

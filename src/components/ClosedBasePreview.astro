@@ -3,156 +3,198 @@ import { siteText } from "../data/site-texts.mjs";
 import { phone } from "../data/contacts";
 import { selectPreview } from "../lib/catalog";
 import "../styles/buy-closed-base.css";
-interface Props { expanded?: boolean; }
+interface Props {
+  expanded?: boolean;
+}
 const { expanded = false } = Astro.props;
 const listings = selectPreview().slice(0, expanded ? 12 : 9);
 ---
-    <div
-      class="buy-safari"
-      role="img"
-      aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
-      data-node-id="1380:6483"
-    >
-      <div class="buy-safari-toolbar" aria-hidden="true">
-        <div class="buy-safari-left">
-          <img class="buy-safari-lights" src="/assets/catalog-browser-window-lights.svg" alt="" width="31" height="13" />
-          <img class="buy-safari-controls" src="/assets/catalog-browser-navigation.svg" alt="" width="54" height="15" />
-        </div>
-        <span class="buy-safari-search">
-          <img src="/assets/catalog-browser-page-options.svg" alt="" width="7" height="7" />
-          <span class="buy-safari-url">monopoly‑base.ru</span>
-          <img src="/assets/catalog-browser-reload.svg" alt="" width="5" height="6" />
-        </span>
-        <div class="buy-safari-right">
-          <img class="buy-safari-actions" src="/assets/catalog-browser-toolbar-actions.svg" alt="" width="55" height="15" />
-        </div>
-      </div>
 
-      <div class="buy-safari-page">
-        <div class="buy-safari-header">
-          <span class="buy-safari-brand">
-            <img
-              src="/assets/catalog-browser-decor.svg"
-              alt=""
-              width="14.1924"
-              height="14.1924"
-              loading="lazy"
-              decoding="async"
-            />
-            <span class="buy-safari-brand-text">
+<div
+  class="buy-safari"
+  role="img"
+  aria-label="Превью закрытой базы объектов monopoly‑base.ru в окне браузера"
+  data-node-id="1380:6483"
+>
+  <div class="buy-safari-toolbar" aria-hidden="true">
+    <div class="buy-safari-left">
+      <img
+        class="buy-safari-lights"
+        src="/assets/catalog-browser-window-lights.svg"
+        alt=""
+        width="31"
+        height="13"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        class="buy-safari-controls"
+        src="/assets/catalog-browser-navigation.svg"
+        alt=""
+        width="54"
+        height="15"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <span class="buy-safari-search">
+      <img
+        src="/assets/catalog-browser-page-options.svg"
+        alt=""
+        width="7"
+        height="7"
+        loading="lazy"
+        decoding="async"
+      />
+      <span class="buy-safari-url">monopoly‑base.ru</span>
+      <img
+        src="/assets/catalog-browser-reload.svg"
+        alt=""
+        width="5"
+        height="6"
+        loading="lazy"
+        decoding="async"
+      />
+    </span>
+    <div class="buy-safari-right">
+      <img
+        class="buy-safari-actions"
+        src="/assets/catalog-browser-toolbar-actions.svg"
+        alt=""
+        width="55"
+        height="15"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  </div>
+
+  <div class="buy-safari-page">
+    <div class="buy-safari-header">
+      <span class="buy-safari-brand">
+        <img
+          src="/assets/catalog-browser-decor.svg"
+          alt=""
+          width="14.1924"
+          height="14.1924"
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="buy-safari-brand-text">
+          <img
+            src="/assets/logo-monopoly-wordmark-browser.svg"
+            alt=""
+            width="58.1002"
+            height="5.75175"
+            loading="lazy"
+            decoding="async"
+          />
+          <span>{siteText("site-header.text.4")}</span>
+        </span>
+      </span>
+      <span class="buy-safari-nav">
+        <span>{siteText("site-header.label.1")}</span>
+        <span>{siteText("site-header.label.2")}</span>
+        <span class="buy-safari-nav-base">
+          {siteText("buy-closed-base.text.5")}
+          <img
+            src="/assets/catalog-browser-nav-dot.svg"
+            alt=""
+            width="2.21756"
+            height="2.21756"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </span>
+      <span class="buy-safari-contacts">
+        <span class="buy-safari-contact-main">
+          <span class="buy-safari-socials">
+            <span class="buy-safari-icon">
               <img
-                src="/assets/logo-monopoly-wordmark-browser.svg"
+                class="telegram"
+                src="/assets/catalog-browser-telegram-icon.svg"
                 alt=""
-                width="58.1002"
-                height="5.75175"
+                width="15.962"
+                height="15.7358"
                 loading="lazy"
                 decoding="async"
               />
-              <span>{siteText("site-header.text.4")}</span>
-            </span>
-          </span>
-          <span class="buy-safari-nav">
-            <span>{siteText("site-header.label.1")}</span>
-            <span>{siteText("site-header.label.2")}</span>
-            <span class="buy-safari-nav-base">
-              {siteText("buy-closed-base.text.5")}
-              <img
-                src="/assets/catalog-browser-nav-dot.svg"
-                alt=""
-                width="2.21756"
-                height="2.21756"
-                loading="lazy"
-                decoding="async"
-              />
-            </span>
-          </span>
-          <span class="buy-safari-contacts">
-            <span class="buy-safari-contact-main">
-              <span class="buy-safari-socials">
-                <span class="buy-safari-icon">
-                  <img
-                    class="telegram"
-                    src="/assets/catalog-browser-telegram-icon.svg"
-                    alt=""
-                    width="15.962"
-                    height="15.7358"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </span>
-                <span class="buy-safari-icon">
-                  <img
-                    class="max"
-                    src="/assets/catalog-browser-max-icon.svg"
-                    alt=""
-                    width="14.9411"
-                    height="15.4192"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </span>
-              </span>
-              <span class="buy-safari-phone">
-                <b>{phone.display}</b>
-                <span class="buy-safari-status">
-                  <i></i>
-                  {siteText("buy-closed-base.text.6")}
-                </span>
-              </span>
             </span>
             <span class="buy-safari-icon">
               <img
-                class="menu"
-                src="/assets/catalog-browser-menu-icon.svg"
+                class="max"
+                src="/assets/catalog-browser-max-icon.svg"
                 alt=""
-                width="15.6898"
-                height="16.6459"
+                width="14.9411"
+                height="15.4192"
                 loading="lazy"
                 decoding="async"
               />
             </span>
           </span>
-        </div>
-
-        {listings.map((listing) => (
-          <div class="buy-safari-listing">
-            <div class="buy-safari-photo">
-              <img
-                src={listing.image}
-                alt=""
-                width={listing.photo.width}
-                height={listing.photo.height}
-                loading="lazy"
-                decoding="async"
-              />
-              <span class="buy-safari-prices">
-                {listing.illustrativeOldPrice && (
-                  <span class="buy-safari-old-price" title="Условная старая цена для иллюстрации">
-                    <span>
-                      {listing.illustrativeOldPrice}
-                      <img
-                        src="/assets/catalog-old-price-strikethrough.svg"
-                        alt=""
-                        width="172"
-                        height="17"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </span>
-                  </span>
-                )}
-                <span class="buy-safari-price">{listing.price}</span>
-              </span>
-            </div>
-            <span class="buy-safari-caption">
-              <b>{listing.title}</b>
-              <span>{listing.caption}</span>
+          <span class="buy-safari-phone">
+            <b>{phone.display}</b>
+            <span class="buy-safari-status">
+              <i></i>
+              {siteText("buy-closed-base.text.6")}
             </span>
-          </div>
-        ))}
+          </span>
+        </span>
+        <span class="buy-safari-icon">
+          <img
+            class="menu"
+            src="/assets/catalog-browser-menu-icon.svg"
+            alt=""
+            width="15.6898"
+            height="16.6459"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+      </span>
+    </div>
 
-        <span class="buy-safari-more">
-          {siteText("buy-closed-base.text.7")}
+    {listings.map((listing) => (
+      <div class="buy-safari-listing">
+        <div class="buy-safari-photo">
+          <img
+            src={listing.image}
+            alt=""
+            width={listing.photo.width}
+            height={listing.photo.height}
+            loading="lazy"
+            decoding="async"
+          />
+          <span class="buy-safari-prices">
+            {listing.illustrativeOldPrice && (
+              <span
+                class="buy-safari-old-price"
+                title="Условная старая цена для иллюстрации"
+              >
+                <span>
+                  {listing.illustrativeOldPrice}
+                  <img
+                    src="/assets/catalog-old-price-strikethrough.svg"
+                    alt=""
+                    width="172"
+                    height="17"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+              </span>
+            )}
+            <span class="buy-safari-price">{listing.price}</span>
+          </span>
+        </div>
+        <span class="buy-safari-caption">
+          <b>{listing.title}</b>
+          <span>{listing.caption}</span>
         </span>
       </div>
-    </div>
+    ))}
+
+    <span class="buy-safari-more">{siteText("buy-closed-base.text.7")}</span>
+  </div>
+</div>

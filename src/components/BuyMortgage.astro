@@ -25,8 +25,7 @@ const steps = [
   [siteText("buy-mortgage.steps.8"), siteText("buy-mortgage.steps.9")],
   [siteText("buy-mortgage.steps.10"), siteText("buy-mortgage.steps.11")],
 ];
-const endpoint =
-  import.meta.env.PUBLIC_CATALOG_ENDPOINT || "/api/catalog";
+const endpoint = import.meta.env.PUBLIC_CATALOG_ENDPOINT || "/api/catalog";
 const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
 ---
 
@@ -89,8 +88,8 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
               <span class="buy-mortgage-divider" aria-hidden="true" />
             )}
             <NumberedBenefit number={index + 1}>
-              {first}<br />{" "}
-              {second}
+              {first}
+              <br /> {second}
             </NumberedBenefit>
           </>
         ))}
@@ -109,11 +108,21 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
           <!-- Только на мобилке: отзыв внутри калькулятора (отдельная плашка скрыта) -->
           <div class="buy-mortgage-calc-review">
             <span class="buy-mortgage-photo expert-avatar-surface expert-avatar-torn">
-              <img class="person-photo" src="/assets/staff-anna-stetsenko.webp" alt="" width="1000" height="1000" loading="lazy" />
+              <img
+                class="person-photo"
+                src="/assets/staff-anna-stetsenko.webp"
+                alt=""
+                width="1000"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              />
             </span>
             <div class="buy-mortgage-review-text">
               <p>{siteText("buy-mortgage.text.23")}</p>
-              <p class="buy-mortgage-author">{siteText("buy-mortgage.text.24")}</p>
+              <p class="buy-mortgage-author">
+                {siteText("buy-mortgage.text.24")}
+              </p>
             </div>
           </div>
           <RangeField
@@ -143,7 +152,15 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
       </Paper>
       <Paper class="buy-mortgage-review" node="1380:6438">
         <span class="buy-mortgage-photo expert-avatar-surface expert-avatar-torn">
-          <img class="person-photo" src="/assets/staff-anna-stetsenko.webp" alt="" width="1000" height="1000" loading="lazy" />
+          <img
+            class="person-photo"
+            src="/assets/staff-anna-stetsenko.webp"
+            alt=""
+            width="1000"
+            height="1000"
+            loading="lazy"
+            decoding="async"
+          />
         </span>
         <div class="buy-mortgage-review-text">
           <p>{siteText("buy-mortgage.text.23")}</p>
@@ -168,18 +185,13 @@ const mediaBase = import.meta.env.PUBLIC_MEDIA_BASE || "";
       data-media-base={mediaBase}
       style="display: contents"
     >
-      <div
-        data-catalog-live
-        hidden
-        style="display: contents"
-      >
+      <div data-catalog-live hidden style="display: contents">
         <Carousel
           label={"Объекты с ценой ниже рынка"}
           class="buy-mortgage-carousel"
           swipeHint
           catalogCount={0}
-        >
-        </Carousel>
+        />
       </div>
       <div data-catalog-empty>
         <div class="buy-deals-empty" role="status" data-catalog-status>

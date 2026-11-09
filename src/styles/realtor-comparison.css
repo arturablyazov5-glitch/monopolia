@@ -87,6 +87,11 @@
 }
 @media (max-width: 767px) {
   .realtor-comparison {
+    /* Секция ~2 экрана с маской кромок на всю ширину и фоном 1440 px:
+       вне вьюпорта пропускаем её растрирование (как .buyer-audience),
+       auto запоминает реальный размер после первого показа. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 2200px;
     /* Кромки входят в секцию: одинаковый свободный отступ с обеих сторон бумаги. */
     padding: calc(var(--section-space) + 32px) 20px;
   }
@@ -126,8 +131,12 @@
     /* Прозрачные разрывы бумаги показывают настоящий фон предыдущей секции. */
     margin-top: -32px;
     padding-top: calc(var(--section-space) + 32px);
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size: 100% 32px, 100% calc(100% - 31px);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% 32px,
+      100% calc(100% - 31px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
   }
@@ -140,7 +149,8 @@
     left: 0;
     width: 100%;
     height: 32px;
-    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100% no-repeat;
+    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100%
+      no-repeat;
     pointer-events: none;
     z-index: 1;
   }

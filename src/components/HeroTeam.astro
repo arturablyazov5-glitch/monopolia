@@ -2,49 +2,58 @@
 // Layer order and coordinates are from Figma 1380:4956 (1270 × 912.641).
 const layers = [
   {
-    name: "01-left-outer", mobile: false,
+    name: "01-left-outer",
+    mobile: false,
     portrait: { x: 3.5, y: 130.51, width: 239, height: 395 },
     original: { width: 1008, height: 1661 },
     shadow: { x: -89.42, y: 73.33, width: 362, height: 520 },
   },
   {
-    name: "08-right-outer", mobile: false, flip: true,
+    name: "08-right-outer",
+    mobile: false,
+    flip: true,
     portrait: { x: 983.84, y: 128.51, width: 229, height: 417 },
     original: { width: 737, height: 1336 },
     shadow: { x: 923.19, y: 62.52, width: 339, height: 492 },
   },
   {
-    name: "02-left", mobile: false,
+    name: "02-left",
+    mobile: false,
     portrait: { x: 96.34, y: 111.72, width: 271.13, height: 435.42 },
     original: { width: 1855, height: 2979 },
     shadow: { x: 10.71, y: 51.76, width: 374, height: 505 },
   },
   {
-    name: "07-right", mobile: true,
+    name: "07-right",
+    mobile: true,
     portrait: { x: 798, y: 105.51, width: 268, height: 436 },
     original: { width: 779, height: 1268 },
     shadow: { x: 752.84, y: 41.8, width: 359, height: 530 },
   },
   {
-    name: "03-left-inner", mobile: true,
+    name: "03-left-inner",
+    mobile: true,
     portrait: { x: 222.8, y: 88.81, width: 271.5, height: 413.49 },
     original: { width: 2000, height: 3046 },
     shadow: { x: 124.06, y: 23.41, width: 387, height: 542 },
   },
   {
-    name: "06-right-inner", mobile: true,
+    name: "06-right-inner",
+    mobile: true,
     portrait: { x: 654, y: 88.51, width: 260, height: 453 },
     original: { width: 771, height: 1345 },
     shadow: { x: 608.11, y: 24.77, width: 354, height: 567 },
   },
   {
-    name: "04-left-front", mobile: true,
+    name: "04-left-front",
+    mobile: true,
     portrait: { x: 335, y: 81.51, width: 286, height: 447 },
     original: { width: 958, height: 1496 },
     shadow: { x: 245.8, y: 17.79, width: 394, height: 579 },
   },
   {
-    name: "05-center", mobile: true,
+    name: "05-center",
+    mobile: true,
     portrait: { x: 492.62, y: 60.14, width: 275.91, height: 803.42 },
     original: { width: 624, height: 1817 },
     shadow: { x: 418.68, y: -9.34, width: 376, height: 593 },
@@ -52,7 +61,12 @@ const layers = [
 ];
 
 const assetDir = "/assets/home-hero-team";
-function layerStyle(box: { x: number; y: number; width: number; height: number }) {
+function layerStyle(box: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}) {
   return `left:${(box.x / 1270) * 100}%;top:${(box.y / 912.641) * 100}%;width:${(box.width / 1270) * 100}%;aspect-ratio:${box.width} / ${box.height}`;
 }
 ---
@@ -67,22 +81,32 @@ function layerStyle(box: { x: number; y: number; width: number; height: number }
     <>
       <img
         data-person={layer.name}
-        class:list={["team-stroke", "team-portrait", { "team-desktop-only": !layer.mobile }]}
+        class:list={[
+          "team-stroke",
+          "team-portrait",
+          { "team-desktop-only": !layer.mobile },
+        ]}
         src={`${assetDir}/${layer.name}-shadow.svg`}
         alt=""
         style={layerStyle(layer.shadow)}
         width={layer.shadow.width}
         height={layer.shadow.height}
+        loading="lazy"
         decoding="async"
       />
       <img
         data-person={layer.name}
-        class:list={["team-portrait", "person-photo", { mirrored: layer.flip, "team-desktop-only": !layer.mobile }]}
+        class:list={[
+          "team-portrait",
+          "person-photo",
+          { mirrored: layer.flip, "team-desktop-only": !layer.mobile },
+        ]}
         src={`${assetDir}/${layer.name}.webp`}
         alt=""
         style={layerStyle(layer.portrait)}
         width={layer.original.width}
         height={layer.original.height}
+        loading="lazy"
         decoding="async"
       />
     </>

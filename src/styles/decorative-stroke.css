@@ -5,7 +5,8 @@
   width: 584.154px;
   height: 14.681px;
   background: var(--stroke-color, var(--color-diamond));
-  mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 100% 100%;
+  mask: url("/assets/background-paper-edge-light.webp") no-repeat center / 100%
+    100%;
 }
 .decorative-stroke--light {
   --stroke-color: var(--color-canvas);

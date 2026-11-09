@@ -50,10 +50,12 @@ const description = seo?.description.replaceAll("\u00a0", " ");
 const preventIndexing = noindex || pathname === "/ui-kit/";
 const canonical =
   Astro.site && !preventIndexing ? siteUrl(pathname, Astro.site) : undefined;
-const socialTitle = pathname === "/" ? "Монополия — недвижимость в Белогорске" : pageTitle;
+const socialTitle =
+  pathname === "/" ? "Монополия — недвижимость в Белогорске" : pageTitle;
 const imagePath = "/seo/monopolia-social-v2.jpg";
 const socialImage = Astro.site ? siteUrl(imagePath, Astro.site) : imagePath;
-const imageAlt = "Первый экран агентства недвижимости Монополия: команда, Белогорск, работаем с 2006 года.";
+const imageAlt =
+  "Первый экран агентства недвижимости Монополия: команда, Белогорск, работаем с 2006 года.";
 // Контакты и часы сверены с SiteFooter; неподтвержденных рейтингов,
 // геокоординат, внешних профилей и будущего офиса здесь нет.
 const business = {
@@ -87,7 +89,10 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
     <meta charset="UTF-8" />
     <style is:inline>
       /* Paint the document canvas before external styles and images arrive. */
-      html { background: var(--color-paper, Canvas); color-scheme: light; }
+      html {
+        background: var(--color-paper, Canvas);
+        color-scheme: light;
+      }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/* LCP mobile: фотографический фон главной. Бумага загружается из CSS. */}
@@ -111,6 +116,23 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
         media="(max-width: 767px)"
       />
     )}
+    {/* Шрифты первого экрана: Calibri — основной текст, Forma — заголовки
+        (Ruble покрывает только «₽» через unicode-range и догружается по мере
+        использования; жирный Calibri и остальные веса — ниже первого экрана). */}
+    <link
+      rel="preload"
+      href="/fonts/calibri-site.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/forma-site.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
     <link rel="alternate icon" href="/favicon.ico" sizes="32x32" />
@@ -143,32 +165,12 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
         />
       </>
     )}
-    <link
-      rel="preload"
-      href="/fonts/calibri-site.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/calibri-bold-site.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
     {preventIndexing && <meta name="robots" content="noindex" />}
     <title>{pageTitle}</title>
-    <link
-      rel="preload"
-      href="/fonts/forma-site.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
   </head>
   <body
     id="top"
+    data-page={pathname === "/" ? "index" : pathname.replaceAll("/", "")}
     data-content-endpoint={
       import.meta.env.PUBLIC_CONTENT_ENDPOINT ||
       (import.meta.env.PUBLIC_CATALOG_ENDPOINT
@@ -203,8 +205,15 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
       const fixedHeader =
         document.querySelector<HTMLElement>(".fixed-site-header");
       if (fixedHeader) {
-        const update = () =>
-          fixedHeader.classList.toggle("is-scrolled", window.scrollY > 150);
+        // Не чаще раза за кадр: scroll стреляет чаще, чем браузер рисует кадр.
+        let frame = 0;
+        const update = () => {
+          if (frame) return;
+          frame = requestAnimationFrame(() => {
+            frame = 0;
+            fixedHeader.classList.toggle("is-scrolled", window.scrollY > 150);
+          });
+        };
         update();
         addEventListener("scroll", update, { passive: true });
       }

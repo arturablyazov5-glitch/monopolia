@@ -19,14 +19,16 @@ import "../styles/fast-sale.css";
     alt=""
     width="1440"
     height="1325"
-    loading="eager"
+    loading="lazy"
     decoding="async"
   />
   <div class="fast-sale-scene">
     <div class="fast-sale-copy">
       <h2 id="fast-sale-title">
         {siteText("fast-sale.text.1")} <br />
-        {siteText("fast-sale.text.2")} <span class="fast-sale-time">{siteText("fast-sale.text.3")}</span> <br />
+        {siteText("fast-sale.text.2")}{" "}
+        <span class="fast-sale-time">{siteText("fast-sale.text.3")}</span>{" "}
+        <br />
         <span class="fast-sale-muted">
           {siteText("fast-sale.text.4")} <br />
           {siteText("fast-sale.text.5")}
@@ -43,7 +45,8 @@ import "../styles/fast-sale.css";
         />
         <p>
           {siteText("fast-sale.text.6")} <br />
-          {siteText("fast-sale.text.7")} <strong>{siteText("fast-sale.text.8")}</strong>
+          {siteText("fast-sale.text.7")}{" "}
+          <strong>{siteText("fast-sale.text.8")}</strong>
         </p>
       </Paper>
       <Button

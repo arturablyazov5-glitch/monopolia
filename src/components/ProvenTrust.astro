@@ -3,6 +3,7 @@ import { siteText } from "../data/site-texts.mjs";
 import { imageSize } from "../lib/image-size";
 import ReviewRating from "./ReviewRating.astro";
 import ReviewCard from "./ReviewCard.astro";
+import ReviewPlaySprite from "./ReviewPlaySprite.astro";
 import Carousel from "./Carousel.astro";
 import "../styles/proven-trust.css";
 import "../styles/reviews-scroll-hint.css";
@@ -122,7 +123,9 @@ const videoReviews = [
     {/* Адаптив: на узких экранах рейтинги выводятся строкой под заголовком,
         а в композиции команды скрываются; на десктопе этот блок display: none. */}
     <div class="trust-ratings-mobile">
-      {ratings.map((rating) => <ReviewRating {...rating} variant="row" />)}
+      {ratings.map((rating) => (
+        <ReviewRating {...rating} variant="row" />
+      ))}
     </div>
     <div class="trust-team" role="group" aria-label="Команда Монополии">
       {shadows.map((s) => (
@@ -186,7 +189,9 @@ const videoReviews = [
         loading="lazy"
         decoding="async"
       />
-      {ratings.map((rating) => <ReviewRating {...rating} />)}
+      {ratings.map((rating) => (
+        <ReviewRating {...rating} />
+      ))}
     </div>
     <div class="trust-reviews">
       <Carousel swipeHint label="Видеоотзывы клиентов">
@@ -196,4 +201,5 @@ const videoReviews = [
       </Carousel>
     </div>
   </div>
+  <ReviewPlaySprite />
 </section>

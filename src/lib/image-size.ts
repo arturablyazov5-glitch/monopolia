@@ -58,9 +58,15 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 384.063,
   },
   "/assets/home-hero-team/04-left-front.webp": { width: 958, height: 1496 },
-  "/assets/home-hero-team/04-left-front-shadow.svg": { width: 394, height: 579 },
+  "/assets/home-hero-team/04-left-front-shadow.svg": {
+    width: 394,
+    height: 579,
+  },
   "/assets/home-hero-team/06-right-inner.webp": { width: 771, height: 1345 },
-  "/assets/home-hero-team/06-right-inner-shadow.svg": { width: 354, height: 566 },
+  "/assets/home-hero-team/06-right-inner-shadow.svg": {
+    width: 354,
+    height: 566,
+  },
   "/assets/hero-team-center-portrait.webp": {
     width: 549,
     height: 1600,
@@ -226,8 +232,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 35.4799,
   },
   "/assets/prepared-viewing-apartment-before.webp": {
-    width: 2880,
-    height: 1514,
+    width: 2160,
+    height: 1136,
   },
   "/assets/property-viewing-route-map.webp": {
     width: 856,
@@ -575,8 +581,8 @@ const dimensions: Record<string, { width: number; height: number }> = {
     height: 335,
   },
   "/assets/prepared-viewing-apartment-after.webp": {
-    width: 2880,
-    height: 1310,
+    width: 2160,
+    height: 983,
   },
   "/assets/sell-steps-advertising-connector.svg": {
     width: 2,

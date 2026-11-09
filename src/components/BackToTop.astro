@@ -18,11 +18,23 @@ import "../styles/back-to-top.css";
   if (backToTop) {
     const main = document.querySelector("main");
     const secondBlock = main?.children.item(1);
-    const update = () => {
-      const threshold = secondBlock
+    let frame = 0;
+    // Документная позиция второго блока константна во время скролла:
+    // считаем её при init/resize, а не getBoundingClientRect каждый кадр.
+    let threshold = innerHeight / 2;
+    const measure = () => {
+      threshold = secondBlock
         ? secondBlock.getBoundingClientRect().top + scrollY
         : innerHeight / 2;
-      backToTop.hidden = scrollY < threshold || scrollY < 1;
+    };
+    const update = () => {
+      // Не чаще раза за кадр: scroll стреляет чаще, чем браузер рисует кадр.
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const visible = scrollY >= threshold && scrollY >= 1;
+        if (backToTop.hidden === visible) backToTop.hidden = !visible;
+      });
     };
     backToTop.addEventListener("click", (event) => {
       event.preventDefault();

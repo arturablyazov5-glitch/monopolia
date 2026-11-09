@@ -54,11 +54,19 @@ const modes: PopupMode[] = [
     leadSource,
     leadSection,
   } from "../lib/lead-source";
-  initializeLeadSources();
+  // Предвычисление источников для всех [data-lead] — одноразовый обход DOM;
+  // откладываем его до первого клика по такой кнопке, чтобы не грузить старт.
+  let leadSourcesReady = false;
+  const ensureLeadSources = () => {
+    if (leadSourcesReady) return;
+    leadSourcesReady = true;
+    initializeLeadSources();
+  };
   const dialog = document.querySelector<HTMLDialogElement>("#lead-dialog");
   if (dialog) {
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
-    let lockedPage: { y: number; bodyStyle: string; rootStyle: string } | null = null;
+    let lockedPage: { y: number; bodyStyle: string; rootStyle: string } | null =
+      null;
     const lockPage = () => {
       if (lockedPage) return;
       lockedPage = {
@@ -156,6 +164,7 @@ const modes: PopupMode[] = [
           ? event.target.closest<HTMLButtonElement>("[data-lead]")
           : null;
       if (!button) return;
+      ensureLeadSources();
       if (dialog.querySelector('form[aria-busy="true"]')) return;
       const mode = button.hasAttribute("data-callback")
         ? "callback"
@@ -255,7 +264,9 @@ const modes: PopupMode[] = [
       else dialog.removeAttribute("aria-describedby");
       const input = form.querySelector<HTMLInputElement>("[name=subject]");
       if (input)
-        input.value = calc ? "Подбор ипотеки" : detail || button.dataset.subject || title;
+        input.value = calc
+          ? "Подбор ипотеки"
+          : detail || button.dataset.subject || title;
       // Панель меню закрывается при открытии формы: ее скрытая кнопка
       // не может принять фокус после Escape. Возвращаем его на бургер.
       opener = button.closest(".menu-panel")

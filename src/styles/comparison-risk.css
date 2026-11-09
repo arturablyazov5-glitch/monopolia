@@ -22,10 +22,26 @@
     --risk-edge-bottom: 0px;
     mask-image: var(--brush-square-images);
     mask-size:
-      12px var(--risk-edge-top), calc(100% - 22px) var(--risk-edge-top), 12px var(--risk-edge-top),
-      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)), calc(100% - 22px) calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)),
-      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)), 12px var(--risk-edge-bottom), calc(100% - 22px) var(--risk-edge-bottom), 12px var(--risk-edge-bottom);
-    mask-position: left top, center top, right top, left 0 top var(--risk-edge-top), left 50% top var(--risk-edge-top), right 0 top var(--risk-edge-top), left bottom, center bottom, right bottom;
+      12px var(--risk-edge-top),
+      calc(100% - 22px) var(--risk-edge-top),
+      12px var(--risk-edge-top),
+      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)),
+      calc(100% - 22px)
+        calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)),
+      12px calc(100% - var(--risk-edge-top) - var(--risk-edge-bottom)),
+      12px var(--risk-edge-bottom),
+      calc(100% - 22px) var(--risk-edge-bottom),
+      12px var(--risk-edge-bottom);
+    mask-position:
+      left top,
+      center top,
+      right top,
+      left 0 top var(--risk-edge-top),
+      left 50% top var(--risk-edge-top),
+      right 0 top var(--risk-edge-top),
+      left bottom,
+      center bottom,
+      right bottom;
     mask-repeat: no-repeat;
   }
   .comparison-risk thead .comparison-risk-ours {
@@ -67,7 +83,7 @@
   text-align: center;
   font: var(--weight-heading) var(--text-card) / var(--leading-body)
     var(--font-heading);
-  color: var(--color-dark);
+  color: var(--color-ink);
 }
 .comparison-risk-label {
   display: block;
@@ -150,7 +166,11 @@
     line-height: 20px;
   }
   .comparison-risk thead .comparison-risk-ours {
-    background: color-mix(in srgb, var(--color-paper) 65%, var(--color-paper-warm));
+    background: color-mix(
+      in srgb,
+      var(--color-paper) 65%,
+      var(--color-paper-warm)
+    );
   }
   .comparison-risk-column-label {
     display: inline-flex;
@@ -161,9 +181,15 @@
   .comparison-risk .comparison-risk-ours {
     mask-image: var(--brush-square-images);
     mask-size:
-      12px 12px, calc(100% - 22px) 12px, 12px 12px,
-      12px calc(100% - 22px), calc(100% - 22px) calc(100% - 22px),
-      12px calc(100% - 22px), 12px 12px, calc(100% - 22px) 12px, 12px 12px;
+      12px 12px,
+      calc(100% - 22px) 12px,
+      12px 12px,
+      12px calc(100% - 22px),
+      calc(100% - 22px) calc(100% - 22px),
+      12px calc(100% - 22px),
+      12px 12px,
+      calc(100% - 22px) 12px,
+      12px 12px;
     mask-position: var(--brush-positions);
     mask-repeat: no-repeat;
   }
@@ -204,6 +230,13 @@
     gap: 10px;
     font-size: 14px;
     line-height: 1.35;
+  }
+  /* На мобильном каждая ячейка «с нами» носит 9-слойную brush-маску
+     (строк ~7 + шапка). Вне вьюпорта строки не рендерим: маски
+     растеризуются только у видимых ячеек, а не у всей таблицы. */
+  .comparison-risk tbody tr {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 150px;
   }
 }
 .comparison-approx {

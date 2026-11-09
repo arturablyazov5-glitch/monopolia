@@ -249,3 +249,16 @@
     font-size: var(--heading-section);
   }
 }
+
+/* iOS Safari перерисовывает border-image рамки ::before и 9-слойные маски
+   полей карточки при скролле внутри overflow: clip — рваный край мерцает.
+   Выносим всю карточку в композитный слой: растр считается один раз,
+   при прокрутке compositing двигает готовый битмап. Тот же прием, что у
+   .case-slide в client-cases.css. Только iOS Safari, визуально не меняет. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    .lead-section-card {
+      transform: translateZ(0);
+    }
+  }
+}

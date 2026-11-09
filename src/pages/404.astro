@@ -9,21 +9,63 @@ const home = import.meta.env.BASE_URL;
 <SiteLayout title="Страница не найдена — Монополия" noindex>
   <main class="not-found standalone-page">
     <a class="not-found-brand" href={home} aria-label="Монополия — главная">
-      <img src="/assets/logo-monopoly-mark-header.svg" width="48" height="48" alt="" />
-      <img src="/assets/logo-monopoly-wordmark-header.svg" width="226" height="22.4275" alt="Монополия" />
+      <img
+        src="/assets/logo-monopoly-mark-header.svg"
+        width="48"
+        height="48"
+        alt=""
+        loading="eager"
+        decoding="async"
+      />
+      <img
+        src="/assets/logo-monopoly-wordmark-header.svg"
+        width="226"
+        height="22.4275"
+        alt="Монополия"
+        loading="eager"
+        decoding="async"
+      />
     </a>
     <svg class="not-found-filters" aria-hidden="true" width="0" height="0">
       <defs>
-        <filter id="not-found-torn-digits" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.08 0.18" numOctaves="2" seed="14" result="grain" />
-          <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
+        <filter
+          id="not-found-torn-digits"
+          x="-5%"
+          y="-5%"
+          width="110%"
+          height="110%"
+        >
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.08 0.18"
+            numOctaves="2"
+            seed="14"
+            result="grain"
+          />
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="grain"
+            scale="1.6"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
         </filter>
       </defs>
     </svg>
     <Paper class="not-found-card" tape>
-      <p class="not-found-code" aria-hidden="true">404</p>
-      <h1>Страница<br />не нашлась</h1>
-      <p class="not-found-description">Возможно, ссылка устарела или в адресе опечатка.<br />Начнем с главной?</p>
+      <p class="not-found-code" aria-hidden="true">
+        404
+      </p>
+      <h1>
+        Страница
+        <br />
+        не нашлась
+      </h1>
+      <p class="not-found-description">
+        Возможно, ссылка устарела или в адресе опечатка.
+        <br />
+        Начнем с главной?
+      </p>
       <Button label="На главную" href={home} />
     </Paper>
   </main>

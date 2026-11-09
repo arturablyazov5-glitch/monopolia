@@ -16,7 +16,11 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
 ---
 
 <div
-  class:list={[Astro.props.class, channels ? "channels" : "chips", { "choice-channels-icons": channels && !!icons?.length }]}
+  class:list={[
+    Astro.props.class,
+    channels ? "channels" : "chips",
+    { "choice-channels-icons": channels && !!icons?.length },
+  ]}
   role="group"
   aria-label={name}
   data-choice-group
@@ -51,7 +55,11 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
           decoding="async"
         />
       )}
-      {Astro.props.labelClass ? <span class={Astro.props.labelClass}>{option}</span> : option}
+      {Astro.props.labelClass ? (
+        <span class={Astro.props.labelClass}>{option}</span>
+      ) : (
+        option
+      )}
     </button>
   ))}
   <slot />
@@ -60,20 +68,23 @@ const { name, options, selected = 0, channels = false, icons } = Astro.props;
   document
     .querySelectorAll<HTMLElement>("[data-choice-group]")
     .forEach((group) => {
-      group.querySelectorAll<HTMLButtonElement>("button").forEach((button) =>
-        button.addEventListener("click", () => {
-          group.querySelectorAll("button").forEach((item) => {
-            const selected = item === button;
-            item.classList.toggle("selected", selected);
-            item.setAttribute("aria-pressed", String(selected));
-          });
-          group.dispatchEvent(
-            new CustomEvent("choice-change", {
-              bubbles: true,
-              detail: { value: button.dataset.value },
-            }),
-          );
-        }),
-      );
+      // Один делегированный обработчик на группу вместо слушателя на кнопку.
+      group.addEventListener("click", (event) => {
+        const button = (
+          event.target as HTMLElement | null
+        )?.closest<HTMLButtonElement>("button");
+        if (!button || !group.contains(button)) return;
+        group.querySelectorAll("button").forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle("selected", selected);
+          item.setAttribute("aria-pressed", String(selected));
+        });
+        group.dispatchEvent(
+          new CustomEvent("choice-change", {
+            bubbles: true,
+            detail: { value: button.dataset.value },
+          }),
+        );
+      });
     });
 </script>

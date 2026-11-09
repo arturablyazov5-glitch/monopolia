@@ -6,16 +6,16 @@
   --brush-rounded-images:
     url("/assets/brush-mask-tl.svg"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-mask-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
-    url("/assets/brush-mask-bl.svg"), url("/assets/brush-mask-b.svg"),
-    url("/assets/brush-mask-br.svg");
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/brush-mask-r.svg"), url("/assets/brush-mask-bl.svg"),
+    url("/assets/brush-mask-b.svg"), url("/assets/brush-mask-br.svg");
   --brush-images: var(--brush-rounded-images);
   --brush-square-images:
     url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
-    url("/assets/brush-square-bl.svg"), url("/assets/brush-mask-b.svg"),
-    url("/assets/brush-square-br.svg");
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/brush-mask-r.svg"), url("/assets/brush-square-bl.svg"),
+    url("/assets/brush-mask-b.svg"), url("/assets/brush-square-br.svg");
   /* Стыки соседних SVG дают дробное покрытие alpha. Перекрытие 2px
      находится внутри непрозрачной части силуэта, внешний контур не меняет. */
   --brush-sizes:
@@ -194,9 +194,9 @@ button.button {
   --brush-images:
     url("/assets/brush-square-tl.svg?v=2"), url("/assets/brush-mask-t.svg"),
     url("/assets/brush-square-tr.svg"), url("/assets/brush-mask-l.svg"),
-    linear-gradient(var(--color-paper), var(--color-paper)), url("/assets/brush-mask-r.svg"),
-    url("/assets/brush-mirror-bl.svg"), url("/assets/brush-mirror-b.svg"),
-    url("/assets/brush-mirror-br.svg");
+    linear-gradient(var(--color-paper), var(--color-paper)),
+    url("/assets/brush-mask-r.svg"), url("/assets/brush-mirror-bl.svg"),
+    url("/assets/brush-mirror-b.svg"), url("/assets/brush-mirror-br.svg");
 }
 .paper.recruiting-note {
   --brush-border: 15px;
@@ -333,7 +333,8 @@ button.button {
 }
 .paper.faq-card-accordion,
 .paper.service-card-coupon {
-  filter: drop-shadow(0 14px 14px rgb(from var(--color-accent) r g b / 3.1%)) drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
+  filter: drop-shadow(0 14px 14px rgb(from var(--color-accent) r g b / 3.1%))
+    drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
 }
 .paper.sell-answers-card {
   filter: drop-shadow(0 14px 14px rgb(from var(--color-accent) r g b / 3.1%));
@@ -447,7 +448,11 @@ button.button {
   background: var(--color-dark);
 }
 .button.button.white:is(:hover, :focus-visible):not(:disabled)::before {
-  background: color-mix(in srgb, var(--color-canvas) 70%, var(--color-disabled));
+  background: color-mix(
+    in srgb,
+    var(--color-canvas) 70%,
+    var(--color-disabled)
+  );
 }
 .button.button.white:is(:hover, :focus-visible):not(:disabled) {
   color: var(--color-dark);
@@ -477,30 +482,71 @@ button.button {
 
 /* Белая кромка 2 px сверху и снизу готового рваного силуэта. */
 .paper.staff-card {
-  filter: drop-shadow(0 -2px 0 var(--color-paper)) drop-shadow(0 2px 0 var(--color-paper)) drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
+  filter: drop-shadow(0 -2px 0 var(--color-paper))
+    drop-shadow(0 2px 0 var(--color-paper))
+    drop-shadow(0 5px 7px rgb(from var(--color-ink) r g b / 5.9%));
 }
 
 /* A visible torn bottom for tall paper cards; content and tape stay uncut. */
 .paper.paper-torn-bottom::before,
 .paper.paper-torn-bottom::after {
   clip-path: polygon(
-    0 0, 100% 0,
-    100% calc(100% - 3.75px), 97% calc(100% - 2.25px),
-    95% calc(100% - 5.25px), 92% calc(100% - 3.75px),
-    89% calc(100% - 4.5px), 87% calc(100% - 1.5px),
-    83% calc(100% - 3px), 81% calc(100% - 6px),
-    78% calc(100% - 4.5px), 75% calc(100% - 5.25px),
-    72% calc(100% - 2.25px), 69% calc(100% - 3.75px),
-    65% calc(100% - 1.5px), 62% calc(100% - 4.5px),
-    59% calc(100% - 3px), 57% calc(100% - 6px),
-    54% calc(100% - 3.75px), 50% calc(100% - 4.5px),
-    47% calc(100% - 1.5px), 44% calc(100% - 3px),
-    41% calc(100% - 5.25px), 38% calc(100% - 3.75px),
-    34% calc(100% - 4.5px), 31% calc(100% - 1.5px),
-    28% calc(100% - 3px), 25% calc(100% - 2.25px),
-    22% calc(100% - 5.25px), 19% calc(100% - 3.75px),
-    16% calc(100% - 6px), 13% calc(100% - 3px),
-    9% calc(100% - 4.5px), 6% calc(100% - 1.5px),
-    3% calc(100% - 3.75px), 0 calc(100% - 2.25px)
+    0 0,
+    100% 0,
+    100% calc(100% - 3.75px),
+    97% calc(100% - 2.25px),
+    95% calc(100% - 5.25px),
+    92% calc(100% - 3.75px),
+    89% calc(100% - 4.5px),
+    87% calc(100% - 1.5px),
+    83% calc(100% - 3px),
+    81% calc(100% - 6px),
+    78% calc(100% - 4.5px),
+    75% calc(100% - 5.25px),
+    72% calc(100% - 2.25px),
+    69% calc(100% - 3.75px),
+    65% calc(100% - 1.5px),
+    62% calc(100% - 4.5px),
+    59% calc(100% - 3px),
+    57% calc(100% - 6px),
+    54% calc(100% - 3.75px),
+    50% calc(100% - 4.5px),
+    47% calc(100% - 1.5px),
+    44% calc(100% - 3px),
+    41% calc(100% - 5.25px),
+    38% calc(100% - 3.75px),
+    34% calc(100% - 4.5px),
+    31% calc(100% - 1.5px),
+    28% calc(100% - 3px),
+    25% calc(100% - 2.25px),
+    22% calc(100% - 5.25px),
+    19% calc(100% - 3.75px),
+    16% calc(100% - 6px),
+    13% calc(100% - 3px),
+    9% calc(100% - 4.5px),
+    6% calc(100% - 1.5px),
+    3% calc(100% - 3.75px),
+    0 calc(100% - 2.25px)
   );
+}
+
+/* iOS Safari перерисовывает drop-shadow поверх девятичастной маски листа
+   при каждом кадре скролла — это основной источник repaint на iPhone.
+   Тени здесь 3–6% альфы и на мобильном экране почти незаметны, поэтому
+   на iOS отключаем их целиком; десктоп и маски не меняются. Блок в конце
+   файла и с явным списком вариантов: правила .paper.xxx выше имеют
+   бо́льшую специфичность, чем голый .paper.
+   .paper.staff-card НЕ трогаем: его первые два drop-shadow — это
+   непрозрачная paper-кромка 2 px, а не тень; её потеря меняла бы вид.
+   Карточки и так промотированы в слой (home-team.css), фильтр
+   растрируется один раз. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .paper,
+    .paper.faq-card-accordion,
+    .paper.service-card-coupon,
+    .paper.sell-answers-card {
+      filter: none;
+    }
+  }
 }

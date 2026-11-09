@@ -67,15 +67,19 @@
   width: 368px;
   flex: 0 0 368px;
 }
-/* Лаги слайдера: каждая карточка (с масками рваных краев и тенями) —
-   на своем слое, при прокрутке она не перерисовывается заново. */
-.home-team .carousel-track {
-  will-change: scroll-position;
-}
-.home-team .carousel-track > .staff-card {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+/* Лаги слайдера на iOS: каждая карточка (с масками рваных краев и тенями) —
+   на своем слое, при прокрутке она не перерисовывается заново.
+   Только iPhone: на десктопе 15 постоянных слоёв — лишний расход памяти. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .home-team .carousel-track {
+      will-change: scroll-position;
+    }
+    .home-team .carousel-track > .staff-card {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+  }
 }
 .home-team .staff-photo {
   height: 336px;
@@ -111,7 +115,12 @@
   height: 1px;
   flex-shrink: 0;
   border: 0;
-  background: linear-gradient(to right, transparent, rgb(from var(--color-ink) r g b / 10.2%) 5%, transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgb(from var(--color-ink) r g b / 10.2%) 5%,
+    transparent
+  );
 }
 .home-team .diamond-list {
   padding: 0;
@@ -196,7 +205,11 @@
     object-fit: cover;
     object-position: center top;
     clip-path: inset(112px 0 0);
-    mask-image: linear-gradient(to bottom, var(--color-ink) calc(100% - 48px), transparent);
+    mask-image: linear-gradient(
+      to bottom,
+      var(--color-ink) calc(100% - 48px),
+      transparent
+    );
   }
 }
 

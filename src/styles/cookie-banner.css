@@ -4,7 +4,7 @@
   right: var(--space-6);
   bottom: var(--space-6);
   width: min(460px, calc(100% - 2 * var(--space-6)));
-  filter: drop-shadow(0 6px 12px rgb(from var(--color-ink) r g b / 18.0%));
+  filter: drop-shadow(0 6px 12px rgb(from var(--color-ink) r g b / 18%));
   animation: cookie-enter 320ms ease-out both;
 }
 @keyframes cookie-enter {

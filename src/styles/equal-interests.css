@@ -72,10 +72,35 @@
 @media (max-width: 767px) {
   /* Fade the dark bottom of the photo into the section's matching backdrop. */
   .home-desktop .equal-interests .equal-interests-photo {
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 28px), transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 24px, #000 calc(100% - 28px), transparent);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 24px,
+      #000 calc(100% - 28px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 24px,
+      #000 calc(100% - 28px),
+      transparent
+    );
   }
 }
+/* iOS Safari: секция с фоновым фото и масками пропускает отрисовку
+   вне экрана; auto в contain-intrinsic-size запоминает реальную
+   высоту после первой отрисовки. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .equal-interests {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1100px;
+    }
+  }
+}
+
 /* NOV02-10: плавно выводим нижний край фото в фон HonestReviews на планшетах. */
 @media (min-width: 768px) and (max-width: 1199px) {
   .home-desktop .equal-interests {

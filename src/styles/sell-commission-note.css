@@ -20,7 +20,8 @@
   .sell-commission-note {
     /* Верхняя кромка сравнения занимает 32 px внутри секции,
        кромка офиса выступает наружу на 20 px. Снизу оставляем на 18 px меньше визуального отступа. */
-    margin-block: calc(var(--section-space) - 32px) calc(var(--section-space) + 2px);
+    margin-block: calc(var(--section-space) - 32px)
+      calc(var(--section-space) + 2px);
     margin-inline: 20px;
   }
   .sell-commission-note .accent-statement {

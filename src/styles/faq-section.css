@@ -220,3 +220,15 @@
     font-size: var(--heading-section);
   }
 }
+
+/* iOS Safari глючит на transform: rotate() + mask: рваный край Paper
+   мерцает, буквы «плывут». Отдельное свойство rotate рендерится
+   иначе — пробуем его только на iPhone, визуально наклон тот же. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .faq-section .faq-slot {
+      transform: none;
+      rotate: var(--faq-tilt);
+    }
+  }
+}

@@ -126,8 +126,8 @@
   mask-size: var(--brush-sizes);
   --brush-sizes:
     10px 10px, calc(100% - 18px) 10px, 10px 10px, 10px calc(100% - 18px),
-    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px),
-    10px 10px, calc(100% - 18px) 10px, 10px 10px;
+    calc(100% - 18px) calc(100% - 18px), 10px calc(100% - 18px), 10px 10px,
+    calc(100% - 18px) 10px, 10px 10px;
   border-radius: 0;
 }
 /* У квиза и выбора города рваный край читается крупнее, как у бумажных
@@ -238,7 +238,7 @@
 }
 .inner-hero-types {
   position: relative;
-  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2.0%));
+  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2%));
 }
 .inner-hero-other {
   display: block;
@@ -397,7 +397,9 @@
 /* Рваный низ скрывает прямой срез команды вместе с фоном на планшете. */
 @media (min-width: 768px) and (max-width: 1199px) {
   .inner-hero {
-    mask-image: linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
+    mask-image:
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      url("/assets/gossip-paper-edge.svg");
     /* Перекрытие убирает просвет между слоями при дробных координатах. */
     mask-size:
       100% calc(100% - 49px),
@@ -471,7 +473,11 @@
     height: 320px;
     object-fit: initial;
     /* верх картинки плавно растворяется, чтобы не было шва с фоном страницы */
-    -webkit-mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-ink) 140px
+    );
     mask-image: linear-gradient(to bottom, transparent, var(--color-ink) 140px);
   }
   /* Небо над картинкой с домами — цвет ее верхней кромки (слева светлее,
@@ -491,7 +497,11 @@
       rgb(206 217 231) 55%,
       rgb(184 205 224)
     );
-    -webkit-mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      var(--color-ink) 45%,
+      transparent
+    );
     mask-image: linear-gradient(to bottom, var(--color-ink) 45%, transparent);
     pointer-events: none;
   }
@@ -504,7 +514,8 @@
     z-index: -1;
     width: 170px;
     height: 320px;
-    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px no-repeat;
+    background: url("/assets/home-background-no-plane.webp") 0 0 / auto 320px
+      no-repeat;
     -webkit-mask-image:
       linear-gradient(to bottom, transparent, var(--color-ink) 140px),
       linear-gradient(to left, transparent, var(--color-ink) 30%);
@@ -661,5 +672,16 @@
   }
   .inner-hero-description {
     max-width: 100%;
+  }
+}
+
+/* iOS WebKit: drop-shadow 2% на группе чипов растрирует их отдельным
+   слоем, который перерисовывается с задержкой при скролле (та же
+   причина, что у .buy-mortgage-programs). Тень незаметна. */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 767px) {
+    .inner-hero-types {
+      filter: none;
+    }
   }
 }

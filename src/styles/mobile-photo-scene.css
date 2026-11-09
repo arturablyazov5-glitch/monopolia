@@ -20,4 +20,11 @@
     height: auto;
     max-width: none;
   }
+  /* iOS Safari перерисовывает mask-image контейнера при скролле.
+     Композитный слой растрирует маску и фото один раз. */
+  @supports (-webkit-touch-callout: none) {
+    .mobile-photo-scene {
+      transform: translateZ(0);
+    }
+  }
 }

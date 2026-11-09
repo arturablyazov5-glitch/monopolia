@@ -7,7 +7,8 @@
   overflow-x: clip;
   z-index: 2;
   margin-top: -65px;
-  padding: calc(var(--valuation-edge-height) + var(--section-space)) 0 calc(var(--valuation-edge-height) + var(--section-space));
+  padding: calc(var(--valuation-edge-height) + var(--section-space)) 0
+    calc(var(--valuation-edge-height) + var(--section-space));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +48,8 @@
   bottom: 0;
   height: 1381.979px;
   max-height: 50%;
-  background: url("/assets/sell-valuation-background.webp") center bottom / 100% auto no-repeat;
+  background: url("/assets/sell-valuation-background.webp") center bottom / 100%
+    auto no-repeat;
   z-index: -1;
 }
 
@@ -386,7 +388,8 @@
 @media (max-width: 1199px) {
   .sell-valuation {
     min-height: 0;
-    padding: calc(var(--valuation-edge-height) + var(--section-space)) 32px calc(var(--valuation-edge-height) + var(--section-space));
+    padding: calc(var(--valuation-edge-height) + var(--section-space)) 32px
+      calc(var(--valuation-edge-height) + var(--section-space));
     gap: var(--section-space);
     overflow-x: clip;
   }
@@ -434,7 +437,6 @@
   .sell-week-video {
     min-height: 480px;
   }
-
 }
 
 /* TASK-009: 1024–1199 — две колонки как на 1440 вместо узкой стопки 704 px
@@ -475,7 +477,8 @@
   .sell-valuation {
     /* Существующий рваный край бумаги перекрывает низ фотографии. */
     margin-top: -105px;
-    padding: calc(var(--valuation-edge-height) + var(--section-space)) 20px calc(var(--valuation-edge-height) + var(--section-space));
+    padding: calc(var(--valuation-edge-height) + var(--section-space)) 20px
+      calc(var(--valuation-edge-height) + var(--section-space));
     gap: var(--section-space-double);
   }
   /* На телефоне кромку рисует вектор; увеличенный растр остается
@@ -488,8 +491,12 @@
     left: 0;
     width: 100%;
     transform: none;
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size: 100% var(--valuation-edge-height), 100% calc(100% - var(--valuation-edge-height) + 2px);
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink));
+    mask-size:
+      100% var(--valuation-edge-height),
+      100% calc(100% - var(--valuation-edge-height) + 2px);
     mask-position: top, bottom;
     mask-repeat: no-repeat;
   }
@@ -625,5 +632,25 @@
   }
   .sell-week-play {
     left: calc(50% + 40px);
+  }
+}
+
+/* iOS Safari: два тяжёлых блока секции (буклет с масками и видео-блок
+   с затемнением/формой) по отдельности пропускают отрисовку вне экрана —
+   у каждого своя оценка высоты через contain-intrinsic-size: auto,
+   реальный размер запоминается после первой отрисовки. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .sell-valuation-main,
+    .sell-week {
+      content-visibility: auto;
+    }
+    .sell-valuation-main {
+      contain-intrinsic-size: auto 1400px;
+    }
+    .sell-week {
+      contain-intrinsic-size: auto 1700px;
+    }
   }
 }

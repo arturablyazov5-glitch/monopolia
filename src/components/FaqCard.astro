@@ -86,7 +86,13 @@ const blocks = typeof answer === "string" ? [answer] : answer;
             ),
           )}
         </div>
-        <Button label={cta} tone="black" subject={`Вопрос: ${question}`} quiz={quiz} popup={quiz ? undefined : (popup ?? "office")} />
+        <Button
+          label={cta}
+          tone="black"
+          subject={`Вопрос: ${question}`}
+          quiz={quiz}
+          popup={quiz ? undefined : (popup ?? "office")}
+        />
       </div>
     </div>
   </Paper>
@@ -104,24 +110,30 @@ const blocks = typeof answer === "string" ? [answer] : answer;
       {question}
     </h3>
     <p>{blocks.filter((block) => typeof block === "string").join(" ")}</p>
-    <Button label={cta} tone="black" popup={popup ?? "office"} subject={`Вопрос: ${question}`} />
+    <Button
+      label={cta}
+      tone="black"
+      popup={popup ?? "office"}
+      subject={`Вопрос: ${question}`}
+    />
   </Paper>
 )}
 
 <script>
-  document
-    .querySelectorAll<HTMLButtonElement>(".faq-toggle")
-    .forEach((toggle) =>
-      toggle.addEventListener("click", () => {
-        const expanded = toggle.getAttribute("aria-expanded") === "true";
-        toggle.setAttribute("aria-expanded", String(!expanded));
-        const panel = document.getElementById(
-          toggle.getAttribute("aria-controls")!,
-        );
-        if (panel) {
-          panel.classList.toggle("is-closed", expanded);
-          panel.inert = expanded;
-        }
-      }),
+  // Один делегированный обработчик вместо слушателя на каждую кнопку.
+  document.addEventListener("click", (event) => {
+    const toggle = (
+      event.target as HTMLElement | null
+    )?.closest<HTMLButtonElement>(".faq-toggle");
+    if (!toggle) return;
+    const expanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!expanded));
+    const panel = document.getElementById(
+      toggle.getAttribute("aria-controls")!,
     );
+    if (panel) {
+      panel.classList.toggle("is-closed", expanded);
+      panel.inert = expanded;
+    }
+  });
 </script>

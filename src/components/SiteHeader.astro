@@ -163,7 +163,13 @@ const isCurrentMenuPage = (href: string) =>
             viewBox="0 0 32 32"
             aria-hidden="true"
           >
-            <rect x="4" y="5" width="25" height="24" fill="var(--color-accent)"></rect>
+            <rect
+              x="4"
+              y="5"
+              width="25"
+              height="24"
+              fill="var(--color-accent)"
+            ></rect>
             <path
               d="M10 10l12 12M22 10L10 22"
               stroke="var(--color-paper)"
@@ -202,6 +208,8 @@ const isCurrentMenuPage = (href: string) =>
                 width="32"
                 height="32"
                 alt=""
+                loading="lazy"
+                decoding="async"
               />
               <span>
                 <img
@@ -209,6 +217,8 @@ const isCurrentMenuPage = (href: string) =>
                   width="131"
                   height="13"
                   alt="Монополия"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span class="menu-panel-descriptor">
                   {siteText("site-header.text.4")}
@@ -490,7 +500,9 @@ const isCurrentMenuPage = (href: string) =>
       const target = anchorTarget(hash);
       if (!target) return;
       const paper = target.closest(".reviews-cases-paper");
-      const background = paper?.querySelector<HTMLImageElement>(".reviews-cases-background");
+      const background = paper?.querySelector<HTMLImageElement>(
+        ".reviews-cases-background",
+      );
       if (background) {
         background.loading = "eager";
         await background.decode().catch(() => {});
@@ -501,6 +513,20 @@ const isCurrentMenuPage = (href: string) =>
       const target = anchorTarget(hash);
       if (!target) return;
       await prepareAnchorSurface(hash);
+      // content-visibility:auto на iOS отдаёт оценочные высоты для
+      // пропущенных секций: без этого якорь считался бы по чужим
+      // цифрам и после отрисовки «уплыл» бы. Два кадра — время полного
+      // рендера страницы; auto-оценки после этого запоминают реальные
+      // высоты, повторные переходы точны без повторного рендера.
+      const root = document.documentElement;
+      root.classList.add("anchor-cv-render");
+      try {
+        await new Promise((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(resolve)),
+        );
+      } finally {
+        root.classList.remove("anchor-cv-render");
+      }
       const top = target.getBoundingClientRect().top + window.scrollY;
       const headerBottom = header.getBoundingClientRect().bottom;
       const contentGap =
@@ -543,12 +569,7 @@ const isCurrentMenuPage = (href: string) =>
         if (!completed) return;
       }
       if (location.hash !== url.hash) history.pushState(null, "", url);
-      void alignAnchor(
-        url.hash,
-        reducedMotion.matches
-          ? "instant"
-          : "smooth",
-      );
+      void alignAnchor(url.hash, reducedMotion.matches ? "instant" : "smooth");
     });
     const alignIncomingHash = () => {
       if (!location.hash) return;

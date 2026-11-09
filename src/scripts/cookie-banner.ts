@@ -46,13 +46,22 @@ if (banner) {
     );
     banner.setAttribute("data-cookie-ready", "");
   };
+  // Слушатели геометрии живут только пока баннер виден: после выбора их
+  // снимаем, иначе ResizeObserver и resize-обработчик работали бы до конца сессии.
+  let bannerObserver: ResizeObserver | undefined;
+  const onWindowResize = () => updateBannerGeometry();
+  const stopWatching = () => {
+    bannerObserver?.disconnect();
+    bannerObserver = undefined;
+    removeEventListener("resize", onWindowResize);
+  };
   if (choice !== "accepted" && choice !== "rejected") {
     const show = () => {
       banner.hidden = false;
       updateBannerGeometry();
-      const observer = new ResizeObserver(updateBannerGeometry);
-      observer.observe(banner);
-      addEventListener("resize", updateBannerGeometry, { passive: true });
+      bannerObserver = new ResizeObserver(updateBannerGeometry);
+      bannerObserver.observe(banner);
+      addEventListener("resize", onWindowResize, { passive: true });
     };
     if (reducedMotion.matches) show();
     else setTimeout(show, 700);
@@ -73,6 +82,7 @@ if (banner) {
       if (banner.hidden) return;
       banner.hidden = true;
       banner.inert = true;
+      stopWatching();
     };
     if (reducedMotion.matches) hide();
     else {

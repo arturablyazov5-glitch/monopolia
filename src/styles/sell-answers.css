@@ -32,7 +32,10 @@
 .paper.paper-white.sell-answers-card::before {
   background-color: var(--color-paper);
   background-image:
-    linear-gradient(rgb(from var(--color-paper) r g b / 80.0%), rgb(from var(--color-paper) r g b / 80.0%)),
+    linear-gradient(
+      rgb(from var(--color-paper) r g b / 80%),
+      rgb(from var(--color-paper) r g b / 80%)
+    ),
     url("/assets/texture-paper-crumpled.webp");
   background-size: cover;
   background-position: center;
@@ -117,5 +120,16 @@
   }
   .sell-answers-heading h2 {
     font-size: var(--heading-section);
+  }
+}
+
+/* iOS Safari: карточка с текстурой бумаги пропускает отрисовку вне экрана. */
+@media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
+    (contain-intrinsic-size: auto 1px) {
+    .sell-answers {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 800px;
+    }
   }
 }

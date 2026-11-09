@@ -71,7 +71,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2.0%));
+  filter: drop-shadow(0 4px 2.5px rgb(from var(--color-ink) r g b / 2%));
 }
 .buy-mortgage-programs .chip {
   /* Слева галочка и так отступает от края, справа рваная маска съедает ~8 px — запас справа больше */
@@ -133,7 +133,7 @@
 }
 /* Тень под плашками логотипов — только на этой странице */
 .buy-mortgage-banks .home-partner-logo {
-  filter: drop-shadow(0 2px 10px rgb(from var(--color-ink) r g b / 7.0%));
+  filter: drop-shadow(0 2px 10px rgb(from var(--color-ink) r g b / 7%));
 }
 /* 1380:6419 — калькулятор и отзыв */
 .buy-mortgage-cards {
@@ -165,7 +165,11 @@
   justify-self: start;
   /* Относительное смещение не меняет размеры grid и дорожки ползунка. */
   position: relative;
-  left: clamp(40px, calc(8px + (100% - 16px) * var(--range-progress, 0.5)), calc(100% - 40px));
+  left: clamp(
+    40px,
+    calc(8px + (100% - 16px) * var(--range-progress, 0.5)),
+    calc(100% - 40px)
+  );
   margin-left: 0;
   min-width: 8ch;
   text-align: center;
@@ -182,7 +186,8 @@
   background: linear-gradient(
       90deg,
       var(--color-ink) calc(var(--range-progress, 0.5) * 100%),
-      rgb(from var(--color-ink) r g b / 10.2%) calc(var(--range-progress, 0.5) * 100%)
+      rgb(from var(--color-ink) r g b / 10.2%)
+        calc(var(--range-progress, 0.5) * 100%)
     )
     center / 100% 1px no-repeat;
 }
@@ -510,7 +515,11 @@
     width: 8px;
     height: 8px;
     border-radius: 99px;
-    background: color-mix(in srgb, var(--color-canvas) 60%, var(--color-disabled));
+    background: color-mix(
+      in srgb,
+      var(--color-canvas) 60%,
+      var(--color-disabled)
+    );
     top: 18px;
     left: 50%;
     transform: translateX(-50%);
@@ -529,7 +538,8 @@
     inset: -1px 0 auto;
     height: 32px;
     background: var(--color-canvas);
-    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100% no-repeat;
+    mask: url("/assets/background-paper-edge-white.svg") center / 100% 100%
+      no-repeat;
     transform: rotate(180deg);
     pointer-events: none;
     z-index: 2;
@@ -540,19 +550,41 @@
     /* 32 px занимает рваная кромка; дальше — общий отступ секции. */
     padding-top: calc(32px + var(--section-space));
     background: var(--color-paper);
-    mask-image: url("/assets/background-paper-edge-white.svg"), linear-gradient(var(--color-ink), var(--color-ink)), url("/assets/gossip-paper-edge.svg");
-    mask-size: 100% 32px, 100% calc(100% - 62px), 100% 32px;
+    mask-image:
+      url("/assets/background-paper-edge-white.svg"),
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      url("/assets/gossip-paper-edge.svg");
+    mask-size:
+      100% 32px,
+      100% calc(100% - 62px),
+      100% 32px;
     mask-position: top, center, bottom;
     mask-repeat: no-repeat;
     padding-bottom: calc(var(--section-space) + 32px);
     /* Между самостоятельными блоками — два общих отступа секции. */
     gap: var(--section-space-double);
   }
-  /* Маска секции перерисовывается при движении ползунка.
-     Отдельный слой удерживает дробно масштабированные SVG-логотипы на месте. */
-  .buy-mortgage-banks .home-partner-logos {
-    transform: translateZ(0);
-    backface-visibility: hidden;
+  @supports (-webkit-touch-callout: none) {
+    /* Маска секции перерисовывается при движении ползунка.
+       Отдельный слой удерживает дробно масштабированные SVG-логотипы на месте. */
+    .buy-mortgage-banks .home-partner-logos {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+    /* Ползунок и сумма платежа — единственный интерактивный узел секции.
+       Выносим карточку калькулятора в отдельный композитный слой: drag
+       range меняет только его текстуру, а не маску секции на ~3 экрана,
+       которую iOS/WebKit перерисовывал целиком при каждом кадре. */
+    .buy-mortgage-calc {
+      transform: translateZ(0);
+    }
+  }
+  /* Трёхслойная маска на всю секцию (~3 экрана): вне вьюпорта пропускаем
+     её растрирование, как у .buyer-audience; auto запоминает реальный
+     размер после первого показа, прыжка scrollbar нет. */
+  .buy-mortgage {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 2600px;
   }
   .buy-mortgage::before {
     content: none;
@@ -661,19 +693,47 @@
     margin-bottom: 0;
     font-size: 46px;
   }
-  .buy-mortgage-steps { gap: 12px; }
-  .buy-mortgage-steps .numbered-benefit { gap: 18px; white-space: nowrap; justify-content: center; }
-  .buy-mortgage-steps .numbered-benefit > span { font-size: 48px; }
-  .buy-mortgage-steps .numbered-benefit p { font-size: clamp(14px, 4.2vw, 18px); }
-  .buy-mortgage-steps br { display: none; }
-  .buy-mortgage-review { display: none; }
+  .buy-mortgage-steps {
+    gap: 12px;
+  }
+  .buy-mortgage-steps .numbered-benefit {
+    gap: 18px;
+    white-space: nowrap;
+    justify-content: center;
+  }
+  .buy-mortgage-steps .numbered-benefit > span {
+    font-size: 48px;
+  }
+  .buy-mortgage-steps .numbered-benefit p {
+    font-size: clamp(14px, 4.2vw, 18px);
+  }
+  .buy-mortgage-steps br {
+    display: none;
+  }
+  .buy-mortgage-review {
+    display: none;
+  }
   .buy-mortgage-carousel .carousel-controls,
-  .buy-mortgage-carousel .carousel-pagination { display: none; }
-  .buy-mortgage-carousel .carousel-track { align-items: stretch; scroll-snap-type: x mandatory; }
-  .buy-mortgage-carousel .carousel-track > * { display: flex; }
-  .buy-mortgage-carousel .property-card { width: 100%; }
-  .buy-mortgage-range input { touch-action: none; }
-  .buy-mortgage-payment output, .buy-mortgage-range output { font-variant-numeric: tabular-nums; }
+  .buy-mortgage-carousel .carousel-pagination {
+    display: none;
+  }
+  .buy-mortgage-carousel .carousel-track {
+    align-items: stretch;
+    scroll-snap-type: x mandatory;
+  }
+  .buy-mortgage-carousel .carousel-track > * {
+    display: flex;
+  }
+  .buy-mortgage-carousel .property-card {
+    width: 100%;
+  }
+  .buy-mortgage-range input {
+    touch-action: none;
+  }
+  .buy-mortgage-payment output,
+  .buy-mortgage-range output {
+    font-variant-numeric: tabular-nums;
+  }
 }
 
 /* Мобилка: отзыв — внутри калькулятора, под заголовком: фото слева, текст справа */
@@ -734,15 +794,40 @@
 }
 
 @media (max-width: 767px) {
-  .buy-mortgage-programs { margin-inline: auto; gap: 12px 8px; }
-  .buy-mortgage-programs .chip { justify-content: center; padding-left: 9px; padding-right: 16px; gap: 6px; text-align: center; }
-  .buy-mortgage-program-label { transform: translateY(1px); }
+  .buy-mortgage-programs {
+    margin-inline: auto;
+    gap: 12px 8px;
+  }
+  .buy-mortgage-programs .chip {
+    justify-content: center;
+    padding-left: 9px;
+    padding-right: 16px;
+    gap: 6px;
+    text-align: center;
+  }
+  .buy-mortgage-program-label {
+    transform: translateY(1px);
+  }
 }
 /* iOS WebKit рисует подписи на 1 px ниже при одинаковых метриках шрифта. */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
-    .buy-mortgage-program-label { transform: none; }
+    .buy-mortgage-program-label {
+      transform: translateY(-1px);
+    }
+    /* drop-shadow на группе чипов растрирует все повёрнутые плашки
+       отдельным слоем — на iOS он перерисовывается с задержкой при
+       скролле и плашки дёргаются. Тень 2% прозрачности незаметна. */
+    .buy-mortgage-programs {
+      filter: none;
+    }
   }
 }
-.buy-mortgage-range input::-webkit-slider-thumb { border-radius: 50%; box-shadow: none; }
-.buy-mortgage-range input::-moz-range-thumb { border-radius: 50%; box-shadow: none; }
+.buy-mortgage-range input::-webkit-slider-thumb {
+  border-radius: 50%;
+  box-shadow: none;
+}
+.buy-mortgage-range input::-moz-range-thumb {
+  border-radius: 50%;
+  box-shadow: none;
+}

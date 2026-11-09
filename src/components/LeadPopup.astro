@@ -22,7 +22,7 @@ const popups = {
     note: "Консультация ни к чему не обязывает",
     image: "/assets/staff-elena-gorbaneva-consultation.webp",
     alt: `${people["elena-gorbaneva"].name}, ${people["elena-gorbaneva"].role.toLocaleLowerCase("ru-RU")}`,
-    badge: "На этой неделе осталось\n4 свободных места",
+    badge: "На этой неделе осталось 4 свободных места",
   },
   analysis: {
     title: "Сделаем анализ вашего объекта перед продажей",
@@ -180,6 +180,7 @@ const hasExpertProfile = ["service", "office", "mortgage"].includes(mode);
                 data-popup-image={mode === "viewing" ? "" : undefined}
                 {...(data.image ? imageSize(data.image) : {})}
                 loading="lazy"
+                decoding="async"
                 hidden={!data.image}
               />
             )}
