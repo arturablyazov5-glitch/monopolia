@@ -3,17 +3,7 @@
   height: 500.681px;
   overflow: hidden;
   isolation: isolate;
-  background: var(--color-canvas);
-}
-.certificates-background {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(180deg);
-  width: max(100%, 1440px);
-  height: 620.273px;
-  max-width: none;
-  z-index: -1;
+  background: linear-gradient(to bottom, #17110f, #1a0b05);
 }
 .certificates-scene {
   position: relative;

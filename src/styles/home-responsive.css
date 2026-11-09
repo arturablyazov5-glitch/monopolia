@@ -244,7 +244,6 @@
   /* --- 5. Certificates --- */
   .home-desktop .certificates {
     height: auto;
-    background: var(--color-dark);
   }
   .home-desktop .certificates-scene {
     width: 100%;
