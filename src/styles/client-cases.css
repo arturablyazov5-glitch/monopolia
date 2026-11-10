@@ -319,6 +319,62 @@
   text-align: center;
   font: 20px/1.2 var(--font-heading);
 }
+.cases-empty-polaroid {
+  display: none;
+  width: min(680px, 95%);
+  margin: 0 auto;
+  padding: 14px 14px 48px;
+  background-color: var(--color-paper-warm);
+  background-image: var(--texture-paper-beige);
+  background-size: 240px;
+  transform: rotate(-2.5deg);
+  /* Рваный контур как у кнопок, прямые углы, глубже. */
+  mask-image: var(--brush-square-images);
+  mask-size:
+    14px 14px,
+    calc(100% - 26px) 14px,
+    14px 14px,
+    14px calc(100% - 26px),
+    calc(100% - 26px) calc(100% - 26px),
+    14px calc(100% - 26px),
+    14px 14px,
+    calc(100% - 26px) 14px,
+    14px 14px;
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+}
+.cases-empty-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  mask-image: var(--brush-square-images);
+  mask-size:
+    14px 14px,
+    calc(100% - 26px) 14px,
+    14px 14px,
+    14px calc(100% - 26px),
+    calc(100% - 26px) calc(100% - 26px),
+    14px calc(100% - 26px),
+    14px 14px,
+    calc(100% - 26px) 14px,
+    14px 14px;
+  mask-position: var(--brush-positions);
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+}
+.cases-empty.is-other {
+  margin-top: 40px;
+  /* Тень по рваному силуэту: drop-shadow на немаскированной обёртке. */
+  filter: drop-shadow(0 8px 14px rgb(25 15 10 / 12%));
+}
+/* Пустая категория не должна держать высоту полноценной карусели кейсов. */
+.client-cases:has(.cases-empty:not([hidden])) {
+  min-height: 0;
+}
+.cases-empty.is-other .cases-empty-polaroid {
+  display: block;
+}
 
 @media (max-width: 767px) {
   .case-person {

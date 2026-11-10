@@ -214,9 +214,19 @@ const cases = clientCases;
     <p class="sr-only" data-case-status aria-live="polite">
       {"Кейс 1 из"} {cases.length}
     </p>
-    <p class="cases-empty" data-case-empty hidden role="status">
-      {siteText("client-cases.text.30")}
-    </p>
+    <div class="cases-empty" data-case-empty hidden role="status">
+      <figure class="cases-empty-polaroid">
+        <img
+          class="cases-empty-photo"
+          src="/assets/cases/other-woman-wringing-rag.webp"
+          width="1536"
+          height="1024"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
   </div>
 </section>
 <script>
@@ -336,6 +346,7 @@ const cases = clientCases;
           : "Консультация по покупке недвижимости";
       scrollHint.hidden = categorySlides.length <= 1;
       empty.hidden = categorySlides.length !== 0;
+      empty.classList.toggle("is-other", category === "other");
       slides.forEach((slide) => {
         const active = slide === categorySlides[current];
         slide.classList.toggle("is-active", active);
