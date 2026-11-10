@@ -20,10 +20,6 @@
   .home-surface-run--reviews {
     background: var(--color-dark);
   }
-  /* Светлый стык отзывов и кейсов не должен сглаживаться в темную подложку. */
-  .home-surface-run:has(> .client-cases) {
-    background: linear-gradient(var(--color-paper) 2px, var(--color-dark) 2px);
-  }
 }
 
 @media (min-width: 2000px) {
@@ -82,5 +78,20 @@
 @media (max-width: 1199px) {
   .reviews-cases-background {
     width: max(100%, 1453.82px);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Обрезаем общий лист только после кейсов, перед тёмным блоком компании. */
+  .reviews-cases-paper {
+    background: none;
+    mask-image:
+      linear-gradient(var(--color-ink), var(--color-ink)),
+      url("/assets/gossip-paper-edge.svg");
+    mask-size:
+      100% calc(100% - 31px),
+      100% 32px;
+    mask-position: top, bottom;
+    mask-repeat: no-repeat;
   }
 }

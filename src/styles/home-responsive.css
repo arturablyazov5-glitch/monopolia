@@ -1462,15 +1462,6 @@
   /* Единый видимый отступ по обе стороны рваного стыка кейсов и компании. */
   .home-desktop .client-cases {
     padding-bottom: calc(var(--section-space) + 32px);
-    background: var(--color-paper);
-    mask-image:
-      linear-gradient(var(--color-ink), var(--color-ink)),
-      url("/assets/gossip-paper-edge.svg");
-    mask-size:
-      100% calc(100% - 31px),
-      100% 32px;
-    mask-position: top, bottom;
-    mask-repeat: no-repeat;
   }
   /* --- 10. CompanyAbout --- */
   .home-desktop .company-container {
@@ -1916,6 +1907,11 @@
    выступает на 8 px за верх секции (padding-top: 0);
    .home-services — .mobile-scroll-hint в анимации выступает за левый край
    секции на ~3 px, paint containment обрезал бы стрелку;
+   .company-guild — у .guild-card (paper-frame-deep) рваная рамка выступает
+   за карточку, а padding-top секции всего 19 px: paint containment
+   срезал верхнюю кромку;
+   .office-expansion — ::before карты .expansion-locations намеренно шире
+   секции ( bleed ), paint containment обрезал её по padding-box;
    .equal-interests — уже покрыта в equal-interests.css;
    .home-partners — секция легкая, выигрыш нулевой.
    contain-intrinsic-size:auto запоминает реальную высоту после первой
@@ -1940,14 +1936,6 @@
     .home-desktop .company-about {
       content-visibility: auto;
       contain-intrinsic-size: auto 1100px;
-    }
-    .home-desktop .company-guild {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 460px;
-    }
-    .home-desktop .office-expansion {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 570px;
     }
     .home-desktop .blockbuster-case {
       content-visibility: auto;
