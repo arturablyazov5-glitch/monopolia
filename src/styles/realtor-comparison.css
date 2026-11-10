@@ -91,7 +91,7 @@
        вне вьюпорта пропускаем её растрирование (как .buyer-audience),
        auto запоминает реальный размер после первого показа. */
     content-visibility: auto;
-    contain-intrinsic-size: auto 2200px;
+    contain-intrinsic-size: auto 2640px;
     /* Кромки входят в секцию: одинаковый свободный отступ с обеих сторон бумаги. */
     padding: calc(var(--section-space) + 32px) 20px;
   }

@@ -180,7 +180,7 @@
     /* Chrome может залипать композитный слой hero при прокрутке;
        пропускаем его отрисовку вне вьюпорта. */
     content-visibility: auto;
-    contain-intrinsic-size: auto 1600px;
+    contain-intrinsic-size: auto 650px;
   }
   .home-desktop .home-hero .hero-team {
     margin-top: calc(28px - var(--hero-gap-buttons-photo) * 0.35);

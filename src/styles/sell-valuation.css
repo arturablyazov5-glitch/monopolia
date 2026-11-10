@@ -647,10 +647,10 @@
       content-visibility: auto;
     }
     .sell-valuation-main {
-      contain-intrinsic-size: auto 1400px;
+      contain-intrinsic-size: auto 800px;
     }
     .sell-week {
-      contain-intrinsic-size: auto 1700px;
+      contain-intrinsic-size: auto 1200px;
     }
   }
 }

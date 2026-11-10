@@ -441,7 +441,7 @@
     /* Мокап окна Safari с десятками drop-shadow внутри: вне вьюпорта
        пропускаем растрирование секции (как .buyer-audience). */
     content-visibility: auto;
-    contain-intrinsic-size: auto 1200px;
+    contain-intrinsic-size: auto 1000px;
   }
   .buy-closed-base-container {
     gap: 32px;

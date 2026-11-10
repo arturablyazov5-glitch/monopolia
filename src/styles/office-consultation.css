@@ -283,6 +283,8 @@
     margin-top: 0;
     width: 100%;
   }
+  /* Рваный переход — сам SVG с заливкой #190f0a: маска на псевдоэлементе
+     плюс z-index:-1 на iOS не всегда доходила до композита. */
   .office-consultation::before {
     content: "";
     position: absolute;
@@ -290,10 +292,7 @@
     left: 0;
     top: calc(-1 * var(--office-edge-height));
     height: calc(var(--office-edge-height) + 1px);
-    background: var(--office-scene-background);
-    -webkit-mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
-      no-repeat;
-    mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+    background: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
       no-repeat;
     pointer-events: none;
     z-index: -1;
@@ -306,10 +305,7 @@
     z-index: -1;
     width: 100%;
     height: calc(var(--office-edge-height) + 1px);
-    background: var(--office-scene-background);
-    -webkit-mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
-      no-repeat;
-    mask: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
+    background: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
       no-repeat;
     transform: rotate(180deg);
     pointer-events: none;

@@ -236,7 +236,7 @@
      растеризуются только у видимых ячеек, а не у всей таблицы. */
   .comparison-risk tbody tr {
     content-visibility: auto;
-    contain-intrinsic-size: auto 150px;
+    contain-intrinsic-size: auto 240px;
   }
 }
 .comparison-approx {

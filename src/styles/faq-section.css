@@ -230,5 +230,11 @@
       transform: none;
       rotate: var(--faq-tilt);
     }
+    /* Раскрытие анимирует grid-template-rows — layout каждый кадр,
+       а карточка с 9-слойной маской Paper перерисовывалась целиком.
+       Отдельный слой держит маску отрепейнченной от остальной страницы. */
+    .faq-card-accordion {
+      transform: translateZ(0);
+    }
   }
 }

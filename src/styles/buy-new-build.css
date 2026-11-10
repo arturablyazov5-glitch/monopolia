@@ -110,7 +110,7 @@
     /* Лист с brush-масками и заметкой с drop-shadow: вне вьюпорта
        пропускаем растрирование (как .buyer-audience). */
     content-visibility: auto;
-    contain-intrinsic-size: auto 700px;
+    contain-intrinsic-size: auto 520px;
   }
   .buy-new-build-divider {
     display: none;

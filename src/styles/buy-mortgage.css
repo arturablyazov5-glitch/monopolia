@@ -584,7 +584,7 @@
      размер после первого показа, прыжка scrollbar нет. */
   .buy-mortgage {
     content-visibility: auto;
-    contain-intrinsic-size: auto 2600px;
+    contain-intrinsic-size: auto 2230px;
   }
   .buy-mortgage::before {
     content: none;

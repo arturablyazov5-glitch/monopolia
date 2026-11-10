@@ -233,11 +233,13 @@
 }
 
 /* iOS: у сцены своя маска поверх фона секции — отдельный слой,
-   скролл не перерисовывает поддерево. */
+   скролл не перерисовывает поддерево. translateX(-50%) обязателен:
+   сцена центрируется left:50% + сдвигом, translateZ(0) без него
+   сдвигал бы фото вправо. */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
     .blockbuster-scene {
-      transform: translateZ(0);
+      transform: translateX(-50%) translateZ(0);
     }
   }
 }

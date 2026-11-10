@@ -1914,6 +1914,8 @@
    clip-path разрешает bleed фото за пределы padding box;
    .director-invitation — у .paper-frame-deep внешняя рваная рамка
    выступает на 8 px за верх секции (padding-top: 0);
+   .home-services — .mobile-scroll-hint в анимации выступает за левый край
+   секции на ~3 px, paint containment обрезал бы стрелку;
    .equal-interests — уже покрыта в equal-interests.css;
    .home-partners — секция легкая, выигрыш нулевой.
    contain-intrinsic-size:auto запоминает реальную высоту после первой
@@ -1921,29 +1923,55 @@
 @media (max-width: 767px) {
   @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
     (contain-intrinsic-size: auto 1px) {
-    .home-desktop .fast-sale,
-    .home-desktop .private-catalog,
-    .home-desktop .certificates,
-    .home-desktop .company-about,
-    .home-desktop .company-guild,
-    .home-desktop .office-expansion,
-    .home-desktop .blockbuster-case,
-    .home-desktop .home-telegram,
-    .home-desktop .home-services,
+    /* У каждой своя оценка высоты (замерено на 390 px): общий 1000 px
+       давал скачок скроллбара на сотни пикселей при первой отрисовке. */
+    .home-desktop .fast-sale {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 700px;
+    }
+    .home-desktop .private-catalog {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 750px;
+    }
+    .home-desktop .certificates {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 400px;
+    }
+    .home-desktop .company-about {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1100px;
+    }
+    .home-desktop .company-guild {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 460px;
+    }
+    .home-desktop .office-expansion {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 570px;
+    }
+    .home-desktop .blockbuster-case {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 740px;
+    }
+    .home-desktop .home-telegram {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1250px;
+    }
     .home-desktop .home-recruiting {
       content-visibility: auto;
-      contain-intrinsic-size: auto 1000px;
+      contain-intrinsic-size: auto 1080px;
     }
   }
 }
 
 /* iOS: портреты и сцена с mask-image на мобильной — в композитные слои,
    чтобы скролл не перерисовывал маскированный растр каждый кадр. */
+/* .blockbuster-scene не здесь: ей нужен translateX(-50%) для центровки,
+   промоция слоя задана в blockbuster-case.css с сохранением сдвига. */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 767px) {
     .home-desktop .buyer-portrait,
-    .home-desktop .fast-sale-portrait,
-    .home-desktop .blockbuster-scene {
+    .home-desktop .fast-sale-portrait {
       transform: translateZ(0);
     }
   }

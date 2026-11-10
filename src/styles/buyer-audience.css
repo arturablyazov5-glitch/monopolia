@@ -121,7 +121,7 @@
     /* Chrome может залипать композитный слой первых экранов при прокрутке;
        пропускаем отрисовку секции вне вьюпорта. */
     content-visibility: auto;
-    contain-intrinsic-size: auto 1400px;
+    contain-intrinsic-size: auto 820px;
   }
   .home-desktop .buyer-audience h2 {
     text-wrap: wrap;

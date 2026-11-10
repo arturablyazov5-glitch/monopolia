@@ -583,7 +583,7 @@
     (contain-intrinsic-size: auto 1px) {
     .deal-step {
       content-visibility: auto;
-      contain-intrinsic-size: auto 720px;
+      contain-intrinsic-size: auto 350px;
     }
   }
 }
