@@ -149,8 +149,8 @@
 @media (max-width: 767px) {
   .office-consultation {
     --office-edge-height: 28px;
-    margin-block: var(--office-edge-height);
-    padding-top: var(--section-space);
+    padding-block: calc(var(--section-space) + var(--office-edge-height))
+      var(--office-edge-height);
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -220,9 +220,11 @@
 @media (max-width: 767px) {
   .office-consultation {
     --office-scene-background: #190f0a;
-    background: var(--office-scene-background);
-    overflow-x: clip;
-    overflow-y: visible;
+    background: linear-gradient(
+        var(--office-scene-background),
+        var(--office-scene-background)
+      )
+      center / 100% calc(100% - 2 * var(--office-edge-height)) no-repeat;
   }
   .office-consultation-photo.mobile-photo-scene {
     display: block;
@@ -283,31 +285,22 @@
     margin-top: 0;
     width: 100%;
   }
-  /* Рваный переход — сам SVG с заливкой #190f0a: маска на псевдоэлементе
-     плюс z-index:-1 на iOS не всегда доходила до композита. */
-  .office-consultation::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: calc(-1 * var(--office-edge-height));
-    height: calc(var(--office-edge-height) + 1px);
-    background: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
-      no-repeat;
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* Края рисуются внутри секции, в полосах, зарезервированных padding-block. */
+  .office-consultation::before,
   .office-consultation::after {
     content: "";
     position: absolute;
-    bottom: calc(-1 * var(--office-edge-height));
-    left: 0;
-    z-index: -1;
-    width: 100%;
+    inset-inline: 0;
     height: calc(var(--office-edge-height) + 1px);
     background: url("/assets/edges/office-mobile-top.svg") center / 100% 100%
       no-repeat;
-    transform: rotate(180deg);
     pointer-events: none;
+  }
+  .office-consultation::before {
+    top: 0;
+  }
+  .office-consultation::after {
+    bottom: 0;
+    transform: rotate(180deg);
   }
 }

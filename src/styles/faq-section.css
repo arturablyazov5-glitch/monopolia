@@ -38,7 +38,7 @@
 .faq-card.faq-card-accordion {
   display: flex;
   flex-direction: column;
-  /* Отступ до ответа задает сам ответ (margin-top), чтобы закрытая карточка не оставляла «дырку» */
+  /* Отступ входит в анимируемую высоту ответа. */
   gap: 0;
   --faq-gap: 20px;
   /* В Figma обводка 16 px внутренняя: 32 px от внешнего края до контента */
@@ -100,47 +100,24 @@
 .faq-toggle:focus-visible .faq-toggle-bg {
   filter: brightness(0) invert(0.11);
 }
-/* Плавное раскрытие: высота анимируется через grid 1fr ↔ 0fr */
-.faq-answer {
-  display: grid;
-  grid-template-rows: 1fr;
-  margin-top: var(--faq-gap);
-  transition:
-    grid-template-rows 0.4s ease,
-    margin-top 0.4s ease,
-    opacity 0.3s ease,
-    visibility 0s;
-}
 .faq-answer.is-closed {
-  grid-template-rows: 0fr;
-  margin-top: 0;
-  opacity: 0;
+  height: 0;
   visibility: hidden;
-  /* visibility прячем только после того, как ответ свернулся */
-  transition:
-    grid-template-rows 0.4s ease,
-    margin-top 0.4s ease,
-    opacity 0.25s ease,
-    visibility 0s 0.4s;
+  transition: visibility 0s 0.4s;
+}
+.faq-answer-clip {
+  height: 100%;
+  /* Оставляем 4 px для выступающего контура кнопки. */
+  clip-path: inset(0 -4px -4px);
 }
 .faq-answer-inner {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
-  min-height: 0;
-  overflow: hidden;
-  /* Заливка кнопки выступает на 4 px: сохраняем ее рваный контур
-     внутри обрезаемой области анимации раскрытия. */
-  padding: 4px;
-  margin: -4px;
-}
-.faq-answer.is-closed .faq-answer-inner {
-  padding-block: 0;
-  margin-block: 0;
+  padding-top: var(--faq-gap);
 }
 @media (prefers-reduced-motion: reduce) {
-  .faq-answer,
   .faq-answer.is-closed,
   .faq-toggle-cross,
   .faq-toggle-bg {
@@ -221,20 +198,22 @@
   }
 }
 
-/* iOS Safari глючит на transform: rotate() + mask: рваный край Paper
-   мерцает, буквы «плывут». Отдельное свойство rotate рендерится
-   иначе — пробуем его только на iPhone, визуально наклон тот же. */
+/* Safari на iOS плавно меняет высоту, отрисовывая один слой бумаги. */
 @supports (-webkit-touch-callout: none) {
+  .paper.faq-card-accordion {
+    filter: none;
+  }
+  .paper.faq-card-accordion::before {
+    --brush-ring: 0px;
+  }
+  .paper.faq-card-accordion::after {
+    content: none;
+  }
+
   @media (max-width: 767px) {
     .faq-section .faq-slot {
       transform: none;
       rotate: var(--faq-tilt);
-    }
-    /* Раскрытие анимирует grid-template-rows — layout каждый кадр,
-       а карточка с 9-слойной маской Paper перерисовывалась целиком.
-       Отдельный слой держит маску отрепейнченной от остальной страницы. */
-    .faq-card-accordion {
-      transform: translateZ(0);
     }
   }
 }

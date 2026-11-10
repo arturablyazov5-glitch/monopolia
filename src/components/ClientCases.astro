@@ -277,21 +277,30 @@ const cases = clientCases;
       const previousHeight = content.getBoundingClientRect().height;
       if (Math.abs(previousHeight - height) < 1) return;
 
+      const animateCta =
+        animateButton && !reduceMotion.matches && !mobileCta.hidden;
+      const transform =
+        animateCta && ctaAnimation?.playState === "running"
+          ? getComputedStyle(mobileCta).transform
+          : "none";
+      const currentOffset =
+        transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m42;
+      ctaAnimation?.cancel();
+      ctaAnimation = null;
       content.style.height = `${height}px`;
-      // Only animate the button on the compositor. Animating the scroll
-      // container's height repaints the whole section on every frame.
-      // The running animation always lands on translate3d(0,0,0), so it is
-      // only cancelled when a new one replaces it — not by resize updates.
-      if (animateButton && !reduceMotion.matches && !mobileCta.hidden) {
-        ctaAnimation?.cancel();
-        const distance = previousHeight - height;
+
+      if (animateCta) {
+        // CTA следует сразу за каруселью, поэтому её смещение равно
+        // разнице высот. Не измеряем раскладку сразу после записи height.
+        const distance = previousHeight - height + currentOffset;
+        if (Math.abs(distance) < 1) return;
         ctaAnimation = mobileCta.animate(
           [
             { transform: `translate3d(0, ${distance}px, 0)` },
             { transform: "translate3d(0, 0, 0)" },
           ],
           {
-            duration: Math.min(480, Math.max(240, Math.abs(distance) * 0.4)),
+            duration: 240,
             easing: "cubic-bezier(0.22, 1, 0.36, 1)",
           },
         );

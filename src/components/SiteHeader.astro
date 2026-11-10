@@ -312,20 +312,12 @@ const isCurrentMenuPage = (href: string) =>
     let animations: Animation[] = [];
     let pending = Promise.resolve(true);
     let resolvePending: ((completed: boolean) => void) | undefined;
-    let scrollY = 0;
-    let bodyStyle = "";
     let rootStyle = "";
     let scrollLocked = false;
     const unlock = () => {
       if (!scrollLocked) return;
       scrollLocked = false;
-      document.body.style.cssText = bodyStyle;
       document.documentElement.style.cssText = rootStyle;
-      // Avoid the site's smooth scrolling when restoring the saved position.
-      const behavior = document.documentElement.style.scrollBehavior;
-      document.documentElement.style.scrollBehavior = "auto";
-      window.scrollTo({ top: scrollY, behavior: "instant" });
-      document.documentElement.style.scrollBehavior = behavior;
     };
     const reflectOpen = (open: boolean) => {
       menu.setAttribute("aria-expanded", String(open));
@@ -354,10 +346,12 @@ const isCurrentMenuPage = (href: string) =>
       surface.inert = true;
       reflectOpen(false);
       header.classList.remove("menu-open");
+      // Keep the final animation frame until the modal leaves the top layer.
+      const wasOpen = drawer.open;
+      if (wasOpen) drawer.close();
       cancelAnimations();
       panel.hidden = true;
-      if (!drawer.open) return;
-      drawer.close();
+      if (!wasOpen) return;
       unlock();
       panelHome.append(panel);
       cityHome.after(cityPicker);
@@ -412,16 +406,12 @@ const isCurrentMenuPage = (href: string) =>
         panel.hidden = false;
         surface.append(panel);
         panel.querySelector(".menu-panel-city")!.append(cityPicker);
-        scrollY = window.scrollY;
-        bodyStyle = document.body.style.cssText;
         rootStyle = document.documentElement.style.cssText;
         scrollLocked = true;
         const gutter = window.innerWidth - document.documentElement.clientWidth;
         if (gutter) document.documentElement.style.scrollbarGutter = "stable";
         document.documentElement.style.overflow = "hidden";
-        document.body.style.position = "fixed";
-        document.body.style.top = `-${scrollY}px`;
-        document.body.style.width = "100%";
+        document.documentElement.style.overscrollBehavior = "none";
         drawer.showModal();
         panel.scrollTop = 0;
       }

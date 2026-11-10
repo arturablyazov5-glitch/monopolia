@@ -31,6 +31,7 @@
   .menu-drawer::backdrop {
     background: transparent;
     backdrop-filter: none;
+    opacity: 0;
   }
   .menu-drawer-backdrop {
     position: absolute;
@@ -60,6 +61,9 @@
   }
   .menu-drawer[data-menu-state="open"] .menu-drawer-backdrop {
     opacity: 1;
+  }
+  .menu-drawer[data-menu-state="closed"] .menu-drawer-backdrop {
+    visibility: hidden;
   }
   /* Only the paper background is masked. The existing left-edge SVG and
      the solid interior overlap by 2px; the other three edges stay flush.
