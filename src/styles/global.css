@@ -1879,6 +1879,11 @@ button.city:hover {
     .menu-panel-shadow {
       transform: translateZ(0);
     }
+    .menu-panel-shadow .city-menu-shadow {
+      filter: none;
+      transform: none;
+      box-shadow: 0 8px 12px rgb(from var(--color-ink) r g b / 14%);
+    }
   }
 }
 /* Якорная навигация: на iOS секции ниже фолда пропускают рендер

@@ -244,6 +244,7 @@ const cases = clientCases;
     let scrolling = false;
     let scrollFrame = 0;
     let ctaAnimation: Animation | null = null;
+    let targetHeight: number | null = null;
     let initialized = false;
     let scrollSettleTimer: ReturnType<typeof setTimeout> | undefined;
     // offsetLeft не меняется во время прокрутки: кэшируем и сбрасываем
@@ -266,6 +267,7 @@ const cases = clientCases;
       if (!mobile.matches || !active) {
         ctaAnimation?.cancel();
         ctaAnimation = null;
+        targetHeight = null;
         content.classList.remove("is-resizing");
         content.style.removeProperty("height");
         return;
@@ -275,15 +277,19 @@ const cases = clientCases;
         active.getBoundingClientRect().height +
         parseFloat(style.paddingTop) +
         parseFloat(style.paddingBottom);
+      if (ctaAnimation?.playState === "running" && targetHeight === height)
+        return;
       const previousHeight = content.getBoundingClientRect().height;
       if (Math.abs(previousHeight - height) < 1) return;
 
       const animateCta =
         animateButton && !reduceMotion.matches && !mobileCta.hidden;
+      // Preserve the current layout before cancelling a previous effect.
+      content.style.height = `${previousHeight}px`;
       ctaAnimation?.cancel();
       ctaAnimation = null;
-      content.classList.remove("is-resizing");
-      content.style.height = `${height}px`;
+      targetHeight = height;
+      content.classList.toggle("is-resizing", animateCta);
 
       if (animateCta) {
         content.classList.add("is-resizing");
@@ -293,6 +299,7 @@ const cases = clientCases;
           [{ height: `${previousHeight}px` }, { height: `${height}px` }],
           {
             duration: 320,
+            fill: "both",
             easing: "cubic-bezier(0.4, 0, 0.2, 1)",
           },
         );
@@ -300,12 +307,16 @@ const cases = clientCases;
         animation.finished
           .then(() => {
             if (ctaAnimation !== animation) return;
+            content.style.height = `${height}px`;
+            animation.cancel();
             content.classList.remove("is-resizing");
             ctaAnimation = null;
           })
           .catch(() => {
             // Retargeting cancels the previous animation.
           });
+      } else {
+        content.style.height = `${height}px`;
       }
     };
     const caseResize = new ResizeObserver(() => {
