@@ -342,6 +342,15 @@
 }
 
 @media (max-width: 767px) {
+  @supports (-webkit-touch-callout: none) {
+    /* Только iPhone: группа реплики правее на 3 px, нижний паддинг меньше. */
+    .deal-insurance-client {
+      left: calc(50% - 43px);
+    }
+    .deal-insurance-client .speech-bubble p {
+      padding-bottom: 8px;
+    }
+  }
   @supports not (-webkit-touch-callout: none) {
     .deal-insurance-client {
       translate: 11px 0;

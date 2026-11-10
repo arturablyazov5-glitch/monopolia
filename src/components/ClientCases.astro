@@ -279,29 +279,18 @@ const cases = clientCases;
 
       const animateCta =
         animateButton && !reduceMotion.matches && !mobileCta.hidden;
-      const transform =
-        animateCta && ctaAnimation?.playState === "running"
-          ? getComputedStyle(mobileCta).transform
-          : "none";
-      const currentOffset =
-        transform === "none" ? 0 : new DOMMatrixReadOnly(transform).m42;
       ctaAnimation?.cancel();
       ctaAnimation = null;
       content.style.height = `${height}px`;
 
       if (animateCta) {
-        // CTA следует сразу за каруселью, поэтому её смещение равно
-        // разнице высот. Не измеряем раскладку сразу после записи height.
-        const distance = previousHeight - height + currentOffset;
-        if (Math.abs(distance) < 1) return;
-        ctaAnimation = mobileCta.animate(
-          [
-            { transform: `translate3d(0, ${distance}px, 0)` },
-            { transform: "translate3d(0, 0, 0)" },
-          ],
+        // Animate the layout itself so the button and everything below it
+        // move together, including when a running animation is retargeted.
+        ctaAnimation = content.animate(
+          [{ height: `${previousHeight}px` }, { height: `${height}px` }],
           {
-            duration: 240,
-            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            duration: 320,
+            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
           },
         );
       }

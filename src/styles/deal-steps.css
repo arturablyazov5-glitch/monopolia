@@ -574,16 +574,5 @@
   overflow: visible;
 }
 
-/* iOS Safari: карточки шагов далеко за экраном не участвуют в paint.
-   contain-intrinsic-size с auto держит оценку высоты до первой отрисовки
-   и запоминает реальную после неё — высота списка и прогресс не прыгают.
-   Маска прогресса остается на ::before (см. комментарий выше про дрожание). */
-@media (max-width: 767px) {
-  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
-    (contain-intrinsic-size: auto 1px) {
-    .deal-step {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 350px;
-    }
-  }
-}
+/* Sticky-прогресс требует стабильной геометрии списка: все шаги
+   участвуют в раскладке сразу, без подмены высоты при прокрутке. */

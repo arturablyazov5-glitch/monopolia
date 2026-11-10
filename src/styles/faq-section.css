@@ -68,6 +68,13 @@
   flex: 1 0 0;
   min-width: 0;
 }
+/* Keep text on stable layers while the tilted paper changes height.
+   These layers persist before and after expansion to avoid a raster switch. */
+.faq-question-text,
+.faq-answer-inner {
+  transform: translateZ(0);
+  transform-origin: left top;
+}
 .faq-toggle-icon {
   position: relative;
   flex-shrink: 0;

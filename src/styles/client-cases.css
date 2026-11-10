@@ -440,10 +440,6 @@
    ничего не меняет. */
 @media (max-width: 767px) {
   @supports (-webkit-touch-callout: none) {
-    .home-desktop .client-cases .cases-mobile-cta {
-      /* Готовим слой заранее, пока пользователь листает кейсы. */
-      will-change: transform;
-    }
     .home-desktop .client-cases .cases-content {
       will-change: scroll-position;
     }
