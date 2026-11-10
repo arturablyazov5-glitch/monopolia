@@ -576,3 +576,24 @@
 
 /* Sticky-прогресс требует стабильной геометрии списка: все шаги
    участвуют в раскладке сразу, без подмены высоты при прокрутке. */
+
+.deal-progress-slot {
+  display: contents;
+}
+@media (max-width: 767px) {
+  .deal-progress-slot {
+    display: block;
+    margin-top: 24px;
+  }
+  .deal-progress-slot > .deal-progress {
+    position: relative;
+    top: auto;
+    margin-top: 0;
+  }
+  .deal-progress-slot > .deal-progress.is-fixed {
+    position: fixed;
+    top: var(--progress-top);
+    left: var(--progress-left);
+    width: var(--progress-width);
+  }
+}

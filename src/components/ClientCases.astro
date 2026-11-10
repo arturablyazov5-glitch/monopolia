@@ -266,6 +266,7 @@ const cases = clientCases;
       if (!mobile.matches || !active) {
         ctaAnimation?.cancel();
         ctaAnimation = null;
+        content.classList.remove("is-resizing");
         content.style.removeProperty("height");
         return;
       }
@@ -281,9 +282,11 @@ const cases = clientCases;
         animateButton && !reduceMotion.matches && !mobileCta.hidden;
       ctaAnimation?.cancel();
       ctaAnimation = null;
+      content.classList.remove("is-resizing");
       content.style.height = `${height}px`;
 
       if (animateCta) {
+        content.classList.add("is-resizing");
         // Animate the layout itself so the button and everything below it
         // move together, including when a running animation is retargeted.
         ctaAnimation = content.animate(
@@ -293,6 +296,16 @@ const cases = clientCases;
             easing: "cubic-bezier(0.4, 0, 0.2, 1)",
           },
         );
+        const animation = ctaAnimation;
+        animation.finished
+          .then(() => {
+            if (ctaAnimation !== animation) return;
+            content.classList.remove("is-resizing");
+            ctaAnimation = null;
+          })
+          .catch(() => {
+            // Retargeting cancels the previous animation.
+          });
       }
     };
     const caseResize = new ResizeObserver(() => {

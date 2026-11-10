@@ -449,3 +449,8 @@
     }
   }
 }
+
+/* Keep the viewport steady while the carousel changes the page height. */
+html:has(.cases-content.is-resizing) {
+  overflow-anchor: none;
+}

@@ -367,15 +367,6 @@
   }
 }
 
-/* iOS Safari: сцена с фото, SVG-тенью и масштабированным stage
-   пропускает отрисовку вне экрана; auto в contain-intrinsic-size
-   запоминает реальную высоту после первой отрисовки. */
-@media (max-width: 767px) {
-  @supports (-webkit-touch-callout: none) and (content-visibility: auto) and
-    (contain-intrinsic-size: auto 1px) {
-    .deal-insurance {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 740px;
-    }
-  }
-}
+/* iOS Safari: НЕ ставим content-visibility на .deal-insurance —
+   paint containment обрезал бы SVG-тень и края сцены, которые
+   намеренно выходят за padding-box секции (margin: 0 20px). */

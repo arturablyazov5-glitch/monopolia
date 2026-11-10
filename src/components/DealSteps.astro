@@ -129,21 +129,23 @@ const {
           </picture>
         </div>
         <p class="deal-mission-text">{missionText}</p>
-        <div
-          class="deal-progress"
-          role="progressbar"
-          aria-label="Пройдено шагов сделки"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow="0"
-          data-deal-progress
-        >
-          <span class="deal-progress-track">
-            <span class="deal-progress-fill" data-deal-progress-fill></span>
-          </span>
-          <span class="deal-progress-value" data-deal-progress-value>
-            0%
-          </span>
+        <div class="deal-progress-slot">
+          <div
+            class="deal-progress"
+            role="progressbar"
+            aria-label="Пройдено шагов сделки"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+            data-deal-progress
+          >
+            <span class="deal-progress-track">
+              <span class="deal-progress-fill" data-deal-progress-fill></span>
+            </span>
+            <span class="deal-progress-value" data-deal-progress-value>
+              0%
+            </span>
+          </div>
         </div>
       </div>
 
@@ -370,6 +372,11 @@ const {
       "[data-deal-progress-value]",
     );
     if (!list || !bar || !fill || !value) continue;
+    const slot = bar.parentElement!;
+    const mobile = matchMedia("(max-width: 767px)");
+    let barStart = 0;
+    let barHeight = 0;
+    let barTop = 80;
     let frame = 0;
     let previousRatio = -1;
     let previousPercent = -1;
@@ -382,10 +389,38 @@ const {
       const rect = list.getBoundingClientRect();
       docTop = rect.top + window.scrollY;
       height = rect.height;
+      if (mobile.matches) {
+        barHeight = bar.offsetHeight;
+        slot.style.height = `${barHeight}px`;
+        const slotRect = slot.getBoundingClientRect();
+        barStart = slotRect.top + window.scrollY;
+        barTop =
+          parseFloat(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--header-height",
+            ),
+          ) + 24;
+        bar.style.setProperty("--progress-left", `${slotRect.left}px`);
+        bar.style.setProperty("--progress-width", `${slotRect.width}px`);
+      } else {
+        slot.style.removeProperty("height");
+        bar.classList.remove("is-fixed");
+      }
     };
     const update = () => {
       frame = 0;
       if (Number.isNaN(docTop)) measure();
+      if (mobile.matches) {
+        const fixed = window.scrollY >= barStart - barTop;
+        bar.classList.toggle("is-fixed", fixed);
+        if (fixed) {
+          const endTop = Math.min(
+            barTop,
+            docTop + height - window.scrollY - barHeight,
+          );
+          bar.style.setProperty("--progress-top", `${endTop}px`);
+        }
+      }
       const top = docTop - window.scrollY;
       const ratio = Math.min(
         1,
