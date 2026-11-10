@@ -273,7 +273,9 @@
     margin-left: -8px;
   }
   .deal-insurance-client .speech-bubble p {
-    padding: 12px 16px 12px 12px;
+    /* Сдвиг эмодзи влево без изменения ширины реплики: +4px справа,
+       −4px слева — сумма паддингов та же. */
+    padding: 12px 16px 12px 8px;
     font-size: 14px;
   }
   .deal-insurance-client > p,
