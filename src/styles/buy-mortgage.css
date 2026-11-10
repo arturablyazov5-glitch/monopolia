@@ -181,7 +181,8 @@
 }
 .buy-mortgage-range input {
   appearance: none;
-  height: 16px;
+  --range-hit-height: 44px;
+  height: var(--range-hit-height);
   margin: 0;
   background: linear-gradient(
       90deg,
@@ -191,55 +192,53 @@
     )
     center / 100% 1px no-repeat;
 }
+/* The native track and thumb accept input across the full control height. */
+.buy-mortgage-range input::-webkit-slider-runnable-track {
+  height: var(--range-hit-height);
+}
+.buy-mortgage-range input::-moz-range-track {
+  height: var(--range-hit-height);
+}
 .buy-mortgage-range input::-webkit-slider-thumb {
   appearance: none;
   width: 16px;
-  height: 16px;
+  height: var(--range-hit-height);
   border: 0;
-  background: var(--color-accent);
-  border-radius: 50%;
-  box-shadow: none;
+  background: radial-gradient(
+      ellipse closest-side,
+      var(--color-accent) 98%,
+      transparent
+    )
+    center / 16px 16px no-repeat;
+  transition:
+    background-size var(--duration-fast) ease,
+    transform var(--duration-fast) ease;
 }
 .buy-mortgage-range input::-moz-range-thumb {
   width: 16px;
-  height: 16px;
+  height: var(--range-hit-height);
   border: 0;
-  background: var(--color-accent);
-  border-radius: 50%;
-  box-shadow: none;
-}
-/* Hover на точке: чуть вырастает и темнеет, при перетаскивании — еще сильнее */
-.buy-mortgage-range input {
-  cursor: pointer;
-}
-.buy-mortgage-range input::-webkit-slider-thumb {
+  background: radial-gradient(
+      ellipse closest-side,
+      var(--color-accent) 98%,
+      transparent
+    )
+    center / 16px 16px no-repeat;
   transition:
-    transform var(--duration-fast) ease,
-    filter var(--duration-fast) ease;
-}
-.buy-mortgage-range input::-moz-range-thumb {
-  transition:
-    transform var(--duration-fast) ease,
-    filter var(--duration-fast) ease;
-}
-.buy-mortgage-range input:hover::-webkit-slider-thumb,
-.buy-mortgage-range input:focus-visible::-webkit-slider-thumb {
-  transform: scale(1.3);
-  filter: brightness(0.85);
-}
-.buy-mortgage-range input:hover::-moz-range-thumb,
-.buy-mortgage-range input:focus-visible::-moz-range-thumb {
-  transform: scale(1.3);
-  filter: brightness(0.85);
+    background-size var(--duration-fast) ease,
+    transform var(--duration-fast) ease;
 }
 .buy-mortgage-range input:active {
   cursor: grabbing;
 }
+/* The active circle can paint outside the thumb's 16px travel footprint. */
 .buy-mortgage-range input:active::-webkit-slider-thumb {
-  transform: scale(1.45);
+  transform: scaleX(1.45);
+  background-size: 16px 23.2px;
 }
 .buy-mortgage-range input:active::-moz-range-thumb {
-  transform: scale(1.45);
+  transform: scaleX(1.45);
+  background-size: 16px 23.2px;
 }
 .buy-mortgage-range > span {
   font: var(--text-small) / 1.2 var(--font-body);
@@ -460,7 +459,7 @@
     order: -1;
   }
   .buy-mortgage-range input {
-    height: 44px;
+    --range-hit-height: 56px;
   }
   .buy-mortgage-range output {
     justify-self: center;

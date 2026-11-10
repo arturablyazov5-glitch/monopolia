@@ -275,7 +275,7 @@
   .deal-insurance-client .speech-bubble p {
     /* Сдвиг эмодзи влево без изменения ширины реплики: +4px справа,
        −4px слева — сумма паддингов та же. */
-    padding: 12px 16px 12px 8px;
+    padding: 10px 16px 10px 8px;
     font-size: 14px;
   }
   .deal-insurance-client > p,
@@ -307,9 +307,9 @@
   }
   .deal-insurance-client {
     position: absolute;
-    left: calc(50% - 49px);
+    left: calc(50% - 46px);
     right: auto;
-    top: calc(var(--bubbles) + 130px * var(--stage-k) + 22px);
+    top: calc(var(--bubbles) + 130px * var(--stage-k) + 25px);
     align-self: auto;
   }
   .deal-insurance-actions {
@@ -342,6 +342,15 @@
 }
 
 @media (max-width: 767px) {
+  @supports not (-webkit-touch-callout: none) {
+    .deal-insurance-client {
+      translate: 11px 0;
+    }
+    .deal-insurance-client .speech-bubble p {
+      padding-block: 11px 9px;
+    }
+  }
+
   .deal-insurance-heading .deal-insurance-hand {
     margin-inline-start: 0.2em;
     position: relative;

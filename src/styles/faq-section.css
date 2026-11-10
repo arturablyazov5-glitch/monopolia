@@ -103,7 +103,7 @@
 .faq-answer.is-closed {
   height: 0;
   visibility: hidden;
-  transition: visibility 0s 0.4s;
+  transition: visibility 0s 280ms;
 }
 .faq-answer-clip {
   height: 100%;

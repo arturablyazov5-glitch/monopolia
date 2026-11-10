@@ -308,7 +308,8 @@ const cases = clientCases;
     };
     const caseResize = new ResizeObserver(() => {
       invalidateCaseOffsets();
-      fitActiveCase();
+      // A late size change must continue from the CTA's visible position.
+      fitActiveCase(initialized);
     });
     slides.forEach((slide) => caseResize.observe(slide));
 

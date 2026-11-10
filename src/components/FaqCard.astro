@@ -124,6 +124,7 @@ const blocks = typeof answer === "string" ? [answer] : answer;
 <script>
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const panelAnimations = new WeakMap<HTMLElement, Animation>();
+  const panelHeight = (panel: HTMLElement) => getComputedStyle(panel).height;
 
   // Один делегированный обработчик вместо слушателя на каждую кнопку.
   document.addEventListener("click", (event) => {
@@ -138,13 +139,16 @@ const blocks = typeof answer === "string" ? [answer] : answer;
     );
     if (panel) {
       const animateHeight = !reducedMotion.matches;
-      const from = animateHeight ? panel.offsetHeight : 0;
+      const from = animateHeight ? panelHeight(panel) : "0px";
       panelAnimations.get(panel)?.cancel();
       panel.classList.toggle("is-closed", expanded);
       if (animateHeight) {
         const animation = panel.animate(
-          [{ height: `${from}px` }, { height: `${panel.offsetHeight}px` }],
-          { duration: 400, easing: "ease" },
+          [{ height: from }, { height: panelHeight(panel) }],
+          {
+            duration: 280,
+            easing: "ease",
+          },
         );
         panelAnimations.set(panel, animation);
       }
