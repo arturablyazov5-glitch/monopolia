@@ -250,12 +250,8 @@ const cases = clientCases;
     const scrollHint = root.querySelector<HTMLElement>(".mobile-scroll-hint")!;
     const mobileCta = root.querySelector<HTMLElement>(".cases-mobile-cta")!;
     const mobileButton = mobileCta.querySelector<HTMLElement>(".button")!;
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
     let scrolling = false;
     let scrollFrame = 0;
-    let ctaAnimation: Animation | null = null;
-    let targetHeight: number | null = null;
-    let initialized = false;
     let scrollSettleTimer: ReturnType<typeof setTimeout> | undefined;
     // offsetLeft не меняется во время прокрутки: кэшируем и сбрасываем
     // только при реальной смене раскладки (resize, смена категории).
@@ -270,72 +266,6 @@ const cases = clientCases;
       contentOffsetLeft = content.offsetLeft;
       slideOffsets = categorySlides.map((slide) => slide.offsetLeft);
     };
-    const fitActiveCase = (animateButton = false) => {
-      // Do not move the CTA while the user is swiping between cards.
-      if (scrolling) return;
-      const active = categorySlides[current];
-      if (!mobile.matches || !active) {
-        ctaAnimation?.cancel();
-        ctaAnimation = null;
-        targetHeight = null;
-        content.classList.remove("is-resizing");
-        content.style.removeProperty("height");
-        return;
-      }
-      const style = getComputedStyle(content);
-      const height =
-        active.getBoundingClientRect().height +
-        parseFloat(style.paddingTop) +
-        parseFloat(style.paddingBottom);
-      if (ctaAnimation?.playState === "running" && targetHeight === height)
-        return;
-      const previousHeight = content.getBoundingClientRect().height;
-      if (Math.abs(previousHeight - height) < 1) return;
-
-      const animateCta =
-        animateButton && !reduceMotion.matches && !mobileCta.hidden;
-      // Preserve the current layout before cancelling a previous effect.
-      content.style.height = `${previousHeight}px`;
-      ctaAnimation?.cancel();
-      ctaAnimation = null;
-      targetHeight = height;
-      content.classList.toggle("is-resizing", animateCta);
-
-      if (animateCta) {
-        content.classList.add("is-resizing");
-        // Animate the layout itself so the button and everything below it
-        // move together, including when a running animation is retargeted.
-        ctaAnimation = content.animate(
-          [{ height: `${previousHeight}px` }, { height: `${height}px` }],
-          {
-            duration: 320,
-            fill: "both",
-            easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-          },
-        );
-        const animation = ctaAnimation;
-        animation.finished
-          .then(() => {
-            if (ctaAnimation !== animation) return;
-            content.style.height = `${height}px`;
-            animation.cancel();
-            content.classList.remove("is-resizing");
-            ctaAnimation = null;
-          })
-          .catch(() => {
-            // Retargeting cancels the previous animation.
-          });
-      } else {
-        content.style.height = `${height}px`;
-      }
-    };
-    const caseResize = new ResizeObserver(() => {
-      invalidateCaseOffsets();
-      // A late size change must continue from the CTA's visible position.
-      fitActiveCase(initialized);
-    });
-    slides.forEach((slide) => caseResize.observe(slide));
-
     const updateCase = (index: number, focusedButton?: HTMLButtonElement) => {
       current = Math.max(0, Math.min(index, categorySlides.length - 1));
       content.hidden = categorySlides.length === 0;
@@ -358,8 +288,6 @@ const cases = clientCases;
         );
         slide.inert = mobile.matches ? !included : !active;
       });
-      fitActiveCase(initialized);
-      initialized = true;
       const previousDisabled = current === 0 || categorySlides.length <= 1;
       const nextDisabled =
         current === categorySlides.length - 1 || categorySlides.length <= 1;
@@ -429,7 +357,6 @@ const cases = clientCases;
       scrollFrame = 0;
       scrolling = false;
       syncScrolledCase();
-      fitActiveCase(true);
     };
     content.addEventListener(
       "scroll",

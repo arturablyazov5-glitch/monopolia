@@ -12,8 +12,14 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6C12 9.31371 9.31371 12 6 12C2.68629 12 0 9.31371 0 6C0 2.68629 2.68629 0 6 0C9.31371 0 12 2.68629 12 6ZM6 2.05714C6.28403 2.05714 6.51429 2.2874 6.51429 2.57143L6.51429 5.48571H8.57143C8.85546 5.48571 9.08571 5.71597 9.08571 6C9.08571 6.28403 8.85546 6.51429 8.57143 6.51429H6C5.71597 6.51429 5.48571 6.28403 5.48571 6V2.57143C5.48571 2.2874 5.71597 2.05714 6 2.05714Z" fill="var(--color-dark)"></path>
   </svg>
-  {time}
+  <span>{time}</span>
 </time>
+
+<script>
+  if (/\biPhone\b/.test(navigator.userAgent)) {
+    document.documentElement.setAttribute("data-iphone", "");
+  }
+</script>
 
 <style>
   .video-duration {
@@ -31,6 +37,10 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
     display: block;
     flex: none;
     transform: translateY(-1px);
+  }
+  :global(html[data-iphone]) .video-duration > :is(svg, span) {
+    position: relative;
+    top: -1px;
   }
   .bottom-right {
     position: absolute;

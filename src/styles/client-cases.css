@@ -368,10 +368,6 @@
   /* Тень по рваному силуэту: drop-shadow на немаскированной обёртке. */
   filter: drop-shadow(0 8px 14px rgb(25 15 10 / 12%));
 }
-/* Пустая категория не должна держать высоту полноценной карусели кейсов. */
-.client-cases:has(.cases-empty:not([hidden])) {
-  min-height: 0;
-}
 .cases-empty.is-other .cases-empty-polaroid {
   display: block;
 }
@@ -504,9 +500,4 @@
       transform: translateZ(0);
     }
   }
-}
-
-/* Keep the viewport steady while the carousel changes the page height. */
-html:has(.cases-content.is-resizing) {
-  overflow-anchor: none;
 }
