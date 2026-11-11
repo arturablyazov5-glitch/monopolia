@@ -499,24 +499,23 @@ const isCurrentMenuPage = (href: string) =>
       }
       await document.fonts.ready;
     };
+    let anchorRevision = 0;
+    let stopAnchorScrollEnd: (() => void) | undefined;
     const alignAnchor = async (hash: string, behavior: ScrollBehavior) => {
       const target = anchorTarget(hash);
       if (!target) return;
-      await prepareAnchorSurface(hash);
-      // content-visibility:auto на iOS отдаёт оценочные высоты для
-      // пропущенных секций: без этого якорь считался бы по чужим
-      // цифрам и после отрисовки «уплыл» бы. Два кадра — время полного
-      // рендера страницы; auto-оценки после этого запоминают реальные
-      // высоты, повторные переходы точны без повторного рендера.
+      const revision = ++anchorRevision;
+      stopAnchorScrollEnd?.();
+      stopAnchorScrollEnd = undefined;
       const root = document.documentElement;
       root.classList.add("anchor-cv-render");
-      try {
-        await new Promise((resolve) =>
-          requestAnimationFrame(() => requestAnimationFrame(resolve)),
-        );
-      } finally {
-        root.classList.remove("anchor-cv-render");
-      }
+      await prepareAnchorSurface(hash);
+      // Two frames let the browser measure skipped sections at real heights.
+      // Keep them rendered while scrolling so passing blocks don't flicker.
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+      if (revision !== anchorRevision) return;
       const top = target.getBoundingClientRect().top + window.scrollY;
       const headerBottom = header.getBoundingClientRect().bottom;
       const contentGap =
@@ -526,10 +525,25 @@ const isCurrentMenuPage = (href: string) =>
         )
           ? 32
           : 8;
-      window.scrollTo({
-        top: Math.max(0, top - headerBottom - contentGap),
-        behavior,
-      });
+      const destination = Math.max(0, top - headerBottom - contentGap);
+      const finish = () => {
+        if (revision !== anchorRevision) return;
+        stopAnchorScrollEnd?.();
+        stopAnchorScrollEnd = undefined;
+        root.classList.remove("anchor-cv-render");
+      };
+      if (behavior === "smooth" && Math.abs(window.scrollY - destination) > 2) {
+        const onScrollEnd = () => requestAnimationFrame(finish);
+        window.addEventListener("scrollend", onScrollEnd, { once: true });
+        const fallback = window.setTimeout(finish, 3500);
+        stopAnchorScrollEnd = () => {
+          window.removeEventListener("scrollend", onScrollEnd);
+          window.clearTimeout(fallback);
+        };
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(finish));
+      }
+      window.scrollTo({ top: destination, behavior });
     };
     document.addEventListener("click", async (event) => {
       if (

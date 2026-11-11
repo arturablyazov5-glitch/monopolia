@@ -40,7 +40,15 @@ import "../styles/home-surface-runs.css";
     </div>
     <div class="home-surface-run">
       <div class="reviews-cases-paper">
-        <img class="reviews-cases-background" src="/assets/background-paper-tall-white.webp" width="1454" height="2143" alt="" loading="lazy" decoding="async" />
+        <img
+          class="reviews-cases-background"
+          src="/assets/background-paper-tall-white.webp"
+          width="1454"
+          height="2143"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
         <ProvenTrust />
         <ClientCases />
       </div>
@@ -53,8 +61,10 @@ import "../styles/home-surface-runs.css";
       <DirectorInvitation />
       <BlockbusterCase />
     </div>
-    <HomeTeam />
-    <HomeTelegram />
+    <div class="team-telegram-paper">
+      <HomeTeam />
+      <HomeTelegram />
+    </div>
     <HomeServices />
     <HomeRecruiting />
     <FaqSection items={homeFaq} />

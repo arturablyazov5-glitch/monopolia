@@ -99,6 +99,11 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
         color-scheme: light;
       }
     </style>
+    {header && <script is:inline>
+      // Before the browser resolves an incoming hash, use real section sizes.
+      if (location.hash)
+        document.documentElement.classList.add("anchor-cv-render");
+    </script>}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {/* LCP mobile: фотографический фон главной. Бумага загружается из CSS. */}
     {seo && pathname === "/" && (

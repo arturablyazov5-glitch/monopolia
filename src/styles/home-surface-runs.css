@@ -95,3 +95,19 @@
     mask-repeat: no-repeat;
   }
 }
+
+.team-telegram-paper {
+  display: contents;
+}
+@media (max-width: 767px) {
+  html[data-iphone] .team-telegram-paper {
+    display: flow-root;
+    margin-top: -120px;
+    background: linear-gradient(transparent 32px, var(--color-paper) 32px);
+  }
+}
+@media (max-width: 767px) {
+  html[data-iphone] .team-telegram-paper .home-team {
+    margin-top: 0;
+  }
+}
