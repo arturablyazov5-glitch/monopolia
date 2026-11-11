@@ -25,7 +25,7 @@ export const clientCases: ClientCase[] = [
     personPhotoFocus: "33% 30%",
     category: "sell",
     person: "Александр П.",
-    object: "Дом с земельным участком в сельской местности, 154,8 м²",
+    object: "Дом с земельным участком\nв сельской местности, 154,8 м²",
     result:
       "Сделка по продаже нашего дома была очень непростой, но, несмотря на все трудности, специалисты справились на 100%",
     situation: [
@@ -49,7 +49,7 @@ export const clientCases: ClientCase[] = [
     personPhotoStock: true,
     category: "sell",
     person: "Ирина В.",
-    object: "Дом с земельным участком, 67,1 м²",
+    object: "Дом с земельным участком,\n67,1 м²",
     result:
       "Быстро совершили сделку по продаже дома и покупке квартиры. Мне ничего не пришлось делать, пришла и подписала документы",
     situation: [
@@ -73,7 +73,7 @@ export const clientCases: ClientCase[] = [
     naturalPhoto: true,
     category: "sell",
     person: "Сергей Ш.",
-    object: "2‑комнатная квартира, 62 м², 5/5 этажей",
+    object: "2‑комнатная квартира,\n62 м², 5/5 этажей",
     result:
       "В продаже был сложный объект недвижимости. На квартире были долги и обременения, и главным условием в продаже была оплата наличными. Сделка прошла на отлично",
     situation: [
@@ -98,7 +98,7 @@ export const clientCases: ClientCase[] = [
     personPhotoStock: true,
     category: "sell",
     person: "Карен Е.",
-    object: "2‑комнатная квартира, 52,9 м², 2/5 этажей",
+    object: "2‑комнатная квартира,\n52,9 м², 2/5 этажей",
     result: null,
     situation: [
       "Квартира куплена с материнским капиталом, поэтому продать ее можно было только после выделения долей детям",
@@ -119,7 +119,7 @@ export const clientCases: ClientCase[] = [
     personPhotoFocus: "47% 16%",
     category: "sell",
     person: "Ольга В.",
-    object: "2‑комнатная квартира, 51,9 м², 5/5 этажей",
+    object: "2‑комнатная квартира,\n51,9 м², 5/5 этажей",
     result:
       "Уже через 3 дня покупатель был найден, хотя до этого квартира рекламировалась другими агентствами в течение 2 месяцев",
     situation: [
@@ -144,7 +144,7 @@ export const clientCases: ClientCase[] = [
     personPhotoStock: true,
     category: "buy",
     person: "Полина Б.",
-    object: "2 студии, 23,3 м² и 24,2 м², 17/25 этажей",
+    object: "2 студии,\n23,3 м² и 24,2 м², 17/25 этажей",
     result:
       "Пришла продавать квартиру с мамой, в итоге сама ушла с новой недвижимостью перед Новым годом",
     situation: [
@@ -167,7 +167,7 @@ export const clientCases: ClientCase[] = [
     personPhotoStock: true,
     category: "buy",
     person: "Надежда Ч.",
-    object: "4‑комнатная квартира в сельской местности",
+    object: "4‑комнатная квартира\nв сельской местности",
     result: null,
     situation: [
       "Молодая семья хотела купить квартиру по дальневосточной ипотеке",
@@ -210,7 +210,7 @@ export const clientCases: ClientCase[] = [
     person: "Варвара Т.",
     personPhoto: "/assets/cases/stock-varvara.webp",
     personPhotoStock: true,
-    object: "1‑комнатная квартира, 33 м², 2/3 этажей",
+    object: "1‑комнатная квартира,\n33 м², 2/3 этажей",
     result: null,
     situation: [
       "Молодая семья искала квартиру в хорошем районе до 3,2 млн ₽, но из‑за бюджета выбор был сильно ограничен",
@@ -231,7 +231,7 @@ export const clientCases: ClientCase[] = [
     personPhoto: "/assets/cases/buy-viktor-people.webp",
     personPhotoZoom: 4.3,
     personPhotoFocus: "81.5% 17%",
-    object: "1‑комнатная квартира, 35,5 м², 1/4 этажей",
+    object: "1‑комнатная квартира,\n35,5 м², 1/4 этажей",
     result:
       "За 3 дня риелтор подобрала подходящий вариант, и я успел переехать в новую квартиру",
     situation: [

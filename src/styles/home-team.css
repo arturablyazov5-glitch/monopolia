@@ -178,22 +178,19 @@
    подгоняя изображение под высоту секции вместо десктопных 1440 px. */
 @media (max-width: 767px) {
   .home-team {
-    background: transparent;
+    /* Paint the body while the texture is loading. */
+    background: linear-gradient(transparent 30px, var(--color-paper) 30px);
   }
   .home-team::before {
     content: "";
     position: absolute;
-    inset: 0 0 -32px;
+    inset: 0 0 auto;
+    height: 32px;
     z-index: -2;
     background: var(--color-paper);
     pointer-events: none;
-    mask-image:
-      url("/assets/background-paper-edge-white.svg"),
-      linear-gradient(var(--color-ink), var(--color-ink));
-    mask-size:
-      100% 32px,
-      100% calc(100% - 30px);
-    mask-position: top, bottom;
+    mask-image: var(--team-paper-edge);
+    mask-size: 100% 100%;
     mask-repeat: no-repeat;
   }
   .team-paper-background {

@@ -3,12 +3,16 @@ import { siteText } from "../data/site-texts.mjs";
 import StaffCard from "./StaffCard.astro";
 import Carousel from "./Carousel.astro";
 import { staff } from "../data/staff";
+import paperEdge from "../../public/assets/background-paper-edge-white.svg?raw";
 import "../styles/home-team.css";
+
+const paperEdgeMask = `url("data:image/svg+xml,${encodeURIComponent(paperEdge)}")`;
 ---
 
 <section
   id="team"
   class="home-team"
+  style={`--team-paper-edge: ${paperEdgeMask}`}
   aria-labelledby="team-title"
   data-node-id="1380:5622"
 >

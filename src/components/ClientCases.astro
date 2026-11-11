@@ -78,7 +78,7 @@ const cases = clientCases;
                 src={caseItem.photo}
                 width="426"
                 height="561"
-                alt={caseItem.object}
+                alt={caseItem.object.replace("\n", " ")}
                 loading="lazy"
                 decoding="async"
               />
