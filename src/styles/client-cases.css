@@ -373,6 +373,13 @@
 }
 
 @media (max-width: 767px) {
+  .case-object h3 {
+    min-block-size: 2.4em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
   .case-person {
     gap: 10px;
   }
