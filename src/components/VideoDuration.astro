@@ -15,12 +15,6 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
   <span>{time}</span>
 </time>
 
-<script>
-  if (/\biPhone\b/.test(navigator.userAgent)) {
-    document.documentElement.setAttribute("data-iphone", "");
-  }
-</script>
-
 <style>
   .video-duration {
     display: inline-flex;
@@ -52,5 +46,16 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
   }
   @media (max-width: 767px) {
     .top-right { margin-bottom: 4px; }
+  }
+  @media (max-width: 767px) {
+    @supports (-webkit-touch-callout: none) {
+      .video-duration {
+        padding-top: 6px;
+        padding-bottom: 2px;
+      }
+      .video-duration svg {
+        transform: translateY(1px);
+      }
+    }
   }
 </style>

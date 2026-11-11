@@ -193,3 +193,10 @@
     height: auto;
   }
 }
+
+@media (max-width: 767px) {
+  /* Cover the fractional-pixel seam between the two paper layers on iPhone. */
+  html[data-iphone] .home-team + .home-telegram {
+    box-shadow: 0 -1px 0 var(--color-paper);
+  }
+}

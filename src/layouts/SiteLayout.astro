@@ -86,6 +86,11 @@ const themeColor = tokenStyles.match(/--color-canvas:\s*(#[\da-f]{6})/i)?.[1];
 <!doctype html>
 <html lang="ru">
   <head>
+    <script is:inline>
+      if (/\biPhone\b/.test(navigator.userAgent)) {
+        document.documentElement.setAttribute("data-iphone", "");
+      }
+    </script>
     <meta charset="UTF-8" />
     <style is:inline>
       /* Paint the document canvas before external styles and images arrive. */
