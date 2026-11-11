@@ -32,10 +32,6 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
     flex: none;
     transform: translateY(-1px);
   }
-  :global(html[data-iphone]) .video-duration > :is(svg, span) {
-    position: relative;
-    top: -1px;
-  }
   .bottom-right {
     position: absolute;
     right: 16px;
@@ -57,5 +53,12 @@ const datetime = parts ? `PT${parts[1]}M${parts[2]}S` : undefined;
         transform: translateY(1px);
       }
     }
+  }
+  :global(html[data-iphone]) .video-duration {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  :global(html[data-iphone]) .video-duration svg {
+    transform: translateY(-1px);
   }
 </style>
