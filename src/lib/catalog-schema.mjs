@@ -142,8 +142,8 @@ export function buildTitle(p) {
   const floor = intOrNull(p.floor),
     floors = intOrNull(p.floors);
   if (floor !== null && floors !== null)
-    parts.push(floor + "/" + floors + " этаж");
-  else if (floor !== null) parts.push(floor + " этаж");
+    parts.push(floor + "/" + floors + " " + plural(floors, "этаж", "этажа", "этажей"));
+  else if (floor !== null) parts.push(floor + " этаж");
   const land = decOrNull(p.landArea, 100000);
   if (land !== null)
     parts.push(fmtArea(land) + " " + plural(land, "сотка", "сотки", "соток"));
